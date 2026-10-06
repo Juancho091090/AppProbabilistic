@@ -1,0 +1,66 @@
+# Filtro del circuito de tenis. Se aplica sobre el texto de categoría / nombre de
+# torneo que entregue el proveedor (normalizado a minúsculas).
+#
+# Orden de evaluación:
+#   1. Si contiene algún patrón de `exclude_patterns`  -> excluido.
+#   2. Si es dobles y `singles_only`                   -> excluido.
+#   3. Si el tour es ATP o WTA y la categoría coincide con `include_categories` -> incluido.
+#   4. En cualquier otro caso                           -> excluido (lista blanca).
+
+singles_only: true
+
+tours: [ATP, WTA]
+
+include_categories:
+  ATP:
+    - grand slam
+    - atp finals
+    - masters 1000
+    - atp 1000
+    - atp 500
+    - atp 250
+    - united cup
+    - davis cup
+    - olympics
+    - atp           # categoría genérica del circuito principal
+  WTA:
+    - grand slam
+    - wta finals
+    - wta 1000
+    - wta 500
+    - wta 250
+    - united cup
+    - billie jean king cup
+    - olympics
+    - wta
+
+# Si cualquiera de estos patrones aparece en categoría o torneo, se excluye.
+exclude_patterns:
+  - challenger
+  - itf
+  - futures
+  - junior
+  - juniors
+  - "boys"
+  - "girls"
+  - exhibition
+  - exhibición
+  - "utr"
+  - "wta 125"      # WTA 125 es circuito secundario
+  - "125k"
+  - legends
+  - "laver cup"    # no oficial ATP
+  - "m15"
+  - "m25"
+  - "w15"
+  - "w35"
+  - "w50"
+  - "w75"
+  - "w100"
+  - wheelchair
+
+# Superficies reconocidas (normalización)
+surfaces:
+  hard: [hard, "hard court", "indoor hard", "outdoor hard", acrylic, carpet]
+  clay: [clay, "red clay", "green clay"]
+  grass: [grass]

@@ -1,0 +1,174 @@
+# Catálogo único de competiciones de fútbol autorizadas.
+#
+# api_football_id: ID de liga en API-Football v3. Los IDs se verifican en tiempo de
+#   ejecución contra el endpoint /leagues (nombre y país); si no coinciden, la
+#   competición se marca como no verificada en el log y se omite.
+# kind: league | international_club | international_national
+# season_mode: calendar  -> temporada = año natural (ligas sudamericanas, MLS…)
+#              split     -> temporada europea (ago–may); API-Football usa el año de inicio
+# Cualquier competición que NO esté aquí queda excluida automáticamente.
+
+include_friendlies: false
+
+football:
+  # --- Ligas nacionales ---
+  - key: arg_liga_profesional
+    name: Liga Profesional Argentina
+    country: Argentina
+    api_football_id: 128
+    kind: league
+    season_mode: calendar
+  - key: col_primera_a
+    name: Liga BetPlay (Primera A)
+    country: Colombia
+    api_football_id: 239
+    kind: league
+    season_mode: calendar
+  - key: eng_premier_league
+    name: Premier League
+    country: England
+    api_football_id: 39
+    kind: league
+    season_mode: split
+  - key: esp_laliga
+    name: LaLiga
+    country: Spain
+    api_football_id: 140
+    kind: league
+    season_mode: split
+  - key: fra_ligue_1
+    name: Ligue 1
+    country: France
+    api_football_id: 61
+    kind: league
+    season_mode: split
+  - key: ita_serie_a
+    name: Serie A
+    country: Italy
+    api_football_id: 135
+    kind: league
+    season_mode: split
+  - key: bra_serie_a
+    name: Brasileirão Serie A
+    country: Brazil
+    api_football_id: 71
+    kind: league
+    season_mode: calendar
+  - key: ger_bundesliga
+    name: Bundesliga
+    country: Germany
+    api_football_id: 78
+    kind: league
+    season_mode: split
+  - key: ger_2_bundesliga
+    name: 2. Bundesliga
+    country: Germany
+    api_football_id: 79
+    kind: league
+    season_mode: split
+  - key: ned_eredivisie
+    name: Eredivisie
+    country: Netherlands
+    api_football_id: 88
+    kind: league
+    season_mode: split
+  - key: por_primeira_liga
+    name: Primeira Liga
+    country: Portugal
+    api_football_id: 94
+    kind: league
+    season_mode: split
+  - key: ecu_ligapro
+    name: LigaPro Serie A
+    country: Ecuador
+    api_football_id: 242
+    kind: league
+    season_mode: calendar
+  - key: per_liga_1
+    name: Liga 1
+    country: Peru
+    api_football_id: 281
+    kind: league
+    season_mode: calendar
+  - key: mex_liga_mx
+    name: Liga MX
+    country: Mexico
+    api_football_id: 262
+    kind: league
+    season_mode: split
+
+  # --- Torneos internacionales de clubes ---
+  - key: uefa_champions_league
+    name: UEFA Champions League
+    country: World
+    api_football_id: 2
+    kind: international_club
+    season_mode: split
+  - key: uefa_europa_league
+    name: UEFA Europa League
+    country: World
+    api_football_id: 3
+    kind: international_club
+    season_mode: split
+  - key: uefa_conference_league
+    name: UEFA Conference League
+    country: World
+    api_football_id: 848
+    kind: international_club
+    season_mode: split
+  - key: conmebol_libertadores
+    name: Copa Libertadores
+    country: World
+    api_football_id: 13
+    kind: international_club
+    season_mode: calendar
+  - key: conmebol_sudamericana
+    name: Copa Sudamericana
+    country: World
+    api_football_id: 11
+    kind: international_club
+    season_mode: calendar
+
+  # --- Selecciones ---
+  - key: fifa_world_cup
+    name: FIFA World Cup
+    country: World
+    api_football_id: 1
+    kind: international_national
+    season_mode: calendar
+  - key: uefa_euro
+    name: UEFA European Championship
+    country: World
+    api_football_id: 4
+    kind: international_national
+    season_mode: calendar
+  - key: uefa_nations_league
+    name: UEFA Nations League
+    country: World
+    api_football_id: 5
+    kind: international_national
+    season_mode: split
+  - key: conmebol_copa_america
+    name: Copa América
+    country: World
+    api_football_id: 9
+    kind: international_national
+    season_mode: calendar
+  - key: wcq_conmebol
+    name: Eliminatorias CONMEBOL
+    country: World
+    api_football_id: 34
+    kind: international_national
+    season_mode: calendar
+  - key: wcq_uefa
+    name: Eliminatorias UEFA
+    country: World
+    api_football_id: 32
+    kind: international_national
+    season_mode: calendar
+  - key: wcq_concacaf
+    name: Eliminatorias CONCACAF
+    country: World
+    api_football_id: 31
+    kind: international_national
+    season_mode: calendar

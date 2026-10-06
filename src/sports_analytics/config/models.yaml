@@ -1,0 +1,85 @@
+# Parámetros de modelos. Ningún peso o umbral se fija en el código.
+# Los pesos de ensemble son VALORES INICIALES: el módulo de calibración los
+# re-estima con histórico propio (ver docs/models.md) y escribe la versión
+# calibrada en la tabla model_metrics / archivo de pesos calibrados.
+
+version: ensemble_v1
+
+recency:
+  # Decay temporal continuo: w = 0.5 ** (días_transcurridos / half_life_days)
+  method: exponential        # exponential | buckets
+  half_life_days:
+    football: 180
+    tennis: 120
+  # Alternativa por tramos (method: buckets), por número de partidos hacia atrás
+  buckets:
+    - {last_n: 5, weight: 1.00}
+    - {last_n: 10, weight: 0.75}
+    - {last_n: 20, weight: 0.50}
+    - {last_n: null, weight: 0.25}   # resto del histórico
+  # Peso mínimo para no descartar del todo partidos antiguos
+  min_weight: 0.05
+
+football:
+  elo:
+    initial_rating: 1500
+    k_factor: 20
+    home_advantage: 65          # puntos Elo
+    goal_diff_multiplier: true  # K ajustado por margen (fórmula World Football Elo)
+    season_regression: 0.20     # regresión a la media entre temporadas
+    draw_model:                 # P(empate) desde diferencia de Elo (logística ordinal)
+      base_draw: 0.27
+      draw_decay: 0.0008
+  poisson:
+    max_goals: 10
+    min_matches: 6              # mínimo de partidos por equipo para estimar
+    prior_strength: 5.0         # partidos "virtuales" de la media de liga (shrinkage)
+  dixon_coles:
+    rho_default: -0.10
+    rho_bounds: [-0.20, 0.05]
+    min_matches_fit: 150        # partidos de la liga para estimar rho por MLE
+  corners:
+    max_corners: 30
+    overdispersion_threshold: 1.10   # var/mean > umbral -> Binomial Negativa
+    min_matches: 6
+  lines:
+    goals: [0.5, 1.5, 2.5, 3.5, 4.5]
+    corners: [7.5, 8.5, 9.5, 10.5, 11.5]
+  ensemble_weights_1x2:
+    dixon_coles: 0.40
+    poisson: 0.20
+    elo: 0.25
+    logistic: 0.15
+
+tennis:
+  elo:
+    initial_rating: 1500
+    # K dinámico (FiveThirtyEight): K = k_base / (n_partidos + offset) ** shape
+    k_base: 250
+    k_offset: 5
+    k_shape: 0.4
+    surface_min_matches: 10     # bajo esto, Elo superficie se mezcla con general
+    surface_blend_prior: 15     # peso n/(n+prior) para superficie
+  markov:
+    # Prob. de ganar punto al saque cuando no hay estadísticas
+    default_spw: {ATP: 0.64, WTA: 0.56}
+    tour_avg_rpw: {ATP: 0.36, WTA: 0.44}
+    stats_shrink_prior: 15      # shrinkage de estadísticas de superficie hacia el total
+  lines:
+    games: [18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 36.5, 38.5]
+  ensemble_weights_winner:
+    elo: 0.30
+    surface_elo: 0.30
+    logistic: 0.20
+    markov: 0.20
+
+calibration:
+  min_samples_platt: 200
+  min_samples_isotonic: 1000
+  n_bins: 10
+
+confidence:
+  # Puntuación 0-1 combinando calidad de datos y acuerdo entre modelos
+  high: 0.70
+  medium: 0.45
+  max_model_spread: 0.15        # desacuerdo máximo tolerable entre modelos (prob.)
