@@ -65,7 +65,15 @@ planes incluyen todas las competiciones y endpoints.
 | `match_winner` | id del jugador ganador |
 | `best_of` | siempre `null`; se infiere (5 sets en Grand Slam ATP, `grand_slam_rank_id: 4`) |
 
-* Los **fixtures** no traen el objeto torneo, solo `tournamentId`. Se cruzan con el
+* **Los fixtures se agrupan por fecha UTC.** El día local de Bogotá (UTC−5) abarca dos
+  fechas UTC, así que se piden ambas y se filtran por los límites del día local. Sin esto
+  se perdían, por ejemplo, los partidos de Shanghái de la noche local (verificado el
+  6-oct-2026: la fecha UTC de hoy solo traía ITF/Challenger de América y Europa).
+* El endpoint de fixtures solo lista partidos **no iniciados**. Los torneos asiáticos que
+  se juegan antes de las 07:00 de Bogotá ya empezaron cuando corre el informe y se
+  reportan como "ya había comenzado".
+* Los **fixtures** no traen el objeto torneo, solo `tournamentId`, y coincide con el `id`
+  del calendario anual (verificado). Se cruzan con el
   calendario anual: 2 páginas por circuito, con caché de 7 días.
 * Paginación: `pageSize` hasta 500 y `hasNextPage`.
 * Cabeceras de cuota: `x-ratelimit-requests-remaining` (diaria) y `x-ratelimit-remaining`.
@@ -79,11 +87,11 @@ planes incluyen todas las competiciones y endpoints.
 
 | Uso | Llamadas |
 |---|---|
-| Fixtures de hoy ATP + WTA | 2 |
+| Fixtures del día local ATP + WTA (2 fechas UTC) | 4 |
 | Resultados de ayer ATP + WTA | 2 |
 | Ranking ATP + WTA | 2 (caché de 12 h) |
 | Calendario anual ATP + WTA | ~4 por semana |
-| **Libre para cargar histórico** | ~35 por día (500 resultados por llamada) |
+| **Libre para cargar histórico** | ~30 por día (500 resultados por llamada) |
 
 ## Free API Live Football Data (RapidAPI · Creativesdev)
 

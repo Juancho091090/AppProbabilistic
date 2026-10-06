@@ -141,7 +141,15 @@ usa horario de verano, así que el desfase es fijo). El pipeline calcula "hoy" s
 en `America/Bogota`, no en UTC. La base de datos en producción debe ser un PostgreSQL
 accesible desde Actions (p. ej. Neon/Supabase gratuito) vía `DATABASE_URL` secreto.
 
-## 9. Fuera de alcance
+## 9. Persistencia y operación
+
+* Producción: PostgreSQL gestionado (Neon) vía `DATABASE_URL`; Actions es efímero.
+* La caché HTTP y el contador de cuota diaria se conservan entre corridas con
+  `actions/cache`.
+* `smoke_test.yml` ejecuta el pipeline con APIs reales sobre una base efímera sin enviar
+  nada (verificado el 6-oct-2026: 9 partidos de fútbol reales predichos en < 3 min).
+
+## 10. Fuera de alcance
 
 Recomendaciones de apuesta, cuotas, stakes o casas de apuestas. El sistema no consume
 cuotas ni calcula "valor".
