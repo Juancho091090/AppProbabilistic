@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sports
+      POSTGRES_PASSWORD: sports
+      POSTGRES_DB: sports
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sports -d sports"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql+psycopg://sports:sports@postgres:5432/sports
+      APP_TIMEZONE: America/Bogota
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+    # Aplica migraciones y ejecuta el pipeline diario (modo simulado si no hay claves)
+    command: >
+      sh -c "alembic upgrade head && sports-analytics run-daily"
+
+volumes:
+  pgdata:
