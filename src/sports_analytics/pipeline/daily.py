@@ -280,7 +280,9 @@ def run_daily(
             tennis_fixtures: list[TennisMatch] = []
             if svc.football:
                 try:
-                    ingest.sync_football(session, svc.football, config, settings, report)
+                    coverage = ingest.sync_football(
+                        session, svc.football, config, settings, report, include_stats=False
+                    )
                     football_fixtures = ingest.football_fixtures_today(
                         svc.football, config, today, report
                     )
@@ -289,6 +291,17 @@ def run_daily(
                         session, [m for m, _ in football_fixtures], comp_ids
                     )
                     session.commit()
+                    # Córners: primero los equipos que juegan hoy, luego la carga general
+                    stats_keys = ingest.stats_competition_keys(config, coverage)
+                    teams_today = {
+                        t for m, _ in football_fixtures for t in (m.home_team, m.away_team)
+                    }
+                    ingest.prioritize_team_stats(
+                        session, svc.football, teams_today, stats_keys, settings, report
+                    )
+                    ingest.sync_football_stats(
+                        session, svc.football, config, settings, coverage, report
+                    )
                     repo.record_data_source(
                         session,
                         "api_football",

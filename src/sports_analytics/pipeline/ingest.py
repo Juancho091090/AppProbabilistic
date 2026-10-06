@@ -60,8 +60,13 @@ def sync_football(
     config: AppConfig,
     settings: Settings,
     report: IngestReport,
+    include_stats: bool = True,
 ) -> dict[int, LeagueCoverage]:
-    """Refresca temporada actual de cada competición y carga temporadas previas una vez."""
+    """Refresca temporada actual de cada competición y carga temporadas previas una vez.
+
+    ``include_stats=False`` permite al pipeline diario cargar primero las estadísticas
+    de los equipos que juegan hoy (``prioritize_team_stats``) y después el resto.
+    """
     comp_ids = repo.ensure_competitions(session, config)
     try:
         coverage = client.current_leagues()
@@ -94,12 +99,42 @@ def sync_football(
             report.add(f"football:{comp.key}", n)
         session.commit()  # progreso persistente aunque algo falle después
 
-    _sync_football_stats(session, client, config, settings, coverage, report)
+    if include_stats:
+        sync_football_stats(session, client, config, settings, coverage, report)
     report.calls["api_football"] = client.http.calls_made
     return coverage
 
 
-def _sync_football_stats(
+def stats_competition_keys(config: AppConfig, coverage: dict[int, LeagueCoverage]) -> list[str]:
+    return [
+        c.key
+        for c in config.competitions.football
+        if coverage.get(c.api_football_id) and coverage[c.api_football_id].fixtures_statistics
+    ]
+
+
+def prioritize_team_stats(
+    session: Session,
+    client: ApiFootballClient,
+    team_ids: set[str],
+    competition_keys: list[str],
+    settings: Settings,
+    report: IngestReport,
+) -> int:
+    """Estadísticas (córners) de los últimos N partidos de los equipos que juegan hoy.
+
+    Garantiza que el modelo de córners tenga datos para los partidos del informe aunque
+    la carga general de estadísticas no haya terminado.
+    """
+    pending = repo.recent_matches_missing_stats_for_teams(
+        session, team_ids, competition_keys, settings.football_priority_stats_per_team
+    )
+    fetch_football_stats(session, client, pending, report)
+    report.add("football:statistics_priority", len(pending))
+    return len(pending)
+
+
+def sync_football_stats(
     session: Session,
     client: ApiFootballClient,
     config: AppConfig,
@@ -107,12 +142,15 @@ def _sync_football_stats(
     coverage: dict[int, LeagueCoverage],
     report: IngestReport,
 ) -> None:
-    keys = [
-        c.key
-        for c in config.competitions.football
-        if coverage.get(c.api_football_id) and coverage[c.api_football_id].fixtures_statistics
-    ]
+    keys = stats_competition_keys(config, coverage)
     pending = repo.football_matches_missing_stats(session, keys, settings.football_stats_per_run)
+    fetch_football_stats(session, client, pending, report)
+    report.add("football:statistics", len(pending))
+
+
+def fetch_football_stats(
+    session: Session, client: ApiFootballClient, pending: list[str], report: IngestReport
+) -> None:
     batch: list[dict[str, Any]] = []
     for ext_id in pending:
         try:
@@ -142,7 +180,7 @@ def _sync_football_stats(
             session.commit()
             batch = []
     repo.upsert_football_statistics(session, batch)
-    report.add("football:statistics", len(pending))
+    session.commit()
 
 
 def football_fixtures_today(

@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     # Ingesta (presupuestos por ejecución)
     football_history_seasons: int = Field(default=3, ge=1)  # actual + 2 anteriores
     football_stats_per_run: int = Field(default=2500, ge=0)  # llamadas /fixtures/statistics
+    football_priority_stats_per_team: int = Field(default=15, ge=0)  # equipos que juegan hoy
     tennis_history_days: int = Field(default=730, ge=30)
     tennis_refresh_days: int = Field(default=3, ge=1)  # días recientes que se re-consultan
     tennis_window_days: int = Field(default=7, ge=1)

@@ -174,6 +174,42 @@ def football_matches_missing_stats(
     return list(session.scalars(q))
 
 
+def recent_matches_missing_stats_for_teams(
+    session: Session,
+    team_external_ids: Iterable[str],
+    competition_keys: Sequence[str],
+    per_team: int,
+) -> list[str]:
+    """De los últimos ``per_team`` partidos terminados de cada equipo, los que no tienen
+    estadísticas aún (sin duplicados, más recientes primero)."""
+    out: list[str] = []
+    seen: set[str] = set()
+    for ext in team_external_ids:
+        team_id = session.scalar(
+            select(Team.id).where(Team.provider == FOOTBALL_PROVIDER, Team.external_id == ext)
+        )
+        if team_id is None:
+            continue
+        q = (
+            select(FootballMatchRow.external_id, FootballStatistics.id)
+            .join(Competition, Competition.id == FootballMatchRow.competition_id)
+            .outerjoin(FootballStatistics, FootballStatistics.match_id == FootballMatchRow.id)
+            .where(
+                FootballMatchRow.status == MatchStatus.FINISHED.value,
+                (FootballMatchRow.home_team_id == team_id)
+                | (FootballMatchRow.away_team_id == team_id),
+                Competition.key.in_(list(competition_keys)),
+            )
+            .order_by(FootballMatchRow.kickoff_utc.desc())
+            .limit(per_team)
+        )
+        for match_ext, stats_id in session.execute(q):
+            if stats_id is None and match_ext not in seen:
+                seen.add(match_ext)
+                out.append(match_ext)
+    return out
+
+
 def load_football_history(session: Session, since: datetime) -> list[FootballMatch]:
     home, away = aliased(Team), aliased(Team)
     q = (
