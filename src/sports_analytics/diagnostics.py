@@ -330,6 +330,68 @@ def check_football_rapid(settings: Settings, today: date | None = None) -> list[
     return lines
 
 
+def check_tennis_join(settings: Settings, today: date | None = None) -> list[str]:
+    """¿Los tournamentId de los fixtures coinciden con los ids del calendario anual?"""
+    from collections import Counter
+
+    from sports_analytics.data.clients.tennis_api import TennisApiClient
+
+    lines = ["## Tennis: cruce fixtures ↔ calendario", ""]
+    if settings.tennis_api_key is None:
+        return [*lines, "❌ `TENNIS_API_KEY` no está definida."]
+    day = today or local_today(settings.tz)
+    client = TennisApiClient(settings, min_interval=1.0)
+    try:
+        for tour in ("atp", "wta"):
+            try:
+                fixtures = client.fixtures(tour, day)
+                cal_raw = client._paged(f"/tennis/v2/{tour}/tournament/calendar/{day.year}", 0)
+            except ApiError as exc:
+                lines.append(f"❌ {tour}: {exc}")
+                continue
+            ids = Counter(f.get("tournamentId") for f in fixtures)
+            by_id = {c.get("id"): c for c in cal_raw}
+            by_link = {c.get("link"): c for c in cal_raw}
+            lines.append(
+                f"**{tour.upper()}**: {len(fixtures)} fixtures, {len(ids)} torneos; "
+                f"calendario {len(cal_raw)} torneos"
+            )
+            for tid, n in ids.most_common(12):
+                c_id, c_link = by_id.get(tid), by_link.get(tid)
+                desc = (
+                    f"id→ {c_id.get('name')} rank={c_id.get('rankId')} court={c_id.get('courtId')}"
+                    if c_id
+                    else "id→ —"
+                )
+                desc += (
+                    f" | link→ {c_link.get('name')} rank={c_link.get('rankId')}"
+                    if c_link
+                    else " | link→ —"
+                )
+                lines.append(f"- tournamentId {tid} ({n} partidos): {desc}")
+            main = [
+                c
+                for c in cal_raw
+                if (c.get("rankId") or 0) >= 2
+                and str(c.get("date", ""))[:7]
+                in (day.strftime("%Y-%m"), (day - timedelta(days=10)).strftime("%Y-%m"))
+            ]
+            lines.append(
+                "Calendario principal reciente: "
+                + "; ".join(
+                    f"{c.get('id')}/{c.get('link')} {c.get('name')} r{c.get('rankId')} {str(c.get('date'))[:10]}"
+                    for c in main[:10]
+                )
+            )
+        lines.append(
+            f"· Llamadas: {client.http.calls_made} · cuota: "
+            f"{client.http.last_rate_headers.get('x-ratelimit-requests-remaining')}"
+        )
+    finally:
+        client.close()
+    return lines
+
+
 def check_others(settings: Settings) -> list[str]:
     rows = [
         ("ANTHROPIC_API_KEY", settings.claude_enabled),
@@ -343,15 +405,18 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
     """``sections``: lista separada por comas (football_rapid, api_football, tennis, others)
     o ``all``. Permite no gastar cuota en APIs ya verificadas."""
     wanted = {s.strip() for s in (sections or os.environ.get("DIAG_SECTIONS") or "all").split(",")}
+    if "all" in wanted:
+        wanted = {"football_rapid", "api_football", "tennis", "others"}
     checks = {
         "football_rapid": lambda: check_football_rapid(settings),
         "api_football": lambda: check_api_football(settings, config),
         "tennis": lambda: check_tennis(settings),
+        "tennis_join": lambda: check_tennis_join(settings),
         "others": lambda: check_others(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
-        if "all" in wanted or name in wanted:
+        if name in wanted:
             body += [*fn(), ""]
     report = "\n".join(body)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
