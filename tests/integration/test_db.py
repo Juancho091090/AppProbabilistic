@@ -4,13 +4,12 @@ import os
 from datetime import UTC, date, datetime, timedelta
 
 import pytest
-from sqlalchemy import create_engine, func, select, text
+from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from sports_analytics.data.schemas import FootballMatch, MatchStatus, TennisMatch
 from sports_analytics.db import repository as repo
 from sports_analytics.db.models import Base, FootballMatchRow, PredictionRow, Team
-from sports_analytics.db.session import normalize_url
 from sports_analytics.models.outputs import MatchForecast, PredictionRecord
 
 URL = os.environ.get("TEST_DATABASE_URL")
@@ -19,28 +18,6 @@ pytestmark = [
     pytest.mark.skipif(not URL, reason="TEST_DATABASE_URL no definida"),
 ]
 T0 = datetime(2026, 9, 1, 18, tzinfo=UTC)
-
-
-@pytest.fixture(scope="module")
-def engine():
-    from alembic import command
-    from alembic.config import Config
-
-    eng = create_engine(normalize_url(URL))
-    try:
-        with eng.connect() as c:
-            c.execute(text("select 1"))
-    except Exception as exc:  # pragma: no cover
-        pytest.skip(f"PostgreSQL no disponible: {exc}")
-    with eng.begin() as c:
-        c.execute(text("DROP SCHEMA public CASCADE; CREATE SCHEMA public;"))
-    root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    cfg = Config(os.path.join(root, "alembic.ini"))
-    cfg.set_main_option("script_location", os.path.join(root, "alembic"))
-    cfg.set_main_option("sqlalchemy.url", URL)
-    command.upgrade(cfg, "head")
-    yield eng
-    eng.dispose()
 
 
 @pytest.fixture
