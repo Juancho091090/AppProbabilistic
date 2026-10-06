@@ -322,6 +322,28 @@ def load_tennis_history(session: Session, since: datetime) -> list[TennisMatch]:
     ]
 
 
+def tennis_tournaments_known(session: Session, tour: str) -> dict[int, dict]:
+    """Torneos vistos en resultados guardados: id externo -> nivel, superficie, nombre."""
+    q = (
+        select(
+            TennisMatchRow.tournament_external_id,
+            TennisMatchRow.rank_id,
+            TennisMatchRow.surface,
+            TennisMatchRow.tournament,
+            TennisMatchRow.category,
+        )
+        .where(
+            TennisMatchRow.tour == tour.upper(), TennisMatchRow.tournament_external_id.is_not(None)
+        )
+        .distinct()
+    )
+    return {
+        int(tid): {"rank_id": rank, "surface": surface, "name": name, "category": cat or ""}
+        for tid, rank, surface, name, cat in session.execute(q)
+        if tid and tid.isdigit()
+    }
+
+
 def tennis_loaded_days(session: Session, tour: str) -> set[date]:
     q = select(TennisMatchRow.kickoff_utc).where(TennisMatchRow.tour == tour.upper())
     return {ts.date() for ts in session.scalars(q)}

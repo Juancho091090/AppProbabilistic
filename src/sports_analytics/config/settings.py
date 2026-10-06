@@ -34,6 +34,14 @@ class Settings(BaseSettings):
     tennis_api_base_url: str = "https://tennis-api-atp-wta-itf.p.rapidapi.com"
     tennis_api_daily_limit: int = Field(default=45, ge=1)  # margen bajo el tope de 50
 
+    # Ingesta (presupuestos por ejecución)
+    football_history_seasons: int = Field(default=3, ge=1)  # actual + 2 anteriores
+    football_stats_per_run: int = Field(default=2500, ge=0)  # llamadas /fixtures/statistics
+    tennis_history_days: int = Field(default=730, ge=30)
+    tennis_refresh_days: int = Field(default=3, ge=1)  # días recientes que se re-consultan
+    tennis_window_days: int = Field(default=7, ge=1)
+    tennis_backfill_calls_per_run: int = Field(default=30, ge=0)
+
     # Claude
     anthropic_api_key: SecretStr | None = None
     anthropic_model: str = "claude-sonnet-5-5"
