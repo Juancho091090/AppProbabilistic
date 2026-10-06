@@ -208,3 +208,23 @@ def test_data_source_tracking(session):
         text("select calls_last_run, last_error, last_success_at from data_sources")
     ).one()
     assert row[0] == 1 and row[1] == "HTTP 500" and row[2] is not None
+
+
+def test_recent_matches_missing_stats_for_teams(session, app_config):
+    comps = repo.ensure_competitions(session, app_config)
+    matches = [_fm(i, home="1" if i % 2 else "3", away="2") for i in range(1, 9)]
+    repo.upsert_football_matches(session, matches, comps)
+    repo.upsert_football_statistics(
+        session, [{"external_id": "fx8", "home_corners": 5, "away_corners": 4, "available": True}]
+    )
+    # Equipo "1" juega fx1, fx3, fx5, fx7; últimos 2 -> fx7, fx5
+    assert repo.recent_matches_missing_stats_for_teams(
+        session, {"1"}, ["eng_premier_league"], 2
+    ) == ["fx7", "fx5"]
+    # Equipo "2" juega todos; fx8 ya tiene estadísticas y se omite
+    got = repo.recent_matches_missing_stats_for_teams(session, {"2"}, ["eng_premier_league"], 3)
+    assert got == ["fx7", "fx6"]
+    assert (
+        repo.recent_matches_missing_stats_for_teams(session, {"999"}, ["eng_premier_league"], 5)
+        == []
+    )

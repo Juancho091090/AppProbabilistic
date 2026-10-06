@@ -336,6 +336,8 @@ def test_day1_full_pipeline(env, app_config):
     # Fútbol: solo Premier (la liga 40 no está autorizada) y 2 partidos
     assert "## Premier League" in md and "Team01 vs Team02" in md and "Championship" not in md
     assert out.payload.n_football == 2
+    # Córners garantizados para los partidos del día gracias a la carga prioritaria
+    assert all(f.markets["corners"] is not None for f in out.payload.football[0].forecasts)
     # Tenis: 1 partido del circuito principal, superficie desde el calendario (arcilla)
     assert out.payload.n_tennis("ATP") == 1 and "Superficie: clay" in md
     # Narrativa de Claude validada e insertada; probabilidades intactas
@@ -366,6 +368,7 @@ def test_day1_full_pipeline(env, app_config):
         run = s.get(PipelineRun, out.run_id)
         assert run.status == out.status and run.predictions_generated == len(preds)
         assert run.telegram_sent and run.email_sent and run.report_markdown
+        assert run.details["loaded"].get("football:statistics_priority", 0) > 0
 
 
 def test_day1_rerun_is_idempotent(env, app_config):
