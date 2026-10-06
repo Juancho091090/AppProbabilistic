@@ -11,6 +11,7 @@ from functools import lru_cache
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from pydantic import Field, SecretStr, field_validator
+from pydantic_core import PydanticUseDefault
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -59,6 +60,14 @@ class Settings(BaseSettings):
     cache_dir: str = "data/cache"
     http_timeout_seconds: float = 20.0
     http_max_retries: int = 4
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def _empty_to_none(cls, value):
+        # En GitHub Actions un secreto inexistente llega como "" -> se trata como no definido
+        if isinstance(value, str) and value.strip() == "":
+            raise PydanticUseDefault()
+        return value
 
     @field_validator("app_timezone")
     @classmethod
