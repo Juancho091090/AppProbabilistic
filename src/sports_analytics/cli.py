@@ -1,9 +1,18 @@
-"""Punto de entrada: ``sports-analytics <comando>``."""
+"""Punto de entrada: ``sports-analytics <comando>``.
+
+Comandos:
+  check-apis   Diagnóstico de claves, plan y cobertura de las APIs.
+  run-daily    Pipeline completo del día (ingesta, resultados, modelos, informe, envío).
+  settle       Solo registra resultados reales y recalcula métricas.
+  backtest     Backtesting walk-forward sobre el histórico de la base de datos.
+"""
 
 from __future__ import annotations
 
 import argparse
 import sys
+from datetime import date, timedelta
+from pathlib import Path
 
 from sports_analytics.config.loader import get_config
 from sports_analytics.config.settings import get_settings
@@ -17,12 +26,88 @@ def _check_apis(_: argparse.Namespace) -> int:
     return 0
 
 
+def _run_daily(args: argparse.Namespace) -> int:
+    from sports_analytics.pipeline.daily import run_daily
+
+    settings = get_settings()
+    if args.dry_run:
+        settings = settings.model_copy(update={"dry_run": True})
+    outcome = run_daily(settings, get_config(), send=not args.no_send)
+    if args.output:
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).write_text(outcome.markdown, encoding="utf-8")
+    print(
+        f"Estado: {outcome.status} · Telegram: {outcome.telegram_sent} · Email: {outcome.email_sent}"
+    )
+    for issue in outcome.issues:
+        print(f"- {issue}")
+    return 0 if outcome.status in ("success", "partial") else 1
+
+
+def _settle(_: argparse.Namespace) -> int:
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.pipeline.results import refresh_live_metrics, settle_predictions
+
+    with session_scope(get_settings().database_url) as session:
+        print(settle_predictions(session))
+        print(f"métricas: {refresh_live_metrics(session)}")
+    return 0
+
+
+def _backtest(args: argparse.Namespace) -> int:
+    from sports_analytics.backtesting.engine import run_backtest
+    from sports_analytics.core.timeutils import local_day_bounds_utc
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.session import session_scope
+
+    settings, config = get_settings(), get_config()
+    start, end = date.fromisoformat(args.start), date.fromisoformat(args.end)
+    since, _ = local_day_bounds_utc(start - timedelta(days=3 * 365), settings.tz)
+    with session_scope(settings.database_url) as session:
+        if args.sport == "football":
+            history = repo.load_football_history(session, since)
+        else:
+            history = repo.load_tennis_history(session, since)
+    names = {c.key: c.name for c in config.competitions.football}
+    report = run_backtest(
+        args.sport, history, config, start, end, settings.tz, args.refit_days, names
+    )
+    md = report.to_markdown(config.models.version)
+    out = Path(args.output or f"reports/output/backtest_{args.sport}_{start}_{end}.md")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(md, encoding="utf-8")
+    print(md)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="sports-analytics", description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog="sports-analytics",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("check-apis", help="Verifica claves, plan y cobertura de las APIs").set_defaults(
+    sub.add_parser("check-apis", help="Verifica claves, plan y cobertura").set_defaults(
         func=_check_apis
     )
+
+    daily = sub.add_parser("run-daily", help="Pipeline diario completo")
+    daily.add_argument("--dry-run", action="store_true", help="No envía Telegram/Email")
+    daily.add_argument("--no-send", action="store_true", help="Genera el informe sin enviarlo")
+    daily.add_argument("--output", help="Ruta donde guardar el informe en Markdown")
+    daily.set_defaults(func=_run_daily)
+
+    sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(
+        func=_settle
+    )
+
+    bt = sub.add_parser("backtest", help="Backtesting walk-forward")
+    bt.add_argument("--sport", choices=["football", "tennis"], required=True)
+    bt.add_argument("--start", required=True, help="YYYY-MM-DD")
+    bt.add_argument("--end", required=True, help="YYYY-MM-DD")
+    bt.add_argument("--refit-days", type=int, default=7)
+    bt.add_argument("--output")
+    bt.set_defaults(func=_backtest)
     return parser
 
 
