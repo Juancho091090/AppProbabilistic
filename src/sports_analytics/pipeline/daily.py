@@ -61,6 +61,7 @@ class DailyOutcome:
     markdown: str = ""
     telegram_sent: bool = False
     email_sent: bool = False
+    narrative: bool = False
     issues: list[str] = field(default_factory=list)
 
 
@@ -380,6 +381,7 @@ def run_daily(
                 narrative.summary if narrative else None,
             )
             outcome.markdown = markdown
+            outcome.narrative = narrative is not None
             run.report_markdown = markdown
 
             # 5) Envío

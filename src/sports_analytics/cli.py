@@ -10,6 +10,7 @@ Comandos:
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -36,11 +37,18 @@ def _run_daily(args: argparse.Namespace) -> int:
     if args.output:
         Path(args.output).parent.mkdir(parents=True, exist_ok=True)
         Path(args.output).write_text(outcome.markdown, encoding="utf-8")
-    print(
-        f"Estado: {outcome.status} · Telegram: {outcome.telegram_sent} · Email: {outcome.email_sent}"
+    summary = (
+        f"Estado: {outcome.status} · Telegram: {outcome.telegram_sent} · "
+        f"Email: {outcome.email_sent} · Narrativa Claude: {outcome.narrative}"
     )
+    print(summary)
     for issue in outcome.issues:
         print(f"- {issue}")
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import _escape_annotation
+
+        text = "\n".join([summary, *[f"- {i}" for i in outcome.issues]])
+        print(f"::notice title=resultado-envio::{_escape_annotation(text)}")
     return 0 if outcome.status in ("success", "partial") else 1
 
 
