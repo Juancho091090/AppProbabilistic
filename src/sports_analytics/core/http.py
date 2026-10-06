@@ -45,6 +45,10 @@ class BudgetExceeded(ApiError):
     """Se alcanzó el presupuesto diario configurado para el proveedor."""
 
 
+class QuotaExhausted(BudgetExceeded):
+    """El proveedor informó que la cuota del plan está agotada (HTTP 429 de cuota)."""
+
+
 class DailyBudget:
     """Contador de llamadas por día UTC, persistido en un JSON."""
 
@@ -220,6 +224,9 @@ class HttpApiClient:
                 # clave para diagnosticar; se recorta y se redacta en el log.
                 body = response.text[:200].replace("\n", " ")
                 last_error = f"HTTP {response.status_code}: {body}"
+                if response.status_code == 429 and "quota" in body.lower():
+                    # Cuota diaria/mensual agotada: reintentar solo gasta más llamadas
+                    raise QuotaExhausted(self.provider, f"{last_error} en {path}", 429)
                 if response.status_code not in RETRYABLE_STATUS:
                     raise ApiError(self.provider, f"{last_error} en {path}", response.status_code)
                 if attempt < self.max_retries:
