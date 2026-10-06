@@ -57,6 +57,8 @@ class CompetitionsConfig(BaseModel):
 
 class TennisConfig(BaseModel):
     singles_only: bool = True
+    min_rank_id: int = 2
+    grand_slam_rank_id: int = 4
     tours: list[str]
     include_categories: dict[str, list[str]]
     exclude_patterns: list[str]

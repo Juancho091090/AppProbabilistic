@@ -9,6 +9,12 @@
 
 singles_only: true
 
+# Nivel del torneo según Tennis API (campo rankId, verificado con la API real):
+#   0 = ITF (M15/M25/W15…), 1 = Challenger / WTA 125 / ITF alto,
+#   2+ = circuito principal (250/500/1000/Grand Slam/Finals/Copas).
+min_rank_id: 2
+grand_slam_rank_id: 4
+
 tours: [ATP, WTA]
 
 include_categories:
