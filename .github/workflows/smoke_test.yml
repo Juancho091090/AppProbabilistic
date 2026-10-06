@@ -1,0 +1,62 @@
+name: smoke-test
+
+# Prueba end-to-end con las APIs REALES y una base PostgreSQL efímera.
+# No envía Telegram/Email. Presupuestos reducidos para no gastar cuota.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: sports
+          POSTGRES_PASSWORD: sports
+          POSTGRES_DB: sports
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U sports -d sports"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: WARNING
+      DATABASE_URL: postgresql+psycopg://sports:sports@localhost:5432/sports
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_DAILY_LIMIT: "1500"
+      FOOTBALL_HISTORY_SEASONS: "2"
+      FOOTBALL_STATS_PER_RUN: "300"
+      TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+      TENNIS_API_DAILY_LIMIT: "45"
+      TENNIS_HISTORY_DAYS: "120"
+      TENNIS_WINDOW_DAYS: "8"
+      TENNIS_BACKFILL_CALLS_PER_RUN: "8"
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - run: alembic upgrade head
+      - name: Pipeline sin envío
+        run: sports-analytics run-daily --no-send --output reports/output/smoke.md
+      - name: Publicar informe como anotaciones
+        if: always()
+        run: |
+          if [ -f reports/output/smoke.md ]; then
+            cat reports/output/smoke.md >> "$GITHUB_STEP_SUMMARY"
+            python -c "from sports_analytics.diagnostics import emit_annotations; emit_annotations(open('reports/output/smoke.md', encoding='utf-8').read())"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-report-${{ github.run_id }}
+          path: reports/output/
+          if-no-files-found: ignore

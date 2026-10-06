@@ -1,0 +1,92 @@
+name: daily-prediction
+
+# Informe diario a las 07:00 America/Bogota.
+# Colombia no usa horario de verano (UTC-5 todo el año) => 12:00 UTC.
+# Nota: GitHub puede retrasar los cron unos minutos en horas de alta carga.
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    inputs:
+      send:
+        description: "Enviar por Telegram/Email"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-prediction
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: INFO
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_DAILY_LIMIT: "7000"      # plan Pro: 7.500/día (margen de seguridad)
+      TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+      TENNIS_API_DAILY_LIMIT: "45"          # plan Basic: 50/día
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # Caché HTTP + contador de cuota diaria entre ejecuciones
+      - uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: http-cache-${{ github.run_id }}
+          restore-keys: http-cache-
+
+      - name: Instalar dependencias
+        run: pip install -e .
+
+      - name: Verificar base de datos configurada
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::Falta el secreto DATABASE_URL (PostgreSQL persistente, p. ej. Neon). Ver docs/deployment.md"
+            exit 1
+          fi
+
+      - name: Migraciones
+        run: alembic upgrade head
+
+      - name: Pipeline diario (ingesta, resultados, modelos, informe, envío)
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" = "false" ]; then
+            sports-analytics run-daily --no-send --output reports/output/daily.md
+          else
+            sports-analytics run-daily --output reports/output/daily.md
+          fi
+
+      - name: Resumen en GitHub
+        if: always()
+        run: |
+          if [ -f reports/output/daily.md ]; then
+            cat reports/output/daily.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: informe-diario-${{ github.run_id }}
+          path: reports/output/
+          retention-days: 30
+          if-no-files-found: ignore
