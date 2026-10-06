@@ -15,7 +15,7 @@ from sports_analytics.data.schemas import MatchStatus
 FIXTURE = {
     "fixture": {"id": 1001, "date": "2026-10-06T20:00:00-05:00", "status": {"short": "AET"}},
     "league": {"id": 13, "name": "CONMEBOL Libertadores", "season": 2026},
-    "teams": {"home": {"name": "Nacional"}, "away": {"name": "River"}},
+    "teams": {"home": {"id": 10, "name": "Nacional"}, "away": {"id": 20, "name": "River"}},
     "goals": {"home": 2, "away": 1},
     "score": {"fulltime": {"home": 1, "away": 1}},
 }
@@ -249,3 +249,9 @@ def test_tennis_probe_reports_without_key(tmp_path, monkeypatch):
     from sports_analytics.diagnostics import check_tennis
 
     assert "no está definida" in "\n".join(check_tennis(Settings(cache_dir=str(tmp_path))))
+
+
+def test_parse_fixture_uses_team_ids_as_keys():
+    m = parse_fixture(FIXTURE, "x")
+    assert (m.home_team, m.away_team) == ("10", "20")
+    assert (m.display_home, m.display_away) == ("Nacional", "River")
