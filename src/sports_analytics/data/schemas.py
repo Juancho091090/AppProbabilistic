@@ -36,8 +36,10 @@ class FootballMatch(_Timed):
     match_id: str
     competition_key: str
     season: int | None = None
-    home_team: str
+    home_team: str  # clave única (id externo) usada por los modelos
     away_team: str
+    home_name: str | None = None  # nombre para mostrar
+    away_name: str | None = None
     status: MatchStatus = MatchStatus.SCHEDULED
     neutral_venue: bool = False
     home_goals: int | None = Field(default=None, ge=0)
@@ -58,6 +60,14 @@ class FootballMatch(_Timed):
         )
 
     @property
+    def display_home(self) -> str:
+        return self.home_name or self.home_team
+
+    @property
+    def display_away(self) -> str:
+        return self.away_name or self.away_team
+
+    @property
     def has_corners(self) -> bool:
         return self.home_corners is not None and self.away_corners is not None
 
@@ -69,8 +79,10 @@ class TennisMatch(_Timed):
     category: str
     surface: str  # hard | clay | grass | unknown
     best_of: int = Field(default=3)
-    player_a: str
+    player_a: str  # clave única (id externo) usada por los modelos
     player_b: str
+    player_a_name: str | None = None
+    player_b_name: str | None = None
     status: MatchStatus = MatchStatus.SCHEDULED
     winner: str | None = None  # "A" | "B"
     sets_a: int | None = None
@@ -92,6 +104,14 @@ class TennisMatch(_Timed):
         if value not in (3, 5):
             raise ValueError("best_of debe ser 3 o 5")
         return value
+
+    @property
+    def display_a(self) -> str:
+        return self.player_a_name or self.player_a
+
+    @property
+    def display_b(self) -> str:
+        return self.player_b_name or self.player_b
 
     @property
     def is_finished(self) -> bool:
