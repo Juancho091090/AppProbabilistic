@@ -1,0 +1,33 @@
+# Secretos — NUNCA versionar
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Datos locales y caché
+data/cache/
+data/raw/
+reports/output/
+*.sqlite
+*.db
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
