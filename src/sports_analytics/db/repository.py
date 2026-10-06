@@ -145,12 +145,14 @@ def upsert_football_statistics(session: Session, stats: Iterable[dict[str, Any]]
             )
         ).all()
     )
-    rows = []
-    for s in stats:
-        if s["external_id"] in ids:
-            row = {k: v for k, v in s.items() if k != "external_id"}
-            rows.append({"match_id": ids[s["external_id"]], **row})
-    cols = [c for c in rows[0] if c != "match_id"] if rows else []
+    # Un INSERT multi-fila exige las mismas columnas en todas las filas: las filas sin
+    # datos (available=False) se completan con None para las columnas ausentes.
+    cols = sorted({k for s in stats for k in s if k != "external_id"})
+    rows = [
+        {"match_id": ids[s["external_id"]], **{c: s.get(c) for c in cols}}
+        for s in stats
+        if s["external_id"] in ids
+    ]
     _upsert(session, FootballStatistics, rows, ["match_id"], cols)
     return len(rows)
 
