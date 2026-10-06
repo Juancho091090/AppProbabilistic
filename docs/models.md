@@ -1,0 +1,76 @@
+# Modelos estadísticos
+
+Todos los modelos se ajustan con partidos **estrictamente anteriores** a `as_of` y
+leen sus parámetros de `src/sports_analytics/config/models.yaml`.
+
+## Recencia (`features/recency.py`)
+
+* `exponential` (por defecto): `w = 0.5 ** (días / half_life)`; vida media 180 días en
+  fútbol y 120 en tenis. Hay un `min_weight` para que el histórico antiguo no se anule.
+* `buckets`: últimos 5 → 1.00, 10 → 0.75, 20 → 0.50, resto → 0.25.
+
+## Fútbol
+
+| Modelo | Archivo | Qué estima |
+|---|---|---|
+| Elo (World Football Elo) | `models/football/elo.py` | Rating por equipo; 1X2 con P(empate) decreciente en \|ΔElo\| y P(L)+½P(E) = We |
+| Poisson | `models/football/poisson.py` | `λ_local = μ_local·att_local·def_visit`, con fuerza del rival iterativa, recencia y shrinkage |
+| Dixon-Coles | `models/football/dixon_coles.py` | Corrige 0-0, 1-0, 0-1 y 1-1 con τ(ρ); ρ por MLE ponderado (≥150 partidos), si no −0.10 |
+| Córners | `models/football/corners.py` | Media multiplicativa (genera/concede + localía + rival); Binomial Negativa si var/media > 1.10 |
+| Logística multinomial | `models/logistic.py` + `features/football.py` | ΔElo, goles a favor/en contra ponderados, forma (puntos) |
+
+Los mercados de goles (esperados, distribución, líneas, ambos marcan, marcadores
+más probables) salen de la matriz Dixon-Coles. El 1X2 final es el ensemble.
+
+**Validación incluida en los tests**
+
+* El modelo Poisson recupera el orden de fuerza ofensiva en datos simulados (correlación > 0.8).
+* Dixon-Coles recupera ρ = −0.10 en una simulación con 2.280 partidos.
+* El estimador de dispersión recupera el tamaño r de una Binomial Negativa (±15%).
+
+## Tenis
+
+| Modelo | Archivo | Qué estima |
+|---|---|---|
+| Elo general | `models/tennis/elo.py` | K dinámico `250/(n+5)^0.4`; los retiros no cuentan |
+| Elo de superficie | ídem | Ratings hard/clay/grass, mezclados con el general según `n/(n+15)` |
+| Logística | `models/logistic.py` + `features/tennis.py` | ΔElo, ΔElo de superficie, log(rank_B/rank_A), forma, ΔSPW, ΔRPW |
+| Markov exacto | `models/tennis/markov.py` | Punto → juego → tiebreak → set → partido; distribución exacta de sets y juegos |
+
+* **Barnett-Clarke**: `p_saque_A = SPW_A − (RPW_B − RPW_medio_circuito)`. Se usa solo si
+  ambos jugadores tienen al menos 5 partidos con estadísticas.
+* **Coherencia**: después del ensemble se buscan las probabilidades de punto al saque
+  que reproducen exactamente la P(ganador) final. De ahí salen "al menos un set" y los
+  juegos, así que las tres salidas no se contradicen.
+* Grand Slams: al mejor de 5 (ATP) y tiebreak a 10 puntos en el set decisivo.
+* **Validación**: el modelo exacto coincide con un Monte Carlo independiente, y reproduce
+  el valor de referencia de la hoja "Apuestas deportivas" (Over 21.5 = 42.1% con
+  SPW 56.8% contra 47.8%).
+
+## Ensemble (`models/ensemble.py`)
+
+`P_final = Σ wᵢ·Pᵢ`. Los pesos iniciales están en YAML. Si falta un modelo, su peso se
+reparte entre los demás. `fit_weights` reestima los pesos minimizando log-loss sobre
+predicciones ya resueltas y rechaza cualquier evento con fecha ≥ `as_of`.
+
+## Calibración (`models/calibration.py`)
+
+* Métricas: Brier, Log Loss, Accuracy, curva de calibración y ECE (top-label para 1X2).
+* Calibradores: identidad con menos de 200 muestras, Platt entre 200 y 1.000, isotónica
+  con 1.000 o más. Se ajusta una clase contra el resto y se renormaliza. Las filas
+  posteriores a `as_of` se descartan.
+
+## Confianza (`models/confidence.py`)
+
+`score = 0.5·calidad_de_datos + 0.5·acuerdo_entre_modelos` → Alta (≥ 0.70),
+Media (≥ 0.45), Baja. **No es una probabilidad.**
+
+## Pendientes conocidos
+
+* Córners: regresión Binomial Negativa con tiros y posesión previos al partido como
+  covariables. Requiere estadísticas reales por partido de API-Football.
+* Tenis: estadísticas de saque/resto separadas por superficie (`stats_shrink_prior`
+  ya está en la configuración). Depende de la API de tenis elegida.
+* Torneos internacionales de clubes: las fuerzas Poisson de equipos de ligas distintas
+  no son del todo comparables. El Elo se ajusta con todas las competiciones a la vez y
+  ayuda a corregirlo.
