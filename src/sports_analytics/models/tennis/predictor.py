@@ -115,14 +115,16 @@ class TennisPredictor:
             per_model["markov"] = [md.p_a_wins, 1 - md.p_a_wins]
             base_spw = (serve[0] + serve[1]) / 2
         else:
-            notes.append(
-                "Sin estadísticas de saque/resto suficientes: Markov usa nivel medio del circuito"
-            )
+            # Ausencia estructural (la fuente no publica saque/resto): el peso de Markov en el
+            # ganador se reparte entre los demás sin penalizar la confianza. Sets y juegos
+            # siguen saliendo del Markov ajustado a la probabilidad final.
             base_spw = mk["default_spw"][m.tour]
         if m.surface == "unknown":
             notes.append("Superficie desconocida: Elo de superficie = Elo general")
 
-        weights = self.weights or self.cfg["ensemble_weights_winner"]
+        weights = dict(self.weights or self.cfg["ensemble_weights_winner"])
+        if per_model["markov"] is None:
+            weights.pop("markov", None)
         ens = combine({k: v for k, v in per_model.items()}, weights)
         final = ens.probabilities
         if self.calibrator is not None:
