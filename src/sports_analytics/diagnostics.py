@@ -243,6 +243,36 @@ def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
 FOOTBALL_RAPID_HOST = "free-api-live-football-data.p.rapidapi.com"
 
 
+def summarize_football_rapid(path: str, data: Any) -> list[str]:
+    """Resumen compacto para mapear ligas y fechas sin volcar respuestas enormes."""
+    from collections import Counter
+
+    resp = data.get("response", {}) if isinstance(data, dict) else {}
+    out = [f"claves response: {sorted(resp) if isinstance(resp, dict) else type(resp).__name__}"]
+    if "leagues" in resp:
+        leagues = resp["leagues"]
+        out.append(f"{len(leagues)} ligas · campos: {sorted(leagues[0]) if leagues else []}")
+        out.extend(f"{lg.get('id')}|{lg.get('ccode')}|{lg.get('name')}" for lg in leagues)
+        for k, v in resp.items():
+            if k != "leagues" and isinstance(v, list):
+                out.append(f"lista extra '{k}': {len(v)} elementos; ej. {str(v[:1])[:300]}")
+    elif "matches" in resp:
+        matches = resp["matches"]
+        dates = sorted(
+            (m.get("status") or {}).get("utcTime", "") for m in matches if m.get("status")
+        )
+        finished = sum(1 for m in matches if (m.get("status") or {}).get("finished"))
+        out.append(
+            f"{len(matches)} partidos · terminados {finished} · fechas {dates[:1]} → {dates[-1:]}"
+        )
+        out.append(f"campos partido: {sorted(matches[0]) if matches else []}")
+        if "leagueId" in (matches[0] if matches else {}):
+            counts = Counter(m.get("leagueId") for m in matches)
+            out.append(f"leagueId distintos: {len(counts)} · {dict(counts.most_common(40))}")
+        out.extend(describe_structure(matches[0], max_depth=3)[:12] if matches else [])
+    return out
+
+
 def check_football_rapid(settings: Settings, today: date | None = None) -> list[str]:
     """Sonda de 'Free API Live Football Data' (RapidAPI, Creativesdev).
 
@@ -257,8 +287,8 @@ def check_football_rapid(settings: Settings, today: date | None = None) -> list[
         ("TENNIS_API_KEY", settings.tennis_api_key),
     ]
     probes = [
-        ("Partidos por fecha", "/football-get-matches-by-date", {"date": day.strftime("%Y%m%d")}),
         ("Todas las ligas", "/football-get-all-leagues", None),
+        ("Partidos por fecha", "/football-get-matches-by-date", {"date": day.strftime("%Y%m%d")}),
         ("Partidos de liga (47)", "/football-get-all-matches-by-league", {"leagueid": 47}),
     ]
     for secret_name, secret in candidates:
@@ -290,7 +320,7 @@ def check_football_rapid(settings: Settings, today: date | None = None) -> list[
                 ok_key = True
                 lines.append(f"✅ [{secret_name}] {title} ({path})")
                 lines.append("```")
-                lines.extend(describe_structure(data, max_depth=5)[:45])
+                lines.extend(summarize_football_rapid(path, data))
                 lines.append("```")
             lines.append(f"· cuota: {http.last_rate_headers}")
         finally:
