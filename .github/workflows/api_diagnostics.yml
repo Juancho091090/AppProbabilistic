@@ -5,6 +5,10 @@ name: api-diagnostics
 # este archivo / el cliente de API.
 on:
   workflow_dispatch:
+    inputs:
+      sections:
+        description: "Secciones: all | football_rapid,api_football,tennis,others"
+        default: "all"
   push:
     branches: [main]
     paths:
@@ -42,4 +46,5 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           APP_TIMEZONE: America/Bogota
           LOG_LEVEL: WARNING
+          DIAG_SECTIONS: ${{ github.event.inputs.sections || 'football_rapid,others' }}
         run: sports-analytics check-apis

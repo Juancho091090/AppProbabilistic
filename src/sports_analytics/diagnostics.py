@@ -240,6 +240,66 @@ def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
     return lines
 
 
+FOOTBALL_RAPID_HOST = "free-api-live-football-data.p.rapidapi.com"
+
+
+def check_football_rapid(settings: Settings, today: date | None = None) -> list[str]:
+    """Sonda de 'Free API Live Football Data' (RapidAPI, Creativesdev).
+
+    No hay documentación pública accesible: se prueban rutas candidatas y se
+    reporta la estructura real y la cuota del plan (cabeceras x-ratelimit-*).
+    Una clave de RapidAPI es por cuenta, así que se prueban ambos secretos.
+    """
+    lines = ["## Free API Live Football Data (RapidAPI)", ""]
+    day = today or local_today(settings.tz)
+    candidates = [
+        ("API_FOOTBALL_KEY", settings.api_football_key),
+        ("TENNIS_API_KEY", settings.tennis_api_key),
+    ]
+    probes = [
+        ("Partidos por fecha", "/football-get-matches-by-date", {"date": day.strftime("%Y%m%d")}),
+        ("Todas las ligas", "/football-get-all-leagues", None),
+        ("Partidos de liga (47)", "/football-get-all-matches-by-league", {"leagueid": 47}),
+    ]
+    for secret_name, secret in candidates:
+        if secret is None:
+            lines.append(f"· `{secret_name}` no definida")
+            continue
+        key = secret.get_secret_value()
+        register_secret(key)
+        http = HttpApiClient(
+            provider="football_rapid",
+            base_url=f"https://{FOOTBALL_RAPID_HOST}",
+            headers={"X-RapidAPI-Key": key, "X-RapidAPI-Host": FOOTBALL_RAPID_HOST},
+            daily_limit=20,
+            cache_dir=Path(settings.cache_dir),
+            timeout=settings.http_timeout_seconds,
+            max_retries=0,
+            min_interval=1.0,
+        )
+        try:
+            ok_key = False
+            for i, (title, path, params) in enumerate(probes):
+                try:
+                    data = http.get(path, params)
+                except ApiError as exc:
+                    lines.append(f"❌ [{secret_name}] {title} ({path}): {exc}")
+                    if i == 0 and exc.status in (401, 403):
+                        break  # esta clave no está suscrita: probar la siguiente
+                    continue
+                ok_key = True
+                lines.append(f"✅ [{secret_name}] {title} ({path})")
+                lines.append("```")
+                lines.extend(describe_structure(data, max_depth=5)[:45])
+                lines.append("```")
+            lines.append(f"· cuota: {http.last_rate_headers}")
+        finally:
+            http.close()
+        if ok_key:
+            break
+    return lines
+
+
 def check_others(settings: Settings) -> list[str]:
     rows = [
         ("ANTHROPIC_API_KEY", settings.claude_enabled),
@@ -249,19 +309,21 @@ def check_others(settings: Settings) -> list[str]:
     return ["## Otras credenciales", "", *[f"{_yes(ok)} {name}" for name, ok in rows]]
 
 
-def run_diagnostics(settings: Settings, config: AppConfig) -> str:
-    report = "\n".join(
-        [
-            "# Diagnóstico de APIs",
-            "",
-            *check_api_football(settings, config),
-            "",
-            *check_tennis(settings),
-            "",
-            *check_others(settings),
-            "",
-        ]
-    )
+def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None = None) -> str:
+    """``sections``: lista separada por comas (football_rapid, api_football, tennis, others)
+    o ``all``. Permite no gastar cuota en APIs ya verificadas."""
+    wanted = {s.strip() for s in (sections or os.environ.get("DIAG_SECTIONS") or "all").split(",")}
+    checks = {
+        "football_rapid": lambda: check_football_rapid(settings),
+        "api_football": lambda: check_api_football(settings, config),
+        "tennis": lambda: check_tennis(settings),
+        "others": lambda: check_others(settings),
+    }
+    body: list[str] = ["# Diagnóstico de APIs", ""]
+    for name, fn in checks.items():
+        if "all" in wanted or name in wanted:
+            body += [*fn(), ""]
+    report = "\n".join(body)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as fh:
