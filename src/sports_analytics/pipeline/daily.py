@@ -302,6 +302,7 @@ def run_daily(
                     ingest.sync_football_stats(
                         session, svc.football, config, settings, coverage, report
                     )
+                    report.calls["api_football"] = svc.football.http.calls_made
                     repo.record_data_source(
                         session,
                         "api_football",
