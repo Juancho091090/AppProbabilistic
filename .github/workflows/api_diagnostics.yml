@@ -1,0 +1,45 @@
+name: api-diagnostics
+
+# Verifica claves, plan y cobertura de las APIs con los secretos reales.
+# Consume ~5 llamadas de API-Football. Se ejecuta manualmente o cuando cambia
+# este archivo / el cliente de API.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/api_diagnostics.yml"
+      - "src/sports_analytics/data/clients/**"
+      - "src/sports_analytics/diagnostics.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-diagnostics
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Diagnóstico
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          APP_TIMEZONE: America/Bogota
+          LOG_LEVEL: WARNING
+        run: sports-analytics check-apis
