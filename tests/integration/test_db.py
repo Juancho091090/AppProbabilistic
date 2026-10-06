@@ -228,3 +228,29 @@ def test_recent_matches_missing_stats_for_teams(session, app_config):
         repo.recent_matches_missing_stats_for_teams(session, {"999"}, ["eng_premier_league"], 5)
         == []
     )
+
+
+def test_stats_batch_with_mixed_columns(session, app_config):
+    """Regresión: lote con partidos con y sin estadísticas (falló en producción)."""
+    comps = repo.ensure_competitions(session, app_config)
+    repo.upsert_football_matches(session, [_fm(1), _fm(2), _fm(3)], comps)
+    repo.upsert_football_statistics(
+        session,
+        [
+            {"external_id": "fx1", "available": False},
+            {
+                "external_id": "fx2",
+                "available": True,
+                "home_corners": 6,
+                "away_corners": 2,
+                "home_shots": 11,
+                "away_shots": 5,
+                "home_possession": 60.0,
+                "away_possession": 40.0,
+            },
+            {"external_id": "fx3", "available": False},
+        ],
+    )
+    hist = {m.match_id: m for m in repo.load_football_history(session, T0)}
+    assert hist["fx2"].home_corners == 6 and hist["fx1"].home_corners is None
+    assert repo.football_matches_missing_stats(session, ["eng_premier_league"], 10) == []

@@ -255,3 +255,19 @@ def test_parse_fixture_uses_team_ids_as_keys():
     m = parse_fixture(FIXTURE, "x")
     assert (m.home_team, m.away_team) == ("10", "20")
     assert (m.display_home, m.display_away) == ("Nacional", "River")
+
+
+def test_quota_exhausted_429_is_not_retried(tmp_path):
+    from sports_analytics.core.http import QuotaExhausted
+
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        return httpx.Response(
+            429, json={"message": "You have exceeded the DAILY quota for Requests"}
+        )
+
+    with pytest.raises(QuotaExhausted):
+        _client(tmp_path, handler).fixtures_by_date(date(2026, 10, 6))
+    assert len(calls) == 1

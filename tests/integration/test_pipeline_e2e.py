@@ -62,7 +62,11 @@ class FakeFootballApi:
             )
             for m in hist
         ]
-        self.stats = {m.match_id: (m.home_corners, m.away_corners) for m in hist}
+        # Como en la API real, algunos partidos no tienen estadísticas (1 de cada 10)
+        self.stats = {
+            m.match_id: (None, None) if i % 10 == 0 else (m.home_corners, m.away_corners)
+            for i, m in enumerate(hist)
+        }
         ko = DAY1.replace(hour=23)  # 18:00 hora local
         self.today = [
             self._item("up1", ko, "Team01", "Team02", "NS", None, None),
