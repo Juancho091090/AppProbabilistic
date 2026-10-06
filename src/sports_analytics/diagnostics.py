@@ -12,12 +12,14 @@ Nunca imprime claves: solo nombres de variables y resultados.
 from __future__ import annotations
 
 import os
-from datetime import date
+from datetime import date, timedelta
+from pathlib import Path
+from typing import Any
 
 from sports_analytics.config.loader import AppConfig
 from sports_analytics.config.settings import Settings
-from sports_analytics.core.http import ApiError
-from sports_analytics.core.logging import get_logger
+from sports_analytics.core.http import ApiError, HttpApiClient
+from sports_analytics.core.logging import get_logger, register_secret
 from sports_analytics.core.timeutils import local_today
 from sports_analytics.data.clients.api_football import ApiFootballClient
 from sports_analytics.data.filters import filter_football_league
@@ -102,12 +104,65 @@ def check_api_football(
     return lines
 
 
-def check_tennis(settings: Settings) -> list[str]:
-    lines = ["## API de tenis", ""]
+def describe_structure(obj: Any, prefix: str = "", depth: int = 0, max_depth: int = 4) -> list[str]:
+    """Esquema legible (ruta: tipo = ejemplo) de un JSON, para inspeccionar la API real."""
+    out: list[str] = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            path = f"{prefix}.{k}" if prefix else k
+            if isinstance(v, dict | list) and depth < max_depth:
+                out.append(f"{path}: {type(v).__name__}")
+                out.extend(describe_structure(v, path, depth + 1, max_depth))
+            else:
+                out.append(f"{path}: {type(v).__name__} = {str(v)[:60]!r}")
+    elif isinstance(obj, list):
+        out.append(f"{prefix}[]: {len(obj)} elementos")
+        if obj:
+            out.extend(describe_structure(obj[0], f"{prefix}[0]", depth + 1, max_depth))
+    return out
+
+
+def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
+    """Sonda de la Tennis API (~5 llamadas de 50): estructura real de las respuestas."""
+    lines = ["## Tennis API (RapidAPI)", ""]
     if settings.tennis_api_key is None:
         return [*lines, "❌ `TENNIS_API_KEY` no está definida."]
-    lines.append("✅ `TENNIS_API_KEY` está definida.")
-    lines.append("⏳ Cliente pendiente: falta confirmar el proveedor (Fase 6).")
+    key = settings.tennis_api_key.get_secret_value()
+    register_secret(key)
+    day = today or local_today(settings.tz)
+    yesterday = day - timedelta(days=1)
+    http = HttpApiClient(
+        provider="tennis_api",
+        base_url=settings.tennis_api_base_url,
+        headers={"X-RapidAPI-Key": key, "X-RapidAPI-Host": settings.tennis_api_host},
+        daily_limit=settings.tennis_api_daily_limit,
+        cache_dir=Path(settings.cache_dir),
+        timeout=settings.http_timeout_seconds,
+        max_retries=1,
+    )
+    probes = [
+        ("Fixtures ATP hoy", f"/tennis/v2/atp/fixtures/{day}", {"pageSize": 3}),
+        ("Fixtures WTA hoy", f"/tennis/v2/wta/fixtures/{day}", {"pageSize": 3}),
+        ("Resultados ATP ayer", f"/tennis/v2/atp/results/{yesterday}", {"pageSize": 3}),
+        ("Ranking ATP", "/tennis/v2/atp/ranking/singles", {"pageSize": 2}),
+        ("Calendario activo", "/tennis/v2/calendar/active", None),
+    ]
+    try:
+        for title, path, params in probes:
+            try:
+                data = http.get(path, params)
+            except ApiError as exc:
+                lines.append(f"❌ {title} ({path}): {exc}")
+                continue
+            lines.append(f"✅ {title} ({path})")
+            lines.append("```")
+            lines.extend(describe_structure(data)[:60])
+            lines.append("```")
+        lines.append(
+            f"· Llamadas reales: {http.calls_made} · rate headers: {http.last_rate_headers}"
+        )
+    finally:
+        http.close()
     return lines
 
 
@@ -137,4 +192,21 @@ def run_diagnostics(settings: Settings, config: AppConfig) -> str:
     if summary:
         with open(summary, "a", encoding="utf-8") as fh:
             fh.write(report)
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        emit_annotations(report)
     return report
+
+
+def _escape_annotation(text: str) -> str:
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def emit_annotations(report: str, chunk: int = 3500) -> None:
+    """Publica el reporte como anotaciones ::notice:: (visibles vía API de check-runs)."""
+    sections = report.split("\n## ")
+    parts: list[str] = []
+    for i, section in enumerate(sections):
+        text = section if i == 0 else "## " + section
+        parts.extend(text[j : j + chunk] for j in range(0, len(text), chunk))
+    for n, part in enumerate(parts[:9], 1):
+        print(f"::notice title=diagnostico {n}/{len(parts)}::{_escape_annotation(part)}")

@@ -235,3 +235,17 @@ def test_empty_env_secret_treated_as_missing(monkeypatch):
     monkeypatch.setenv("SMTP_PORT", "")
     s = Settings()
     assert s.api_football_key is None and s.smtp_port == 587
+
+
+def test_describe_structure_and_annotation_escape():
+    from sports_analytics.diagnostics import _escape_annotation, describe_structure
+
+    lines = describe_structure({"data": [{"tournament": {"rankId": 2, "court": {"name": "Hard"}}}]})
+    assert "data[0].tournament.rankId: int = '2'" in lines
+    assert _escape_annotation("50%\nok") == "50%25%0Aok"
+
+
+def test_tennis_probe_reports_without_key(tmp_path, monkeypatch):
+    from sports_analytics.diagnostics import check_tennis
+
+    assert "no está definida" in "\n".join(check_tennis(Settings(cache_dir=str(tmp_path))))

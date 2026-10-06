@@ -28,9 +28,11 @@ class Settings(BaseSettings):
     api_football_base_url: str = "https://v3.football.api-sports.io"
     api_football_daily_limit: int = Field(default=100, ge=1)
 
+    # Tennis API (RapidAPI: tennis-api-atp-wta-itf). Plan FREE = 50 llamadas/día.
     tennis_api_key: SecretStr | None = None
-    tennis_api_base_url: str | None = None
-    tennis_api_daily_limit: int = Field(default=100, ge=1)
+    tennis_api_host: str = "tennis-api-atp-wta-itf.p.rapidapi.com"
+    tennis_api_base_url: str = "https://tennis-api-atp-wta-itf.p.rapidapi.com"
+    tennis_api_daily_limit: int = Field(default=45, ge=1)  # margen bajo el tope de 50
 
     # Claude
     anthropic_api_key: SecretStr | None = None
