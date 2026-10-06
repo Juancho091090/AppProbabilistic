@@ -145,6 +145,10 @@ def render_markdown(
                 f"Brier {q['brier']:.3f}, LogLoss {q['log_loss']:.3f}, ECE {q['ece']:.3f}"
             )
         out.append("")
+    if payload.load_summary:
+        out += ["---", "", "## Carga de datos", ""]
+        out += [f"- {x}" for x in payload.load_summary]
+        out.append("")
     if payload.skipped or payload.data_issues:
         out += ["---", "", "## Datos faltantes e incidencias", ""]
         out += [f"- {s}" for s in payload.skipped + payload.data_issues]

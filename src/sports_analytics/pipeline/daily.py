@@ -358,6 +358,7 @@ def run_daily(
 
             # 4) Informe (números de Python; narrativa de Claude validada)
             payload.data_issues = issues + payload.data_issues
+            payload.load_summary = _load_summary(report)
             payload.model_quality = [
                 {
                     "sport": m.sport,
@@ -454,3 +455,31 @@ def _notify_failure(svc: Services, settings: Settings, message: str, send: bool)
             fn()
         except Exception:  # no enmascarar el error original
             log.warning("failure_notification_failed", extra={"channel": name})
+
+
+LOAD_LABELS = {
+    "football:statistics_priority": "Estadísticas de equipos que juegan hoy",
+    "football:statistics": "Estadísticas (carga general)",
+    "football:fixtures_found": "Partidos de fútbol del día (todas las ligas)",
+    "football:fixtures_kept": "Partidos de fútbol en competiciones autorizadas",
+}
+
+
+def _load_summary(report: ingest.IngestReport) -> list[str]:
+    football = sum(
+        v for k, v in report.loaded.items() if k.startswith("football:") and k not in LOAD_LABELS
+    )
+    lines = [f"Partidos de fútbol actualizados: {football}"] if football else []
+    lines += [
+        f"{label}: {report.loaded[k]}" for k, label in LOAD_LABELS.items() if k in report.loaded
+    ]
+    tennis = sum(
+        v
+        for k, v in report.loaded.items()
+        if k.startswith("tennis:") and k.endswith(("recent", "backfill"))
+    )
+    if tennis:
+        lines.append(f"Partidos de tenis guardados: {tennis}")
+    if report.calls:
+        lines.append("Llamadas a APIs: " + ", ".join(f"{k} {v}" for k, v in report.calls.items()))
+    return lines
