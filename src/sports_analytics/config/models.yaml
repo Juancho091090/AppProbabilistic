@@ -27,6 +27,7 @@ football:
     home_advantage: 65          # puntos Elo
     goal_diff_multiplier: true  # K ajustado por margen (fórmula World Football Elo)
     season_regression: 0.20     # regresión a la media entre temporadas
+    season_gap_days: 45         # inactividad que se considera cambio de temporada
     draw_model:                 # P(empate) desde diferencia de Elo (logística ordinal)
       base_draw: 0.27
       draw_decay: 0.0008
@@ -38,6 +39,10 @@ football:
     rho_default: -0.10
     rho_bounds: [-0.20, 0.05]
     min_matches_fit: 150        # partidos de la liga para estimar rho por MLE
+  logistic:
+    min_samples: 300            # partidos de entrenamiento mínimos
+    C: 1.0
+    min_history: 3              # partidos previos por equipo para crear una fila
   corners:
     max_corners: 30
     overdispersion_threshold: 1.10   # var/mean > umbral -> Binomial Negativa
@@ -65,6 +70,13 @@ tennis:
     default_spw: {ATP: 0.64, WTA: 0.56}
     tour_avg_rpw: {ATP: 0.36, WTA: 0.44}
     stats_shrink_prior: 15      # shrinkage de estadísticas de superficie hacia el total
+    min_stats_matches: 5        # partidos con estadísticas para usar Barnett-Clarke
+    final_set_tiebreak: 7
+    grand_slam_final_set_tiebreak: 10
+  logistic:
+    min_samples: 300
+    C: 1.0
+    min_history: 5
   lines:
     games: [18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 36.5, 38.5]
   ensemble_weights_winner:
