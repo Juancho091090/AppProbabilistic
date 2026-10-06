@@ -72,7 +72,7 @@ planes incluyen todas las competiciones y endpoints.
 * **No hay estadísticas de saque y resto** en resultados ni fixtures. El modelo de Markov
   usa entonces probabilidades de saque derivadas del Elo (`serve_probs_from_match_prob`),
   y la confianza lo refleja.
-* Volumen observado: ~500 resultados ATP cada 8 días, de los cuales el circuito principal
+* Volumen observado: más de 500 resultados ATP en 8 días (hay más páginas), de los que el circuito principal
   es una fracción pequeña; ~236 WTA por día.
 
 ### Presupuesto diario (50 llamadas)
