@@ -72,18 +72,42 @@ def check_api_football(
         if mismatches:
             lines.append(f"⚠️ {mismatches} competición(es) con país distinto: revisar IDs.")
 
-        # Acceso a temporadas (restricción típica de planes gratuitos)
-        probe = config.competitions.football[0]
-        probe_cov = leagues.get(probe.api_football_id)
-        if probe_cov:
-            for season in (probe_cov.season, probe_cov.season - 1):
-                try:
-                    n = len(client.fixtures_by_league_season(probe.api_football_id, season))
-                    lines.append(f"✅ Acceso a temporada {season} ({probe.name}): {n} partidos")
-                except ApiError as exc:
-                    lines.append(f"❌ Sin acceso a temporada {season} ({probe.name}): {exc}")
-
         day = today or local_today(settings.tz)
+
+        # ¿Sirve la consulta por fecha para días pasados? (alternativa al bloqueo por temporada)
+        finished_id = None
+        for days_back in (7, 60, 400):
+            past = day - timedelta(days=days_back)
+            try:
+                items = client.fixtures_by_date(past)
+                ours = [
+                    f
+                    for f in items
+                    if filter_football_league(
+                        f["league"]["id"], f["league"]["name"], config.competitions
+                    ).included
+                ]
+                done = [f for f in ours if f["fixture"]["status"]["short"] in ("FT", "AET", "PEN")]
+                lines.append(
+                    f"✅ Fecha pasada {past} (−{days_back} d): {len(items)} partidos, "
+                    f"{len(ours)} autorizados, {len(done)} con resultado"
+                )
+                if done and finished_id is None:
+                    finished_id = str(done[0]["fixture"]["id"])
+            except ApiError as exc:
+                lines.append(f"❌ Fecha pasada {past} (−{days_back} d): {exc}")
+
+        if finished_id:
+            try:
+                st = client.fixture_statistics(finished_id)
+                lines.append(
+                    f"✅ Estadísticas de partido {finished_id}: córners {st.home_corners}-{st.away_corners}, "
+                    f"tiros {st.home_shots}-{st.away_shots}"
+                    if st
+                    else f"⚠️ Partido {finished_id} sin estadísticas"
+                )
+            except ApiError as exc:
+                lines.append(f"❌ Estadísticas de partido: {exc}")
         try:
             fixtures = client.fixtures_by_date(day)
             kept = [
@@ -138,21 +162,26 @@ def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
         daily_limit=settings.tennis_api_daily_limit,
         cache_dir=Path(settings.cache_dir),
         timeout=settings.http_timeout_seconds,
-        max_retries=1,
+        max_retries=0,  # sin reintentos: no gastar cuota si hay un error de suscripción
+        min_interval=1.5,  # respeta el límite por segundo del plan
     )
     probes = [
         ("Fixtures ATP hoy", f"/tennis/v2/atp/fixtures/{day}", {"pageSize": 3}),
-        ("Fixtures WTA hoy", f"/tennis/v2/wta/fixtures/{day}", {"pageSize": 3}),
         ("Resultados ATP ayer", f"/tennis/v2/atp/results/{yesterday}", {"pageSize": 3}),
+        ("Fixtures WTA hoy", f"/tennis/v2/wta/fixtures/{day}", {"pageSize": 3}),
         ("Ranking ATP", "/tennis/v2/atp/ranking/singles", {"pageSize": 2}),
-        ("Calendario activo", "/tennis/v2/calendar/active", None),
     ]
     try:
-        for title, path, params in probes:
+        for i, (title, path, params) in enumerate(probes):
             try:
                 data = http.get(path, params)
             except ApiError as exc:
                 lines.append(f"❌ {title} ({path}): {exc}")
+                if i == 0 and exc.status in (401, 403):
+                    lines.append(
+                        "⛔ Error de autorización: se detiene la sonda para no gastar cuota."
+                    )
+                    break
                 continue
             lines.append(f"✅ {title} ({path})")
             lines.append("```")

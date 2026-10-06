@@ -118,6 +118,7 @@ class HttpApiClient:
     max_retries: int = 4
     backoff_base: float = 1.0
     backoff_max: float = 30.0
+    min_interval: float = 0.0  # segundos mínimos entre llamadas (límite por segundo)
     transport: httpx.BaseTransport | None = None
     sleep: Callable[[float], None] = time.sleep
     last_rate_headers: dict[str, str] = field(default_factory=dict)
@@ -125,6 +126,7 @@ class HttpApiClient:
     cache_hits: int = 0
 
     def __post_init__(self) -> None:
+        self._last_call = 0.0
         self.cache = DiskCache(self.cache_dir / self.provider)
         self.budget = DailyBudget(self.cache_dir / "budget.json", self.provider, self.daily_limit)
         self._client = httpx.Client(
@@ -172,6 +174,11 @@ class HttpApiClient:
         last_error: str = ""
         for attempt in range(self.max_retries + 1):
             self.budget.consume()  # cada intento real cuenta contra la cuota
+            if self.min_interval > 0:
+                wait = self.min_interval - (time.monotonic() - self._last_call)
+                if wait > 0:
+                    self.sleep(wait)
+            self._last_call = time.monotonic()
             started = time.perf_counter()
             try:
                 response = self._client.get(path, params=params)
@@ -209,7 +216,10 @@ class HttpApiClient:
                     if cache_ttl > 0:
                         self.cache.set(cache_key, data)
                     return data
-                last_error = f"HTTP {response.status_code}"
+                # El cuerpo del error (p. ej. "You are not subscribed to this API") es
+                # clave para diagnosticar; se recorta y se redacta en el log.
+                body = response.text[:200].replace("\n", " ")
+                last_error = f"HTTP {response.status_code}: {body}"
                 if response.status_code not in RETRYABLE_STATUS:
                     raise ApiError(self.provider, f"{last_error} en {path}", response.status_code)
                 if attempt < self.max_retries:
