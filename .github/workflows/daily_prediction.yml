@@ -81,6 +81,7 @@ jobs:
         run: |
           if [ -f reports/output/daily.md ]; then
             cat reports/output/daily.md >> "$GITHUB_STEP_SUMMARY"
+            python -c "from sports_analytics.diagnostics import emit_annotations; emit_annotations(open('reports/output/daily.md', encoding='utf-8').read())"
           fi
 
       - uses: actions/upload-artifact@v4
