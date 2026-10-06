@@ -52,11 +52,35 @@ planes incluyen todas las competiciones y endpoints.
 * Filtro de circuito: `tournament.rankId` (0 = ITF $10K, 1 = Challenger/ITF, 2 = circuito
   principal, 3 = Masters, 4 = Grand Slam). El sistema admitirá solo `rankId ≥ 2`, además del
   filtro por texto de `tennis.yaml`.
-* Estado: ❌ **"You are not subscribed to this API."** La clave de RapidAPI es válida, pero
-  la cuenta no está suscrita a esta API. Hay que pulsar *Subscribe* en el plan FREE de la
-  página de la API en RapidAPI.
-* Pendiente de verificar con la API real (lo hará la sonda del diagnóstico):
-  * nombres exactos de los campos de partido y resultado;
-  * identificadores de superficie (`courtId`);
-  * cómo se marcan los retiros;
-  * endpoint de estadísticas de saque y resto por partido.
+* Estado: ✅ suscripción activa (plan Basic, 50 llamadas al día), verificada el 6 de octubre de 2026.
+
+### Esquema verificado con la API real
+
+| Campo | Significado |
+|---|---|
+| `tournament.courtId` | 1 = dura, 2 = arcilla, 3 = dura bajo techo, 4 = carpet, 5 = césped |
+| `tournament.rankId` | 0 = ITF (M15/W15…), 1 = Challenger / WTA 125, 2 o más = circuito principal; 7 = Finals |
+| `result` | marcador desde player1, p. ej. `"6-3 2-6 4-2 ret."`; tiebreak como `7-6(4)` |
+| `result_type` | `completed` o `retired` |
+| `match_winner` | id del jugador ganador |
+| `best_of` | siempre `null`; se infiere (5 sets en Grand Slam ATP, `grand_slam_rank_id: 4`) |
+
+* Los **fixtures** no traen el objeto torneo, solo `tournamentId`. Se cruzan con el
+  calendario anual: 2 páginas por circuito, con caché de 7 días.
+* Paginación: `pageSize` hasta 500 y `hasNextPage`.
+* Cabeceras de cuota: `x-ratelimit-requests-remaining` (diaria) y `x-ratelimit-remaining`.
+* **No hay estadísticas de saque y resto** en resultados ni fixtures. El modelo de Markov
+  usa entonces probabilidades de saque derivadas del Elo (`serve_probs_from_match_prob`),
+  y la confianza lo refleja.
+* Volumen observado: ~500 resultados ATP cada 8 días, de los cuales el circuito principal
+  es una fracción pequeña; ~236 WTA por día.
+
+### Presupuesto diario (50 llamadas)
+
+| Uso | Llamadas |
+|---|---|
+| Fixtures de hoy ATP + WTA | 2 |
+| Resultados de ayer ATP + WTA | 2 |
+| Ranking ATP + WTA | 2 (caché de 12 h) |
+| Calendario anual ATP + WTA | ~4 por semana |
+| **Libre para cargar histórico** | ~35 por día (500 resultados por llamada) |
