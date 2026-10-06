@@ -163,6 +163,7 @@ class ApiFootballClient:
             cache_dir=Path(settings.cache_dir),
             timeout=settings.http_timeout_seconds,
             max_retries=settings.http_max_retries,
+            min_interval=settings.api_football_min_interval,
             transport=transport,
             **kwargs,
         )

@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     api_football_key: SecretStr | None = None
     api_football_base_url: str = "https://v3.football.api-sports.io"
     api_football_daily_limit: int = Field(default=100, ge=1)
+    api_football_min_interval: float = Field(default=0.25, ge=0)  # ≤240 llamadas/min
 
     # Tennis API (RapidAPI: tennis-api-atp-wta-itf). Plan FREE = 50 llamadas/día.
     tennis_api_key: SecretStr | None = None
