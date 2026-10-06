@@ -146,6 +146,46 @@ def describe_structure(obj: Any, prefix: str = "", depth: int = 0, max_depth: in
     return out
 
 
+def summarize_tennis_payload(data: Any) -> list[str]:
+    """Agrega una respuesta paginada de la Tennis API para deducir el esquema real."""
+    from collections import Counter, defaultdict
+
+    items = data.get("data", []) if isinstance(data, dict) else []
+    out = [
+        f"items={len(items)} hasNextPage={data.get('hasNextPage')} "
+        f"pageSize={data.get('pageSize')} keys={sorted(k for k in data if k != 'data')}"
+    ]
+    if not items:
+        return out
+    out.append("campos item: " + ", ".join(sorted(items[0].keys())))
+
+    def tour(it: dict) -> dict:
+        return it.get("tournament") if isinstance(it.get("tournament"), dict) else it
+
+    ranks = Counter(tour(it).get("rankId") for it in items)
+    out.append(f"rankId: {dict(ranks)}")
+    courts: dict[Any, set[str]] = defaultdict(set)
+    for it in items:
+        t = tour(it)
+        if "courtId" in t:
+            court = t.get("court")
+            label = court.get("name") if isinstance(court, dict) else court
+            courts[t["courtId"]].add(f"{t.get('name')}" + (f" [{label}]" if label else ""))
+    for cid, names in sorted(courts.items(), key=lambda kv: str(kv[0])):
+        out.append(f"courtId={cid}: " + " | ".join(sorted(names)[:8]))
+    if "result_type" in items[0]:
+        out.append(f"result_type: {dict(Counter(it.get('result_type') for it in items))}")
+        odd = [it for it in items if it.get("result_type") != "completed"][:6]
+        for it in odd:
+            out.append(
+                f"  ej. {it.get('result_type')}: '{it.get('result')}' winner={it.get('match_winner')}"
+            )
+        out.append(f"best_of: {dict(Counter(it.get('best_of') for it in items))}")
+    if "rankId" in items[0] or "courtId" in items[0]:
+        out.extend(describe_structure(items[0])[:25])
+    return out
+
+
 def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
     """Sonda de la Tennis API (~5 llamadas de 50): estructura real de las respuestas."""
     lines = ["## Tennis API (RapidAPI)", ""]
@@ -165,11 +205,16 @@ def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
         max_retries=0,  # sin reintentos: no gastar cuota si hay un error de suscripción
         min_interval=1.5,  # respeta el límite por segundo del plan
     )
+    week_ago = day - timedelta(days=8)
     probes = [
-        ("Fixtures ATP hoy", f"/tennis/v2/atp/fixtures/{day}", {"pageSize": 3}),
-        ("Resultados ATP ayer", f"/tennis/v2/atp/results/{yesterday}", {"pageSize": 3}),
-        ("Fixtures WTA hoy", f"/tennis/v2/wta/fixtures/{day}", {"pageSize": 3}),
-        ("Ranking ATP", "/tennis/v2/atp/ranking/singles", {"pageSize": 2}),
+        ("Calendario ATP", f"/tennis/v2/atp/tournament/calendar/{day.year}", {"pageSize": 500}),
+        (
+            "Resultados ATP 8 días",
+            f"/tennis/v2/atp/results/{week_ago}/{yesterday}",
+            {"pageSize": 500},
+        ),
+        ("Resultados WTA ayer", f"/tennis/v2/wta/results/{yesterday}", {"pageSize": 500}),
+        ("Fixtures ATP hoy", f"/tennis/v2/atp/fixtures/{day}", {"pageSize": 500}),
     ]
     try:
         for i, (title, path, params) in enumerate(probes):
@@ -185,7 +230,7 @@ def check_tennis(settings: Settings, today: date | None = None) -> list[str]:
                 continue
             lines.append(f"✅ {title} ({path})")
             lines.append("```")
-            lines.extend(describe_structure(data)[:60])
+            lines.extend(summarize_tennis_payload(data))
             lines.append("```")
         lines.append(
             f"· Llamadas reales: {http.calls_made} · rate headers: {http.last_rate_headers}"
