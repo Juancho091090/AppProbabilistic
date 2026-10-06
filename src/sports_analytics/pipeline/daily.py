@@ -310,7 +310,7 @@ def run_daily(
                 try:
                     ingest.sync_tennis(session, svc.tennis, config, settings, today, report)
                     tennis_fixtures = ingest.tennis_fixtures_today(
-                        svc.tennis, config, today, report, session
+                        svc.tennis, config, today, report, session, tz
                     )
                     session.commit()
                 except Exception as exc:

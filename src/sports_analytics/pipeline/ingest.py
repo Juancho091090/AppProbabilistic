@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -17,6 +18,7 @@ from sports_analytics.config.loader import AppConfig
 from sports_analytics.config.settings import Settings
 from sports_analytics.core.http import ApiError, BudgetExceeded
 from sports_analytics.core.logging import get_logger
+from sports_analytics.core.timeutils import local_day_bounds_utc
 from sports_analytics.data.clients.api_football import (
     ApiFootballClient,
     LeagueCoverage,
@@ -259,12 +261,24 @@ def tennis_fixtures_today(
     day: date,
     report: IngestReport,
     session: Session | None = None,
+    tz: ZoneInfo | None = None,
 ):
-    """Partidos del día del circuito principal, con superficie y ranking actual."""
+    """Partidos del día LOCAL del circuito principal, con superficie y ranking actual.
+
+    La Tennis API agrupa los fixtures por fecha UTC. El día local (p. ej. Bogotá, UTC−5)
+    abarca dos fechas UTC, así que se piden ambas y se filtra por los límites locales.
+    Sin esto se pierden, por ejemplo, los partidos asiáticos de la noche local.
+    """
     out = []
+    start_utc, end_utc = local_day_bounds_utc(day, tz or ZoneInfo("UTC"))
+    utc_dates = sorted({start_utc.date(), (end_utc - timedelta(microseconds=1)).date()})
     for tour in ("atp", "wta"):
         try:
-            items = client.fixtures(tour, day)
+            seen: dict[Any, dict] = {}
+            for d in utc_dates:
+                for it in client.fixtures(tour, d):
+                    seen[it.get("matchId") or it.get("id")] = it
+            items = list(seen.values())
             infos = client.tournaments(tour, day.year)
         except BudgetExceeded:
             raise
@@ -298,10 +312,10 @@ def tennis_fixtures_today(
             info = infos.get(it.get("tournamentId"))
             if not is_main_tour(info, config.tennis):
                 continue
-            out.append(
-                to_tennis_match(
-                    it, tour, info, ranks, grand_slam_rank_id=config.tennis.grand_slam_rank_id
-                )
+            m = to_tennis_match(
+                it, tour, info, ranks, grand_slam_rank_id=config.tennis.grand_slam_rank_id
             )
+            if start_utc <= m.kickoff_utc < end_utc:
+                out.append(m)
         report.add(f"tennis:{tour}:fixtures_kept", sum(1 for m in out if m.tour == tour.upper()))
     return out
