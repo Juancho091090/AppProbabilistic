@@ -84,3 +84,26 @@ planes incluyen todas las competiciones y endpoints.
 | Ranking ATP + WTA | 2 (caché de 12 h) |
 | Calendario anual ATP + WTA | ~4 por semana |
 | **Libre para cargar histórico** | ~35 por día (500 resultados por llamada) |
+
+## Free API Live Football Data (RapidAPI · Creativesdev)
+
+Verificada con la clave real el 6 de octubre de 2026 (secreto `API_FOOTBALL_KEY`). Los datos
+provienen de FotMob: los logos apuntan a `images.fotmob.com`.
+
+* Host: `free-api-live-football-data.p.rapidapi.com` · cabeceras `X-RapidAPI-Key` y `X-RapidAPI-Host`.
+* **Cuota del plan Basic: 100 llamadas al MES.** Cabecera `x-ratelimit-requests-limit: 100`,
+  con reinicio en unos 31 días.
+* Endpoints verificados:
+  * `/football-get-matches-by-date?date=YYYYMMDD`: todos los partidos del día (111 hoy) en una
+    sola llamada, con marcador y estado. El `leagueId` es el de la fase o grupo (p. ej. 920743),
+    no el de la competición madre, así que no se puede asignar a una liga sin consultas extra.
+  * `/football-get-all-leagues`: solo 127 competiciones **internacionales**; las ligas
+    nacionales no aparecen ahí.
+  * `/football-get-all-matches-by-league?leagueid=47`: 380 partidos de la Premier League,
+    todos de la **temporada 2025/26 ya terminada** (15-ago-2025 → 24-may-2026), no de la
+    temporada actual.
+* No se observaron estadísticas de córners, tiros ni posesión en estas respuestas. Obtenerlas
+  costaría al menos una llamada por partido, algo inviable con 100 al mes.
+
+Conclusión: sirve para descargar UNA vez la temporada completa anterior de cada liga
+(≈26 llamadas), pero no como fuente diaria ni para la temporada en curso.
