@@ -308,3 +308,12 @@ def test_pdf_render_contains_matches_and_unicode(payload):
     assert pct(f.markets["1x2"]["home"]) in text
     assert "Anexo" in text and "Datos no disponibles" in text
     assert "Jugador Uno vs Jugador Dos" in text
+
+
+def test_extract_json_object_tolerates_extra_text():
+    from sports_analytics.reporting.claude_narrator import extract_json_object
+
+    text = 'Aquí está:\n```json\n{"summary": "a {b}", "matches": {}}\n```\n{"otro": 1}\nNota final.'
+    assert extract_json_object(text) == {"summary": "a {b}", "matches": {}}
+    with pytest.raises(ValueError):
+        extract_json_object("sin json")

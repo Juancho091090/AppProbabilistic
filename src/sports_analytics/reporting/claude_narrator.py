@@ -66,6 +66,22 @@ Responde SOLO con JSON válido:
 Máximo 3 factores por partido, cada uno de una frase."""
 
 
+def extract_json_object(text: str) -> dict[str, Any]:
+    """Primer objeto JSON completo del texto (tolera ```json, texto previo o posterior)."""
+    decoder = json.JSONDecoder()
+    start = text.find("{")
+    while start != -1:
+        try:
+            obj, _ = decoder.raw_decode(text, start)
+        except json.JSONDecodeError:
+            start = text.find("{", start + 1)
+            continue
+        if isinstance(obj, dict):
+            return obj
+        start = text.find("{", start + 1)
+    raise ValueError("la respuesta no contiene un objeto JSON válido")
+
+
 def _pct(p: float) -> float:
     return round(p * 100, 1)
 
@@ -219,7 +235,7 @@ class ClaudeNarrator:
                 messages=[{"role": "user", "content": json.dumps(compact, ensure_ascii=False)}],
             )
             text = "".join(b.text for b in response.content if getattr(b, "type", "") == "text")
-            raw = json.loads(text[text.find("{") : text.rfind("}") + 1])
+            raw = extract_json_object(text)
         except Exception as exc:  # API caída, JSON inválido…: el informe sigue sin narrativa
             self.last_error = f"{type(exc).__name__}: {str(exc)[:300]}"
             log.warning("claude_narrative_failed", extra={"error": self.last_error})
