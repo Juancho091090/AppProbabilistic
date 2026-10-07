@@ -122,6 +122,35 @@ class FootballStatistics(TimestampMixin, Base):
     match: Mapped[FootballMatchRow] = relationship(back_populates="statistics")
 
 
+class MarketOdds(TimestampMixin, Base):
+    """Precios 1X2 de mercado por casa (solo para evaluar el modelo, nunca para el informe)."""
+
+    __tablename__ = "market_odds"
+    __table_args__ = (UniqueConstraint("match_id", "bookmaker_id", "market"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    match_id: Mapped[int] = mapped_column(ForeignKey("football_matches.id"), index=True)
+    bookmaker_id: Mapped[int] = mapped_column(Integer)
+    bookmaker_name: Mapped[str] = mapped_column(String(80))
+    market: Mapped[str] = mapped_column(String(20), default="1x2")
+    odd_home: Mapped[float] = mapped_column(Float)
+    odd_draw: Mapped[float] = mapped_column(Float)
+    odd_away: Mapped[float] = mapped_column(Float)
+    source_updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class MarketOddsCheck(Base):
+    """Partidos ya consultados en /odds (con o sin precios) para no repetir llamadas."""
+
+    __tablename__ = "market_odds_checks"
+
+    match_id: Mapped[int] = mapped_column(ForeignKey("football_matches.id"), primary_key=True)
+    checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    bookmakers: Mapped[int] = mapped_column(Integer, default=0)
+    final: Mapped[bool] = mapped_column(Boolean, default=False)  # consultado tras el inicio
+
+
 class TennisMatchRow(TimestampMixin, Base):
     __tablename__ = "tennis_matches"
     __table_args__ = (

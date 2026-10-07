@@ -229,6 +229,11 @@ class ApiFootballClient:
     def fixtures_by_league_season(self, league_id: int, season: int) -> list[dict[str, Any]]:
         return self._get("/fixtures", {"league": league_id, "season": season}, ttl=TTL_SEASON)
 
+    def fixture_odds(self, fixture_id: str, bet_id: int = 1) -> list[dict[str, Any]]:
+        """Precios pre-partido de un partido (sin caché: cambian hasta el inicio).
+        API-Football solo los conserva unos días después del partido."""
+        return self._get("/odds", {"fixture": fixture_id, "bet": bet_id})
+
     def fixture_statistics(self, fixture_id: str) -> FixtureStats | None:
         items = self._get("/fixtures/statistics", {"fixture": fixture_id}, ttl=TTL_FINISHED)
         return parse_statistics(fixture_id, items)

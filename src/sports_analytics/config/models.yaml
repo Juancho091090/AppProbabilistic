@@ -95,3 +95,13 @@ confidence:
   high: 0.70
   medium: 0.45
   max_model_spread: 0.15        # desacuerdo máximo tolerable entre modelos (prob.)
+
+# Benchmark de mercado: probabilidades implícitas 1X2 (sin margen) usadas SOLO para
+# evaluar el modelo en backtesting y métricas vivas. Nunca se muestran en el informe.
+market:
+  enabled: true
+  bet_id: 1                  # "Match Winner" en API-Football
+  preferred_bookmakers: [4]  # 4 = Pinnacle (margen bajo); si no está, se usa el consenso
+  fallback: consensus        # consensus | none
+  devig_method: proportional # reparte el margen en proporción a cada implícita
+  bootstrap_samples: 2000    # IC 95 % de la diferencia de log-loss

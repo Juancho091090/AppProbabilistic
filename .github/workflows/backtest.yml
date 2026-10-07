@@ -1,0 +1,65 @@
+name: backtest
+
+# Evaluación bajo demanda contra la base de datos de producción (solo lectura de datos;
+# no llama a las APIs). Resultados en el resumen del job, anotaciones y artefacto.
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "backtest | market-benchmark"
+        default: backtest
+        type: choice
+        options: [backtest, market-benchmark]
+      sport:
+        description: "football | tennis (solo backtest)"
+        default: football
+        type: choice
+        options: [football, tennis]
+      start:
+        description: "Inicio YYYY-MM-DD (solo backtest)"
+        required: false
+      end:
+        description: "Fin YYYY-MM-DD (solo backtest)"
+        required: false
+      refit_days:
+        description: "Reentrenar cada N días"
+        default: "7"
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: WARNING
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Migraciones
+        run: alembic upgrade head
+      - name: Evaluación
+        run: |
+          if [ "${{ inputs.command }}" = "market-benchmark" ]; then
+            sports-analytics market-benchmark
+          else
+            START="${{ inputs.start }}"; END="${{ inputs.end }}"
+            [ -z "$END" ] && END=$(TZ=America/Bogota date -d yesterday +%F)
+            [ -z "$START" ] && START=$(date -d "$END -30 days" +%F)
+            sports-analytics backtest --sport "${{ inputs.sport }}" --start "$START" --end "$END" \
+              --refit-days "${{ inputs.refit_days }}" --output "reports/output/backtest.md"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backtest-${{ github.run_id }}
+          path: reports/output/
+          retention-days: 30
+          if-no-files-found: ignore

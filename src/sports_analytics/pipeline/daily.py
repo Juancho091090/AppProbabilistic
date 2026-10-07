@@ -298,6 +298,21 @@ def run_daily(
                         session, [m for m, _ in football_fixtures], comp_ids
                     )
                     session.commit()
+                    # Benchmark de mercado (solo evaluación): antes de la carga masiva de
+                    # estadísticas para que no se quede sin presupuesto de llamadas.
+                    try:
+                        ingest.sync_market_odds(
+                            session,
+                            svc.football,
+                            config,
+                            settings,
+                            [m.match_id for m, _ in football_fixtures],
+                            now,
+                            report,
+                        )
+                    except Exception as exc:
+                        session.rollback()
+                        report.failures["market"] = f"benchmark de mercado: {exc}"
                     # Córners: primero los equipos que juegan hoy, luego la carga general
                     stats_keys = ingest.stats_competition_keys(config, coverage)
                     teams_today = {
@@ -340,15 +355,18 @@ def run_daily(
             else:
                 issues.append("Tenis: TENNIS_API_KEY no configurada")
             for key, err in report.failures.items():
-                if not key.startswith("stats:"):
+                if not key.startswith(("stats:", "odds:")):
                     issues.append(f"{key}: {err[:160]}")
             n_stats_fail = sum(1 for k in report.failures if k.startswith("stats:"))
             if n_stats_fail:
                 issues.append(f"Estadísticas de {n_stats_fail} partidos no disponibles")
+            n_odds_fail = sum(1 for k in report.failures if k.startswith("odds:"))
+            if n_odds_fail:
+                issues.append(f"Mercado de referencia: {n_odds_fail} consultas fallidas")
 
             # 2) Resultados reales de días anteriores + métricas vivas
             settled = settle_predictions(session, now)
-            refresh_live_metrics(session, now)
+            refresh_live_metrics(session, now, config.models.market, config.models.version)
             session.commit()
 
             # 3) Modelos y predicciones (as_of = ahora: solo datos anteriores)
@@ -491,6 +509,8 @@ LOAD_LABELS = {
     "football:statistics": "Estadísticas (carga general)",
     "football:fixtures_found": "Partidos de fútbol del día (todas las ligas)",
     "football:fixtures_kept": "Partidos de fútbol en competiciones autorizadas",
+    "football:market_checked": "Mercado de referencia (evaluación): partidos consultados",
+    "football:market_with_prices": "Mercado de referencia (evaluación): partidos con datos",
 }
 
 

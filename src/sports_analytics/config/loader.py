@@ -9,7 +9,7 @@ from __future__ import annotations
 from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
 from pydantic import BaseModel, Field, model_validator
@@ -73,6 +73,17 @@ def _weights_sum_to_one(weights: dict[str, float], name: str) -> None:
         raise ValueError(f"Pesos negativos en {name}")
 
 
+class MarketConfig(BaseModel):
+    """Benchmark de mercado (solo evaluación; nunca aparece en el informe diario)."""
+
+    enabled: bool = True
+    bet_id: int = 1  # "Match Winner" (1X2) en API-Football
+    preferred_bookmakers: list[int] = Field(default_factory=lambda: [4])  # 4 = Pinnacle
+    fallback: Literal["consensus", "none"] = "consensus"
+    devig_method: Literal["proportional"] = "proportional"
+    bootstrap_samples: int = Field(default=2000, ge=0)
+
+
 class ModelsConfig(BaseModel):
     """Se mantiene como dict tipado parcialmente: la estructura completa está
     documentada en models.yaml y cada modelo valida su propia sección."""
@@ -83,6 +94,7 @@ class ModelsConfig(BaseModel):
     tennis: dict[str, Any]
     calibration: dict[str, Any]
     confidence: dict[str, float]
+    market: MarketConfig = Field(default_factory=MarketConfig)
 
     @model_validator(mode="after")
     def _check_weights(self) -> ModelsConfig:

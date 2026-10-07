@@ -60,7 +60,8 @@ def _settle(_: argparse.Namespace) -> int:
 
     with session_scope(get_settings().database_url) as session:
         print(settle_predictions(session))
-        print(f"métricas: {refresh_live_metrics(session)}")
+        cfg = get_config().models
+        print(f"métricas: {refresh_live_metrics(session, None, cfg.market, cfg.version)}")
     return 0
 
 
@@ -73,21 +74,64 @@ def _backtest(args: argparse.Namespace) -> int:
     settings, config = get_settings(), get_config()
     start, end = date.fromisoformat(args.start), date.fromisoformat(args.end)
     since, _ = local_day_bounds_utc(start - timedelta(days=3 * 365), settings.tz)
+    market = None
     with session_scope(settings.database_url) as session:
         if args.sport == "football":
             history = repo.load_football_history(session, since)
+            if config.models.market.enabled:
+                from sports_analytics.market.benchmark import market_probs_by_match
+
+                market = market_probs_by_match(
+                    repo.load_market_quotes(
+                        session, since=local_day_bounds_utc(start, settings.tz)[0]
+                    ),
+                    config.models.market,
+                )
         else:
             history = repo.load_tennis_history(session, since)
     names = {c.key: c.name for c in config.competitions.football}
     report = run_backtest(
-        args.sport, history, config, start, end, settings.tz, args.refit_days, names
+        args.sport, history, config, start, end, settings.tz, args.refit_days, names, market
     )
     md = report.to_markdown(config.models.version)
     out = Path(args.output or f"reports/output/backtest_{args.sport}_{start}_{end}.md")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(md, encoding="utf-8")
     print(md)
+    _publish(md, "backtest")
     return 0
+
+
+def _market_benchmark(_: argparse.Namespace) -> int:
+    """Predicciones reales del informe diario (ya liquidadas) frente al mercado."""
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.market.benchmark import summarize, to_markdown
+    from sports_analytics.pipeline.results import live_market_pairs
+
+    cfg = get_config().models
+    with session_scope(get_settings().database_url) as session:
+        pairs = live_market_pairs(session, cfg.market, cfg.version)
+    md = "\n".join(
+        to_markdown(
+            summarize(pairs, cfg.market.bootstrap_samples),
+            "Informe diario vs mercado (predicciones reales liquidadas)",
+            "modelo a la hora del informe; mercado con el último precio previo al inicio",
+        )
+    )
+    print(md)
+    _publish(md, "benchmark-mercado")
+    return 0
+
+
+def _publish(md: str, title: str) -> None:
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as fh:
+            fh.write(md + "\n")
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import emit_annotations
+
+        emit_annotations(md)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -118,6 +162,10 @@ def build_parser() -> argparse.ArgumentParser:
     bt.add_argument("--refit-days", type=int, default=7)
     bt.add_argument("--output")
     bt.set_defaults(func=_backtest)
+
+    sub.add_parser(
+        "market-benchmark", help="Compara las predicciones liquidadas con el mercado"
+    ).set_defaults(func=_market_benchmark)
     return parser
 
 

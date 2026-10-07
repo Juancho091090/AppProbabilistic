@@ -39,6 +39,8 @@ class Settings(BaseSettings):
     football_history_seasons: int = Field(default=3, ge=1)  # actual + 2 anteriores
     football_stats_per_run: int = Field(default=2500, ge=0)  # llamadas /fixtures/statistics
     football_priority_stats_per_team: int = Field(default=15, ge=0)  # equipos que juegan hoy
+    football_odds_calls_per_run: int = Field(default=150, ge=0)  # /odds (benchmark de mercado)
+    market_odds_backfill_days: int = Field(default=6, ge=0)  # API-Football guarda ~7 días
     tennis_history_days: int = Field(default=730, ge=30)
     tennis_refresh_days: int = Field(default=3, ge=1)  # días recientes que se re-consultan
     tennis_window_days: int = Field(default=7, ge=1)

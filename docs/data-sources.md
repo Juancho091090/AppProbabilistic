@@ -36,6 +36,11 @@ planes incluyen todas las competiciones y endpoints.
 | `/fixtures?date=ayer` (resultados para registrar y actualizar) | 1 | diaria |
 | `/fixtures/statistics?fixture=` (córners/tiros de partidos terminados) | 1 por partido | con tope por ejecución |
 | `/fixtures?league&season` (carga inicial de histórico) | 1 por liga-temporada | una vez, en caché |
+| `/odds?fixture=&bet=1` (precios 1X2, solo benchmark de evaluación) | 1 por partido (2 si se reconsulta tras el inicio) | tope `FOOTBALL_ODDS_CALLS_PER_RUN` |
+
+Verificado el 7-oct-2026: `/odds` devuelve 9 casas (entre ellas Pinnacle = 4, Bet365 = 8)
+para partidos del día y de hace 4 días, y **nada** para uno de hace 31 días: API-Football
+solo conserva los precios unos días. No hay histórico de temporadas pasadas.
 
 ## Tennis API (tenis)
 

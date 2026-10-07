@@ -6,8 +6,9 @@ Cada competición / ventana se procesa de forma aislada: un fallo se registra en
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -35,6 +36,7 @@ from sports_analytics.data.clients.tennis_api import (
 from sports_analytics.data.filters import filter_football_league
 from sports_analytics.db import repository as repo
 from sports_analytics.db.models import DataSource
+from sports_analytics.market.odds import parse_odds_response
 
 log = get_logger(__name__)
 
@@ -181,6 +183,49 @@ def fetch_football_stats(
             batch = []
     repo.upsert_football_statistics(session, batch)
     session.commit()
+
+
+def sync_market_odds(
+    session: Session,
+    client: ApiFootballClient,
+    config: AppConfig,
+    settings: Settings,
+    today_fixture_ids: Sequence[str],
+    now: datetime,
+    report: IngestReport,
+) -> None:
+    """Benchmark de mercado: precios 1X2 de los partidos de hoy (antes del inicio) y de
+    los partidos de los últimos días aún sin consulta final (API-Football los borra a los
+    pocos días). Presupuesto propio: ``football_odds_calls_per_run``."""
+    mcfg = config.models.market
+    budget = settings.football_odds_calls_per_run
+    if not mcfg.enabled or budget <= 0:
+        return
+    since = now - timedelta(days=settings.market_odds_backfill_days)
+    targets = list(dict.fromkeys(today_fixture_ids))[:budget]
+    targets += [
+        e for e in repo.matches_needing_odds(session, since, now, budget) if e not in targets
+    ][: budget - len(targets)]
+    ids = repo.football_match_ids(session, targets)
+    with_prices = 0
+    for i, ext in enumerate(targets):
+        if ext not in ids:
+            continue
+        match_id, kickoff = ids[ext]
+        try:
+            quotes = parse_odds_response(client.fixture_odds(ext, mcfg.bet_id), mcfg.bet_id)
+        except BudgetExceeded:
+            break
+        except ApiError as exc:
+            report.failures[f"odds:{ext}"] = str(exc)
+            continue
+        repo.save_market_quotes(session, match_id, quotes, now, final=kickoff <= now)
+        with_prices += bool(quotes)
+        if i % 50 == 49:
+            session.commit()
+    session.commit()
+    report.add("football:market_checked", len(targets))
+    report.add("football:market_with_prices", with_prices)
 
 
 def football_fixtures_today(

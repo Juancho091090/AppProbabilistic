@@ -65,6 +65,33 @@ predicciones ya resueltas y rechaza cualquier evento con fecha ≥ `as_of`.
 `score = 0.5·calidad_de_datos + 0.5·acuerdo_entre_modelos` → Alta (≥ 0.70),
 Media (≥ 0.45), Baja. **No es una probabilidad.**
 
+## Benchmark de mercado
+
+Módulos `market/odds.py` y `market/benchmark.py`. **Solo evaluación**: mide si el modelo
+predice mejor o peor que el mercado; nunca entra en el informe ni genera recomendaciones.
+
+1. **Datos.** `/odds?fixture=&bet=1` de API-Football (mercado *Match Winner*). Se guardan
+   los precios de todas las casas en `market_odds`. Los partidos de hoy se consultan antes
+   del inicio; los ya iniciados de los últimos `MARKET_ODDS_BACKFILL_DAYS` días se
+   reconsultan una vez (`market_odds_checks.final`) para quedarse con el último precio
+   previo al inicio. Presupuesto: `FOOTBALL_ODDS_CALLS_PER_RUN`.
+2. **Margen.** Probabilidad implícita `1/precio`; se elimina el margen con el método
+   proporcional: `p_i = (1/o_i) / Σ_j (1/o_j)`.
+3. **Referencia** (`models.yaml → market`): la primera casa disponible de
+   `preferred_bookmakers` (por defecto Pinnacle, de margen bajo); si no está, el
+   consenso (media de las probabilidades justas de todas las casas, renormalizada).
+4. **Comparación** sobre los mismos partidos: Brier multiclase `Σ_k (p_k − y_k)²`,
+   log-loss `−ln p_resultado`, acierto del favorito y diferencia de log-loss
+   (modelo − mercado) con IC 95 % por bootstrap pareado. Si el intervalo incluye 0, la
+   muestra no permite decir cuál es mejor.
+5. **Dónde aparece:** sección *Modelo vs mercado* del backtest; `model_metrics` con los
+   modelos `mercado` y `ensemble_v1@mercado` (el modelo final limitado a los mismos
+   partidos); comando `market-benchmark`.
+
+Advertencia de interpretación: en el informe diario el modelo predice a las 06:37 y el
+mercado se toma con el último precio previo al inicio, que ya incorpora alineaciones y
+noticias. La comparación es por tanto exigente con el modelo.
+
 ## Pendientes conocidos
 
 * Córners: regresión Binomial Negativa con tiros y posesión previos al partido como

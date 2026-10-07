@@ -18,6 +18,8 @@ from sports_analytics.db.models import (
     DataSource,
     FootballMatchRow,
     FootballStatistics,
+    MarketOdds,
+    MarketOddsCheck,
     PipelineRun,
     Player,
     PredictionResult,
@@ -26,6 +28,7 @@ from sports_analytics.db.models import (
     Team,
     TennisMatchRow,
 )
+from sports_analytics.market.odds import OddsQuote
 from sports_analytics.models.outputs import MatchForecast
 
 FOOTBALL_PROVIDER = "api_football"
@@ -541,3 +544,107 @@ def save_ratings(session: Session, sport: str, rows: Sequence[dict], valid_from:
             ["sport", "entity_key", "rating_type", "valid_from"],
             ["value", "matches", "entity_name"],
         )
+
+
+# ------------------------------------------------------- mercado (benchmark)
+
+VOID_MATCH_STATUSES = ("postponed", "cancelled")
+
+
+def football_match_ids(
+    session: Session, external_ids: Iterable[str]
+) -> dict[str, tuple[int, datetime]]:
+    """external_id → (id interno, inicio UTC)."""
+    ext = list(set(external_ids))
+    if not ext:
+        return {}
+    q = select(
+        FootballMatchRow.external_id, FootballMatchRow.id, FootballMatchRow.kickoff_utc
+    ).where(FootballMatchRow.provider == FOOTBALL_PROVIDER, FootballMatchRow.external_id.in_(ext))
+    return {e: (i, ensure_utc(k)) for e, i, k in session.execute(q)}
+
+
+def matches_needing_odds(session: Session, since: datetime, now: datetime, limit: int) -> list[str]:
+    """Partidos ya iniciados desde ``since`` sin consulta *final* de precios (la última
+    consulta se hizo antes del inicio o nunca): los más recientes primero."""
+    q = (
+        select(FootballMatchRow.external_id)
+        .outerjoin(MarketOddsCheck, MarketOddsCheck.match_id == FootballMatchRow.id)
+        .where(
+            FootballMatchRow.provider == FOOTBALL_PROVIDER,
+            FootballMatchRow.kickoff_utc >= since,
+            FootballMatchRow.kickoff_utc < now,
+            FootballMatchRow.status.not_in(VOID_MATCH_STATUSES),
+            (MarketOddsCheck.match_id.is_(None)) | (MarketOddsCheck.final.is_(False)),
+        )
+        .order_by(FootballMatchRow.kickoff_utc.desc())
+        .limit(limit)
+    )
+    return list(session.scalars(q))
+
+
+def save_market_quotes(
+    session: Session, match_id: int, quotes: Sequence[OddsQuote], fetched_at: datetime, final: bool
+) -> int:
+    rows = [
+        {
+            "match_id": match_id,
+            "bookmaker_id": q.bookmaker_id,
+            "bookmaker_name": q.bookmaker_name[:80],
+            "market": "1x2",
+            "odd_home": q.home,
+            "odd_draw": q.draw,
+            "odd_away": q.away,
+            "source_updated_at": q.source_updated_at,
+            "fetched_at": fetched_at,
+        }
+        for q in quotes
+    ]
+    _upsert(
+        session,
+        MarketOdds,
+        rows,
+        ["match_id", "bookmaker_id", "market"],
+        ["bookmaker_name", "odd_home", "odd_draw", "odd_away", "source_updated_at", "fetched_at"],
+    )
+    _upsert(
+        session,
+        MarketOddsCheck,
+        [
+            {
+                "match_id": match_id,
+                "checked_at": fetched_at,
+                "bookmakers": len(quotes),
+                "final": final,
+            }
+        ],
+        ["match_id"],
+        ["checked_at", "bookmakers", "final"],
+    )
+    return len(rows)
+
+
+def load_market_quotes(
+    session: Session, external_ids: Iterable[str] | None = None, since: datetime | None = None
+) -> dict[str, list[OddsQuote]]:
+    """Precios 1X2 por partido (clave: external_id del partido)."""
+    q = select(FootballMatchRow.external_id, MarketOdds).join(
+        FootballMatchRow, FootballMatchRow.id == MarketOdds.match_id
+    )
+    if external_ids is not None:
+        q = q.where(FootballMatchRow.external_id.in_(list(set(external_ids))))
+    if since is not None:
+        q = q.where(FootballMatchRow.kickoff_utc >= since)
+    out: dict[str, list[OddsQuote]] = {}
+    for ext, o in session.execute(q):
+        out.setdefault(ext, []).append(
+            OddsQuote(
+                o.bookmaker_id,
+                o.bookmaker_name,
+                o.odd_home,
+                o.odd_draw,
+                o.odd_away,
+                o.source_updated_at,
+            )
+        )
+    return out

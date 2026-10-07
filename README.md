@@ -125,7 +125,8 @@ resumen arriba y el detalle completo debajo (texto + HTML), y correos de error c
 
 ## 10. GitHub Actions
 
-* `daily_prediction.yml`: cron `0 12 * * *` = 07:00 Bogotá (UTC−5 fijo).
+* `daily_prediction.yml`: cron `37 11 * * *` = 06:37 Bogotá (UTC−5 fijo); no reenvía si ya se envió.
+* `backtest.yml`: backtest o benchmark de mercado sobre la base de producción (manual).
 * `tests.yml`: lint y tests en cada push.
 * `smoke_test.yml`: corrida real sin envío sobre base efímera (manual).
 * `api_diagnostics.yml`: diagnóstico de APIs (manual).
@@ -154,6 +155,18 @@ sports-analytics backtest --sport tennis --start 2026-01-01 --end 2026-09-30
 Walk-forward: en cada ventana se entrena con partidos anteriores a su inicio y se predicen
 solo los de la ventana. Reporta Brier, Log Loss, Accuracy y ECE por modelo, mercado,
 competición, tipo de evento y rango de probabilidad, más la curva de calibración.
+
+**Benchmark de mercado (solo evaluación).** Si hay precios 1X2 guardados para los
+partidos del periodo, el backtest añade la sección *Modelo vs mercado*: Brier multiclase,
+log-loss y acierto del favorito del modelo y del mercado (probabilidades sin margen) sobre
+los mismos partidos, con intervalo de confianza del 95 % de la diferencia de log-loss.
+`sports-analytics market-benchmark` hace lo mismo con las predicciones reales del informe
+diario ya liquidadas. Los precios nunca aparecen en el informe ni se usan para recomendar
+nada. API-Football solo conserva los precios unos días: el pipeline los guarda cada día
+(partidos de hoy + los de los últimos `MARKET_ODDS_BACKFILL_DAYS`), así que la muestra
+crece desde el 8-oct-2026. Detalle en [docs/models.md](docs/models.md#benchmark-de-mercado).
+
+Ambos se pueden lanzar desde GitHub: **Actions → backtest → Run workflow**.
 
 ## 13. Base de datos
 

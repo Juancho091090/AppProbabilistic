@@ -24,6 +24,9 @@ from sports_analytics.data.clients.tennis_api import TennisApiClient
 from sports_analytics.db.models import (
     FootballMatchRow,
     FootballStatistics,
+    MarketOdds,
+    MarketOddsCheck,
+    ModelMetric,
     PipelineRun,
     PredictionResult,
     PredictionRow,
@@ -73,6 +76,14 @@ class FakeFootballApi:
             self._item("up2", ko, "Team03", "Team04", "NS", None, None),
         ]
         self.other = self._item("x9", ko, "Foo", "Bar", "NS", None, None, league=40)
+        # Benchmark de mercado: up1 con Pinnacle (preferida) y Bet365; up2 solo Bet365
+        self.odds = {
+            "up1": [
+                _bookmaker(4, "Pinnacle", "1.80", "3.70", "4.60"),
+                _bookmaker(8, "Bet365", "1.75", "3.60", "4.50"),
+            ],
+            "up2": [_bookmaker(8, "Bet365", "2.50", "3.10", "2.90")],
+        }
         self.calls: list[str] = []
 
     @staticmethod
@@ -145,9 +156,21 @@ class FakeFootballApi:
                     },
                 ]
             )
+        elif path == "/odds":
+            assert q["bet"] == "1"
+            resp = [
+                {"update": "2024-06-01T10:00:00+00:00", "bookmakers": bks}
+                for bks in [self.odds.get(q["fixture"])]
+                if bks
+            ]
         else:
             return httpx.Response(404)
         return httpx.Response(200, json={"errors": [], "response": resp})
+
+
+def _bookmaker(bid, name, h, d, a):
+    vals = [{"value": "Home", "odd": h}, {"value": "Draw", "odd": d}, {"value": "Away", "odd": a}]
+    return {"id": bid, "name": name, "bets": [{"id": 1, "name": "Match Winner", "values": vals}]}
 
 
 # ------------------------------------------------------------- Tennis API falsa
@@ -372,6 +395,13 @@ def test_day1_full_pipeline(env, app_config):
         assert {p.sport for p in preds} == {"football", "tennis"}
         assert all(0 <= p.probability <= 1 for p in preds)
         assert s.scalar(select(func.count()).select_from(Rating)) > 0
+        odds = s.scalars(select(MarketOdds)).all()
+        assert sorted(o.bookmaker_id for o in odds) == [4, 8, 8]
+        checks = s.scalars(select(MarketOddsCheck)).all()
+        assert len(checks) == 2 and not any(c.final for c in checks)  # aún no empiezan
+    # El mercado es solo para evaluar: nunca aparece en el informe ni en el correo
+    assert "Pinnacle" not in md and "Bet365" not in md and "1.80" not in md
+    with session_scope(URL) as s:
         run = s.get(PipelineRun, out.run_id)
         assert run.status == out.status and run.predictions_generated == len(preds)
         assert run.telegram_sent and run.email_sent and run.report_markdown
@@ -413,6 +443,25 @@ def test_day2_settles_results(env, app_config):
         ).all()
         assert corners and all(v == 10.0 for _, _, v in corners)
         assert all(o == int(line < 10) for line, o, _ in corners)
+        # Benchmark de mercado: reconsulta final tras el inicio y métricas vivas comparables
+        assert all(c.final for c in s.scalars(select(MarketOddsCheck)))
+        metrics = {
+            m.model: m
+            for m in s.scalars(
+                select(ModelMetric).where(
+                    ModelMetric.segment_type == "global", ModelMetric.market == "1x2"
+                )
+            )
+        }
+        assert metrics["mercado"].n == metrics["ensemble_v1@mercado"].n == 6  # 2 partidos × 3
+    from sports_analytics.pipeline.results import live_market_pairs
+
+    with session_scope(URL) as s:
+        pairs = {
+            p.match_label: p for p in live_market_pairs(s, app_config.models.market, "ensemble_v1")
+        }
+    assert set(pairs) == {"up1", "up2"} and pairs["up1"].outcome == 0 and pairs["up2"].outcome == 1
+    assert pairs["up1"].market[0] == pytest.approx((1 / 1.80) / (1 / 1.80 + 1 / 3.70 + 1 / 4.60))
 
 
 def test_pipeline_survives_api_outage(env, app_config):

@@ -13,6 +13,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from sports_analytics.backtesting.metrics import ResolvedPrediction, segment_metrics
+from sports_analytics.config.loader import MarketConfig
 from sports_analytics.core.timeutils import now_utc
 from sports_analytics.db import repository as repo
 from sports_analytics.db.models import (
@@ -22,6 +23,7 @@ from sports_analytics.db.models import (
     PredictionRow,
     TennisMatchRow,
 )
+from sports_analytics.market.benchmark import MARKET_MODEL, live_pairs, market_probs_by_match
 
 VOID_STATUSES = {"postponed", "cancelled"}
 WAIT_RESULT = timedelta(days=3)
@@ -139,8 +141,17 @@ def settle_predictions(session: Session, now: datetime | None = None) -> dict[st
     return {"pending": len(pending), "settled": settled, "void": void}
 
 
-def refresh_live_metrics(session: Session, now: datetime | None = None) -> int:
-    """Recalcula model_metrics (source='live') con todas las predicciones resueltas."""
+def refresh_live_metrics(
+    session: Session,
+    now: datetime | None = None,
+    market_cfg: MarketConfig | None = None,
+    final_model: str | None = None,
+) -> int:
+    """Recalcula model_metrics (source='live') con todas las predicciones resueltas.
+
+    Con ``market_cfg`` y ``final_model`` añade el benchmark de mercado en 1X2: el modelo
+    ``mercado`` y ``<final_model>@mercado`` (el modelo final restringido a los mismos
+    partidos), para comparar en igualdad de condiciones."""
     now = now or now_utc()
     pairs = repo.settled_predictions(session)
     rows = [
@@ -156,6 +167,8 @@ def refresh_live_metrics(session: Session, now: datetime | None = None) -> int:
         )
         for p, r in pairs
     ]
+    if market_cfg is not None and market_cfg.enabled and final_model:
+        rows += market_resolved_rows(session, pairs, market_cfg, final_model)
     session.query(ModelMetric).filter(ModelMetric.source == "live").delete()
     metrics = segment_metrics(rows)
     dates = [p.prediction_date for p, _ in pairs]
@@ -179,6 +192,43 @@ def refresh_live_metrics(session: Session, now: datetime | None = None) -> int:
             )
         )
     return len(metrics)
+
+
+def live_market_pairs(session: Session, market_cfg: MarketConfig, final_model: str):
+    pairs = repo.settled_predictions(session, sport="football")
+    events = {p.event_id for p, _ in pairs if p.market == "1x2"}
+    market = market_probs_by_match(repo.load_market_quotes(session, events), market_cfg)
+    return live_pairs(pairs, market, final_model)
+
+
+def market_resolved_rows(
+    session: Session, pairs, market_cfg: MarketConfig, final_model: str
+) -> list[ResolvedPrediction]:
+    events = {p.event_id for p, _ in pairs if p.market == "1x2" and p.sport == "football"}
+    if not events:
+        return []
+    market = market_probs_by_match(repo.load_market_quotes(session, events), market_cfg)
+    out = []
+    for pf in live_pairs(pairs, market, final_model):
+        for idx, event in enumerate(("home_win", "draw", "away_win")):
+            y = int(pf.outcome == idx)
+            out.append(
+                ResolvedPrediction(
+                    "football", pf.competition, MARKET_MODEL, "1x2", event, pf.market[idx], y
+                )
+            )
+            out.append(
+                ResolvedPrediction(
+                    "football",
+                    pf.competition,
+                    f"{final_model}@mercado",
+                    "1x2",
+                    event,
+                    pf.model[idx],
+                    y,
+                )
+            )
+    return out
 
 
 def latest_global_metrics(session: Session) -> list[ModelMetric]:

@@ -26,6 +26,13 @@ from sports_analytics.config.loader import AppConfig
 from sports_analytics.core.logging import get_logger
 from sports_analytics.core.timeutils import local_day_bounds_utc
 from sports_analytics.data.schemas import FootballMatch, MatchStatus, TennisMatch
+from sports_analytics.market.benchmark import (
+    MARKET_MODEL,
+    PairedForecast,
+    summarize,
+)
+from sports_analytics.market.benchmark import to_markdown as benchmark_markdown
+from sports_analytics.market.odds import MarketProbs
 from sports_analytics.models.football.predictor import FootballPredictor
 from sports_analytics.models.outputs import MatchForecast, PredictionRecord
 from sports_analytics.models.tennis.predictor import TennisPredictor
@@ -70,6 +77,9 @@ class BacktestReport:
     n_skipped: int = 0
     predictions: list[ResolvedPrediction] = field(default_factory=list)
     metrics: list[SegmentMetric] = field(default_factory=list)
+    market_pairs: list[PairedForecast] = field(default_factory=list)
+    market_available: bool = False  # se pasaron precios de mercado al backtest
+    bootstrap_samples: int = 2000
 
     def to_markdown(self, model_version: str) -> str:
         lines = [
@@ -108,6 +118,28 @@ class BacktestReport:
                         f"| {m.market} | {m.segment_value} | {m.n} | {m.brier:.4f} | {m.ece:.4f} | "
                         f"{m.mean_prob:.3f} | {m.hit_rate:.3f} |"
                     )
+        if self.market_available:
+            lines.append("")
+            lines += benchmark_markdown(
+                summarize(self.market_pairs, self.bootstrap_samples),
+                "Modelo vs mercado (1X2, mismos partidos)",
+                "probabilidades del mercado sin margen; solo partidos con precios guardados",
+            )
+            by_comp: dict[str, list[PairedForecast]] = {}
+            for pf in self.market_pairs:
+                by_comp.setdefault(pf.competition, []).append(pf)
+            if len(by_comp) > 1:
+                lines += [
+                    "| Competición | n | Log-loss modelo | Log-loss mercado | Brier modelo | Brier mercado |",
+                    "|---|---|---|---|---|---|",
+                ]
+                for comp, items in sorted(by_comp.items(), key=lambda kv: -len(kv[1])):
+                    s = summarize(items, 0)
+                    lines.append(
+                        f"| {comp} | {s.n} | {s.logloss_model:.4f} | {s.logloss_market:.4f} | "
+                        f"{s.brier_model:.4f} | {s.brier_market:.4f} |"
+                    )
+                lines.append("")
         main = [p for p in self.predictions if p.model == model_version]
         if main:
             lines += [
@@ -144,6 +176,29 @@ def _resolve(forecast: MatchForecast, match, sport: str) -> list[ResolvedPredict
     return out
 
 
+def _add_market(
+    report: BacktestReport, f: MatchForecast, m: FootballMatch, mp: MarketProbs, version: str
+) -> None:
+    outcome = 0 if m.home_goals > m.away_goals else 1 if m.home_goals == m.away_goals else 2
+    model = tuple(float(f.markets["1x2"][k]) for k in ("home", "draw", "away"))
+    market = (mp.home, mp.draw, mp.away)
+    report.market_pairs.append(
+        PairedForecast(f"{f.home_or_a} vs {f.away_or_b}", f.competition, model, market, outcome)
+    )
+    for idx, event in enumerate(("home_win", "draw", "away_win")):
+        y = int(outcome == idx)
+        report.predictions.append(
+            ResolvedPrediction(
+                "football", f.competition, MARKET_MODEL, "1x2", event, market[idx], y
+            )
+        )
+        report.predictions.append(
+            ResolvedPrediction(
+                "football", f.competition, f"{version}@mercado", "1x2", event, model[idx], y
+            )
+        )
+
+
 def run_backtest(
     sport: str,
     history: Sequence[FootballMatch | TennisMatch],
@@ -153,7 +208,9 @@ def run_backtest(
     tz: ZoneInfo,
     refit_every_days: int = 7,
     competition_names: dict[str, str] | None = None,
+    market: dict[str, MarketProbs] | None = None,
 ) -> BacktestReport:
+    """``market``: probabilidades de referencia por external_id (benchmark opcional)."""
     if sport not in ("football", "tennis"):
         raise ValueError("sport debe ser football o tennis")
     if refit_every_days < 1 or end < start:
@@ -161,6 +218,8 @@ def run_backtest(
     mcfg = config.models
     names = competition_names or {}
     report = BacktestReport(sport, start, end, refit_every_days)
+    report.market_available = market is not None and sport == "football"
+    report.bootstrap_samples = config.models.market.bootstrap_samples
     finished = sorted((m for m in history if m.is_finished), key=lambda m: m.kickoff_utc)
 
     day = start
@@ -219,6 +278,8 @@ def run_backtest(
                     f = predictor.predict(scheduled)
                 report.n_matches += 1
                 report.predictions.extend(_resolve(f, m, sport))
+                if report.market_available and m.match_id in market:
+                    _add_market(report, f, m, market[m.match_id], mcfg.version)
             log.info(
                 "backtest_window",
                 extra={"sport": sport, "from": day.isoformat(), "matches": len(targets)},
