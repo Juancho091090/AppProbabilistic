@@ -159,6 +159,83 @@ def _export_metrics(args: argparse.Namespace) -> int:
     return 0
 
 
+def _data_audit(_: argparse.Namespace) -> int:
+    """Auditoría de la base de datos (solo lectura, sin llamadas a APIs)."""
+    from sqlalchemy import case, func, select
+
+    from sports_analytics.db.models import (
+        Competition,
+        FootballMatchRow,
+        FootballStatistics,
+        TennisMatchRow,
+    )
+    from sports_analytics.db.session import session_scope
+
+    lines = ["# Auditoría de datos", "", "## Tenis", ""]
+    with session_scope(get_settings().database_url) as s:
+        t = TennisMatchRow
+        rows = s.execute(
+            select(
+                t.tour,
+                func.count(),
+                func.sum(case((t.status == "finished", 1), else_=0)),
+                func.sum(case((t.winner == "A", 1), else_=0)),
+                func.sum(case((t.winner == "B", 1), else_=0)),
+                func.sum(case((t.retired.is_(True), 1), else_=0)),
+                func.min(t.kickoff_utc),
+                func.max(t.kickoff_utc),
+            ).group_by(t.tour)
+        ).all()
+        lines += [
+            "| Circuito | Partidos | Terminados | Gana jugador 1 | Gana jugador 2 | "
+            "Retiros | Desde | Hasta |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+        for r in rows:
+            lines.append("| " + " | ".join(str(v)[:10] for v in r) + " |")
+        players = s.execute(
+            select(
+                func.count(func.distinct(t.player_a_id)), func.count(func.distinct(t.player_b_id))
+            )
+        ).one()
+        lines += [
+            "",
+            f"Jugadores distintos como jugador 1: {players[0]} · como jugador 2: {players[1]}",
+        ]
+        by_surface = s.execute(select(t.surface, func.count()).group_by(t.surface)).all()
+        lines.append("Superficies: " + ", ".join(f"{a}={b}" for a, b in by_surface))
+        month = func.to_char(t.kickoff_utc, "YYYY-MM").label("mes")
+        by_month = s.execute(select(month, func.count()).group_by("mes").order_by("mes")).all()
+        lines.append("Partidos por mes: " + ", ".join(f"{a}={b}" for a, b in by_month))
+
+        lines += ["", "## Fútbol", ""]
+        f, st = FootballMatchRow, FootballStatistics
+        fr = s.execute(
+            select(
+                Competition.name,
+                func.count(f.id),
+                func.sum(case((f.status == "finished", 1), else_=0)),
+                func.sum(case((st.available.is_(True), 1), else_=0)),
+                func.sum(case((st.home_xg.is_not(None), 1), else_=0)),
+                func.sum(case((f.neutral_venue.is_(True), 1), else_=0)),
+            )
+            .join(Competition, Competition.id == f.competition_id)
+            .outerjoin(st, st.match_id == f.id)
+            .group_by(Competition.name)
+            .order_by(func.count(f.id).desc())
+        ).all()
+        lines += [
+            "| Competición | Partidos | Terminados | Con estadísticas | Con xG | Sede neutral |",
+            "|---|---|---|---|---|---|",
+        ]
+        for r in fr:
+            lines.append("| " + " | ".join(str(v) for v in r) + " |")
+    md = "\n".join(lines)
+    print(md)
+    _publish(md, "auditoria")
+    return 0
+
+
 def _market_benchmark(_: argparse.Namespace) -> int:
     """Predicciones reales del informe diario (ya liquidadas) frente al mercado."""
     from sports_analytics.db.session import session_scope
@@ -232,6 +309,10 @@ def build_parser() -> argparse.ArgumentParser:
     ex.add_argument("--refit-days", type=int, default=7)
     ex.add_argument("--output", default="reports/metrics/metrics.json")
     ex.set_defaults(func=_export_metrics)
+
+    sub.add_parser("data-audit", help="Auditoría de la base de datos (sin APIs)").set_defaults(
+        func=_data_audit
+    )
 
     sub.add_parser(
         "fit-recalibration", help="Ajusta y valida la recalibración 1X2 (walk-forward)"

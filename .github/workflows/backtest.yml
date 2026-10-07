@@ -12,7 +12,7 @@ on:
         description: "backtest | market-benchmark | fit-recalibration"
         default: backtest
         type: choice
-        options: [backtest, market-benchmark, fit-recalibration]
+        options: [backtest, market-benchmark, fit-recalibration, data-audit]
       sport:
         description: "football | tennis (solo backtest)"
         default: football
@@ -52,7 +52,9 @@ jobs:
         run: |
           CMD="${{ inputs.command }}"
           [ "${{ github.event_name }}" = "schedule" ] && CMD=fit-recalibration
-          if [ "$CMD" = "fit-recalibration" ]; then
+          if [ "$CMD" = "data-audit" ]; then
+            sports-analytics data-audit
+          elif [ "$CMD" = "fit-recalibration" ]; then
             sports-analytics fit-recalibration
           elif [ "$CMD" = "market-benchmark" ]; then
             sports-analytics market-benchmark
