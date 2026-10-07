@@ -195,6 +195,7 @@ class ClaudeNarrator:
     def __init__(self, settings: Settings, client: Any | None = None):
         self.settings = settings
         self._client = client
+        self.last_error: str | None = None
 
     def _get_client(self):
         if self._client is None:
@@ -206,6 +207,7 @@ class ClaudeNarrator:
         return self._client
 
     def narrate(self, payload: DailyReportPayload) -> Narrative | None:
+        self.last_error = None
         if not self.settings.claude_enabled or not payload.all_forecasts():
             return None
         compact = compact_payload(payload)
@@ -219,9 +221,11 @@ class ClaudeNarrator:
             text = "".join(b.text for b in response.content if getattr(b, "type", "") == "text")
             raw = json.loads(text[text.find("{") : text.rfind("}") + 1])
         except Exception as exc:  # API caída, JSON inválido…: el informe sigue sin narrativa
-            log.warning("claude_narrative_failed", extra={"error": type(exc).__name__})
+            self.last_error = f"{type(exc).__name__}: {str(exc)[:300]}"
+            log.warning("claude_narrative_failed", extra={"error": self.last_error})
             return None
         narrative, problems = validate_narrative(raw, compact)
         if narrative is None:
+            self.last_error = "rechazada por validación: " + " | ".join(problems[:8])
             log.warning("claude_narrative_rejected", extra={"problems": problems[:10]})
         return narrative

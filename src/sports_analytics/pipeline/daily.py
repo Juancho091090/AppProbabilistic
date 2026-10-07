@@ -15,7 +15,7 @@ from typing import Any
 
 from sports_analytics.config.loader import AppConfig
 from sports_analytics.config.settings import Settings
-from sports_analytics.core.logging import get_logger
+from sports_analytics.core.logging import get_logger, redact
 from sports_analytics.core.timeutils import ensure_utc, local_today, now_utc, to_local
 from sports_analytics.data.clients.api_football import ApiFootballClient
 from sports_analytics.data.clients.tennis_api import TennisApiClient
@@ -382,6 +382,8 @@ def run_daily(
             )
             outcome.markdown = markdown
             outcome.narrative = narrative is not None
+            if narrative is None and svc.narrator and svc.narrator.last_error:
+                issues.append(redact(f"Claude: {svc.narrator.last_error}"))
             run.report_markdown = markdown
 
             # 5) Envío
