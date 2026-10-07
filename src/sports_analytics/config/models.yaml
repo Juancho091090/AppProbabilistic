@@ -89,6 +89,18 @@ calibration:
   min_samples_platt: 200
   min_samples_isotonic: 1000
   n_bins: 10
+  # Recalibración multinomial del 1X2 (q_k ∝ p_k^a · e^{b_k}): corrige que el ensemble
+  # sea demasiado conservador y el sesgo local/visitante. Se ajusta con predicciones
+  # walk-forward del histórico (comando fit-recalibration, semanal) y solo se aplica si
+  # mejora la log-loss en el tramo final reservado (holdout, fuera de muestra).
+  recalibration_1x2:
+    enabled: true
+    window_days: 150        # histórico walk-forward usado para ajustar
+    refit_days: 7           # reentrenamiento del backtest interno
+    holdout_fraction: 0.3   # último 30 % (cronológico) para validar
+    l2: 1.0                 # penalización hacia la identidad (a=1, b=0)
+    min_samples: 300        # partidos mínimos para ajustar
+    max_age_days: 21        # parámetros más antiguos se ignoran
 
 confidence:
   # Puntuación 0-1 combinando calidad de datos y acuerdo entre modelos

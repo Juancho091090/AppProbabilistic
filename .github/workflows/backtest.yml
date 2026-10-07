@@ -3,13 +3,16 @@ name: backtest
 # Evaluación bajo demanda contra la base de datos de producción (solo lectura de datos;
 # no llama a las APIs). Resultados en el resumen del job, anotaciones y artefacto.
 on:
+  # Recalibración 1X2 semanal: lunes 05:20 Bogotá, antes del informe de las 06:37
+  schedule:
+    - cron: "20 10 * * 1"
   workflow_dispatch:
     inputs:
       command:
-        description: "backtest | market-benchmark"
+        description: "backtest | market-benchmark | fit-recalibration"
         default: backtest
         type: choice
-        options: [backtest, market-benchmark]
+        options: [backtest, market-benchmark, fit-recalibration]
       sport:
         description: "football | tennis (solo backtest)"
         default: football
@@ -47,7 +50,11 @@ jobs:
         run: alembic upgrade head
       - name: Evaluación
         run: |
-          if [ "${{ inputs.command }}" = "market-benchmark" ]; then
+          CMD="${{ inputs.command }}"
+          [ "${{ github.event_name }}" = "schedule" ] && CMD=fit-recalibration
+          if [ "$CMD" = "fit-recalibration" ]; then
+            sports-analytics fit-recalibration
+          elif [ "$CMD" = "market-benchmark" ]; then
             sports-analytics market-benchmark
           else
             START="${{ inputs.start }}"; END="${{ inputs.end }}"

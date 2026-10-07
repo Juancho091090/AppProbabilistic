@@ -193,3 +193,72 @@ class ProbabilityCalibrator:
         out = np.column_stack([c.transform(probs[:, k]) for k, c in enumerate(self.per_class)])
         out = np.clip(out, _EPS, None)
         return out / out.sum(axis=1, keepdims=True)
+
+
+# ------------------------------------------------- recalibración multinomial
+
+
+@dataclass
+class MultinomialRecalibrator:
+    """Corrige compresión y sesgos de una distribución 1X2:
+
+        q_k ∝ p_k^a · exp(b_k),   b_empate = 0
+
+    * ``a`` > 1 separa las probabilidades (corrige un modelo demasiado conservador);
+      ``a`` < 1 las acerca al centro.
+    * ``b_home`` / ``b_away`` corrigen sesgos sistemáticos (p. ej. local sobreestimado).
+
+    Se ajusta minimizando log-loss con penalización L2 hacia la identidad
+    (a=1, b=0), sobre predicciones walk-forward cuyo partido ya terminó.
+    """
+
+    a: float = 1.0
+    b_home: float = 0.0
+    b_away: float = 0.0
+    n_train: int = 0
+
+    @property
+    def is_identity(self) -> bool:
+        return self.a == 1.0 and self.b_home == 0.0 and self.b_away == 0.0
+
+    def transform(self, p: np.ndarray) -> np.ndarray:
+        probs = np.clip(np.atleast_2d(np.asarray(p, dtype=float)), 1e-12, 1.0)
+        bias = np.array([self.b_home, 0.0, self.b_away])
+        logits = self.a * np.log(probs) + bias
+        logits -= logits.max(axis=1, keepdims=True)
+        q = np.exp(logits)
+        q /= q.sum(axis=1, keepdims=True)
+        return q[0] if np.ndim(p) == 1 else q
+
+    def fit(self, p: np.ndarray, y: np.ndarray, l2: float = 1.0) -> MultinomialRecalibrator:
+        from scipy.optimize import minimize
+
+        probs = np.clip(np.atleast_2d(np.asarray(p, dtype=float)), 1e-12, 1.0)
+        y = np.asarray(y, dtype=int)
+        logp = np.log(probs)
+        n = len(y)
+
+        def loss(theta: np.ndarray) -> float:
+            a, bh, ba = theta
+            logits = a * logp + np.array([bh, 0.0, ba])
+            logits -= logits.max(axis=1, keepdims=True)
+            lse = np.log(np.exp(logits).sum(axis=1))
+            nll = -(logits[np.arange(n), y] - lse).mean()
+            return nll + l2 / n * ((a - 1.0) ** 2 + bh**2 + ba**2)
+
+        res = minimize(
+            loss,
+            np.array([1.0, 0.0, 0.0]),
+            method="L-BFGS-B",
+            bounds=[(0.25, 4.0), (-2.0, 2.0), (-2.0, 2.0)],
+        )
+        self.a, self.b_home, self.b_away = (float(v) for v in res.x)
+        self.n_train = n
+        return self
+
+    def to_dict(self) -> dict[str, float]:
+        return {"a": self.a, "b_home": self.b_home, "b_away": self.b_away, "n_train": self.n_train}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> MultinomialRecalibrator:
+        return cls(float(d["a"]), float(d["b_home"]), float(d["b_away"]), int(d.get("n_train", 0)))

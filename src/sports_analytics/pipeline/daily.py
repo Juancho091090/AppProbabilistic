@@ -27,6 +27,7 @@ from sports_analytics.models.outputs import MatchForecast
 from sports_analytics.models.tennis.predictor import TennisPredictor
 from sports_analytics.pipeline import ingest
 from sports_analytics.pipeline.calibration_state import load_calibration_state
+from sports_analytics.pipeline.recalibration import load_recalibrator
 from sports_analytics.pipeline.results import (
     latest_global_metrics,
     refresh_live_metrics,
@@ -116,6 +117,7 @@ def _predict_football(
         mcfg.version,
         weights=state.weights,
         calibrator=state.calibrator,
+        recalibrator=load_recalibrator(session, config, as_of),
     ).fit(history, as_of)
     log.info(
         "football_models_fitted",

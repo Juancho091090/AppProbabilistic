@@ -22,6 +22,7 @@ from sports_analytics.config.settings import Settings
 from sports_analytics.data.clients.api_football import ApiFootballClient
 from sports_analytics.data.clients.tennis_api import TennisApiClient
 from sports_analytics.db.models import (
+    DataSource,
     FootballMatchRow,
     FootballStatistics,
     MarketOdds,
@@ -462,6 +463,35 @@ def test_day2_settles_results(env, app_config):
         }
     assert set(pairs) == {"up1", "up2"} and pairs["up1"].outcome == 0 and pairs["up2"].outcome == 1
     assert pairs["up1"].market[0] == pytest.approx((1 / 1.80) / (1 / 1.80 + 1 / 3.70 + 1 / 4.60))
+
+
+def test_weekly_recalibration_fit_and_load(env, app_config):
+    from sports_analytics.pipeline.recalibration import (
+        PROVIDER,
+        fit_recalibration,
+        load_recalibrator,
+    )
+
+    settings, *_ = env
+    cal = dict(app_config.models.calibration)
+    cal["recalibration_1x2"] = {**cal["recalibration_1x2"], "window_days": 120, "min_samples": 50}
+    cfg = app_config.model_copy(
+        update={"models": app_config.models.model_copy(update={"calibration": cal})}
+    )
+    with session_scope(URL) as s:
+        res = fit_recalibration(s, settings, cfg, now=DAY2)
+        s.commit()
+        assert res.n >= 50 and res.status in ("applied", "rejected")
+        assert set(res.params) == {"a", "b_home", "b_away", "n_train"}
+        assert res.holdout["n_test"] > 0 and res.holdout["favorite"]
+        md = res.to_markdown()
+        assert "Validación fuera de muestra" in md and "Calibración del favorito" in md
+        row = s.scalar(select(DataSource).where(DataSource.provider == PROVIDER))
+        assert row.details["status"] == res.status
+        loaded = load_recalibrator(s, cfg, DAY2 + timedelta(hours=1))
+        assert (loaded is not None) == (res.status == "applied")
+        assert load_recalibrator(s, cfg, DAY2 + timedelta(days=40)) is None  # caducado
+        assert load_recalibrator(s, cfg, DAY2 - timedelta(days=1)) is None  # futuro: no
 
 
 def test_pipeline_survives_api_outage(env, app_config):

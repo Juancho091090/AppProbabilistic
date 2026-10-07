@@ -102,6 +102,18 @@ def _backtest(args: argparse.Namespace) -> int:
     return 0
 
 
+def _fit_recalibration(_: argparse.Namespace) -> int:
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.pipeline.recalibration import fit_recalibration
+
+    with session_scope(get_settings().database_url) as session:
+        result = fit_recalibration(session, get_settings(), get_config())
+    md = result.to_markdown()
+    print(md)
+    _publish(md, "recalibracion")
+    return 0
+
+
 def _market_benchmark(_: argparse.Namespace) -> int:
     """Predicciones reales del informe diario (ya liquidadas) frente al mercado."""
     from sports_analytics.db.session import session_scope
@@ -162,6 +174,10 @@ def build_parser() -> argparse.ArgumentParser:
     bt.add_argument("--refit-days", type=int, default=7)
     bt.add_argument("--output")
     bt.set_defaults(func=_backtest)
+
+    sub.add_parser(
+        "fit-recalibration", help="Ajusta y valida la recalibración 1X2 (walk-forward)"
+    ).set_defaults(func=_fit_recalibration)
 
     sub.add_parser(
         "market-benchmark", help="Compara las predicciones liquidadas con el mercado"

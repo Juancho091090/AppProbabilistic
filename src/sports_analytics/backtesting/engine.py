@@ -78,6 +78,10 @@ class BacktestReport:
     predictions: list[ResolvedPrediction] = field(default_factory=list)
     metrics: list[SegmentMetric] = field(default_factory=list)
     market_pairs: list[PairedForecast] = field(default_factory=list)
+    # (probabilidades 1X2 del ensemble antes de recalibrar, resultado 0/1/2, inicio UTC)
+    ensemble_1x2: list[tuple[tuple[float, float, float], int, datetime]] = field(
+        default_factory=list
+    )
     market_available: bool = False  # se pasaron precios de mercado al backtest
     bootstrap_samples: int = 2000
 
@@ -278,6 +282,18 @@ def run_backtest(
                     f = predictor.predict(scheduled)
                 report.n_matches += 1
                 report.predictions.extend(_resolve(f, m, sport))
+                if sport == "football":
+                    raw = f.context.get("ensemble_raw_1x2") or f.markets["1x2"]
+                    y = (
+                        0
+                        if m.home_goals > m.away_goals
+                        else 1
+                        if m.home_goals == m.away_goals
+                        else 2
+                    )
+                    report.ensemble_1x2.append(
+                        (tuple(float(raw[k]) for k in ("home", "draw", "away")), y, m.kickoff_utc)
+                    )
                 if report.market_available and m.match_id in market:
                     _add_market(report, f, m, market[m.match_id], mcfg.version)
             log.info(

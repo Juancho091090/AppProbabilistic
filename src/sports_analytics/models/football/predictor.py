@@ -17,7 +17,7 @@ import numpy as np
 from sports_analytics.core.timeutils import ensure_utc, now_utc
 from sports_analytics.data.schemas import FootballMatch
 from sports_analytics.features import football as ff
-from sports_analytics.models.calibration import ProbabilityCalibrator
+from sports_analytics.models.calibration import MultinomialRecalibrator, ProbabilityCalibrator
 from sports_analytics.models.confidence import assess_confidence
 from sports_analytics.models.ensemble import combine
 from sports_analytics.models.football.corners import CornersModel
@@ -39,6 +39,7 @@ class FootballPredictor:
     model_version: str = "ensemble_v1"
     weights: dict[str, float] | None = None  # pesos calibrados (si existen)
     calibrator: ProbabilityCalibrator | None = None
+    recalibrator: MultinomialRecalibrator | None = None  # corrige compresión/sesgo del 1X2
     as_of: datetime | None = None
     elo: FootballElo = field(init=False)
     poisson: PoissonGoalsModel = field(init=False)
@@ -109,6 +110,8 @@ class FootballPredictor:
         weights = self.weights or self.cfg["ensemble_weights_1x2"]
         ens = combine(per_model, weights)
         final = ens.probabilities
+        if self.recalibrator is not None and not self.recalibrator.is_identity:
+            final = self.recalibrator.transform(final)
         if self.calibrator is not None:
             final = self.calibrator.transform(final.reshape(1, -1))[0]
 
@@ -168,6 +171,12 @@ class FootballPredictor:
                 "ensemble_weights": ens.weights_used,
                 "models_missing": ens.models_missing,
                 "model_spread": ens.spread,
+                "ensemble_raw_1x2": dict(zip(OUTCOMES, map(float, ens.probabilities), strict=True)),
+                "recalibration": (
+                    self.recalibrator.to_dict()
+                    if self.recalibrator is not None and not self.recalibrator.is_identity
+                    else None
+                ),
                 "matches_used": {
                     "home": self.poisson.strength(home).n_matches,
                     "away": self.poisson.strength(away).n_matches,

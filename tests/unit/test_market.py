@@ -153,3 +153,55 @@ def test_backtest_includes_market_comparison(app_config):
     # Sin mercado no aparece la sección
     plain = run_backtest("football", matches, app_config, start, end, tz, refit_every_days=14)
     assert "Modelo vs mercado" not in plain.to_markdown("ensemble_v1")
+
+
+# ------------------------------------------------- recalibración multinomial 1X2
+
+
+def _compressed_sample(n=4000, shrink=0.6, home_bias=0.0, seed=1):
+    """Probabilidades reales → versión 'comprimida' (p^shrink), como un modelo conservador."""
+    rng = np.random.default_rng(seed)
+    true = rng.dirichlet([2.0, 1.2, 1.6], size=n)
+    y = np.array([rng.choice(3, p=t) for t in true])
+    comp = true**shrink * np.exp([home_bias, 0, 0])
+    comp /= comp.sum(axis=1, keepdims=True)
+    return comp, y
+
+
+def test_recalibrator_recovers_compression_and_improves_logloss():
+    from sports_analytics.models.calibration import MultinomialRecalibrator
+
+    p, y = _compressed_sample(home_bias=0.15)
+    rec = MultinomialRecalibrator().fit(p[:3000], y[:3000], l2=1.0)
+    assert rec.a == pytest.approx(1 / 0.6, rel=0.12)  # deshace la compresión
+    assert rec.b_home < 0  # corrige el local sobreestimado
+    ll = lambda q, yy: -np.log(q[np.arange(len(yy)), yy]).mean()  # noqa: E731
+    assert ll(rec.transform(p[3000:]), y[3000:]) < ll(p[3000:], y[3000:])
+    q = rec.transform(p[0])
+    assert q.shape == (3,) and q.sum() == pytest.approx(1.0)
+    assert MultinomialRecalibrator.from_dict(rec.to_dict()) == rec
+
+
+def test_recalibrator_identity_and_well_calibrated_input():
+    from sports_analytics.models.calibration import MultinomialRecalibrator
+
+    ident = MultinomialRecalibrator()
+    assert ident.is_identity
+    p = np.array([[0.5, 0.3, 0.2], [0.1, 0.2, 0.7]])
+    assert ident.transform(p) == pytest.approx(p)
+    # Si el modelo ya está calibrado, el ajuste queda cerca de la identidad
+    good, y = _compressed_sample(shrink=1.0, seed=3)
+    rec = MultinomialRecalibrator().fit(good, y)
+    assert rec.a == pytest.approx(1.0, abs=0.12) and abs(rec.b_home) < 0.1
+
+
+def test_backtest_exposes_raw_ensemble_1x2(app_config):
+    matches, _ = football_league(n_teams=12, rounds=4)
+    tz = ZoneInfo("America/Bogota")
+    start = (START + timedelta(days=60)).date()
+    rep = run_backtest(
+        "football", matches, app_config, start, matches[-1].kickoff_utc.date(), tz, 14
+    )
+    assert len(rep.ensemble_1x2) == rep.n_matches
+    probs, y, ko = rep.ensemble_1x2[0]
+    assert sum(probs) == pytest.approx(1.0) and y in (0, 1, 2) and ko.tzinfo is not None
