@@ -399,6 +399,19 @@ def start_run(session: Session, run_type: str, run_date: date) -> PipelineRun:
     return run
 
 
+def report_already_sent(
+    session: Session, run_date: date, exclude_run_id: int | None = None
+) -> bool:
+    q = select(PipelineRun.id).where(
+        PipelineRun.run_type == "daily",
+        PipelineRun.run_date == run_date,
+        (PipelineRun.telegram_sent.is_(True)) | (PipelineRun.email_sent.is_(True)),
+    )
+    if exclude_run_id is not None:
+        q = q.where(PipelineRun.id != exclude_run_id)
+    return session.scalar(q.limit(1)) is not None
+
+
 def finish_run(session: Session, run: PipelineRun, status: str) -> None:
     run.finished_at = now_utc()
     run.status = status

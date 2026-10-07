@@ -69,6 +69,8 @@ class Settings(BaseSettings):
     app_timezone: str = "America/Bogota"
     log_level: str = "INFO"
     dry_run: bool = False
+    # En ejecuciones programadas: no reenviar si hoy ya se envió el informe (evita duplicados)
+    skip_if_already_sent: bool = False
     cache_dir: str = "data/cache"
     http_timeout_seconds: float = 20.0
     http_max_retries: int = 4

@@ -433,3 +433,11 @@ def test_pipeline_survives_api_outage(env, app_config):
     assert out.status == "partial"
     assert any("football" in i.lower() or "fútbol" in i.lower() for i in out.issues)
     assert "# INFORME DEPORTIVO" in out.markdown
+
+
+def test_scheduled_run_does_not_resend_same_day(env, app_config):
+    settings, *_rest, services = env
+    # Día 1 ya se envió en test_day1_full_pipeline: una corrida programada no debe reenviar
+    s2 = settings.model_copy(update={"skip_if_already_sent": True})
+    out = run_daily(s2, app_config, services(), now=DAY1 + timedelta(hours=1))
+    assert not out.telegram_sent and not out.email_sent

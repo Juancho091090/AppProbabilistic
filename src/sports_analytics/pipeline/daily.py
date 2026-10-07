@@ -385,7 +385,13 @@ def run_daily(
             run.report_markdown = markdown
 
             # 5) Envío
-            if send and not settings.dry_run:
+            already = settings.skip_if_already_sent and repo.report_already_sent(
+                session, today, exclude_run_id=run.id
+            )
+            if already:
+                log.info("report_already_sent_today", extra={"date": today.isoformat()})
+                run.details = {**(run.details or {}), "skipped_send": "already_sent_today"}
+            if send and not settings.dry_run and not already:
                 if svc.telegram:
                     try:
                         svc.telegram.send_daily_report(markdown_to_telegram_html(markdown))
