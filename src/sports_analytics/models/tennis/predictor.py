@@ -22,7 +22,7 @@ from sports_analytics.core.timeutils import ensure_utc, now_utc
 from sports_analytics.data.schemas import TennisMatch
 from sports_analytics.features import tennis as tf
 from sports_analytics.models.calibration import ProbabilityCalibrator
-from sports_analytics.models.confidence import assess_confidence
+from sports_analytics.models.confidence import assess
 from sports_analytics.models.ensemble import combine
 from sports_analytics.models.logistic import ProbabilisticLogit
 from sports_analytics.models.outputs import MatchForecast, PredictionRecord
@@ -137,7 +137,9 @@ class TennisPredictor:
         markets["winner"] = {"A": p_a_final, "B": 1 - p_a_final}
 
         n_min = min(self.elo.matches_played(m.player_a), self.elo.matches_played(m.player_b))
-        conf = assess_confidence(
+        conf = assess(
+            sport="tennis",
+            favorite_probability=max(p_a_final, 1 - p_a_final),
             min_matches_side=n_min,
             required_matches=max(self.cfg["elo"]["surface_min_matches"] * 2, 20),
             spread=ens.spread,

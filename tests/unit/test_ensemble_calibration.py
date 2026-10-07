@@ -212,3 +212,43 @@ def test_confidence_levels(app_config):
     assert low.level == ConfidenceLevel.LOW
     assert low.notes
     assert ConfidenceLevel.MEDIUM.label_es == "Media"
+
+
+def test_confidence_favorite_probability_method():
+    from sports_analytics.models.confidence import assess
+
+    cfg = {
+        "method": "favorite_probability",
+        "favorite_thresholds": {"football": {"high": 0.60, "medium": 0.45}},
+        "min_data_quality": 0.6,
+        "high": 0.70,
+        "medium": 0.45,
+        "max_model_spread": 0.15,
+    }
+    common = dict(sport="football", required_matches=10, models_missing=0, models_total=4, cfg=cfg)
+    hi = assess(favorite_probability=0.65, min_matches_side=20, spread=0.05, **common)
+    mid = assess(favorite_probability=0.50, min_matches_side=20, spread=0.05, **common)
+    lo = assess(favorite_probability=0.40, min_matches_side=20, spread=0.05, **common)
+    assert [c.level for c in (hi, mid, lo)] == [
+        ConfidenceLevel.HIGH,
+        ConfidenceLevel.MEDIUM,
+        ConfidenceLevel.LOW,
+    ]
+    assert hi.score == 0.65
+    # Poco histórico o desacuerdo: baja un nivel (no por debajo de Baja)
+    thin = assess(favorite_probability=0.65, min_matches_side=3, spread=0.05, **common)
+    split = assess(favorite_probability=0.65, min_matches_side=20, spread=0.30, **common)
+    assert thin.level == split.level == ConfidenceLevel.MEDIUM
+    assert any("histórico" in n for n in thin.notes)
+    assert (
+        assess(favorite_probability=0.40, min_matches_side=3, spread=0.3, **common).level
+        == ConfidenceLevel.LOW
+    )
+    # Método anterior intacto
+    old = assess(
+        favorite_probability=0.9,
+        min_matches_side=20,
+        spread=0.0,
+        **{**common, "cfg": {**cfg, "method": "data_agreement"}},
+    )
+    assert old.level == ConfidenceLevel.HIGH and old.score == 1.0

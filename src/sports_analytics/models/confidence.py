@@ -1,9 +1,17 @@
 """Nivel de confianza de una predicción (Alta / Media / Baja).
 
-No es una probabilidad: resume si la predicción se apoya en datos suficientes y
-si los modelos coinciden.
+Método ``favorite_probability`` (por defecto desde el 7-oct-2026):
 
-    score = 0.5 · calidad_de_datos + 0.5 · acuerdo_entre_modelos
+1. Nivel base según la probabilidad final (calibrada) del resultado más probable. En un
+   modelo calibrado esa probabilidad ES la tasa de acierto esperada del favorito, así
+   que el nivel separa los pronósticos que más aciertan.
+2. Baja un nivel si el histórico es insuficiente (calidad de datos < ``min_data_quality``)
+   o si los modelos discrepan más de ``max_model_spread``.
+
+El método anterior (``data_agreement``: 0.5 · calidad de datos + 0.5 · acuerdo) no
+anticipaba el acierto en el backtest (Alta 48.1 %, Media 53.6 %) y queda como opción.
+
+    score = 0.5 · calidad_de_datos + 0.5 · acuerdo_entre_modelos   (data_agreement)
 
 * calidad_de_datos ∈ [0,1]: min(n_partidos / mínimo_requerido, 1) del lado con
   menos datos, penalizado si faltan modelos del ensemble.
@@ -63,3 +71,41 @@ def assess_confidence(
     else:
         level = ConfidenceLevel.LOW
     return ConfidenceAssessment(level, score, data_q, agreement, tuple(notes))
+
+
+_ORDER = [ConfidenceLevel.LOW, ConfidenceLevel.MEDIUM, ConfidenceLevel.HIGH]
+
+
+def assess(
+    *,
+    sport: str,
+    favorite_probability: float,
+    min_matches_side: int,
+    required_matches: int,
+    spread: float,
+    models_missing: int,
+    models_total: int,
+    cfg: dict,
+) -> ConfidenceAssessment:
+    """Punto de entrada: aplica el método configurado en ``confidence.method``."""
+    base = assess_confidence(
+        min_matches_side=min_matches_side,
+        required_matches=required_matches,
+        spread=spread,
+        models_missing=models_missing,
+        models_total=models_total,
+        cfg=cfg,
+    )
+    if cfg.get("method", "data_agreement") != "favorite_probability":
+        return base
+    th = cfg["favorite_thresholds"][sport]
+    p = favorite_probability
+    idx = 2 if p >= th["high"] else 1 if p >= th["medium"] else 0
+    notes = list(base.notes)
+    if base.data_quality < cfg.get("min_data_quality", 0.6) and idx > 0:
+        idx -= 1
+        notes.append("confianza rebajada: histórico insuficiente")
+    elif spread > cfg.get("max_model_spread", 0.15) and idx > 0:
+        idx -= 1
+        notes.append("confianza rebajada: los modelos discrepan")
+    return ConfidenceAssessment(_ORDER[idx], p, base.data_quality, base.agreement, tuple(notes))

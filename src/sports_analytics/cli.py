@@ -159,6 +159,39 @@ def _export_metrics(args: argparse.Namespace) -> int:
     return 0
 
 
+def _ab_test(args: argparse.Namespace) -> int:
+    """Compara la configuración en producción con la de la Fase A (mismo backtest)."""
+    import json
+
+    from sports_analytics.core.timeutils import local_today, now_utc
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.evaluation.ab import run_ab, to_markdown
+
+    settings, config = get_settings(), get_config()
+    end = local_today(settings.tz) - timedelta(days=1)
+    start = end - timedelta(days=args.days)
+    with session_scope(settings.database_url) as session:
+        hist = repo.load_football_history(session, now_utc() - timedelta(days=3 * 365))
+    variants = {
+        "actual": {},
+        "fase_a": {
+            "football.league_effects.enabled": True,
+            "confidence.method": "favorite_probability",
+        },
+    }
+    names = {c.key: c.name for c in config.competitions.football}
+    res = run_ab(hist, config, variants, start, end, settings.tz, args.refit_days, names)
+    md = to_markdown(res, start, end)
+    print(md)
+    out = Path(args.output)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    out.with_suffix(".md").write_text(md, encoding="utf-8")
+    _publish(md, "ab-test")
+    return 0
+
+
 def _data_audit(_: argparse.Namespace) -> int:
     """Auditoría de la base de datos (solo lectura, sin llamadas a APIs)."""
     from sqlalchemy import case, func, select
@@ -309,6 +342,12 @@ def build_parser() -> argparse.ArgumentParser:
     ex.add_argument("--refit-days", type=int, default=7)
     ex.add_argument("--output", default="reports/metrics/metrics.json")
     ex.set_defaults(func=_export_metrics)
+
+    ab = sub.add_parser("ab-test", help="Backtest A/B: configuración anterior vs actual")
+    ab.add_argument("--days", type=int, default=150)
+    ab.add_argument("--refit-days", type=int, default=7)
+    ab.add_argument("--output", default="reports/metrics/ab.json")
+    ab.set_defaults(func=_ab_test)
 
     sub.add_parser("data-audit", help="Auditoría de la base de datos (sin APIs)").set_defaults(
         func=_data_audit

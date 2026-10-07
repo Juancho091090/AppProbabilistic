@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from sports_analytics.data.schemas import FootballMatch, strictly_before
+from sports_analytics.models.football.league import LeagueEffects
 
 
 def goal_diff_multiplier(goal_diff: int) -> float:
@@ -39,6 +40,7 @@ class FootballElo:
     season_gap_days: float = 45.0
     base_draw: float = 0.27
     draw_decay: float = 0.0008
+    league: LeagueEffects | None = None  # escala la ventaja de local por competición
     ratings: dict[str, float] = field(default_factory=dict)
     games_played: dict[str, int] = field(default_factory=dict)
     last_played: dict[str, datetime] = field(default_factory=dict)
@@ -63,8 +65,16 @@ class FootballElo:
     def rating(self, team: str) -> float:
         return self.ratings.get(team, self.initial_rating)
 
-    def expected_home(self, home: str, away: str, neutral: bool = False) -> float:
-        hfa = 0.0 if neutral else self.home_advantage
+    def hfa(self, neutral: bool = False, competition: str | None = None) -> float:
+        if neutral:
+            return 0.0
+        ratio = self.league.hfa_ratio(competition) if self.league is not None else 1.0
+        return self.home_advantage * ratio
+
+    def expected_home(
+        self, home: str, away: str, neutral: bool = False, competition: str | None = None
+    ) -> float:
+        hfa = self.hfa(neutral, competition)
         diff = self.rating(home) + hfa - self.rating(away)
         return 1.0 / (1.0 + 10 ** (-diff / 400.0))
 
@@ -79,7 +89,9 @@ class FootballElo:
             raise ValueError("Solo se actualiza con partidos finalizados")
         for team in (match.home_team, match.away_team):
             self._maybe_regress(team, match.kickoff_utc)
-        we = self.expected_home(match.home_team, match.away_team, match.neutral_venue)
+        we = self.expected_home(
+            match.home_team, match.away_team, match.neutral_venue, match.competition_key
+        )
         gd = match.home_goals - match.away_goals
         w = 1.0 if gd > 0 else 0.5 if gd == 0 else 0.0
         g = goal_diff_multiplier(gd) if self.goal_diff_multiplier else 1.0
@@ -105,8 +117,10 @@ class FootballElo:
     def draw_probability(self, elo_diff: float) -> float:
         return self.base_draw * math.exp(-self.draw_decay * abs(elo_diff))
 
-    def predict_1x2(self, home: str, away: str, neutral: bool = False) -> dict[str, float]:
-        hfa = 0.0 if neutral else self.home_advantage
+    def predict_1x2(
+        self, home: str, away: str, neutral: bool = False, competition: str | None = None
+    ) -> dict[str, float]:
+        hfa = self.hfa(neutral, competition)
         diff = self.rating(home) + hfa - self.rating(away)
         we = 1.0 / (1.0 + 10 ** (-diff / 400.0))
         p_draw = min(self.draw_probability(diff), 2 * min(we, 1 - we))

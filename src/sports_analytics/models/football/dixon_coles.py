@@ -89,7 +89,10 @@ class DixonColesModel:
             return self
 
         w = recency_weights([m.kickoff_utc for m in train], as_of, recency_cfg, "football")
-        lams = [self.base.expected_goals(m.home_team, m.away_team, m.neutral_venue) for m in train]
+        lams = [
+            self.base.expected_goals(m.home_team, m.away_team, m.neutral_venue, m.competition_key)
+            for m in train
+        ]
 
         def neg_loglik(rho: float) -> float:
             # Solo las celdas 0/1 dependen de ρ, más la constante de normalización
@@ -106,6 +109,8 @@ class DixonColesModel:
         self.rho_estimated = bool(res.success)
         return self
 
-    def predict_matrix(self, home: str, away: str, neutral: bool = False) -> np.ndarray:
-        lam, mu = self.base.expected_goals(home, away, neutral)
+    def predict_matrix(
+        self, home: str, away: str, neutral: bool = False, competition: str | None = None
+    ) -> np.ndarray:
+        lam, mu = self.base.expected_goals(home, away, neutral, competition)
         return dixon_coles_matrix(lam, mu, self.rho, self.base.max_goals)

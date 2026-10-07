@@ -8,6 +8,11 @@ on:
     - cron: "40 10 * * 1"   # lunes 05:40 Bogotá, después de la recalibración
   workflow_dispatch:
     inputs:
+      mode:
+        description: "export | ab-test"
+        type: choice
+        options: [export, ab-test]
+        default: export
       football_days:
         description: "Días de fútbol a evaluar"
         default: "150"
@@ -41,6 +46,11 @@ jobs:
         run: alembic upgrade head
       - name: Calcular métricas
         run: |
+          if [ "${{ inputs.mode }}" = "ab-test" ]; then
+            sports-analytics ab-test --days "${{ inputs.football_days || '150' }}" \
+              --output "$RUNNER_TEMP/ab.json"
+            exit 0
+          fi
           sports-analytics export-metrics \
             --football-days "${{ inputs.football_days || '150' }}" \
             --tennis-days "${{ inputs.tennis_days || '180' }}" \
@@ -56,9 +66,16 @@ jobs:
             git switch --orphan metrics-data
             git rm -rf --quiet . || true
           fi
-          mkdir -p metrics
-          cp "$RUNNER_TEMP/metrics.json" metrics/latest.json
-          cp "$RUNNER_TEMP/metrics.json" "metrics/$(TZ=America/Bogota date +%F).json"
-          git add metrics
+          mkdir -p metrics experiments
+          STAMP=$(TZ=America/Bogota date +%F-%H%M)
+          if [ -f "$RUNNER_TEMP/ab.json" ]; then
+            cp "$RUNNER_TEMP/ab.json" "experiments/ab-$STAMP.json"
+            cp "$RUNNER_TEMP/ab.md" "experiments/ab-$STAMP.md"
+            cp "$RUNNER_TEMP/ab.md" experiments/latest.md
+          else
+            cp "$RUNNER_TEMP/metrics.json" metrics/latest.json
+            cp "$RUNNER_TEMP/metrics.json" "metrics/$(TZ=America/Bogota date +%F).json"
+          fi
+          git add metrics experiments
           git commit -m "métricas $(TZ=America/Bogota date +%F) (run ${GITHUB_RUN_ID})" || exit 0
           git push origin metrics-data

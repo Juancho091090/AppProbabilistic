@@ -93,7 +93,7 @@ class ModelsConfig(BaseModel):
     football: dict[str, Any]
     tennis: dict[str, Any]
     calibration: dict[str, Any]
-    confidence: dict[str, float]
+    confidence: dict[str, Any]
     market: MarketConfig = Field(default_factory=MarketConfig)
 
     @model_validator(mode="after")

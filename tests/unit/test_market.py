@@ -258,3 +258,22 @@ def test_export_tables_from_backtest(app_config):
     ttabs = {t["title"]: t for t in tennis_tables(trep.match_rows)}
     assert ttabs["Resumen tenis (ganador)"]["rows"][0][0] == trep.n_matches
     assert football_tables([]) == [] and tennis_tables([]) == []
+
+
+def test_ab_overrides_and_markdown(app_config):
+    from sports_analytics.evaluation.ab import run_ab, to_markdown, with_overrides
+
+    fase_a = {"football.league_effects.enabled": True, "confidence.method": "favorite_probability"}
+    cfg = with_overrides(app_config, fase_a)
+    assert cfg.models.football["league_effects"]["enabled"] is True
+    assert cfg.models.confidence["method"] == "favorite_probability"
+    assert app_config.models.football["league_effects"]["enabled"] is False  # sin mutar
+    matches, _ = football_league(n_teams=12, rounds=4)
+    tz = ZoneInfo("America/Bogota")
+    start = (START + timedelta(days=60)).date()
+    end = matches[-1].kickoff_utc.date()
+    res = run_ab(matches, app_config, {"actual": {}, "fase_a": fase_a}, start, end, tz, 14, {})
+    assert res["actual"]["n"] == res["fase_a"]["n"] > 50
+    assert res["actual"]["rps"] != res["fase_a"]["rps"]  # la variante cambia el modelo
+    md = to_markdown(res, start, end)
+    assert "| RPS (menor mejor) |" in md and "Confianza · fase_a" in md

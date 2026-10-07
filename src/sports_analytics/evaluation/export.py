@@ -428,7 +428,7 @@ def tennis_tables(rows: Sequence[dict]) -> list[dict]:
                     sc.log_loss_binary(p, y),
                     float(yf.mean()),
                     float(pf.mean()),
-                    sc.auc(p, y),
+                    sc.auc(pf, yf),
                     sc.ece(pf, yf),
                     mu["reliability"],
                     mu["resolution"],
@@ -485,7 +485,9 @@ def tennis_tables(rows: Sequence[dict]) -> list[dict]:
                     sc.brier_binary(pm, yc),
                     sc.log_loss_binary(pm, yc),
                     float(((pm >= 0.5) == (yc == 1)).mean()),
-                    sc.auc(pm, yc),
+                    # AUC con el favorito como evento: el orden jugador 1/2 de la API no
+                    # es aleatorio (el ganador suele ir primero), así que no se usa
+                    sc.auc(np.maximum(pm, 1 - pm), np.where(pm >= 0.5, yc, 1 - yc)),
                 ]
             )
     tables.append(

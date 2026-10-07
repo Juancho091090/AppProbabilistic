@@ -27,6 +27,7 @@ from scipy.stats import poisson
 
 from sports_analytics.data.schemas import FootballMatch, strictly_before
 from sports_analytics.features.recency import recency_weights
+from sports_analytics.models.football.league import LeagueEffects
 
 
 @dataclass
@@ -46,6 +47,7 @@ class PoissonGoalsModel:
     mu_home: float = 1.45
     mu_away: float = 1.15
     teams: dict[str, TeamStrength] = field(default_factory=dict)
+    league: LeagueEffects | None = None  # medias por competición (None = globales)
     fitted_as_of: datetime | None = None
     n_train: int = 0
 
@@ -75,6 +77,10 @@ class PoissonGoalsModel:
         ag = np.array([m.away_goals for m in train], dtype=float)
         self.mu_home = float(np.average(hg, weights=w))
         self.mu_away = float(np.average(ag, weights=w))
+        # Medias esperadas por partido: las de su competición si hay efectos por liga
+        means = [self._means(m.competition_key) for m in train]
+        muh = np.array([x[0] for x in means])
+        mua = np.array([x[1] for x in means])
 
         names = sorted({m.home_team for m in train} | {m.away_team for m in train})
         idx = {t: i for i, t in enumerate(names)}
@@ -89,14 +95,14 @@ class PoissonGoalsModel:
         for _ in range(self.iterations):
             # Ataque: goles marcados / goles esperados contra la defensa rival
             scored = np.bincount(hi, w * hg, n) + np.bincount(ai, w * ag, n)
-            exp_scored = np.bincount(hi, w * self.mu_home * dfn[ai], n) + np.bincount(
-                ai, w * self.mu_away * dfn[hi], n
+            exp_scored = np.bincount(hi, w * muh * dfn[ai], n) + np.bincount(
+                ai, w * mua * dfn[hi], n
             )
             att = (scored + k * mu_bar) / (exp_scored + k * mu_bar)
             # Defensa: goles recibidos / esperados contra el ataque rival
             conceded = np.bincount(hi, w * ag, n) + np.bincount(ai, w * hg, n)
-            exp_conceded = np.bincount(hi, w * self.mu_away * att[ai], n) + np.bincount(
-                ai, w * self.mu_home * att[hi], n
+            exp_conceded = np.bincount(hi, w * mua * att[ai], n) + np.bincount(
+                ai, w * muh * att[hi], n
             )
             dfn = (conceded + k * mu_bar) / (exp_conceded + k * mu_bar)
             # Normalización: media geométrica 1 (identificabilidad)
@@ -119,11 +125,18 @@ class PoissonGoalsModel:
     def has_enough_data(self, team: str) -> bool:
         return self.strength(team).n_matches >= self.min_matches
 
-    def expected_goals(self, home: str, away: str, neutral: bool = False) -> tuple[float, float]:
+    def _means(self, competition: str | None) -> tuple[float, float]:
+        if self.league is None:
+            return self.mu_home, self.mu_away
+        return self.league.goal_means(competition)
+
+    def expected_goals(
+        self, home: str, away: str, neutral: bool = False, competition: str | None = None
+    ) -> tuple[float, float]:
         h, a = self.strength(home), self.strength(away)
-        mu_h, mu_a = (
-            ((self.mu_home + self.mu_away) / 2,) * 2 if neutral else (self.mu_home, self.mu_away)
-        )
+        mu_h, mu_a = self._means(competition)
+        if neutral:
+            mu_h = mu_a = (mu_h + mu_a) / 2
         return mu_h * h.attack * a.defense, mu_a * a.attack * h.defense
 
     def score_matrix(self, lam_home: float, lam_away: float) -> np.ndarray:
@@ -131,5 +144,7 @@ class PoissonGoalsModel:
         matrix = np.outer(poisson.pmf(goals, lam_home), poisson.pmf(goals, lam_away))
         return matrix / matrix.sum()
 
-    def predict_matrix(self, home: str, away: str, neutral: bool = False) -> np.ndarray:
-        return self.score_matrix(*self.expected_goals(home, away, neutral))
+    def predict_matrix(
+        self, home: str, away: str, neutral: bool = False, competition: str | None = None
+    ) -> np.ndarray:
+        return self.score_matrix(*self.expected_goals(home, away, neutral, competition))

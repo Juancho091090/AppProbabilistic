@@ -18,11 +18,12 @@ from sports_analytics.core.timeutils import ensure_utc, now_utc
 from sports_analytics.data.schemas import FootballMatch
 from sports_analytics.features import football as ff
 from sports_analytics.models.calibration import MultinomialRecalibrator, ProbabilityCalibrator
-from sports_analytics.models.confidence import assess_confidence
+from sports_analytics.models.confidence import assess
 from sports_analytics.models.ensemble import combine
 from sports_analytics.models.football.corners import CornersModel
 from sports_analytics.models.football.dixon_coles import DixonColesModel
 from sports_analytics.models.football.elo import FootballElo
+from sports_analytics.models.football.league import LeagueEffects, fit_league_effects
 from sports_analytics.models.football.markets import one_x_two, summarize_matrix
 from sports_analytics.models.football.poisson import PoissonGoalsModel
 from sports_analytics.models.logistic import ProbabilisticLogit
@@ -47,10 +48,25 @@ class FootballPredictor:
     corners: CornersModel = field(init=False)
     logistic: ProbabilisticLogit = field(init=False)
     feature_state: ff.FootballFeatureState | None = field(init=False, default=None)
+    league: LeagueEffects | None = field(init=False, default=None)
 
     def fit(self, history: Sequence[FootballMatch], as_of: datetime) -> FootballPredictor:
         self.as_of = ensure_utc(as_of)
+        le_cfg = self.cfg.get("league_effects") or {}
+        league = (
+            fit_league_effects(
+                history,
+                self.as_of,
+                self.recency_cfg,
+                le_cfg.get("prior_matches", 60),
+                tuple(le_cfg.get("hfa_ratio_bounds", (0.0, 2.0))),
+            )
+            if le_cfg.get("enabled", False)
+            else None
+        )
+        self.league = league
         self.elo = FootballElo.from_config(self.cfg["elo"])
+        self.elo.league = league
         x, y, self.feature_state = ff.build_training_set(
             history,
             self.as_of,
@@ -58,9 +74,9 @@ class FootballPredictor:
             self.recency_cfg["half_life_days"]["football"],
             self.cfg["logistic"]["min_history"],
         )
-        self.poisson = PoissonGoalsModel.from_config(self.cfg["poisson"]).fit(
-            history, self.as_of, self.recency_cfg
-        )
+        self.poisson = PoissonGoalsModel.from_config(self.cfg["poisson"])
+        self.poisson.league = league
+        self.poisson.fit(history, self.as_of, self.recency_cfg)
         self.dixon_coles = DixonColesModel.from_config(self.poisson, self.cfg["dixon_coles"])
         self.dixon_coles.fit_rho(history, self.as_of, self.recency_cfg)
         self.corners = CornersModel.from_config(
@@ -78,7 +94,7 @@ class FootballPredictor:
         if not self.logistic.is_fitted or self.feature_state is None:
             return None
         feats = self.feature_state.features(
-            match.home_team, match.away_team, self.as_of, match.neutral_venue
+            match.home_team, match.away_team, self.as_of, match.neutral_venue, match.competition_key
         )
         if np.isnan(feats).any():
             return None
@@ -93,18 +109,19 @@ class FootballPredictor:
             # Un partido ya iniciado no se predice con este modelo (evita mirar el resultado)
             raise ValueError("El partido comenzó antes de as_of; no se puede predecir sin leakage")
         home, away, neutral = match.home_team, match.away_team, match.neutral_venue
+        comp = match.competition_key
         notes: list[str] = []
 
         poisson_ok = self.poisson.has_enough_data(home) and self.poisson.has_enough_data(away)
         if not poisson_ok:
             notes.append("Poisson/Dixon-Coles con pocos partidos de algún equipo")
 
-        dc_matrix = self.dixon_coles.predict_matrix(home, away, neutral)
-        poisson_matrix = self.poisson.predict_matrix(home, away, neutral)
+        dc_matrix = self.dixon_coles.predict_matrix(home, away, neutral, comp)
+        poisson_matrix = self.poisson.predict_matrix(home, away, neutral, comp)
         per_model = {
             "dixon_coles": list(one_x_two(dc_matrix).values()) if poisson_ok else None,
             "poisson": list(one_x_two(poisson_matrix).values()) if poisson_ok else None,
-            "elo": list(self.elo.predict_1x2(home, away, neutral).values()),
+            "elo": list(self.elo.predict_1x2(home, away, neutral, comp).values()),
             "logistic": self._logistic_1x2(match),
         }
         weights = self.weights or self.cfg["ensemble_weights_1x2"]
@@ -128,7 +145,9 @@ class FootballPredictor:
             notes.append("Córners: datos insuficientes")
 
         n_min = min(self.poisson.strength(home).n_matches, self.poisson.strength(away).n_matches)
-        conf = assess_confidence(
+        conf = assess(
+            sport="football",
+            favorite_probability=float(np.max(final)),
             min_matches_side=n_min,
             required_matches=max(self.cfg["poisson"]["min_matches"] * 2, 10),
             spread=ens.spread,
@@ -162,7 +181,7 @@ class FootballPredictor:
                 "lambda": dict(
                     zip(
                         ("home", "away"),
-                        self.poisson.expected_goals(home, away, neutral),
+                        self.poisson.expected_goals(home, away, neutral, comp),
                         strict=True,
                     )
                 ),

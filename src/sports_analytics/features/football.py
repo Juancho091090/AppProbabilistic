@@ -65,9 +65,16 @@ class FootballFeatureState:
             float(np.average(h.pts, weights=w)),
         )
 
-    def features(self, home: str, away: str, as_of: datetime, neutral: bool = False) -> list[float]:
+    def features(
+        self,
+        home: str,
+        away: str,
+        as_of: datetime,
+        neutral: bool = False,
+        competition: str | None = None,
+    ) -> list[float]:
         as_of = ensure_utc(as_of)
-        hfa = 0.0 if neutral else self.elo.home_advantage
+        hfa = self.elo.hfa(neutral, competition)
         elo_diff = self.elo.rating(home) + hfa - self.elo.rating(away)
         hgf, hga, hform = self._weighted(home, as_of)
         agf, aga, aform = self._weighted(away, as_of)
@@ -107,7 +114,11 @@ def build_training_set(
             and len(state.history[m.away_team].dates) >= min_history
         )
         if enough:
-            rows.append(state.features(m.home_team, m.away_team, m.kickoff_utc, m.neutral_venue))
+            rows.append(
+                state.features(
+                    m.home_team, m.away_team, m.kickoff_utc, m.neutral_venue, m.competition_key
+                )
+            )
             labels.append(outcome_label(m))
         state.update(m)
     elo.fitted_as_of = as_of
