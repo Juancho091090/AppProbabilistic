@@ -317,3 +317,11 @@ def test_extract_json_object_tolerates_extra_text():
     assert extract_json_object(text) == {"summary": "a {b}", "matches": {}}
     with pytest.raises(ValueError):
         extract_json_object("sin json")
+
+
+def test_issue_headline_strips_api_details():
+    from sports_analytics.reporting.claude_narrator import _issue_headline
+
+    raw = 'Tenis: ingesta fallida ([tennis_api] HTTP 429: {"message":"exceeded the DAILY quota"} en /x)'
+    assert _issue_headline(raw) == "Tenis: ingesta fallida"
+    assert _issue_headline("Sin estadísticas de córners") == "Sin estadísticas de córners"

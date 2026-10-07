@@ -58,7 +58,9 @@ estimes ni inventes cifras, porcentajes o estadísticas.
 - No modifiques ni reinterpretes probabilidades. No digas qué resultado "va a pasar".
 - Lenguaje de analítica estadística. Prohibido cualquier lenguaje de apuestas \
 (apuesta, pick, stake, cuota, valor, segura, etc.).
-- Señala datos faltantes o desacuerdo entre modelos cuando el JSON lo indique.
+- Señala datos faltantes o desacuerdo entre modelos cuando el JSON lo indique. \
+Las incidencias técnicas descríbelas solo como "datos no disponibles", sin detalles \
+de proveedores, límites de consultas ni errores.
 
 Responde SOLO con JSON válido:
 {"summary": "2-3 frases sobre la jornada",
@@ -84,6 +86,11 @@ def extract_json_object(text: str) -> dict[str, Any]:
 
 def _pct(p: float) -> float:
     return round(p * 100, 1)
+
+
+def _issue_headline(issue: str) -> str:
+    """Solo el titular de la incidencia: sin trazas técnicas de APIs (URLs, cuerpos HTTP)."""
+    return re.split(r"\s*[\(\[:]\s*(?=\[|\(|HTTP|https?://)", issue, maxsplit=1)[0].strip()[:120]
 
 
 def compact_payload(payload: DailyReportPayload) -> dict[str, Any]:
@@ -124,7 +131,7 @@ def compact_payload(payload: DailyReportPayload) -> dict[str, Any]:
     return {
         "date": payload.report_date.isoformat(),
         "matches": matches,
-        "data_issues": payload.data_issues[:20],
+        "data_issues": [_issue_headline(i) for i in payload.data_issues[:20]],
     }
 
 
