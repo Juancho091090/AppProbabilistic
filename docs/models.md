@@ -60,6 +60,28 @@ predicciones ya resueltas y rechaza cualquier evento con fecha ≥ `as_of`.
   con 1.000 o más. Se ajusta una clase contra el resto y se renormaliza. Las filas
   posteriores a `as_of` se descartan.
 
+### Recalibración multinomial del 1X2 (`MultinomialRecalibrator`)
+
+El backtest de producción mostró que el ensemble es demasiado conservador (favoritos
+claros por debajo de su frecuencia real) y sobreestima al local. Tras el ensemble y
+antes del calibrador vivo se aplica
+
+    q_k ∝ p_k^a · exp(b_k),   b_empate = 0
+
+`a` > 1 separa las probabilidades; `b_local` y `b_visitante` corrigen sesgos. Se ajusta
+cada lunes (`fit-recalibration`, workflow `backtest`) minimizando log-loss sobre las
+predicciones walk-forward de los últimos `window_days` días, con penalización L2 hacia
+la identidad. Antes de aplicarla se valida fuera de muestra: se ajusta con el primer
+70 % cronológico y se mide en el 30 % final; **solo se aplica si mejora la log-loss**.
+Los parámetros caducan a los `max_age_days`. Las líneas de goles (Dixon-Coles) no se
+modifican.
+
+Primer ajuste (7-oct-2026, 2.181 partidos del 9-may al 6-oct): a = 1.209,
+b_local = −0.215, b_visitante = −0.042. Fuera de muestra (654 partidos): log-loss
+1.0020 → 0.9976, Brier 0.5993 → 0.5962, probabilidad media del local 45.9 % → 44.6 %
+(real 42.5 %). Persiste que los favoritos de más del 60 % ganan más de lo predicho:
+una sola potencia no lo corrige del todo (ver *Pendientes*).
+
 ## Confianza (`models/confidence.py`)
 
 `score = 0.5·calidad_de_datos + 0.5·acuerdo_entre_modelos` → Alta (≥ 0.70),
@@ -93,6 +115,10 @@ mercado se toma con el último precio previo al inicio, que ya incorpora alineac
 noticias. La comparación es por tanto exigente con el modelo.
 
 ## Pendientes conocidos
+
+* 1X2: los favoritos con más del 60 % siguen por debajo de su frecuencia real tras la
+  recalibración. Origen probable en los componentes (shrinkage de Poisson, K y ventaja
+  de local del Elo, peso de la recencia); revisar con backtests por componente.
 
 * Córners: regresión Binomial Negativa con tiros y posesión previos al partido como
   covariables. Requiere estadísticas reales por partido de API-Football.

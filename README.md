@@ -125,8 +125,11 @@ resumen arriba y el detalle completo debajo (texto + HTML), y correos de error c
 
 ## 10. GitHub Actions
 
-* `daily_prediction.yml`: cron `37 11 * * *` = 06:37 Bogotá (UTC−5 fijo); no reenvía si ya se envió.
-* `backtest.yml`: backtest o benchmark de mercado sobre la base de producción (manual).
+* `daily_prediction.yml`: lunes a viernes 06:37 Bogotá con los partidos del día; viernes y
+  sábado 18:45 Bogotá con los partidos del día siguiente (hay ligas desde las 05:00). No
+  reenvía si el informe de esa fecha ya salió.
+* `backtest.yml`: backtest, benchmark de mercado o recalibración 1X2 (manual); la
+  recalibración corre sola cada lunes a las 05:20 Bogotá.
 * `tests.yml`: lint y tests en cada push.
 * `smoke_test.yml`: corrida real sin envío sobre base efímera (manual).
 * `api_diagnostics.yml`: diagnóstico de APIs (manual).
