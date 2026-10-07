@@ -392,6 +392,97 @@ def check_tennis_join(settings: Settings, today: date | None = None) -> list[str
     return lines
 
 
+def check_odds(settings: Settings, ref_day: date | None = None) -> list[str]:
+    """Explora /odds de API-Football: casas, mercado 1X2 y cuánto histórico conserva.
+    También lista los marcadores finales de la Nations League del día de referencia."""
+    lines = ["## API-Football: cuotas e histórico", ""]
+    if settings.api_football_key is None:
+        return [*lines, "❌ `API_FOOTBALL_KEY` no está definida."]
+    client = ApiFootballClient(settings)
+    day = ref_day or date.fromisoformat(os.environ.get("DIAG_DATE", "2026-10-06"))
+    try:
+        fixtures = client.fixtures_by_date(day)
+        nl = [
+            f
+            for f in fixtures
+            if "nations league" in f["league"]["name"].lower()
+            and f["league"].get("country") == "World"
+        ]
+        lines += [
+            f"### Nations League {day} ({len(nl)} partidos)",
+            "",
+            "| fixture | Partido | Estado | Marcador |",
+            "|---|---|---|---|",
+        ]
+        for f in nl:
+            g = f["goals"]
+            lines.append(
+                f"| {f['fixture']['id']} | {f['teams']['home']['name']} vs "
+                f"{f['teams']['away']['name']} | {f['fixture']['status']['short']} | "
+                f"{g['home']}-{g['away']} |"
+            )
+        lines.append("")
+
+        books = client.http.get("/odds/bookmakers").get("response", [])
+        lines.append("Casas (id:nombre): " + ", ".join(f"{b['id']}:{b['name']}" for b in books))
+        bets = client.http.get("/odds/bets", {"search": "Winner"}).get("response", [])
+        lines.append("Mercados 'Winner': " + ", ".join(f"{b['id']}:{b['name']}" for b in bets))
+        lines.append("")
+
+        def probe(fid: Any, label: str) -> None:
+            payload = client.http.get("/odds", {"fixture": fid})
+            resp = payload.get("response", [])
+            if not resp:
+                lines.append(
+                    f"- {label} (fixture {fid}): ❌ sin cuotas · paging {payload.get('paging')}"
+                )
+                return
+            item = resp[0]
+            lines.append(
+                f"- {label} (fixture {fid}): ✅ {len(item['bookmakers'])} casas · "
+                f"update {item.get('update')}"
+            )
+            for bk in item["bookmakers"][:40]:
+                mw = next((b for b in bk["bets"] if b["id"] == 1), None)
+                if mw:
+                    vals = " / ".join(f"{v['value']} {v['odd']}" for v in mw["values"])
+                    lines.append(f"    · {bk['id']}:{bk['name']}: {vals}")
+
+        for f in nl[:2]:
+            probe(
+                f["fixture"]["id"], f"{f['teams']['home']['name']} vs {f['teams']['away']['name']}"
+            )
+        for back in (3, 8, 15, 30):
+            old_day = day - timedelta(days=back)
+            olds = [
+                f
+                for f in client.fixtures_by_date(old_day)
+                if f["fixture"]["status"]["short"] == "FT"
+                and f["league"]["id"] in (39, 140, 135, 71)
+            ]
+            if olds:
+                f = olds[0]
+                probe(
+                    f["fixture"]["id"],
+                    f"hace {back + (date.today() - day).days} días "
+                    f"{f['teams']['home']['name']} vs {f['teams']['away']['name']}",
+                )
+            else:
+                lines.append(f"- {old_day}: sin partidos FT de ligas de referencia")
+        page = client.http.get("/odds", {"date": day.isoformat(), "bet": 1})
+        lines.append(
+            f"- /odds?date={day}&bet=1 → paging {page.get('paging')} · "
+            f"results {page.get('results')}"
+        )
+        st = client.status()
+        lines.append(f"· Llamadas usadas hoy: {st['requests_current']} / {st['requests_limit']}")
+    except Exception as exc:
+        lines.append(f"❌ {type(exc).__name__}: {str(exc)[:300]}")
+    finally:
+        client.close()
+    return lines
+
+
 def check_claude(settings: Settings) -> list[str]:
     """Llamada mínima real a la API de Anthropic (unos pocos tokens) para validar la clave."""
     lines = ["## Claude (Anthropic)", ""]
@@ -438,6 +529,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "tennis_join": lambda: check_tennis_join(settings),
         "others": lambda: check_others(settings),
         "claude": lambda: check_claude(settings),
+        "odds": lambda: check_odds(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
