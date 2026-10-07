@@ -1,11 +1,12 @@
 name: daily-prediction
 
-# Informe diario a las 07:00 America/Bogota.
-# Colombia no usa horario de verano (UTC-5 todo el año) => 12:00 UTC.
-# Nota: GitHub puede retrasar los cron unos minutos en horas de alta carga.
+# Informe diario para las 07:00 America/Bogota (UTC-5 todo el año, sin horario de verano).
+# El cron se programa a las 11:37 UTC = 06:37 Bogotá y fuera del minuto 00: GitHub retrasa
+# (o incluso omite) los cron en punto por alta carga. El 7-oct-2026 el cron de las 12:00
+# UTC no se había disparado a las 12:12 UTC.
 on:
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "37 11 * * *"
   workflow_dispatch:
     inputs:
       send:
@@ -27,6 +28,8 @@ jobs:
     env:
       APP_TIMEZONE: America/Bogota
       LOG_LEVEL: INFO
+      # Solo en ejecuciones programadas: si hoy ya se envió (p. ej. manualmente), no reenviar
+      SKIP_IF_ALREADY_SENT: ${{ github.event_name == 'schedule' }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       API_FOOTBALL_DAILY_LIMIT: "7000"      # plan Pro: 7.500/día (margen de seguridad)
