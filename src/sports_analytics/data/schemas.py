@@ -50,6 +50,10 @@ class FootballMatch(_Timed):
     away_shots: int | None = Field(default=None, ge=0)
     home_possession: float | None = Field(default=None, ge=0, le=100)
     away_possession: float | None = Field(default=None, ge=0, le=100)
+    home_shots_on_target: int | None = Field(default=None, ge=0)
+    away_shots_on_target: int | None = Field(default=None, ge=0)
+    home_xg: float | None = Field(default=None, ge=0)
+    away_xg: float | None = Field(default=None, ge=0)
 
     @property
     def is_finished(self) -> bool:

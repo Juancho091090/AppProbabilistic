@@ -74,6 +74,10 @@ class FixtureStats:
     away_shots: int | None
     home_possession: float | None
     away_possession: float | None
+    home_shots_on_target: int | None = None
+    away_shots_on_target: int | None = None
+    home_xg: float | None = None  # expected_goals: solo en ligas con cobertura
+    away_xg: float | None = None
 
 
 def _check_errors(payload: dict[str, Any], path: str) -> None:
@@ -119,6 +123,13 @@ def parse_fixture(item: dict[str, Any], competition_key: str) -> FootballMatch:
     )
 
 
+def _to_float(value: Any) -> float | None:
+    try:
+        return None if value is None else float(str(value).strip().rstrip("%"))
+    except ValueError:
+        return None
+
+
 def parse_statistics(fixture_id: str, payload: list[dict[str, Any]]) -> FixtureStats | None:
     """La respuesta trae [local, visitante] con listas {type, value}."""
     if len(payload) != 2:
@@ -139,6 +150,10 @@ def parse_statistics(fixture_id: str, payload: list[dict[str, Any]]) -> FixtureS
         away_shots=_to_int(stat(away, "total shots")),
         home_possession=_to_int(stat(home, "ball possession")),
         away_possession=_to_int(stat(away, "ball possession")),
+        home_shots_on_target=_to_int(stat(home, "shots on goal")),
+        away_shots_on_target=_to_int(stat(away, "shots on goal")),
+        home_xg=_to_float(stat(home, "expected_goals")),
+        away_xg=_to_float(stat(away, "expected_goals")),
     )
 
 

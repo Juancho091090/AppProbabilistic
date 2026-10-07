@@ -175,6 +175,10 @@ def fetch_football_stats(
                     "away_shots": st.away_shots,
                     "home_possession": st.home_possession,
                     "away_possession": st.away_possession,
+                    "home_shots_on_target": st.home_shots_on_target,
+                    "away_shots_on_target": st.away_shots_on_target,
+                    "home_xg": st.home_xg,
+                    "away_xg": st.away_xg,
                 }
             )
         if len(batch) >= 200:

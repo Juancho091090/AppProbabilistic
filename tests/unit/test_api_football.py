@@ -271,3 +271,24 @@ def test_quota_exhausted_429_is_not_retried(tmp_path):
     with pytest.raises(QuotaExhausted):
         _client(tmp_path, handler).fixtures_by_date(date(2026, 10, 6))
     assert len(calls) == 1
+
+
+def _stats_block(xg, sot):
+    return {
+        "statistics": [
+            {"type": "Shots on Goal", "value": sot},
+            {"type": "Corner Kicks", "value": 5},
+            {"type": "expected_goals", "value": xg},
+            {"type": "Ball Possession", "value": "40%"},
+        ]
+    }
+
+
+def test_parse_statistics_xg_and_shots_on_target():
+    # Formato real de API-Football (Atletico-MG vs Bragantino, 4-oct-2026)
+    s = parse_statistics("1492310", [_stats_block("0.50", 3), _stats_block("1.72", 6)])
+    assert (s.home_xg, s.away_xg) == (0.5, 1.72)
+    assert (s.home_shots_on_target, s.away_shots_on_target) == (3, 6)
+    # Ligas sin cobertura de xG (p. ej. Liga BetPlay): queda en None
+    no_xg = {"statistics": [{"type": "Corner Kicks", "value": 3}]}
+    assert parse_statistics("1", [no_xg, no_xg]).home_xg is None

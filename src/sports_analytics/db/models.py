@@ -117,6 +117,10 @@ class FootballStatistics(TimestampMixin, Base):
     away_shots: Mapped[int | None] = mapped_column(Integer)
     home_possession: Mapped[float | None] = mapped_column(Float)
     away_possession: Mapped[float | None] = mapped_column(Float)
+    home_shots_on_target: Mapped[int | None] = mapped_column(Integer)
+    away_shots_on_target: Mapped[int | None] = mapped_column(Integer)
+    home_xg: Mapped[float | None] = mapped_column(Float)
+    away_xg: Mapped[float | None] = mapped_column(Float)
     available: Mapped[bool] = mapped_column(Boolean, default=True)  # False = API sin datos
 
     match: Mapped[FootballMatchRow] = relationship(back_populates="statistics")

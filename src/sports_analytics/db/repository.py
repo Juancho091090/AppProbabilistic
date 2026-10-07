@@ -249,6 +249,10 @@ def load_football_history(session: Session, since: datetime) -> list[FootballMat
                 away_shots=st.away_shots if has_stats else None,
                 home_possession=st.home_possession if has_stats else None,
                 away_possession=st.away_possession if has_stats else None,
+                home_shots_on_target=st.home_shots_on_target if has_stats else None,
+                away_shots_on_target=st.away_shots_on_target if has_stats else None,
+                home_xg=st.home_xg if has_stats else None,
+                away_xg=st.away_xg if has_stats else None,
             )
         )
     return out
