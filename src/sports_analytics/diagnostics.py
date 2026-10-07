@@ -483,6 +483,100 @@ def check_odds(settings: Settings, ref_day: date | None = None) -> list[str]:
     return lines
 
 
+def check_coverage(settings: Settings, config: AppConfig) -> list[str]:
+    """Qué datos extra ofrece API-Football para nuestras ligas (cobertura + muestras reales)."""
+    lines = ["## API-Football: cobertura de datos adicionales", ""]
+    if settings.api_football_key is None:
+        return [*lines, "❌ `API_FOOTBALL_KEY` no está definida."]
+    client = ApiFootballClient(settings)
+    try:
+        items = client.http.get("/leagues", {"current": "true"}).get("response", [])
+        by_id = {it["league"]["id"]: it for it in items}
+        keys = ["events", "lineups", "statistics_fixtures", "statistics_players"]
+        top = ["standings", "players", "injuries", "predictions", "odds"]
+        lines += [
+            "| Competición | " + " | ".join(keys + top) + " |",
+            "|" + "---|" * (len(keys) + len(top) + 1),
+        ]
+        for comp in config.competitions.football:
+            it = by_id.get(comp.api_football_id)
+            if not it:
+                lines.append(f"| {comp.name} | sin temporada actual |")
+                continue
+            cov = next(
+                (x.get("coverage") or {} for x in it.get("seasons", []) if x.get("current")), {}
+            )
+            fx = cov.get("fixtures") or {}
+            vals = [_yes(bool(fx.get(k))) for k in keys] + [_yes(bool(cov.get(k))) for k in top]
+            lines.append(f"| {comp.name} | " + " | ".join(vals) + " |")
+        lines.append("")
+        day = local_today(settings.tz) - timedelta(days=int(os.environ.get("DIAG_BACK", "3")))
+        fixtures = [f for d in (day, day - timedelta(days=1)) for f in client.fixtures_by_date(d)]
+        wanted = {39: "Premier League", 71: "Brasileirão", 239: "Liga BetPlay"}
+        for lid, label in wanted.items():
+            fx = next(
+                (
+                    f
+                    for f in fixtures
+                    if f["league"]["id"] == lid and f["fixture"]["status"]["short"] == "FT"
+                ),
+                None,
+            )
+            if not fx:
+                lines.append(f"### {label}: sin partido terminado en {day}")
+                continue
+            fid = fx["fixture"]["id"]
+            lines.append(
+                f"### {label}: {fx['teams']['home']['name']} vs "
+                f"{fx['teams']['away']['name']} (fixture {fid})"
+            )
+            st = client.http.get("/fixtures/statistics", {"fixture": fid}).get("response", [])
+            if st:
+                lines.append(
+                    "- estadísticas: "
+                    + ", ".join(f"{s['type']}={s['value']}" for s in st[0].get("statistics", []))
+                )
+            lu = client.http.get("/fixtures/lineups", {"fixture": fid}).get("response", [])
+            if lu:
+                lines.append(
+                    f"- alineaciones: {len(lu)} equipos · formación {lu[0].get('formation')} · "
+                    f"titulares {len(lu[0].get('startXI') or [])}"
+                )
+            pl = client.http.get("/fixtures/players", {"fixture": fid}).get("response", [])
+            if pl:
+                p0 = (pl[0].get("players") or [{}])[0]
+                st0 = (p0.get("statistics") or [{}])[0]
+                lines.append(
+                    f"- jugadores: {sum(len(t.get('players') or []) for t in pl)} con "
+                    f"estadísticas · bloques {sorted(st0.keys())} · rating "
+                    f"{(st0.get('games') or {}).get('rating')}"
+                )
+            inj = client.http.get("/injuries", {"fixture": fid}).get("response", [])
+            lines.append(
+                f"- lesionados/sancionados registrados: {len(inj)}"
+                + (
+                    f" · ejemplo: {inj[0]['player']['type']} / {inj[0]['player']['reason']}"
+                    if inj
+                    else ""
+                )
+            )
+            pr = client.http.get("/predictions", {"fixture": fid}).get("response", [])
+            if pr:
+                comp = pr[0].get("comparison") or {}
+                lines.append(
+                    f"- predictions: bloques {sorted(pr[0].keys())} · comparison "
+                    f"{sorted(comp.keys())} · percent {pr[0].get('predictions', {}).get('percent')}"
+                )
+            lines.append("")
+        st = client.status()
+        lines.append(f"· Llamadas usadas hoy: {st['requests_current']} / {st['requests_limit']}")
+    except Exception as exc:
+        lines.append(f"❌ {type(exc).__name__}: {str(exc)[:300]}")
+    finally:
+        client.close()
+    return lines
+
+
 def check_claude(settings: Settings) -> list[str]:
     """Llamada mínima real a la API de Anthropic (unos pocos tokens) para validar la clave."""
     lines = ["## Claude (Anthropic)", ""]
@@ -530,6 +624,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "others": lambda: check_others(settings),
         "claude": lambda: check_claude(settings),
         "odds": lambda: check_odds(settings),
+        "coverage": lambda: check_coverage(settings, config),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
