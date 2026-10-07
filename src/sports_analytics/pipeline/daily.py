@@ -265,11 +265,16 @@ def run_daily(
     services: Services | None = None,
     now: datetime | None = None,
     send: bool = True,
+    days_ahead: int | None = None,
 ) -> DailyOutcome:
+    """``days_ahead``: 0 = partidos de hoy; 1 = informe la noche anterior con los partidos
+    de mañana (fines de semana). ``today`` es siempre el día del INFORME (los partidos)."""
     started = time.perf_counter()
     now = ensure_utc(now) if now else now_utc()
     tz = settings.tz
-    today = local_today(tz, now)
+    ahead = settings.report_days_ahead if days_ahead is None else days_ahead
+    local_day = local_today(tz, now)
+    today = local_day + timedelta(days=ahead)
     svc = services or build_services(settings)
     report = ingest.IngestReport()
     payload = DailyReportPayload(
@@ -346,7 +351,7 @@ def run_daily(
                 issues.append("Fútbol: API_FOOTBALL_KEY no configurada")
             if svc.tennis:
                 try:
-                    ingest.sync_tennis(session, svc.tennis, config, settings, today, report)
+                    ingest.sync_tennis(session, svc.tennis, config, settings, local_day, report)
                     tennis_fixtures = ingest.tennis_fixtures_today(
                         svc.tennis, config, today, report, session, tz
                     )

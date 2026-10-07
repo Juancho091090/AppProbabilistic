@@ -1,18 +1,28 @@
 name: daily-prediction
 
-# Informe diario para las 07:00 America/Bogota (UTC-5 todo el año, sin horario de verano).
-# El cron se programa a las 11:37 UTC = 06:37 Bogotá y fuera del minuto 00: GitHub retrasa
-# (o incluso omite) los cron en punto por alta carga. El 7-oct-2026 el cron de las 12:00
-# UTC no se había disparado a las 12:12 UTC.
+# Horario (America/Bogota = UTC-5 todo el año, sin horario de verano):
+# * Lunes a viernes, informe de los partidos del día hacia las 07:00:
+#   cron 11:37 UTC = 06:37 Bogotá.
+# * Viernes y sábado, informe la NOCHE ANTERIOR con los partidos de sábado y domingo (hay
+#   ligas desde las 05:00): cron 23:45 UTC = 18:45 Bogotá, para llegar hacia las 19:00.
+#   Sábado y domingo por la mañana no hay corrida (ese informe ya salió la víspera).
+# Los cron van fuera del minuto 00: GitHub retrasa (o incluso omite) los cron en punto por
+# alta carga. El 7-oct-2026 el cron de las 12:00 UTC no se había disparado a las 12:12 UTC.
 on:
   schedule:
-    - cron: "37 11 * * *"
+    - cron: "37 11 * * 1-5"
+    - cron: "45 23 * * 5,6"
   workflow_dispatch:
     inputs:
       send:
         description: "Enviar por Telegram/Email"
         type: boolean
         default: true
+      days_ahead:
+        description: "0 = partidos de hoy · 1 = partidos de mañana"
+        type: choice
+        options: ["0", "1"]
+        default: "0"
 
 permissions:
   contents: read
@@ -73,10 +83,13 @@ jobs:
 
       - name: Pipeline diario (ingesta, resultados, modelos, informe, envío)
         run: |
+          AHEAD="${{ inputs.days_ahead || '0' }}"
+          [ "${{ github.event.schedule }}" = "45 23 * * 5,6" ] && AHEAD=1
+          echo "Informe de los partidos de: $(TZ=America/Bogota date -d "+$AHEAD day" +%F) (days_ahead=$AHEAD)"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" = "false" ]; then
-            sports-analytics run-daily --no-send --output reports/output/daily.md
+            sports-analytics run-daily --no-send --days-ahead "$AHEAD" --output reports/output/daily.md
           else
-            sports-analytics run-daily --output reports/output/daily.md
+            sports-analytics run-daily --days-ahead "$AHEAD" --output reports/output/daily.md
           fi
 
       - name: Resumen en GitHub

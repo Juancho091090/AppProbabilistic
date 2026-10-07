@@ -523,3 +523,27 @@ def test_scheduled_run_does_not_resend_same_day(env, app_config):
     s2 = settings.model_copy(update={"skip_if_already_sent": True})
     out = run_daily(s2, app_config, services(), now=DAY1 + timedelta(hours=1))
     assert not out.telegram_sent and not out.email_sent
+
+
+def test_evening_run_reports_next_day(env, app_config):
+    """Fines de semana: la corrida de las 19:00 del viernes informa los partidos del sábado."""
+    settings, _fb, *_rest, services = env
+    fb = FakeFootballApi()  # partidos de DAY1 aún sin jugar
+    tn = FakeTennisApi()
+    svc = services()
+    svc.football = ApiFootballClient(
+        settings, transport=httpx.MockTransport(fb), sleep=lambda s: None
+    )
+    svc.tennis = TennisApiClient(
+        settings, transport=httpx.MockTransport(tn), sleep=lambda s: None, min_interval=0
+    )
+    evening_before = DAY1 - timedelta(hours=12, minutes=15)  # 31-may 18:45 Bogotá
+    s2 = settings.model_copy(update={"skip_if_already_sent": True})
+    shutil.rmtree(settings.cache_dir, ignore_errors=True)
+    out = run_daily(s2, app_config, svc, now=evening_before, send=True, days_ahead=1)
+    assert out.payload.report_date == DAY1.date()  # informe de los partidos del 1-jun
+    assert out.payload.n_football == 2 and "Fecha: 2024-06-01" in out.markdown
+    with session_scope(URL) as s:
+        assert s.get(PipelineRun, out.run_id).run_date == DAY1.date()
+    # El 1-jun ya se había enviado (test_day1): el guard de no reenvío usa la fecha del informe
+    assert not out.telegram_sent and not out.email_sent

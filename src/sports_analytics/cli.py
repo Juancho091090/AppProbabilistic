@@ -33,7 +33,7 @@ def _run_daily(args: argparse.Namespace) -> int:
     settings = get_settings()
     if args.dry_run:
         settings = settings.model_copy(update={"dry_run": True})
-    outcome = run_daily(settings, get_config(), send=not args.no_send)
+    outcome = run_daily(settings, get_config(), send=not args.no_send, days_ahead=args.days_ahead)
     if args.output:
         Path(args.output).parent.mkdir(parents=True, exist_ok=True)
         Path(args.output).write_text(outcome.markdown, encoding="utf-8")
@@ -161,6 +161,12 @@ def build_parser() -> argparse.ArgumentParser:
     daily.add_argument("--dry-run", action="store_true", help="No envía Telegram/Email")
     daily.add_argument("--no-send", action="store_true", help="Genera el informe sin enviarlo")
     daily.add_argument("--output", help="Ruta donde guardar el informe en Markdown")
+    daily.add_argument(
+        "--days-ahead",
+        type=int,
+        default=None,
+        help="0 = partidos de hoy; 1 = partidos de mañana (informe la noche anterior)",
+    )
     daily.set_defaults(func=_run_daily)
 
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(
