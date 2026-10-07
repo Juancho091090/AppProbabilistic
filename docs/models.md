@@ -84,8 +84,31 @@ una sola potencia no lo corrige del todo (ver *Pendientes*).
 
 ## Confianza (`models/confidence.py`)
 
-`score = 0.5·calidad_de_datos + 0.5·acuerdo_entre_modelos` → Alta (≥ 0.70),
-Media (≥ 0.45), Baja. **No es una probabilidad.**
+Método `favorite_probability` (activo desde el 7-oct-2026):
+
+1. Nivel según la probabilidad final (ya calibrada) del resultado más probable. En
+   fútbol: Alta ≥ 60 %, Media ≥ 45 %, Baja < 45 %. En tenis: Alta ≥ 72 %, Media ≥ 60 %.
+2. Baja un nivel si la calidad de datos es menor que `min_data_quality` (poco histórico
+   o modelos sin datos) o si los modelos discrepan más de `max_model_spread`.
+
+Validación (A/B walk-forward, 2.181 partidos del 9-may al 6-oct-2026):
+
+| Nivel | Partidos | Acierto del favorito (nuevo) | Antes (método anterior) |
+|---|---|---|---|
+| Alta | 12.9 % | 74.5 % | 48.1 % |
+| Media | 40.7 % | 48.6 % | 53.6 % |
+| Baja | 46.4 % | 42.5 % | 50.0 % |
+
+El método anterior (`data_agreement`: 0.5 · calidad de datos + 0.5 · acuerdo entre
+modelos) no anticipaba el acierto y queda disponible por configuración. Los umbrales de
+tenis están pendientes de validar porque la muestra de tenis aún es pequeña.
+
+### Efectos por liga (`models/football/league.py`, desactivado)
+
+Nivel de goles y ventaja de local por competición con shrinkage hacia la media global.
+En el A/B del 7-oct-2026 no mejoró el RPS global (0.2083 → 0.2085); sí mejoró algunas
+ligas (Serie A 0.2111 → 0.2060, Eredivisie 0.2010 → 0.1973) y empeoró otras (Mundial,
+Liga BetPlay). Se retomará en la fase B junto con las sedes neutrales.
 
 ## Benchmark de mercado
 

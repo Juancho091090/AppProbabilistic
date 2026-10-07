@@ -49,7 +49,10 @@ football:
     min_matches: 6
   # Nivel de goles y ventaja de local por competición (shrinkage hacia la media global).
   league_effects:
-    enabled: false              # se activa solo si el A/B (ab-test) mejora el RPS
+    # Desactivado: en el A/B del 7-oct-2026 no mejoró el RPS global (0.2083 → 0.2085),
+    # aunque sí ligas como Serie A y Eredivisie. Se revisará en la fase B (shrinkage,
+    # sedes neutrales en torneos de selecciones).
+    enabled: false
     prior_matches: 60           # partidos "virtuales" de la media global por liga
     hfa_ratio_bounds: [0.0, 2.0]  # escala de la ventaja de local del Elo por liga
   lines:
@@ -112,7 +115,10 @@ confidence:
   # nivel con poco histórico o desacuerdo entre modelos (ver models/confidence.py).
   # data_agreement: método anterior (0.5·calidad de datos + 0.5·acuerdo); no anticipaba
   # el acierto en el backtest del 7-oct-2026.
-  method: data_agreement        # favorite_probability se activa tras validarlo con ab-test
+  # Activado el 7-oct-2026 tras el A/B (2.181 partidos, 9-may a 6-oct): acierto del
+  # favorito Alta 74.5 %, Media 48.6 %, Baja 42.5 % (antes 48.1 / 53.6 / 50.0 %).
+  # Umbrales de tenis pendientes de validar: la muestra de tenis aún es pequeña.
+  method: favorite_probability
   favorite_thresholds:
     football: {high: 0.60, medium: 0.45}   # P(resultado más probable) en el 1X2
     tennis: {high: 0.72, medium: 0.60}     # P(ganador más probable)
