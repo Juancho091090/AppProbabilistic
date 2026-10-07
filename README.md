@@ -130,6 +130,10 @@ resumen arriba y el detalle completo debajo (texto + HTML), y correos de error c
   reenvía si el informe de esa fecha ya salió.
 * `backtest.yml`: backtest, benchmark de mercado o recalibración 1X2 (manual); la
   recalibración corre sola cada lunes a las 05:20 Bogotá.
+* `metrics.yml`: métricas avanzadas (RPS, skill scores, descomposición de Murphy, AUC,
+  por competición, confianza, semana, goles, córners y tenis) con
+  `sports-analytics export-metrics`; cada lunes a las 05:40 publica el JSON en la rama
+  `metrics-data` (`metrics/latest.json`), fuente de la hoja de métricas.
 * `tests.yml`: lint y tests en cada push.
 * `smoke_test.yml`: corrida real sin envío sobre base efímera (manual).
 * `api_diagnostics.yml`: diagnóstico de APIs (manual).
