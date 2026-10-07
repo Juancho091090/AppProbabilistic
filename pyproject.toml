@@ -23,6 +23,7 @@ dependencies = [
     "statsmodels>=0.14",
     "fastapi>=0.110",
     "anthropic>=0.40",
+    "reportlab>=4.0",
     "tzdata>=2024.1",
 ]
 
@@ -30,6 +31,7 @@ dependencies = [
 dev = [
     "pytest>=8",
     "pytest-cov>=5",
+    "pypdf>=4",
     "respx>=0.21",
     "ruff>=0.5",
 ]

@@ -48,7 +48,13 @@ class EmailService:
         if settings.smtp_password:
             register_secret(settings.smtp_password.get_secret_value())
 
-    def _send(self, subject: str, text: str, html_body: str | None = None) -> None:
+    def _send(
+        self,
+        subject: str,
+        text: str,
+        html_body: str | None = None,
+        attachments: list[tuple[str, bytes]] | None = None,
+    ) -> None:
         msg = EmailMessage()
         msg["Subject"] = subject
         msg["From"] = self.s.email_from
@@ -56,6 +62,8 @@ class EmailService:
         msg.set_content(text)
         if html_body:
             msg.add_alternative(html_body, subtype="html")
+        for filename, data in attachments or []:
+            msg.add_attachment(data, maintype="application", subtype="pdf", filename=filename)
         with self._factory(
             self.s.smtp_host, self.s.smtp_port, timeout=self.s.http_timeout_seconds
         ) as smtp:
@@ -68,10 +76,17 @@ class EmailService:
             "email_sent", extra={"subject": subject, "recipients": len(self.s.email_recipients)}
         )
 
-    def send_daily_report(self, report_date: str, summary_md: str, full_md: str) -> None:
-        """Un correo con el resumen arriba y el detalle completo debajo."""
-        body = f"{summary_md}\n\n{'=' * 40}\nDETALLE COMPLETO\n{'=' * 40}\n\n{full_md}"
-        self._send(f"Informe deportivo {report_date}", body, markdown_to_basic_html(full_md))
+    def send_daily_report(
+        self, report_date: str, summary_text: str, pdf: bytes | None = None
+    ) -> None:
+        """Correo corto con el resumen; el detalle completo va en el PDF adjunto."""
+        attachments = [(f"informe_{report_date}.pdf", pdf)] if pdf else []
+        self._send(
+            f"Informe deportivo {report_date}",
+            summary_text,
+            markdown_to_basic_html(summary_text),
+            attachments,
+        )
 
     def send_critical_error(self, error: str) -> None:
         self._send("⚠️ Error crítico en el pipeline deportivo", error[:10000])

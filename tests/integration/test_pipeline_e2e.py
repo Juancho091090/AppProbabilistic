@@ -351,6 +351,9 @@ def test_day1_full_pipeline(env, app_config):
     # Envíos
     assert out.telegram_sent and tg_msgs and all(m["parse_mode"] == "HTML" for m in tg_msgs)
     assert out.email_sent and FakeSMTP.sent
+    mail = FakeSMTP.sent[-1]
+    assert [a.get_filename() for a in mail.iter_attachments()] == ["informe_2024-06-01.pdf"]
+    assert out.pdf and out.pdf.startswith(b"%PDF")
     # Persistencia
     with session_scope(URL) as s:
         assert s.scalar(select(func.count()).select_from(FootballMatchRow)) >= 264

@@ -32,9 +32,14 @@ from sports_analytics.pipeline.results import (
     refresh_live_metrics,
     settle_predictions,
 )
-from sports_analytics.reporting.builder import markdown_to_telegram_html, render_markdown
+from sports_analytics.reporting.builder import (
+    markdown_to_telegram_html,
+    render_email_summary,
+    render_markdown,
+)
 from sports_analytics.reporting.claude_narrator import ClaudeNarrator
 from sports_analytics.reporting.payload import CompetitionSection, DailyReportPayload
+from sports_analytics.reporting.pdf import render_pdf
 
 log = get_logger(__name__)
 
@@ -62,6 +67,7 @@ class DailyOutcome:
     telegram_sent: bool = False
     email_sent: bool = False
     narrative: bool = False
+    pdf: bytes | None = None
     issues: list[str] = field(default_factory=list)
 
 
@@ -381,6 +387,15 @@ def run_daily(
                 narrative.summary if narrative else None,
             )
             outcome.markdown = markdown
+            try:
+                outcome.pdf = render_pdf(
+                    payload,
+                    narrative.matches if narrative else None,
+                    narrative.summary if narrative else None,
+                )
+            except Exception as exc:  # el PDF no debe impedir el envío del informe
+                issues.append(f"PDF: {type(exc).__name__}: {exc}")
+                outcome.pdf = None
             outcome.narrative = narrative is not None
             if narrative is None and svc.narrator and svc.narrator.last_error:
                 issues.append(redact(f"Claude: {svc.narrator.last_error}"))
@@ -402,8 +417,11 @@ def run_daily(
                         issues.append(f"Telegram: {exc}")
                 if svc.email:
                     try:
-                        summary = markdown.split("---")[0]
-                        svc.email.send_daily_report(today.isoformat(), summary, markdown)
+                        svc.email.send_daily_report(
+                            today.isoformat(),
+                            render_email_summary(payload, narrative.summary if narrative else None),
+                            outcome.pdf,
+                        )
                         outcome.email_sent = True
                     except Exception as exc:
                         issues.append(f"Email: {type(exc).__name__}: {exc}")

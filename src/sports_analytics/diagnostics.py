@@ -392,6 +392,30 @@ def check_tennis_join(settings: Settings, today: date | None = None) -> list[str
     return lines
 
 
+def check_claude(settings: Settings) -> list[str]:
+    """Llamada mínima real a la API de Anthropic (unos pocos tokens) para validar la clave."""
+    lines = ["## Claude (Anthropic)", ""]
+    if not settings.claude_enabled:
+        return [*lines, "❌ `ANTHROPIC_API_KEY` no está definida."]
+    import anthropic
+
+    from sports_analytics.core.logging import redact
+
+    key = settings.anthropic_api_key.get_secret_value()
+    register_secret(key)
+    try:
+        resp = anthropic.Anthropic(api_key=key, timeout=30.0).messages.create(
+            model=settings.anthropic_model,
+            max_tokens=5,
+            messages=[{"role": "user", "content": "Responde solo: ok"}],
+        )
+        text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+        lines.append(f"✅ Clave válida · modelo `{settings.anthropic_model}` respondió: {text!r}")
+    except Exception as exc:
+        lines.append(redact(f"❌ {type(exc).__name__}: {str(exc)[:300]}"))
+    return lines
+
+
 def check_others(settings: Settings) -> list[str]:
     rows = [
         ("ANTHROPIC_API_KEY", settings.claude_enabled),
@@ -413,6 +437,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "tennis": lambda: check_tennis(settings),
         "tennis_join": lambda: check_tennis_join(settings),
         "others": lambda: check_others(settings),
+        "claude": lambda: check_claude(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():

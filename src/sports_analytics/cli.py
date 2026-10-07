@@ -37,6 +37,8 @@ def _run_daily(args: argparse.Namespace) -> int:
     if args.output:
         Path(args.output).parent.mkdir(parents=True, exist_ok=True)
         Path(args.output).write_text(outcome.markdown, encoding="utf-8")
+        if outcome.pdf:
+            Path(args.output).with_suffix(".pdf").write_bytes(outcome.pdf)
     summary = (
         f"Estado: {outcome.status} · Telegram: {outcome.telegram_sent} · "
         f"Email: {outcome.email_sent} · Narrativa Claude: {outcome.narrative}"

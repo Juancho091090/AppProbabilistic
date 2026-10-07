@@ -13,6 +13,7 @@ from sports_analytics.reporting.builder import (
     UNAVAILABLE,
     markdown_to_telegram_html,
     pct,
+    render_email_summary,
     render_markdown,
 )
 from sports_analytics.reporting.claude_narrator import (
@@ -22,6 +23,7 @@ from sports_analytics.reporting.claude_narrator import (
 )
 from sports_analytics.reporting.email import EmailService
 from sports_analytics.reporting.payload import CompetitionSection, DailyReportPayload
+from sports_analytics.reporting.pdf import render_pdf
 from sports_analytics.reporting.telegram import TelegramService, split_message
 from tests.synthetic import football_league, tennis_tour
 
@@ -274,15 +276,35 @@ def test_email_daily_and_error(payload):
         email_to="b@y.com,c@z.com",
     )
     svc = EmailService(settings, smtp_factory=_FakeSMTP)
-    md = render_markdown(payload)
-    svc.send_daily_report("2026-10-06", md.split("---")[0], md)
+    summary = render_email_summary(payload)
+    pdf = render_pdf(payload)
+    svc.send_daily_report("2026-10-06", summary, pdf)
     smtp = _FakeSMTP.instances[-1]
     msg = smtp.sent[0]
     assert smtp.tls and smtp.login_args == ("u", "pw-secret")
     assert msg["To"] == "b@y.com, c@z.com" and "2026-10-06" in msg["Subject"]
-    assert (
-        msg.get_body(("html",)) is not None
-        and "DETALLE COMPLETO" in msg.get_body(("plain",)).get_content()
-    )
+    body = msg.get_body(("plain",)).get_content()
+    assert "PDF adjunto" in body and "Arsenal vs Chelsea" in body
+    assert "Más de 2.5" not in body  # el detalle va en el PDF, no en el cuerpo
+    [att] = list(msg.iter_attachments())
+    assert att.get_filename() == "informe_2026-10-06.pdf"
+    assert att.get_content().startswith(b"%PDF")
     svc.send_critical_error("fallo")
     assert "Error crítico" in _FakeSMTP.instances[-1].sent[0]["Subject"]
+
+
+def test_pdf_render_contains_matches_and_unicode(payload):
+    import io
+
+    from pypdf import PdfReader
+
+    f = payload.football[0].forecasts[0]
+    renamed = f.model_copy(update={"home_or_a": "Beşiktaş", "away_or_b": "Łódź"})
+    p2 = payload.model_copy(deep=True)
+    p2.football[0].forecasts = [renamed]
+    pdf = render_pdf(p2, summary="Resumen de prueba.")
+    text = "".join(page.extract_text() for page in PdfReader(io.BytesIO(pdf)).pages)
+    assert "Beşiktaş vs Łódź" in text
+    assert pct(f.markets["1x2"]["home"]) in text
+    assert "Anexo" in text and "Datos no disponibles" in text
+    assert "Jugador Uno vs Jugador Dos" in text

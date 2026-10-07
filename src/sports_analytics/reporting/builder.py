@@ -179,3 +179,42 @@ def markdown_to_telegram_html(md: str) -> str:
                 text = "• " + text[2:]
         lines.append(text)
     return "\n".join(lines)
+
+
+def render_email_summary(payload: DailyReportPayload, summary: str | None = None) -> str:
+    """Cuerpo corto del correo: conteos, un renglón por partido y aviso del PDF adjunto."""
+    tz = ZoneInfo(payload.timezone)
+    out = [
+        f"INFORME DEPORTIVO · {payload.report_date.isoformat()}",
+        "",
+        f"Fútbol: {payload.n_football} · ATP: {payload.n_tennis('ATP')} · "
+        f"WTA: {payload.n_tennis('WTA')}",
+        "",
+    ]
+    if summary:
+        out += [summary, ""]
+    for section in payload.football:
+        for f in sorted(section.forecasts, key=lambda f: f.kickoff_utc):
+            x = f.markets["1x2"]
+            out.append(
+                f"- {_time(f, tz)} · {section.name} · {f.home_or_a} vs {f.away_or_b}: "
+                f"L {pct(x['home'])} · E {pct(x['draw'])} · V {pct(x['away'])} ({_conf(f)})"
+            )
+    for tour in ("ATP", "WTA"):
+        for f in sorted(payload.tennis.get(tour) or [], key=lambda f: f.kickoff_utc):
+            w = f.markets["winner"]
+            out.append(
+                f"- {_time(f, tz)} · {tour} · {f.home_or_a} {pct(w['A'])} vs "
+                f"{f.away_or_b} {pct(w['B'])} ({_conf(f)})"
+            )
+    if not payload.all_forecasts():
+        out.append("Sin partidos para analizar hoy en las competiciones autorizadas.")
+    n_issues = len(payload.skipped) + len(payload.data_issues)
+    out += [
+        "",
+        "El detalle completo (goles, córners, sets, juegos, factores) está en el PDF adjunto.",
+    ]
+    if n_issues:
+        out.append(f"Incidencias registradas: {n_issues} (ver anexo del PDF).")
+    out += ["", DISCLAIMER]
+    return "\n".join(out)
