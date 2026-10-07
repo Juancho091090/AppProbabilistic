@@ -1,0 +1,64 @@
+name: metrics-export
+
+# Métricas avanzadas (backtest walk-forward de fútbol y tenis) para la hoja de métricas.
+# Solo lee la base de datos (no llama a las APIs). El JSON se publica en la rama
+# `metrics-data` (aislada de main) para poder leerlo sin descargar artefactos.
+on:
+  schedule:
+    - cron: "40 10 * * 1"   # lunes 05:40 Bogotá, después de la recalibración
+  workflow_dispatch:
+    inputs:
+      football_days:
+        description: "Días de fútbol a evaluar"
+        default: "150"
+      tennis_days:
+        description: "Días de tenis a evaluar"
+        default: "180"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metrics-export
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: WARNING
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Migraciones
+        run: alembic upgrade head
+      - name: Calcular métricas
+        run: |
+          sports-analytics export-metrics \
+            --football-days "${{ inputs.football_days || '150' }}" \
+            --tennis-days "${{ inputs.tennis_days || '180' }}" \
+            --output "$RUNNER_TEMP/metrics.json"
+      - name: Publicar en la rama metrics-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin metrics-data || true
+          if git rev-parse --verify origin/metrics-data >/dev/null 2>&1; then
+            git switch -C metrics-data origin/metrics-data
+          else
+            git switch --orphan metrics-data
+            git rm -rf --quiet . || true
+          fi
+          mkdir -p metrics
+          cp "$RUNNER_TEMP/metrics.json" metrics/latest.json
+          cp "$RUNNER_TEMP/metrics.json" "metrics/$(TZ=America/Bogota date +%F).json"
+          git add metrics
+          git commit -m "métricas $(TZ=America/Bogota date +%F) (run ${GITHUB_RUN_ID})" || exit 0
+          git push origin metrics-data

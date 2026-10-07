@@ -82,6 +82,8 @@ class BacktestReport:
     ensemble_1x2: list[tuple[tuple[float, float, float], int, datetime]] = field(
         default_factory=list
     )
+    # Una fila por partido con todo lo necesario para métricas avanzadas (evaluation/)
+    match_rows: list[dict] = field(default_factory=list)
     market_available: bool = False  # se pasaron precios de mercado al backtest
     bootstrap_samples: int = 2000
 
@@ -178,6 +180,44 @@ def _resolve(forecast: MatchForecast, match, sport: str) -> list[ResolvedPredict
                 )
             )
     return out
+
+
+def _match_row(f: MatchForecast, m, sport: str) -> dict:
+    row = {"kickoff": m.kickoff_utc, "competition": f.competition, "confidence": f.confidence}
+    if sport == "football":
+        mk = f.markets
+        corners = mk.get("corners")
+        row.update(
+            p=[float(mk["1x2"][k]) for k in ("home", "draw", "away")],
+            per_model={
+                n: [float(v[k]) for k in ("home", "draw", "away")]
+                for n, v in f.per_model.items()
+                if v
+            },
+            y=0 if m.home_goals > m.away_goals else 1 if m.home_goals == m.away_goals else 2,
+            goals=m.home_goals + m.away_goals,
+            xg=float(mk["goals"]["expected_goals"]["total"]),
+            goal_lines={float(k): float(v["over"]) for k, v in mk["goals"]["goal_lines"].items()},
+            corners=(m.home_corners + m.away_corners) if m.has_corners else None,
+            xc=float(corners["expected"]["total"]) if corners else None,
+            corner_lines=(
+                {float(k): float(v["over"]) for k, v in corners["lines"].items()}
+                if corners
+                else None
+            ),
+        )
+    else:
+        games = m.games_a + m.games_b if m.games_a is not None and m.games_b is not None else None
+        row.update(
+            tour=m.tour,
+            surface=m.surface,
+            pa=float(f.markets["winner"]["A"]),
+            per_model={n: float(v["A"]) for n, v in f.per_model.items() if v},
+            y=int(m.winner == "A"),
+            games=games,
+            xgames=float(f.markets.get("expected_games") or 0) or None,
+        )
+    return row
 
 
 def _add_market(
@@ -282,6 +322,7 @@ def run_backtest(
                     f = predictor.predict(scheduled)
                 report.n_matches += 1
                 report.predictions.extend(_resolve(f, m, sport))
+                report.match_rows.append(_match_row(f, m, sport))
                 if sport == "football":
                     raw = f.context.get("ensemble_raw_1x2") or f.markets["1x2"]
                     y = (

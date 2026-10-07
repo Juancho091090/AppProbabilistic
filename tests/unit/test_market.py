@@ -205,3 +205,56 @@ def test_backtest_exposes_raw_ensemble_1x2(app_config):
     assert len(rep.ensemble_1x2) == rep.n_matches
     probs, y, ko = rep.ensemble_1x2[0]
     assert sum(probs) == pytest.approx(1.0) and y in (0, 1, 2) and ko.tzinfo is not None
+
+
+# ------------------------------------------------- métricas avanzadas
+
+
+def test_scores_known_values():
+    from sports_analytics.evaluation import scores as sc
+
+    p = np.array([[1.0, 0.0, 0.0], [0.2, 0.3, 0.5]])
+    y = np.array([0, 2])
+    # RPS: partido 1 perfecto (0); partido 2: F=(0.2,0.5), O=(0,0) → (0.04+0.25)/2
+    assert sc.rps(p, y) == pytest.approx((0 + 0.145) / 2)
+    assert sc.auc(np.array([0.9, 0.8, 0.1]), np.array([1, 1, 0])) == 1.0
+    assert sc.auc(np.array([0.5, 0.5]), np.array([1, 0])) == 0.5
+    pb = np.array([0.1, 0.1, 0.9, 0.9])
+    yb = np.array([0, 0, 1, 1])
+    mu = sc.murphy(pb, yb)
+    assert mu["reliability"] == pytest.approx(0.01) and mu["uncertainty"] == 0.25
+    assert sc.brier_binary(pb, yb) == pytest.approx(
+        mu["reliability"] - mu["resolution"] + mu["uncertainty"]
+    )
+
+
+def test_export_tables_from_backtest(app_config):
+    from sports_analytics.evaluation.export import football_tables, tennis_tables
+    from tests.synthetic import tennis_tour
+
+    matches, _ = football_league(n_teams=12, rounds=4)
+    tz = ZoneInfo("America/Bogota")
+    start = (START + timedelta(days=60)).date()
+    rep = run_backtest(
+        "football", matches, app_config, start, matches[-1].kickoff_utc.date(), tz, 14
+    )
+    tabs = {t["title"]: t for t in football_tables(rep.match_rows)}
+    assert {
+        "Resumen 1X2",
+        "Modelos (mismos partidos)",
+        "Por competición",
+        "Tendencia semanal",
+        "Goles: líneas",
+        "Córners: líneas",
+    } <= set(tabs)
+    summary = {r[0]: r for r in tabs["Resumen 1X2"]["rows"]}
+    assert summary["Partidos"][1] == rep.n_matches
+    assert summary["RPS"][1] < summary["RPS"][3]  # el modelo supera al uniforme
+    assert all(len(r) == len(t["columns"]) for t in tabs.values() for r in t["rows"])
+    tm, _ = tennis_tour(n_players=20, n_matches=900)
+    trep = run_backtest(
+        "tennis", tm, app_config, tm[500].kickoff_utc.date(), tm[-1].kickoff_utc.date(), tz, 30
+    )
+    ttabs = {t["title"]: t for t in tennis_tables(trep.match_rows)}
+    assert ttabs["Resumen tenis (ganador)"]["rows"][0][0] == trep.n_matches
+    assert football_tables([]) == [] and tennis_tables([]) == []

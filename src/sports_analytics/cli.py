@@ -114,6 +114,51 @@ def _fit_recalibration(_: argparse.Namespace) -> int:
     return 0
 
 
+def _export_metrics(args: argparse.Namespace) -> int:
+    """Backtest walk-forward de fútbol y tenis → métricas avanzadas en JSON."""
+    import json
+
+    from sports_analytics.backtesting.engine import run_backtest
+    from sports_analytics.core.timeutils import local_today, now_utc
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.evaluation.export import football_tables, tennis_tables
+
+    settings, config = get_settings(), get_config()
+    tz = settings.tz
+    end = local_today(tz) - timedelta(days=1)
+    names = {c.key: c.name for c in config.competitions.football}
+    since = now_utc() - timedelta(days=3 * 365)
+    with session_scope(settings.database_url) as session:
+        fh = repo.load_football_history(session, since)
+        th = repo.load_tennis_history(session, since)
+    out: dict = {
+        "generated_at": now_utc().isoformat(),
+        "model_version": config.models.version,
+        "run_id": os.environ.get("GITHUB_RUN_ID"),
+        "sections": {},
+    }
+    for sport, hist, days, fn in (
+        ("football", fh, args.football_days, football_tables),
+        ("tennis", th, args.tennis_days, tennis_tables),
+    ):
+        start = end - timedelta(days=days)
+        bt = run_backtest(sport, hist, config, start, end, tz, args.refit_days, names)
+        out["sections"][sport] = {
+            "start": start.isoformat(),
+            "end": end.isoformat(),
+            "matches": bt.n_matches,
+            "skipped": bt.n_skipped,
+            "tables": fn(bt.match_rows),
+        }
+        print(f"{sport}: {bt.n_matches} partidos, {len(out['sections'][sport]['tables'])} tablas")
+    path = Path(args.output)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    print(f"escrito {path}")
+    return 0
+
+
 def _market_benchmark(_: argparse.Namespace) -> int:
     """Predicciones reales del informe diario (ya liquidadas) frente al mercado."""
     from sports_analytics.db.session import session_scope
@@ -180,6 +225,13 @@ def build_parser() -> argparse.ArgumentParser:
     bt.add_argument("--refit-days", type=int, default=7)
     bt.add_argument("--output")
     bt.set_defaults(func=_backtest)
+
+    ex = sub.add_parser("export-metrics", help="Métricas avanzadas (JSON) para la hoja")
+    ex.add_argument("--football-days", type=int, default=150)
+    ex.add_argument("--tennis-days", type=int, default=180)
+    ex.add_argument("--refit-days", type=int, default=7)
+    ex.add_argument("--output", default="reports/metrics/metrics.json")
+    ex.set_defaults(func=_export_metrics)
 
     sub.add_parser(
         "fit-recalibration", help="Ajusta y valida la recalibración 1X2 (walk-forward)"
