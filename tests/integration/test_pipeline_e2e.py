@@ -182,8 +182,14 @@ class FakeTennisApi:
         hist, self.skill = tennis_tour(
             n_players=20, n_matches=1400, start=DAY1 - timedelta(hours=6 * 1400 + 48)
         )
+        self.t0 = hist[0].kickoff_utc
         self.results = [self._result(m) for m in hist]
         self.results.append(self._result(hist[0], challenger=True))  # debe filtrarse
+        # Torneos sintéticos de 2 semanas (como el calendario real): id -> fecha de inicio
+        self.tournaments: dict[int, str] = {}
+        for r in self.results:
+            tid = r["tournament"]["id"]
+            self.tournaments.setdefault(tid, r["date"])
         best = sorted(self.skill, key=self.skill.get)
         ko = DAY1.replace(hour=20).isoformat().replace("+00:00", ".000Z")
         self.fixtures = [
@@ -205,8 +211,12 @@ class FakeTennisApi:
     def pid(name):
         return 1000 + int(name[1:])
 
+    def _tid(self, m, challenger=False):
+        return 22 if challenger else 500 + (m.kickoff_utc - self.t0).days // 14
+
     def _result(self, m, challenger=False):
         a, b = self.pid(m.player_a), self.pid(m.player_b)
+        tid = self._tid(m, challenger)
         score = "6-4 6-3" if m.winner == "A" else "4-6 3-6"
         return {
             "id": m.match_id + ("c" if challenger else ""),
@@ -214,15 +224,15 @@ class FakeTennisApi:
             "date": m.kickoff_utc.isoformat().replace("+00:00", ".000Z"),
             "player1Id": a,
             "player2Id": b,
-            "tournamentId": 22 if challenger else 500,
+            "tournamentId": tid,
             "match_winner": a if m.winner == "A" else b,
             "result": score,
             "result_type": "completed",
             "player1": {"id": a, "name": f"Player {m.player_a}"},
             "player2": {"id": b, "name": f"Player {m.player_b}"},
             "tournament": {
-                "id": 22 if challenger else 500,
-                "name": "Lima Challenger" if challenger else "Synthetic Open",
+                "id": tid,
+                "name": "Lima Challenger" if challenger else f"Synthetic Open {tid}",
                 "courtId": 1,
                 "rankId": 1 if challenger else 2,
             },
@@ -244,8 +254,23 @@ class FakeTennisApi:
             ]
         elif "/atp/fixtures/" in path:
             data = self.fixtures if path.endswith(DAY1.date().isoformat()) else []
+        elif m2 := re.match(r".*/atp/tournament/results/(\d+)$", path):
+            tid = int(m2.group(1))
+            singles = [r for r in self.results if r["tournament"]["id"] == tid]
+            return httpx.Response(
+                200, json={"data": {"singles": singles, "qualifying": [], "doubles": []}}
+            )
         elif "/atp/tournament/calendar/" in path:
             data = [
+                {
+                    "id": tid,
+                    "name": "Lima Challenger" if tid == 22 else f"Synthetic Open {tid}",
+                    "courtId": 1,
+                    "rankId": 1 if tid == 22 else 2,
+                    "date": start,
+                }
+                for tid, start in self.tournaments.items()
+            ] + [
                 {
                     "id": 900,
                     "name": "Clay Masters",

@@ -51,6 +51,11 @@ solo conserva los precios unos días. No hay histórico de temporadas pasadas.
 * Plan FREE: 50 llamadas al día y 4 por segundo, con los mismos datos que el plan PRO.
   Las cuotas y las predicciones propias del proveedor están restringidas; este sistema no
   las usa.
+* **Resultados por torneo** (verificado el 8-oct-2026): `/tennis/v2/{atp|wta}/tournament/results/{id}`
+  devuelve en UNA llamada `data.singles` (cuadro principal), `data.qualifying` y `data.doubles`
+  con el mismo formato que `/results` (incluye el objeto `tournament`). El US Open ATP trajo
+  127 + 111 + 61 partidos. El histórico se carga así: una llamada por torneo del circuito
+  principal ya terminado (inicio hace más de 21 días), del más reciente al más antiguo.
 * Endpoints relevantes: `/tennis/v2/{atp|wta}/fixtures/{fecha}`,
   `/tennis/v2/{atp|wta}/results/{fecha}`, `/tennis/v2/{atp|wta}/ranking/singles`,
   `/tennis/v2/{atp|wta}/tournament/calendar/{año}`, con resultados desde 2010.
@@ -96,7 +101,7 @@ solo conserva los precios unos días. No hay histórico de temporadas pasadas.
 | Resultados de ayer ATP + WTA | 2 |
 | Ranking ATP + WTA | 2 (caché de 12 h) |
 | Calendario anual ATP + WTA | ~4 por semana |
-| **Libre para cargar histórico** | ~30 por día (500 resultados por llamada) |
+| **Libre para cargar histórico** | ~30 por día: un torneo completo por llamada (~2 años en 1-2 semanas) |
 
 ## Free API Live Football Data (RapidAPI · Creativesdev)
 

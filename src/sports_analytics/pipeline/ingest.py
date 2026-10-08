@@ -6,6 +6,7 @@ Cada competición / ventana se procesa de forma aislada: un fallo se registra en
 
 from __future__ import annotations
 
+import contextlib
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
@@ -307,48 +308,74 @@ def sync_tennis(
         except ApiError as exc:
             report.failures[f"tennis:{tour}:recent"] = str(exc)
 
-    # 2) Backfill alternando circuitos, ventana a ventana hacia atrás
+    # 2) Backfill por torneo: una llamada trae un torneo completo del circuito principal
+    #    (los rangos de fechas traen miles de partidos ITF en varias páginas).
     budget_end = client.http.calls_made + settings.tennis_backfill_calls_per_run
-    progressed = True
-    while progressed and client.http.calls_made < budget_end:
-        progressed = False
-        for tour in ("atp", "wta"):
-            key = f"{tour}_backfilled_until"
-            oldest = (
-                date.fromisoformat(state[key])
-                if key in state
-                else today - timedelta(days=settings.tennis_refresh_days)
-            )
-            if oldest <= horizon or client.http.calls_made >= budget_end:
-                continue
-            w_end = oldest - timedelta(days=1)
-            w_start = max(horizon, oldest - timedelta(days=settings.tennis_window_days))
-            try:
-                # Cada página es una llamada: no se piden más páginas que el presupuesto
-                items, complete = client.results_ex(
-                    tour, w_start, w_end, today, max_pages=budget_end - client.http.calls_made
-                )
-            except BudgetExceeded:
-                budget_end = 0
-                break
-            except ApiError as exc:
-                report.failures[f"tennis:{tour}:{w_start}"] = str(exc)
-                continue
-            matches, meta = _main_tour_matches(items, tour, config, {})
-            report.add(
-                f"tennis:{tour}:backfill", repo.upsert_tennis_matches(session, matches, meta)
-            )
-            if not complete:
-                # Ventana a medias: se guarda lo obtenido pero no se avanza el puntero, para
-                # completarla en la próxima corrida (las páginas ya pedidas quedan en caché)
-                session.commit()
-                budget_end = 0
-                break
-            state[key] = w_start.isoformat()
-            _save_tennis_state(session, state, client.http.calls_made - start_calls)
-            session.commit()
-            progressed = True
+    with contextlib.suppress(BudgetExceeded):
+        _backfill_tournaments(
+            session,
+            client,
+            config,
+            settings,
+            today,
+            horizon,
+            state,
+            budget_end,
+            report,
+            start_calls,
+        )
     report.calls["tennis_api"] = client.http.calls_made - start_calls
+
+
+TOURNAMENT_CLOSED_AFTER_DAYS = 21  # un torneo empezado hace más de 3 semanas ya terminó
+
+
+def _backfill_tournaments(
+    session: Session,
+    client: TennisApiClient,
+    config: AppConfig,
+    settings: Settings,
+    today: date,
+    horizon: date,
+    state: dict[str, Any],
+    budget_end: int,
+    report: IngestReport,
+    start_calls: int,
+) -> None:
+    """Carga torneos del circuito principal ya terminados, del más reciente al más antiguo,
+    hasta agotar ``budget_end``. Los cargados se recuerdan en el estado para no repetirlos."""
+    pending: list[tuple[date, str, TournamentInfo]] = []
+    for tour in ("atp", "wta"):
+        done = set(state.get(f"{tour}_tournaments_loaded", []))
+        for year in range(today.year, horizon.year - 1, -1):
+            if client.http.calls_made >= budget_end:
+                break
+            for info in client.tournaments(tour, year).values():
+                if (
+                    info.start is not None
+                    and horizon
+                    <= info.start
+                    <= today - timedelta(days=TOURNAMENT_CLOSED_AFTER_DAYS)
+                    and str(info.id) not in done
+                    and is_main_tour(info, config.tennis)
+                ):
+                    pending.append((info.start, tour, info))
+    pending.sort(key=lambda x: x[0], reverse=True)  # lo más reciente pesa más en el modelo
+    for _start, tour, info in pending:
+        if client.http.calls_made >= budget_end:
+            break
+        try:
+            items = client.tournament_results(tour, info.id, closed=True)
+        except ApiError as exc:
+            report.failures[f"tennis:{tour}:tournament:{info.id}"] = str(exc)
+            continue
+        matches, meta = _main_tour_matches(items, tour, config, {info.id: info})
+        report.add(f"tennis:{tour}:backfill", repo.upsert_tennis_matches(session, matches, meta))
+        key = f"{tour}_tournaments_loaded"
+        state[key] = sorted({*state.get(key, []), str(info.id)})
+        _save_tennis_state(session, state, client.http.calls_made - start_calls)
+        session.commit()
+    report.add("tennis:tournaments_pending", max(len(pending), 0))
 
 
 def tennis_fixtures_today(

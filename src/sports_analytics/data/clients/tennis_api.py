@@ -269,6 +269,21 @@ class TennisApiClient:
         path = f"/tennis/v2/{tour}/results/{start.isoformat()}/{end.isoformat()}"
         return self._paged_ex(path, ttl, max_pages=max(1, max_pages))
 
+    def tournament_results(self, tour: str, tournament_id: int, closed: bool) -> list[dict]:
+        """Todos los partidos de un torneo en UNA llamada (verificado el 8-oct-2026: el
+        US Open trajo 127 de cuadro principal + 111 de fase previa + 61 de dobles).
+        Devuelve individuales (cuadro principal y fase previa); los dobles se descartan."""
+        tour = self._check_tour(tour)
+        payload = self.http.get(
+            f"/tennis/v2/{tour}/tournament/results/{tournament_id}",
+            {"pageSize": 500},
+            cache_ttl=TTL_CLOSED_RESULTS if closed else TTL_FIXTURES,
+        )
+        data = payload.get("data") if isinstance(payload, dict) else None
+        if not isinstance(data, dict):
+            raise ApiError(PROVIDER, f"respuesta inesperada en tournament/results/{tournament_id}")
+        return [*(data.get("singles") or []), *(data.get("qualifying") or [])]
+
     def rankings(self, tour: str) -> dict[int, int]:
         tour = self._check_tour(tour)
         payload = self.http.get(

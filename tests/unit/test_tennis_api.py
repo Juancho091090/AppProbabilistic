@@ -231,3 +231,35 @@ def test_invalid_tour_rejected(tmp_path):
     client = _client(tmp_path, lambda r: httpx.Response(200, json={}))
     with pytest.raises(ValueError):
         client.fixtures("itf", date(2026, 10, 6))
+
+
+def test_tournament_results_one_call_singles_and_qualifying(tmp_path):
+    # Estructura real verificada el 8-oct-2026 (US Open ATP, id 21349)
+    calls = []
+
+    def handler(request):
+        calls.append(request.url.path)
+        return httpx.Response(
+            200,
+            json={
+                "data": {
+                    "singles": [{"id": "1"}, {"id": "2"}],
+                    "qualifying": [{"id": "3"}],
+                    "doubles": [{"id": "4"}],
+                    "doublesQualifying": [],
+                }
+            },
+        )
+
+    client = _client(tmp_path, handler)
+    items = client.tournament_results("atp", 21349, closed=True)
+    assert [i["id"] for i in items] == ["1", "2", "3"]  # sin dobles
+    assert calls == ["/tennis/v2/atp/tournament/results/21349"]
+    client.tournament_results("atp", 21349, closed=True)  # torneo cerrado: caché
+    assert len(calls) == 1
+
+
+def test_tournament_results_unexpected_payload(tmp_path):
+    client = _client(tmp_path, lambda r: httpx.Response(200, json={"data": []}))
+    with pytest.raises(ApiError):
+        client.tournament_results("wta", 1, closed=False)
