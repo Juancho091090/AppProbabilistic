@@ -622,6 +622,24 @@ def check_tennis_tournament(settings: Settings) -> list[str]:
         "/tennis/v2/{tour}/tournament/results/{id}",
         "/tennis/v2/{tour}/tournament/{id}/results",
     ]
+    if os.environ.get("DIAG_TENNIS_STRUCTURE"):
+        # Una sola llamada: estructura completa de la respuesta por torneo
+        tour, (tid, name, n_db) = next(iter(picks.items()))
+        path = templates[0].format(tour=tour, id=tid)
+        try:
+            payload = http.get(path, {"pageSize": 500})
+            lines.append(f"- `{path}` ({name}): estructura")
+            lines += ["```", *describe_structure(payload, max_depth=5)[:80], "```"]
+            data = payload.get("data") if isinstance(payload, dict) else None
+            if isinstance(data, dict):
+                for k, v in list(data.items())[:12]:
+                    size = len(v) if isinstance(v, list | dict) else v
+                    lines.append(f"  · data.{k}: {type(v).__name__} ({size})")
+            remaining = http.last_rate_headers.get("x-ratelimit-requests-remaining")
+            lines.append(f"· cuota restante: {remaining} · llamadas: {http.calls_made}")
+        finally:
+            http.close()
+        return lines
     try:
         tour, (tid, name, n_db) = next(iter(picks.items()))
         working = None
@@ -713,6 +731,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "odds": lambda: check_odds(settings),
         "coverage": lambda: check_coverage(settings, config),
         "tennis_tournament": lambda: check_tennis_tournament(settings),
+        "tennis_structure": lambda: check_tennis_tournament(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():

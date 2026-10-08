@@ -48,4 +48,5 @@ jobs:
           APP_TIMEZONE: America/Bogota
           LOG_LEVEL: WARNING
           DIAG_SECTIONS: ${{ github.event.inputs.sections || 'football_rapid,others' }}
+          DIAG_TENNIS_STRUCTURE: ${{ github.event.inputs.sections == 'tennis_structure' && '1' || '' }}
         run: sports-analytics check-apis
