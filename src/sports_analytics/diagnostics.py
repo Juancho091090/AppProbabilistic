@@ -577,6 +577,93 @@ def check_coverage(settings: Settings, config: AppConfig) -> list[str]:
     return lines
 
 
+def check_tennis_tournament(settings: Settings) -> list[str]:
+    """Prueba (máx. 3 llamadas, autorizada el 7-oct) de resultados por torneo de la Tennis API.
+
+    Toma de la base de datos el torneo ATP del circuito principal con más partidos y pide
+    sus resultados en una sola consulta. Tope duro de 3 llamadas (caché propia vacía)."""
+    import tempfile
+
+    from sqlalchemy import func, select
+
+    from sports_analytics.db.models import TennisMatchRow
+    from sports_analytics.db.session import session_scope
+
+    lines = ["## Tennis API: resultados por torneo (máx. 3 llamadas)", ""]
+    if settings.tennis_api_key is None or not settings.database_url:
+        return [*lines, "❌ falta TENNIS_API_KEY o DATABASE_URL"]
+    t = TennisMatchRow
+    picks = {}
+    with session_scope(settings.database_url) as s:
+        for tour in ("ATP", "WTA"):
+            row = s.execute(
+                select(t.tournament_external_id, t.tournament, func.count())
+                .where(t.tour == tour, t.rank_id >= 2, t.tournament_external_id.is_not(None))
+                .group_by(t.tournament_external_id, t.tournament)
+                .order_by(func.count().desc())
+                .limit(1)
+            ).first()
+            if row:
+                picks[tour.lower()] = row
+    if not picks:
+        return [*lines, "❌ no hay torneos del circuito principal en la base de datos"]
+    key = settings.tennis_api_key.get_secret_value()
+    register_secret(key)
+    http = HttpApiClient(
+        provider="tennis_probe",
+        base_url=settings.tennis_api_base_url,
+        headers={"X-RapidAPI-Key": key, "X-RapidAPI-Host": settings.tennis_api_host},
+        daily_limit=3,
+        cache_dir=Path(tempfile.mkdtemp()),
+        timeout=settings.http_timeout_seconds,
+        max_retries=0,
+    )
+    templates = [
+        "/tennis/v2/{tour}/tournament/results/{id}",
+        "/tennis/v2/{tour}/tournament/{id}/results",
+    ]
+    try:
+        tour, (tid, name, n_db) = next(iter(picks.items()))
+        working = None
+        for tpl in templates:
+            path = tpl.format(tour=tour, id=tid)
+            try:
+                payload = http.get(path, {"pageSize": 500})
+            except Exception as exc:
+                lines.append(f"- `{path}` ({name}, {n_db} partidos en BD): ❌ {str(exc)[:160]}")
+                continue
+            data = payload.get("data") if isinstance(payload, dict) else payload
+            items = data if isinstance(data, list) else (data or {}).get("matches") or []
+            keys = sorted(payload.keys()) if isinstance(payload, dict) else type(payload).__name__
+            sample = items[0] if items and isinstance(items[0], dict) else {}
+            lines.append(
+                f"- `{path}` ({name}, {n_db} partidos en BD): ✅ claves {keys} · "
+                f"{len(items)} elementos · hasNextPage {payload.get('hasNextPage') if isinstance(payload, dict) else '?'}"
+            )
+            lines.append(f"  campos del primer elemento: {sorted(sample.keys())[:25]}")
+            lines.append(
+                f"  · cuota restante: {http.last_rate_headers.get('x-ratelimit-requests-remaining')}"
+            )
+            working = tpl
+            break
+        if working and "wta" in picks and http.calls_made < 3:
+            tid, name, n_db = picks["wta"]
+            path = working.format(tour="wta", id=tid)
+            try:
+                payload = http.get(path, {"pageSize": 500})
+                data = payload.get("data") if isinstance(payload, dict) else payload
+                items = data if isinstance(data, list) else []
+                lines.append(
+                    f"- `{path}` ({name}, {n_db} partidos en BD): ✅ {len(items)} elementos"
+                )
+            except Exception as exc:
+                lines.append(f"- `{path}`: ❌ {str(exc)[:160]}")
+        lines.append(f"· Llamadas usadas en esta prueba: {http.calls_made} / 3")
+    finally:
+        http.close()
+    return lines
+
+
 def check_claude(settings: Settings) -> list[str]:
     """Llamada mínima real a la API de Anthropic (unos pocos tokens) para validar la clave."""
     lines = ["## Claude (Anthropic)", ""]
@@ -625,6 +712,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "claude": lambda: check_claude(settings),
         "odds": lambda: check_odds(settings),
         "coverage": lambda: check_coverage(settings, config),
+        "tennis_tournament": lambda: check_tennis_tournament(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
