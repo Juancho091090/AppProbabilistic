@@ -324,7 +324,10 @@ def sync_tennis(
             w_end = oldest - timedelta(days=1)
             w_start = max(horizon, oldest - timedelta(days=settings.tennis_window_days))
             try:
-                items = client.results(tour, w_start, w_end, today)
+                # Cada página es una llamada: no se piden más páginas que el presupuesto
+                items, complete = client.results_ex(
+                    tour, w_start, w_end, today, max_pages=budget_end - client.http.calls_made
+                )
             except BudgetExceeded:
                 budget_end = 0
                 break
@@ -335,6 +338,12 @@ def sync_tennis(
             report.add(
                 f"tennis:{tour}:backfill", repo.upsert_tennis_matches(session, matches, meta)
             )
+            if not complete:
+                # Ventana a medias: se guarda lo obtenido pero no se avanza el puntero, para
+                # completarla en la próxima corrida (las páginas ya pedidas quedan en caché)
+                session.commit()
+                budget_end = 0
+                break
             state[key] = w_start.isoformat()
             _save_tennis_state(session, state, client.http.calls_made - start_calls)
             session.commit()

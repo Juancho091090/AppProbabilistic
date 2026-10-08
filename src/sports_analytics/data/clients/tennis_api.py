@@ -222,6 +222,13 @@ class TennisApiClient:
     def _paged(
         self, path: str, ttl: float, page_size: int = 500, max_pages: int = 20
     ) -> list[dict]:
+        return self._paged_ex(path, ttl, page_size, max_pages)[0]
+
+    def _paged_ex(
+        self, path: str, ttl: float, page_size: int = 500, max_pages: int = 20
+    ) -> tuple[list[dict], bool]:
+        """(items, completo). Cada página es una llamada a la API: ``max_pages`` limita el
+        gasto. ``completo`` = False si quedaron páginas sin pedir."""
         items: list[dict] = []
         for page in range(1, max_pages + 1):
             payload = self.http.get(path, {"pageSize": page_size, "pageNo": page}, cache_ttl=ttl)
@@ -229,10 +236,9 @@ class TennisApiClient:
                 raise ApiError(PROVIDER, f"respuesta inesperada en {path}")
             items.extend(payload.get("data") or [])
             if not payload.get("hasNextPage"):
-                break
-        else:
-            log.warning("tennis_max_pages_reached", extra={"path": path, "pages": max_pages})
-        return items
+                return items, True
+        log.warning("tennis_max_pages_reached", extra={"path": path, "pages": max_pages})
+        return items, False
 
     @staticmethod
     def _check_tour(tour: str) -> str:
@@ -249,12 +255,19 @@ class TennisApiClient:
         tour = self._check_tour(tour)
         return self._paged(f"/tennis/v2/{tour}/fixtures/{day.isoformat()}", TTL_FIXTURES)
 
-    def results(self, tour: str, start: date, end: date, today: date) -> list[dict]:
+    def results(
+        self, tour: str, start: date, end: date, today: date, max_pages: int = 40
+    ) -> list[dict]:
+        return self.results_ex(tour, start, end, today, max_pages)[0]
+
+    def results_ex(
+        self, tour: str, start: date, end: date, today: date, max_pages: int = 40
+    ) -> tuple[list[dict], bool]:
         tour = self._check_tour(tour)
         # Días ya cerrados no cambian: caché larga. Si incluye hoy/ayer, caché corta.
         ttl = TTL_CLOSED_RESULTS if end < today - timedelta(days=1) else TTL_FIXTURES
         path = f"/tennis/v2/{tour}/results/{start.isoformat()}/{end.isoformat()}"
-        return self._paged(path, ttl, max_pages=40)
+        return self._paged_ex(path, ttl, max_pages=max(1, max_pages))
 
     def rankings(self, tour: str) -> dict[int, int]:
         tour = self._check_tour(tour)

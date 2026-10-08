@@ -547,3 +547,18 @@ def test_evening_run_reports_next_day(env, app_config):
         assert s.get(PipelineRun, out.run_id).run_date == DAY1.date()
     # El 1-jun ya se había enviado (test_day1): el guard de no reenvío usa la fecha del informe
     assert not out.telegram_sent and not out.email_sent
+
+
+def test_tennis_fixtures_have_priority_over_backfill(env, app_config):
+    """Regresión 8-oct-2026: el histórico agotó la cuota y el informe salió sin tenis."""
+    settings, *_rest, services = env
+    tn = FakeTennisApi()
+    s2 = settings.model_copy(
+        update={"tennis_api_daily_limit": 8, "cache_dir": settings.cache_dir + "_tight"}
+    )
+    svc = services()
+    svc.tennis = TennisApiClient(
+        s2, transport=httpx.MockTransport(tn), sleep=lambda s: None, min_interval=0
+    )
+    out = run_daily(s2, app_config, svc, now=DAY1 + timedelta(minutes=30), send=False)
+    assert out.payload.n_tennis("ATP") == 1  # los partidos del día llegaron pese a la cuota

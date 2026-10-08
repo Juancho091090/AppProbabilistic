@@ -351,10 +351,12 @@ def run_daily(
                 issues.append("Fútbol: API_FOOTBALL_KEY no configurada")
             if svc.tennis:
                 try:
-                    ingest.sync_tennis(session, svc.tennis, config, settings, local_day, report)
+                    # Primero los partidos del informe (prioridad); el histórico usa lo que sobre
                     tennis_fixtures = ingest.tennis_fixtures_today(
                         svc.tennis, config, today, report, session, tz
                     )
+                    session.commit()
+                    ingest.sync_tennis(session, svc.tennis, config, settings, local_day, report)
                     session.commit()
                 except Exception as exc:
                     session.rollback()

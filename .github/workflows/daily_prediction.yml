@@ -6,6 +6,9 @@ name: daily-prediction
 # * Viernes y sábado, informe la NOCHE ANTERIOR con los partidos de sábado y domingo (hay
 #   ligas desde las 05:00): cron 23:45 UTC = 18:45 Bogotá, para llegar hacia las 19:00.
 #   Sábado y domingo por la mañana no hay corrida (ese informe ya salió la víspera).
+# Respaldo: el 7 y el 8-oct-2026 GitHub no disparó ningún cron de este repositorio. Una
+# tarea programada externa llama a workflow_dispatch con skip_if_sent=true a la misma hora;
+# si el cron sí corre, la segunda ejecución no reenvía.
 # Los cron van fuera del minuto 00: GitHub retrasa (o incluso omite) los cron en punto por
 # alta carga. El 7-oct-2026 el cron de las 12:00 UTC no se había disparado a las 12:12 UTC.
 on:
@@ -23,6 +26,10 @@ on:
         type: choice
         options: ["0", "1"]
         default: "0"
+      skip_if_sent:
+        description: "No reenviar si el informe de esa fecha ya salió (respaldo programado)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -38,8 +45,8 @@ jobs:
     env:
       APP_TIMEZONE: America/Bogota
       LOG_LEVEL: INFO
-      # Solo en ejecuciones programadas: si hoy ya se envió (p. ej. manualmente), no reenviar
-      SKIP_IF_ALREADY_SENT: ${{ github.event_name == 'schedule' }}
+      # Programadas y respaldo (skip_if_sent): si el informe de esa fecha ya salió, no reenviar
+      SKIP_IF_ALREADY_SENT: ${{ github.event_name == 'schedule' || inputs.skip_if_sent == true }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       API_FOOTBALL_DAILY_LIMIT: "7000"      # plan Pro: 7.500/día (margen de seguridad)
