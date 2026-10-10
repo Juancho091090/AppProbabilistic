@@ -30,7 +30,7 @@ from reportlab.platypus import (
 
 from sports_analytics.models.confidence import ConfidenceLevel
 from sports_analytics.models.outputs import MatchForecast
-from sports_analytics.reporting.builder import DISCLAIMER, UNAVAILABLE, pct
+from sports_analytics.reporting.builder import DISCLAIMER, TRACK_NOTE, UNAVAILABLE, pct
 from sports_analytics.reporting.payload import DailyReportPayload, statistical_factors
 
 # Fuente Unicode (nombres con tildes, ñ, ş, ł…). Si no existe, Helvetica.
@@ -284,8 +284,27 @@ def render_pdf(
                 flow.append(_tennis(f, tz, narrative, st))
 
     annex = []
+    if payload.track_record:
+        annex.append(Paragraph("¿Cuánto se acertó? (partidos ya jugados)", st["h2"]))
+        annex.append(
+            _table(
+                [["Qué se mide", "Partidos", "Acertados", "% real", "% esperado"]]
+                + [
+                    [
+                        t["label"],
+                        str(t["n"]),
+                        str(t["hits"]),
+                        f"{t['hit_rate']:.0%}",
+                        f"{t['expected_rate']:.0%}",
+                    ]
+                    for t in payload.track_record
+                ],
+                [66 * mm, 22 * mm, 24 * mm, 22 * mm, 26 * mm],
+            )
+        )
+        annex.append(Paragraph(_esc(TRACK_NOTE), st["small"]))
     if payload.model_quality:
-        annex.append(Paragraph("Calidad de los modelos (predicciones resueltas)", st["h2"]))
+        annex.append(Paragraph("Métricas técnicas (Brier, LogLoss, ECE)", st["h2"]))
         annex.append(
             _table(
                 [["Deporte", "Mercado", "n", "Brier", "LogLoss", "ECE"]]

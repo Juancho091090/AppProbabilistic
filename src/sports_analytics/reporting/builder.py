@@ -137,8 +137,16 @@ def render_markdown(
             out += [f"## {tour}", ""]
             for f in sorted(items, key=lambda f: f.kickoff_utc):
                 out += tennis_block(f, tz, narrative)
+    if payload.track_record:
+        out += ["---", "", "## ¿Cuánto se acertó? (partidos ya jugados)", ""]
+        for t in payload.track_record:
+            out.append(
+                f"- {t['label']}: {t['hits']} de {t['n']} ({t['hit_rate']:.0%}); "
+                f"el modelo esperaba {t['expected_rate']:.0%}"
+            )
+        out += ["", f"_{TRACK_NOTE}_", ""]
     if payload.model_quality:
-        out += ["---", "", "## Calidad de los modelos (predicciones ya resueltas)", ""]
+        out += ["---", "", "## Métricas técnicas (Brier, LogLoss, ECE)", ""]
         for q in payload.model_quality:
             out.append(
                 f"- {q['sport']} · {q['model']} · {q['market']}: n={q['n']}, "
@@ -155,6 +163,13 @@ def render_markdown(
         out.append("")
     out += ["---", "", f"_{DISCLAIMER}_", ""]
     return "\n".join(out)
+
+
+TRACK_NOTE = (
+    "Acierto = ocurrió el resultado al que el modelo dio más probabilidad. "
+    "'Esperaba' es la probabilidad media que le dio: si ambas cifras se parecen, "
+    "las probabilidades están bien medidas. Con pocos partidos varían mucho por azar."
+)
 
 
 def markdown_to_telegram_html(md: str) -> str:
@@ -191,6 +206,13 @@ def render_email_summary(payload: DailyReportPayload, summary: str | None = None
         f"WTA: {payload.n_tennis('WTA')}",
         "",
     ]
+    if payload.track_record:
+        t = payload.track_record[0]
+        out += [
+            f"Balance hasta hoy · {t['label']}: acertado {t['hits']} de {t['n']} "
+            f"({t['hit_rate']:.0%}); el modelo esperaba {t['expected_rate']:.0%}.",
+            "",
+        ]
     if summary:
         out += [summary, ""]
     for section in payload.football:

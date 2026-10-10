@@ -26,6 +26,7 @@ class DailyReportPayload(BaseModel):
     skipped: list[str] = Field(default_factory=list)  # partidos omitidos y motivo
     data_issues: list[str] = Field(default_factory=list)
     model_quality: list[dict[str, Any]] = Field(default_factory=list)  # métricas vivas globales
+    track_record: list[dict[str, Any]] = Field(default_factory=list)  # aciertos esperado vs real
     load_summary: list[str] = Field(default_factory=list)  # estado de la ingesta
 
     @property

@@ -192,6 +192,62 @@ def _ab_test(args: argparse.Namespace) -> int:
     return 0
 
 
+def _track_record(_: argparse.Namespace) -> int:
+    """Aciertos reales frente a esperados, con detalle por partido (solo lectura)."""
+    from sqlalchemy import select
+    from sqlalchemy.orm import aliased
+
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.models import FootballMatchRow, Team
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.evaluation.track_record import football_1x2_detail, track_record
+
+    version = get_config().models.version
+    lines = ["# Balance de aciertos", ""]
+    with session_scope(get_settings().database_url) as s:
+        pairs = repo.settled_predictions(s)
+        for t in track_record(pairs, version):
+            lines.append(
+                f"- {t['label']}: {t['hits']} de {t['n']} ({t['hit_rate']:.0%}); "
+                f"esperado {t['expected_rate']:.0%}"
+            )
+        detail = football_1x2_detail(pairs, version)
+        h, a = aliased(Team), aliased(Team)
+        ids = [d["event_id"] for d in detail]
+        names = {
+            ext: f"{hn} vs {an}"
+            for ext, hn, an in s.execute(
+                select(FootballMatchRow.external_id, h.name, a.name)
+                .join(h, h.id == FootballMatchRow.home_team_id)
+                .join(a, a.id == FootballMatchRow.away_team_id)
+                .where(FootballMatchRow.external_id.in_(ids))
+            )
+        }
+    lines += ["", "## Detalle 1X2", ""]
+    for d in detail:
+        lines.append(
+            f"- {d['date']} · {d['competition']} · {names.get(d['event_id'], d['event_id'])}: "
+            f"favorito {d['favorite']} {d['probability']:.0%} ({d['confidence']}) → "
+            f"resultado {d['result']} {'✔' if d['hit'] else '✘'}"
+        )
+    text = "\n".join(lines)
+    print(text)
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import _escape_annotation
+
+        chunk, n = [], 0
+        for line in lines:
+            chunk.append(line)
+            if sum(len(x) for x in chunk) > 3500:
+                n += 1
+                print(f"::notice title=balance {n}::{_escape_annotation(chr(10).join(chunk))}")
+                chunk = []
+        if chunk:
+            n += 1
+            print(f"::notice title=balance {n}::{_escape_annotation(chr(10).join(chunk))}")
+    return 0
+
+
 def _data_audit(_: argparse.Namespace) -> int:
     """Auditoría de la base de datos (solo lectura, sin llamadas a APIs)."""
     from sqlalchemy import case, func, select
@@ -348,6 +404,10 @@ def build_parser() -> argparse.ArgumentParser:
     ab.add_argument("--refit-days", type=int, default=7)
     ab.add_argument("--output", default="reports/metrics/ab.json")
     ab.set_defaults(func=_ab_test)
+
+    sub.add_parser("track-record", help="Aciertos reales vs esperados (sin APIs)").set_defaults(
+        func=_track_record
+    )
 
     sub.add_parser("data-audit", help="Auditoría de la base de datos (sin APIs)").set_defaults(
         func=_data_audit
