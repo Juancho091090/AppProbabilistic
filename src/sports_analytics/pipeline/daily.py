@@ -22,7 +22,7 @@ from sports_analytics.data.clients.tennis_api import TennisApiClient
 from sports_analytics.data.schemas import FootballMatch, TennisMatch
 from sports_analytics.db import repository as repo
 from sports_analytics.db.session import session_scope
-from sports_analytics.evaluation.track_record import track_record
+from sports_analytics.evaluation.track_record import lines_record, track_record
 from sports_analytics.models.football.predictor import FootballPredictor
 from sports_analytics.models.outputs import MatchForecast
 from sports_analytics.models.tennis.predictor import TennisPredictor
@@ -409,9 +409,9 @@ def run_daily(
                 if m.model == config.models.version and m.n >= 30
             ]
             payload.show_btts = bool(config.models.football.get("report_btts", False))
-            payload.track_record = track_record(
-                repo.settled_predictions(session), config.models.version
-            )
+            settled_pairs = repo.settled_predictions(session)
+            payload.track_record = track_record(settled_pairs, config.models.version)
+            payload.lines_record = lines_record(settled_pairs)
             narrative = svc.narrator.narrate(payload) if svc.narrator else None
             markdown = render_markdown(
                 payload,

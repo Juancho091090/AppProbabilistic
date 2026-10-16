@@ -151,6 +151,15 @@ def render_markdown(
                 f"el modelo esperaba {t['expected_rate']:.0%}"
             )
         out += ["", f"_{TRACK_NOTE}_", ""]
+    if payload.lines_record:
+        out += ["## Goles y córners: lo que se predijo vs lo que pasó", ""]
+        for t in payload.lines_record:
+            out.append(
+                f"- {t['label']}: predicho {t['predicted_rate']:.0%} de media, ocurrió en "
+                f"{t['observed_rate']:.0%} de {t['n']} partidos; lado más probable acertado "
+                f"{t['hits']} de {t['n']} ({t['hit_rate']:.0%})"
+            )
+        out += ["", f"_{LINES_NOTE}_", ""]
     if payload.model_quality:
         out += ["---", "", "## Métricas técnicas (Brier, LogLoss, ECE)", ""]
         for q in payload.model_quality:
@@ -170,6 +179,12 @@ def render_markdown(
     out += ["---", "", f"_{DISCLAIMER}_", ""]
     return "\n".join(out)
 
+
+LINES_NOTE = (
+    "'Predicho' es la probabilidad media que dio el modelo; 'real', el % de partidos en que "
+    "ocurrió. Si se parecen, el modelo mide bien ese mercado. 'Lado más probable' = más o "
+    "menos de la línea según qué opción tuviera más del 50 %."
+)
 
 TRACK_NOTE = (
     "Acierto = ocurrió el resultado al que el modelo dio más probabilidad. "

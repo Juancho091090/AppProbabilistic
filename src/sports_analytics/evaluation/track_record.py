@@ -54,7 +54,12 @@ def _latest(pairs: Iterable, final_model: str, sport: str, market: str, line_key
     """Agrupa por partido y se queda con la predicción más reciente de cada uno."""
     by_event: dict[str, list] = defaultdict(list)
     for p, r in pairs:
-        if p.sport != sport or p.market != market or p.model != final_model:
+        model_ok = (
+            p.model.startswith(final_model[:-1])
+            if final_model.endswith("*")
+            else p.model == final_model
+        )
+        if p.sport != sport or p.market != market or not model_ok:
             continue
         if (p.line_key or "") != line_key or r.outcome is None:
             continue
@@ -140,3 +145,43 @@ def football_1x2_detail(pairs: Iterable, final_model: str) -> list[dict]:
             }
         )
     return sorted(out, key=lambda x: (x["date"], x["competition"]))
+
+
+GOAL_LINES = ("1.5", "2.5", "3.5")
+CORNER_LINES = ("8.5", "9.5", "10.5")
+CORNERS_MODEL = "corners_*"  # corners_<familia de distribución>
+
+
+def _line_row(label: str, items: list[tuple[float, int]]) -> dict:
+    """items: (probabilidad de 'sí/más de', ocurrió 0/1) por partido."""
+    n = len(items)
+    pred = sum(p for p, _ in items) / n
+    real = sum(y for _, y in items) / n
+    hits = sum(int((p >= 0.5) == bool(y)) for p, y in items)
+    return {
+        "label": label,
+        "n": n,
+        "predicted_rate": pred,
+        "observed_rate": real,
+        "hits": hits,
+        "hit_rate": hits / n,
+        "expected_rate": sum(max(p, 1 - p) for p, _ in items) / n,
+    }
+
+
+def lines_record(pairs: Iterable, min_n: int = 1) -> list[dict]:
+    """Por línea de goles y córners (y BTTS): % predicho medio frente a % que ocurrió, y
+    cuántas veces acertó el lado más probable (más/menos)."""
+    pairs = list(pairs)
+    specs = [
+        *((f"Más de {ln} goles", GOALS_MODEL, "goals_total", ln) for ln in GOAL_LINES),
+        ("Ambos marcan", GOALS_MODEL, "btts", ""),
+        *((f"Más de {ln} córners", CORNERS_MODEL, "corners_total", ln) for ln in CORNER_LINES),
+    ]
+    out = []
+    for label, model, market, line in specs:
+        groups = _latest(pairs, model, "football", market, line)
+        items = [(its[0][0].probability, int(its[0][1].outcome)) for its in groups.values()]
+        if len(items) >= min_n:
+            out.append(_line_row(label, items))
+    return out

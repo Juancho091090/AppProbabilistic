@@ -222,7 +222,11 @@ def _track_record(_: argparse.Namespace) -> int:
     from sports_analytics.db import repository as repo
     from sports_analytics.db.models import FootballMatchRow, Team
     from sports_analytics.db.session import session_scope
-    from sports_analytics.evaluation.track_record import football_1x2_detail, track_record
+    from sports_analytics.evaluation.track_record import (
+        football_1x2_detail,
+        lines_record,
+        track_record,
+    )
 
     version = get_config().models.version
     lines = ["# Balance de aciertos", ""]
@@ -232,6 +236,13 @@ def _track_record(_: argparse.Namespace) -> int:
             lines.append(
                 f"- {t['label']}: {t['hits']} de {t['n']} ({t['hit_rate']:.0%}); "
                 f"esperado {t['expected_rate']:.0%}"
+            )
+        lines += ["", "## Goles y córners (predicho vs real)", ""]
+        for t in lines_record(pairs):
+            lines.append(
+                f"- {t['label']}: n={t['n']} · predicho {t['predicted_rate']:.1%} · real "
+                f"{t['observed_rate']:.1%} · lado más probable {t['hit_rate']:.0%} "
+                f"(esperado {t['expected_rate']:.0%})"
             )
         detail = football_1x2_detail(pairs, version)
         h, a = aliased(Team), aliased(Team)

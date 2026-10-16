@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 
-from sports_analytics.evaluation.track_record import track_record
+from sports_analytics.evaluation.track_record import lines_record, track_record
 
 M = "v1"
 
@@ -79,3 +79,35 @@ def test_goals_most_likely_side_and_tennis():
     assert rows["Tenis · ganador"]["hits"] == 1
     b = rows["Fútbol · ambos marcan (sí/no)"]
     assert (b["n"], b["hits"]) == (1, 1)
+
+
+def test_lines_record_predicted_vs_observed():
+    pairs = [
+        (
+            P("football", "1", "goals_total", "over_2.5", 0.6, line_key="2.5", model="dixon_coles"),
+            R(1),
+        ),
+        (
+            P("football", "2", "goals_total", "over_2.5", 0.4, line_key="2.5", model="dixon_coles"),
+            R(1),
+        ),
+        (
+            P(
+                "football",
+                "1",
+                "corners_total",
+                "over_8.5",
+                0.7,
+                line_key="8.5",
+                model="corners_negbin",
+            ),
+            R(0),
+        ),
+    ]
+    rows = {r["label"]: r for r in lines_record(pairs)}
+    g = rows["Más de 2.5 goles"]
+    assert g["n"] == 2 and abs(g["predicted_rate"] - 0.5) < 1e-9 and g["observed_rate"] == 1.0
+    assert g["hits"] == 1  # 0.6 → más (sí); 0.4 → menos (no, ocurrió más)
+    c = rows["Más de 8.5 córners"]
+    assert (c["n"], c["hits"], c["observed_rate"]) == (1, 0, 0.0)
+    assert "Más de 1.5 goles" not in rows

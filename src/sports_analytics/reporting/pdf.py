@@ -30,7 +30,13 @@ from reportlab.platypus import (
 
 from sports_analytics.models.confidence import ConfidenceLevel
 from sports_analytics.models.outputs import MatchForecast
-from sports_analytics.reporting.builder import DISCLAIMER, TRACK_NOTE, UNAVAILABLE, pct
+from sports_analytics.reporting.builder import (
+    DISCLAIMER,
+    LINES_NOTE,
+    TRACK_NOTE,
+    UNAVAILABLE,
+    pct,
+)
 from sports_analytics.reporting.payload import DailyReportPayload, statistical_factors
 
 # Fuente Unicode (nombres con tildes, ñ, ş, ł…). Si no existe, Helvetica.
@@ -306,6 +312,25 @@ def render_pdf(
             )
         )
         annex.append(Paragraph(_esc(TRACK_NOTE), st["small"]))
+    if payload.lines_record:
+        annex.append(Paragraph("Goles y córners: lo que se predijo vs lo que pasó", st["h2"]))
+        annex.append(
+            _table(
+                [["Mercado", "Partidos", "% predicho", "% real", "Lado más probable"]]
+                + [
+                    [
+                        t["label"],
+                        str(t["n"]),
+                        f"{t['predicted_rate']:.0%}",
+                        f"{t['observed_rate']:.0%}",
+                        f"{t['hits']} de {t['n']} ({t['hit_rate']:.0%})",
+                    ]
+                    for t in payload.lines_record
+                ],
+                [50 * mm, 22 * mm, 26 * mm, 22 * mm, 40 * mm],
+            )
+        )
+        annex.append(Paragraph(_esc(LINES_NOTE), st["small"]))
     if payload.model_quality:
         annex.append(Paragraph("Métricas técnicas (Brier, LogLoss, ECE)", st["h2"]))
         annex.append(
