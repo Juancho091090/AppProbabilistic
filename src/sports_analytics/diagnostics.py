@@ -715,6 +715,72 @@ def check_others(settings: Settings) -> list[str]:
     return ["## Otras credenciales", "", *[f"{_yes(ok)} {name}" for name, ok in rows]]
 
 
+def check_league_lookup(settings: Settings) -> list[str]:
+    """Verifica ligas candidatas por país (2 llamadas por país): ID, temporada actual,
+    cobertura, partidos de los próximos días y temporadas disponibles para el histórico."""
+    lines = ["## API-Football: ligas candidatas", ""]
+    if settings.api_football_key is None:
+        return [*lines, "❌ `API_FOOTBALL_KEY` no está definida."]
+    client = ApiFootballClient(settings)
+    countries = [
+        c.strip() for c in os.environ.get("DIAG_COUNTRIES", "Turkey,Saudi-Arabia").split(",")
+    ]
+    today = local_today(settings.tz)
+    for country in countries:
+        try:
+            items = client.http.get("/leagues", {"country": country, "type": "league"}).get(
+                "response", []
+            )
+        except Exception as exc:  # noqa: BLE001 - diagnóstico: se informa y sigue
+            lines.append(f"❌ {country}: {type(exc).__name__}: {str(exc)[:160]}")
+            continue
+        for it in items[:4]:
+            lg = it["league"]
+            seasons = it.get("seasons") or []
+            cur = next((x for x in seasons if x.get("current")), None)
+            years = sorted(x["year"] for x in seasons)
+            lines.append(
+                f"### {lg['name']} · {(it.get('country') or {}).get('name')} · id {lg['id']}"
+            )
+            if not cur:
+                lines.append("- sin temporada actual")
+                continue
+            cov = cur.get("coverage") or {}
+            fx = cov.get("fixtures") or {}
+            lines.append(
+                f"- temporada actual {cur['year']} ({cur.get('start')} → {cur.get('end')}); "
+                f"temporadas en la API: {years[0]}–{years[-1]}"
+            )
+            lines.append(
+                f"- estadísticas por partido {_yes(bool(fx.get('statistics_fixtures')))} · "
+                f"alineaciones {_yes(bool(fx.get('lineups')))} · lesionados "
+                f"{_yes(bool(cov.get('injuries')))} · cuotas {_yes(bool(cov.get('odds')))}"
+            )
+        if items:
+            top = items[0]
+            cur = next((x for x in top.get("seasons") or [] if x.get("current")), None)
+            if cur:
+                nxt = client.http.get(
+                    "/fixtures",
+                    {
+                        "league": top["league"]["id"],
+                        "season": cur["year"],
+                        "from": today.isoformat(),
+                        "to": (today + timedelta(days=3)).isoformat(),
+                        "timezone": settings.app_timezone,
+                    },
+                ).get("response", [])
+                lines.append(f"- partidos {today} → {today + timedelta(days=3)}: {len(nxt)}")
+                lines += [
+                    f"  - {f['fixture']['date'][:16]} · {f['teams']['home']['name']} vs "
+                    f"{f['teams']['away']['name']}"
+                    for f in nxt[:12]
+                ]
+        lines.append("")
+    lines.append(f"Llamadas usadas: {client.http.calls_made}")
+    return lines
+
+
 def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None = None) -> str:
     """``sections``: lista separada por comas (football_rapid, api_football, tennis, others)
     o ``all``. Permite no gastar cuota en APIs ya verificadas."""
@@ -732,6 +798,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "coverage": lambda: check_coverage(settings, config),
         "tennis_tournament": lambda: check_tennis_tournament(settings),
         "tennis_structure": lambda: check_tennis_tournament(settings),
+        "league_lookup": lambda: check_league_lookup(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():

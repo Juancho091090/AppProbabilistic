@@ -38,7 +38,9 @@ def _factors(f: MatchForecast, narrative: dict[str, list[str]] | None) -> list[s
     return statistical_factors(f)
 
 
-def football_block(f: MatchForecast, tz: ZoneInfo, narrative=None) -> list[str]:
+def football_block(
+    f: MatchForecast, tz: ZoneInfo, narrative=None, show_btts: bool = False
+) -> list[str]:
     m = f.markets
     x = m["1x2"]
     lines = [
@@ -56,6 +58,10 @@ def football_block(f: MatchForecast, tz: ZoneInfo, narrative=None) -> list[str]:
     ]
     for line, p in m["goals"]["goal_lines"].items():
         lines.append(f"- Más de {line}: {pct(p['over'])}")
+    if show_btts and m["goals"].get("btts") is not None:
+        lines.append(
+            f"- Ambos marcan: Sí {pct(m['goals']['btts'])} · No {pct(1 - m['goals']['btts'])}"
+        )
     lines += ["", "**Córners**"]
     if m.get("corners"):
         lines.append(f"- Esperados: {m['corners']['expected']['total']:.2f}")
@@ -127,7 +133,7 @@ def render_markdown(
             out += [UNAVAILABLE, f"_{section.unavailable_reason}_", ""]
             continue
         for f in sorted(section.forecasts, key=lambda f: f.kickoff_utc):
-            out += football_block(f, tz, narrative)
+            out += football_block(f, tz, narrative, payload.show_btts)
     out += ["---", "", "# TENIS", ""]
     if not any(payload.tennis.values()):
         out += ["Sin partidos ATP/WTA del circuito principal hoy.", ""]

@@ -60,9 +60,16 @@ def test_only_latest_prediction_per_match_counts():
 
 def test_goals_most_likely_side_and_tennis():
     pairs = [
-        (P("football", "1", "goals_total", "over", 0.3, line_key="2.5"), R(0)),  # menos: acierto
-        (P("football", "2", "goals_total", "over", 0.7, line_key="2.5"), R(0)),  # fallo
-        (P("football", "2", "goals_total", "over", 0.9, line_key="1.5"), R(1)),  # otra línea
+        (
+            P("football", "1", "goals_total", "over", 0.3, line_key="2.5", model="dixon_coles"),
+            R(0),
+        ),  # menos: acierto
+        (
+            P("football", "2", "goals_total", "over", 0.7, line_key="2.5", model="dixon_coles"),
+            R(0),
+        ),  # fallo
+        (P("football", "2", "goals_total", "over", 0.9, line_key="1.5", model="dixon_coles"), R(1)),
+        (P("football", "2", "btts", "yes", 0.6, model="dixon_coles"), R(1)),  # otra línea
         (P("tennis", "t", "winner", "player_a_win", 0.65), R(1)),
         (P("tennis", "t", "winner", "player_b_win", 0.35), R(0)),
     ]
@@ -70,3 +77,5 @@ def test_goals_most_likely_side_and_tennis():
     g = rows["Fútbol · más/menos de 2.5 goles"]
     assert (g["n"], g["hits"]) == (2, 1) and abs(g["expected_rate"] - 0.7) < 1e-9
     assert rows["Tenis · ganador"]["hits"] == 1
+    b = rows["Fútbol · ambos marcan (sí/no)"]
+    assert (b["n"], b["hits"]) == (1, 1)

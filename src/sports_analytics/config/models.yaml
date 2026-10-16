@@ -58,6 +58,9 @@ football:
   lines:
     goals: [0.5, 1.5, 2.5, 3.5, 4.5]
     corners: [7.5, 8.5, 9.5, 10.5, 11.5]
+  # Ambos marcan (BTTS), de la matriz de Dixon-Coles. Siempre se guarda y se evalúa;
+  # solo se muestra en el informe si report_btts es true (tras validarlo en backtest).
+  report_btts: false
   ensemble_weights_1x2:
     dixon_coles: 0.40
     poisson: 0.20

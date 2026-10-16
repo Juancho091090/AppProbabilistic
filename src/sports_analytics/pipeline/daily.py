@@ -408,6 +408,7 @@ def run_daily(
                 for m in latest_global_metrics(session)
                 if m.model == config.models.version and m.n >= 30
             ]
+            payload.show_btts = bool(config.models.football.get("report_btts", False))
             payload.track_record = track_record(
                 repo.settled_predictions(session), config.models.version
             )

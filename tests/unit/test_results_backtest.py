@@ -40,6 +40,11 @@ def test_football_goals_and_corners():
     )
 
 
+def test_football_btts_outcome():
+    assert football_outcome(_pred("btts", "yes"), _fm(hg=2, ag=1), None, NOW)[0] == 1
+    assert football_outcome(_pred("btts", "yes"), _fm(hg=2, ag=0), None, NOW)[0] == 0
+
+
 def test_football_void_and_pending():
     assert football_outcome(_pred("1x2", "draw"), _fm("postponed"), None, NOW) == (
         None,
@@ -99,6 +104,9 @@ def test_backtest_football_walk_forward(app_config):
     assert brier_model < brier_naive  # el modelo aporta información frente a la tasa base
     md = rep.to_markdown("ensemble_v1")
     assert "Métricas globales" in md and "Curva de calibración" in md and "Por competición" in md
+    btts = [p for p in rep.predictions if p.market == "btts"]
+    assert btts and all(p.model == "dixon_coles" and p.event == "yes" for p in btts)
+    assert "| dixon_coles | btts | yes |" in md  # habilidad frente a la climatología
 
 
 def test_backtest_tennis_runs(app_config):

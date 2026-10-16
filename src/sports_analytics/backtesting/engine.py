@@ -16,6 +16,8 @@ from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
+import numpy as np
+
 from sports_analytics.backtesting.metrics import (
     ResolvedPrediction,
     SegmentMetric,
@@ -40,6 +42,36 @@ from sports_analytics.models.tennis.predictor import TennisPredictor
 log = get_logger(__name__)
 
 
+def binary_skill_markdown(preds: list[ResolvedPrediction]) -> list[str]:
+    """Brier Skill Score frente a la climatología (frecuencia real del periodo) en los
+    mercados sí/no. > 0 significa que el modelo aporta información; ≤ 0, que no."""
+    groups: dict[tuple[str, str, str], list[ResolvedPrediction]] = {}
+    for r in preds:
+        if r.market != "1x2":
+            groups.setdefault((r.model, r.market, r.event), []).append(r)
+    if not groups:
+        return []
+    out = [
+        "",
+        "## Habilidad frente a la climatología (mercados sí/no)",
+        "",
+        "| Modelo | Mercado | Evento | n | Prob. media | Frecuencia real | Brier | BSS |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for (model, market, event), rows in sorted(groups.items()):
+        p = np.array([r.probability for r in rows], dtype=float)
+        y = np.array([r.outcome for r in rows], dtype=float)
+        base = float(y.mean())
+        b = float(np.mean((p - y) ** 2))
+        b0 = float(np.mean((base - y) ** 2))
+        bss = 1 - b / b0 if b0 > 0 else float("nan")
+        out.append(
+            f"| {model} | {market} | {event} | {len(rows)} | {p.mean():.3f} | {base:.3f} | "
+            f"{b:.4f} | {bss:+.1%} |"
+        )
+    return out
+
+
 def football_outcome(rec: PredictionRecord, m: FootballMatch) -> int | None:
     hg, ag = m.home_goals, m.away_goals
     if rec.market == "1x2":
@@ -47,6 +79,8 @@ def football_outcome(rec: PredictionRecord, m: FootballMatch) -> int | None:
         return int(rec.event == actual)
     if rec.market == "goals_total":
         return int(hg + ag > rec.line)
+    if rec.market == "btts":
+        return int(hg > 0 and ag > 0)
     if rec.market == "corners_total":
         return int(m.home_corners + m.away_corners > rec.line) if m.has_corners else None
     return None
@@ -106,6 +140,7 @@ class BacktestReport:
                     f"| {m.model} | {m.market} | {m.n} | {m.brier:.4f} | {m.log_loss:.4f} | "
                     f"{m.accuracy:.3f} | {m.ece:.4f} |"
                 )
+        lines += binary_skill_markdown(self.predictions)
         for seg, title in (
             ("competition", "Por competición"),
             ("prob_bucket", "Por rango de probabilidad"),

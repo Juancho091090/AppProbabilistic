@@ -247,6 +247,16 @@ class FootballPredictor:
                     model="dixon_coles",
                 )
             )
+        if f.markets["goals"].get("btts") is not None:
+            recs.append(
+                PredictionRecord(
+                    **base,
+                    market="btts",
+                    event="yes",
+                    probability=float(f.markets["goals"]["btts"]),
+                    model="dixon_coles",
+                )
+            )
         if f.markets.get("corners"):
             for line, p in f.markets["corners"]["lines"].items():
                 recs.append(

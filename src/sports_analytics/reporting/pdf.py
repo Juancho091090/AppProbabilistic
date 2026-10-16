@@ -123,7 +123,7 @@ def _factors(f: MatchForecast, narrative, st) -> list:
     return out
 
 
-def _football(f: MatchForecast, tz: ZoneInfo, narrative, st) -> KeepTogether:
+def _football(f: MatchForecast, tz: ZoneInfo, narrative, st, show_btts=False) -> KeepTogether:
     m = f.markets
     x = m["1x2"]
     when = f.kickoff_utc.astimezone(tz).strftime("%H:%M")
@@ -150,6 +150,9 @@ def _football(f: MatchForecast, tz: ZoneInfo, narrative, st) -> KeepTogether:
         ["Línea", *[f"+{k}" for k in goal_lines]],
         ["Goles", *[pct(v["over"]) for v in goal_lines.values()]],
     ]
+    if show_btts and m["goals"].get("btts") is not None:
+        rows[0].append("Ambos marcan")
+        rows[1].append(pct(m["goals"]["btts"]))
     if m.get("corners"):
         c_lines = m["corners"]["lines"]
         rows_c = [
@@ -158,7 +161,7 @@ def _football(f: MatchForecast, tz: ZoneInfo, narrative, st) -> KeepTogether:
         ]
     else:
         rows_c = None
-    flow.append(_table(rows, [20 * mm] + [24.4 * mm] * len(goal_lines)))
+    flow.append(_table(rows, [20 * mm] + [24.4 * mm] * (len(rows[0]) - 1)))
     if rows_c:
         flow += [Spacer(1, 2), _table(rows_c, [20 * mm] + [24.4 * mm] * (len(rows_c[0]) - 1))]
     else:
@@ -271,7 +274,7 @@ def render_pdf(
             flow.append(Paragraph(f"{UNAVAILABLE} {_esc(section.unavailable_reason)}", st["small"]))
             continue
         for f in sorted(section.forecasts, key=lambda f: f.kickoff_utc):
-            flow.append(_football(f, tz, narrative, st))
+            flow.append(_football(f, tz, narrative, st, payload.show_btts))
 
     flow.append(Paragraph("Tenis", st["h1"]))
     if not any(payload.tennis.values()):

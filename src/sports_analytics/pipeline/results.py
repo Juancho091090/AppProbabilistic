@@ -51,6 +51,8 @@ def football_outcome(
         return int(p.event == result), None, None
     if p.market == "goals_total":
         return _over(hg + ag, p.line), float(hg + ag), None
+    if p.market == "btts":
+        return int(hg > 0 and ag > 0), None, None
     if p.market == "corners_total":
         if st is not None and st.available and st.home_corners is not None:
             total = st.home_corners + st.away_corners

@@ -17,6 +17,7 @@ from collections import defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass
 
+GOALS_MODEL = "dixon_coles"
 CONF_ORDER = ("high", "medium", "low")
 CONF_LABEL = {"high": "Alta", "medium": "Media", "low": "Baja"}
 
@@ -104,9 +105,13 @@ def track_record(pairs: Iterable, final_model: str, min_n: int = 1) -> list[dict
             sub = [x for x in fav if x.confidence == c]
             if sub:
                 rows.append(_row(f"Fútbol 1X2 · confianza {CONF_LABEL[c]}", sub))
-    goals = _binary_picks(pairs, final_model, "goals_total", "2.5")
+    # Goles y BTTS salen de la matriz de Dixon-Coles y se guardan con ese nombre de modelo.
+    goals = _binary_picks(pairs, GOALS_MODEL, "goals_total", "2.5")
     if goals:
         rows.append(_row("Fútbol · más/menos de 2.5 goles", goals))
+    btts = _binary_picks(pairs, GOALS_MODEL, "btts", "")
+    if btts:
+        rows.append(_row("Fútbol · ambos marcan (sí/no)", btts))
     tennis = _favorite_picks(pairs, final_model, "tennis", "winner")
     if tennis:
         rows.append(_row("Tenis · ganador", tennis))
