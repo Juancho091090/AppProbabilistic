@@ -196,7 +196,7 @@ def backfill_xg(
     """xG y tiros al arco de partidos antiguos, 20 por llamada. Cada partido pedido queda
     marcado (xg_checked) para no repetirlo aunque la API no publique su xG."""
     pending = repo.football_matches_missing_xg(session, max_calls * 20)
-    found = 0
+    found = checked = 0
     for start in range(0, len(pending), 20):
         chunk = pending[start : start + 20]
         try:
@@ -223,7 +223,9 @@ def backfill_xg(
         for rows in groups.values():
             repo.upsert_football_statistics(session, rows)
         session.commit()
-    report.add("football:xg_backfill_checked", len(pending))
+        checked += len(chunk)
+    report.add("football:xg_backfill_pending", len(pending))
+    report.add("football:xg_backfill_checked", checked)
     report.add("football:xg_backfill_found", found)
     return found
 
