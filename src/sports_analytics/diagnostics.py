@@ -781,6 +781,58 @@ def check_league_lookup(settings: Settings) -> list[str]:
     return lines
 
 
+def check_xg_batch(settings: Settings) -> list[str]:
+    """1 llamada: /fixtures?ids= con 20 partidos antiguos sin xG (uno o dos por liga) para
+    comprobar si el lote trae estadísticas con expected_goals de temporadas pasadas."""
+    from sqlalchemy import func, select
+
+    from sports_analytics.db.models import Competition, FootballMatchRow, FootballStatistics
+    from sports_analytics.db.session import session_scope
+
+    lines = ["## API-Football: xG histórico por lotes (/fixtures?ids=)", ""]
+    if settings.api_football_key is None or settings.database_url is None:
+        return [*lines, "❌ falta API_FOOTBALL_KEY o DATABASE_URL"]
+    f, st = FootballMatchRow, FootballStatistics
+    with session_scope(settings.database_url) as s:
+        ranked = (
+            select(
+                f.external_id,
+                Competition.name,
+                f.kickoff_utc,
+                func.row_number()
+                .over(partition_by=Competition.id, order_by=f.kickoff_utc)
+                .label("rn"),
+            )
+            .join(Competition, Competition.id == f.competition_id)
+            .join(st, st.match_id == f.id)
+            .where(st.available.is_(True), st.home_xg.is_(None))
+            .subquery()
+        )
+        rows = s.execute(
+            select(ranked.c.external_id, ranked.c.name, ranked.c.kickoff_utc)
+            .where(ranked.c.rn == 1)
+            .limit(20)
+        ).all()
+    ids = [r[0] for r in rows]
+    meta = {r[0]: (r[1], r[2]) for r in rows}
+    client = ApiFootballClient(settings)
+    items = client.http.get("/fixtures", {"ids": "-".join(ids)}).get("response", [])
+    lines.append(f"Pedidos {len(ids)} · devueltos {len(items)} · llamadas {client.http.calls_made}")
+    for it in items:
+        fid = str(it["fixture"]["id"])
+        stats = it.get("statistics") or []
+        xg = []
+        for team in stats:
+            for x in team.get("statistics", []):
+                if x.get("type") == "expected_goals":
+                    xg.append(x.get("value"))
+        name, ko = meta.get(fid, ("?", None))
+        lines.append(
+            f"- {name} · {str(ko)[:10]} · bloques estadísticas {len(stats)} · xG {xg or 'no'}"
+        )
+    return lines
+
+
 def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None = None) -> str:
     """``sections``: lista separada por comas (football_rapid, api_football, tennis, others)
     o ``all``. Permite no gastar cuota en APIs ya verificadas."""
@@ -799,6 +851,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "tennis_tournament": lambda: check_tennis_tournament(settings),
         "tennis_structure": lambda: check_tennis_tournament(settings),
         "league_lookup": lambda: check_league_lookup(settings),
+        "xg_batch": lambda: check_xg_batch(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
