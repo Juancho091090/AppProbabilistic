@@ -166,3 +166,56 @@ def live_pairs(rows, market: dict[str, MarketProbs], final_model: str) -> list[P
             )
         )
     return pairs
+
+
+def divergence_table(
+    pairs: Sequence[PairedForecast], thresholds: Sequence[float] = (0.05, 0.10)
+) -> list[dict]:
+    """¿Las discrepancias modelo–mercado fueron informativas?
+
+    Para cada resultado (local/empate/visitante) de cada partido se calcula
+    d = p_modelo − p_mercado. Con d ≥ umbral (o ≤ −umbral) se agrupan y se compara la
+    frecuencia real con lo que decía cada uno. Si la frecuencia real se acerca más al
+    modelo, la discrepancia aportaba información; si se acerca al mercado, era ruido.
+    """
+    rows = []
+    if not pairs:
+        return rows
+    p, q, y, onehot = _arrays(pairs)
+    d = p - q
+    for t in thresholds:
+        for side, mask in (("modelo por encima", d >= t), ("modelo por debajo", d <= -t)):
+            n = int(mask.sum())
+            if n == 0:
+                continue
+            obs = float(onehot[mask].mean())
+            pm, qm = float(p[mask].mean()), float(q[mask].mean())
+            rows.append(
+                {
+                    "threshold": t,
+                    "side": side,
+                    "n": n,
+                    "model_mean": pm,
+                    "market_mean": qm,
+                    "observed": obs,
+                    "closer_to": "modelo" if abs(obs - pm) < abs(obs - qm) else "mercado",
+                }
+            )
+    return rows
+
+
+def divergence_markdown(rows: list[dict]) -> list[str]:
+    if not rows:
+        return []
+    out = [
+        "## Discrepancias modelo–mercado: ¿quién se acercó a lo que pasó?",
+        "",
+        "| Discrepancia | Lado | Resultados | Modelo decía | Mercado decía | Ocurrió | Más cerca |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for r in rows:
+        out.append(
+            f"| ≥ {r['threshold'] * 100:.0f} pp | {r['side']} | {r['n']} | {r['model_mean']:.1%} | "
+            f"{r['market_mean']:.1%} | {r['observed']:.1%} | {r['closer_to']} |"
+        )
+    return [*out, ""]

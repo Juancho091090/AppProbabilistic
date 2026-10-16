@@ -31,6 +31,8 @@ from sports_analytics.data.schemas import FootballMatch, MatchStatus, TennisMatc
 from sports_analytics.market.benchmark import (
     MARKET_MODEL,
     PairedForecast,
+    divergence_markdown,
+    divergence_table,
     summarize,
 )
 from sports_analytics.market.benchmark import to_markdown as benchmark_markdown
@@ -166,6 +168,7 @@ class BacktestReport:
                 "Modelo vs mercado (1X2, mismos partidos)",
                 "probabilidades del mercado sin margen; solo partidos con precios guardados",
             )
+            lines += divergence_markdown(divergence_table(self.market_pairs))
             by_comp: dict[str, list[PairedForecast]] = {}
             for pf in self.market_pairs:
                 by_comp.setdefault(pf.competition, []).append(pf)

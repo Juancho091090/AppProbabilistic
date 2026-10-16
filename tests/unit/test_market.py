@@ -277,3 +277,18 @@ def test_ab_overrides_and_markdown(app_config):
     assert res["actual"]["rps"] != res["fase_a"]["rps"]  # la variante cambia el modelo
     md = to_markdown(res, start, end)
     assert "| RPS (menor mejor) |" in md and "Confianza · fase_a" in md
+
+
+def test_divergence_table_says_who_was_closer():
+    from sports_analytics.market.benchmark import PairedForecast, divergence_table
+
+    # El modelo sobrevalora al local 20 pp; el local gana 1 de 4 (25 %, como el mercado)
+    pairs = [
+        PairedForecast(str(i), "L", (0.45, 0.30, 0.25), (0.25, 0.35, 0.40), y)
+        for i, y in enumerate([0, 1, 2, 2])
+    ]
+    rows = divergence_table(pairs, thresholds=(0.10,))
+    up = next(r for r in rows if r["side"] == "modelo por encima")
+    assert up["n"] == 4 and abs(up["observed"] - 0.25) < 1e-9 and up["closer_to"] == "mercado"
+    down = next(r for r in rows if r["side"] == "modelo por debajo")
+    assert down["n"] == 4  # visitante −15 pp en los 4 partidos

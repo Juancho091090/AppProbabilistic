@@ -368,7 +368,12 @@ def _data_audit(_: argparse.Namespace) -> int:
 def _market_benchmark(_: argparse.Namespace) -> int:
     """Predicciones reales del informe diario (ya liquidadas) frente al mercado."""
     from sports_analytics.db.session import session_scope
-    from sports_analytics.market.benchmark import summarize, to_markdown
+    from sports_analytics.market.benchmark import (
+        divergence_markdown,
+        divergence_table,
+        summarize,
+        to_markdown,
+    )
     from sports_analytics.pipeline.results import live_market_pairs
 
     cfg = get_config().models
@@ -380,6 +385,7 @@ def _market_benchmark(_: argparse.Namespace) -> int:
             "Informe diario vs mercado (predicciones reales liquidadas)",
             "modelo a la hora del informe; mercado con el último precio previo al inicio",
         )
+        + divergence_markdown(divergence_table(pairs))
     )
     print(md)
     _publish(md, "benchmark-mercado")
