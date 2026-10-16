@@ -53,6 +53,7 @@ DAY2 = DAY1 + timedelta(days=1)
 
 class FakeFootballApi:
     def __init__(self):
+        self.xg_batches = 0
         hist, _ = football_league(n_teams=12, rounds=4, start=DAY1 - timedelta(days=120))
         self.items = [
             self._item(
@@ -135,6 +136,19 @@ class FakeFootballApi:
         elif path == "/fixtures" and "date" in q:
             day = q["date"]
             resp = [it for it in self.today + [self.other] if it["fixture"]["date"].startswith(day)]
+        elif path == "/fixtures" and "ids" in q:
+            # Lote histórico de xG: 20 partidos por llamada
+            self.xg_batches += 1
+            resp = [
+                {
+                    "fixture": {"id": fid},
+                    "statistics": [
+                        {"statistics": [{"type": "expected_goals", "value": "1.20"}]},
+                        {"statistics": [{"type": "expected_goals", "value": "0.80"}]},
+                    ],
+                }
+                for fid in q["ids"].split("-")
+            ]
         elif path == "/fixtures":
             resp = self.items + self.today if q["season"] == "2024" else []
         elif path == "/fixtures/statistics":
@@ -421,6 +435,21 @@ def test_day1_full_pipeline(env, app_config):
         assert {p.sport for p in preds} == {"football", "tennis"}
         assert all(0 <= p.probability <= 1 for p in preds)
         assert s.scalar(select(func.count()).select_from(Rating)) > 0
+        # xG histórico por lotes: los partidos con estadísticas reciben xG y quedan marcados
+        with_xg = s.scalar(
+            select(func.count())
+            .select_from(FootballStatistics)
+            .where(FootballStatistics.home_xg == 1.2, FootballStatistics.xg_checked.is_(True))
+        )
+        assert with_xg > 0
+        assert (
+            s.scalar(
+                select(func.count())
+                .select_from(FootballStatistics)
+                .where(FootballStatistics.home_corners.is_not(None))
+            )
+            > 0
+        )  # el lote de xG no borra los córners
         odds = s.scalars(select(MarketOdds)).all()
         assert sorted(o.bookmaker_id for o in odds) == [4, 8, 8]
         checks = s.scalars(select(MarketOddsCheck)).all()

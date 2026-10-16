@@ -160,6 +160,22 @@ def upsert_football_statistics(session: Session, stats: Iterable[dict[str, Any]]
     return len(rows)
 
 
+def football_matches_missing_xg(session: Session, limit: int) -> list[str]:
+    """Partidos con estadísticas pero sin xG y aún no consultados en lote (recientes primero)."""
+    q = (
+        select(FootballMatchRow.external_id)
+        .join(FootballStatistics, FootballStatistics.match_id == FootballMatchRow.id)
+        .where(
+            FootballStatistics.available.is_(True),
+            FootballStatistics.home_xg.is_(None),
+            FootballStatistics.xg_checked.is_not(True),
+        )
+        .order_by(FootballMatchRow.kickoff_utc.desc())
+        .limit(limit)
+    )
+    return list(session.scalars(q))
+
+
 def football_matches_missing_stats(
     session: Session, competition_keys: Sequence[str], limit: int
 ) -> list[str]:

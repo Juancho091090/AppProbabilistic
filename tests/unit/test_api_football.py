@@ -292,3 +292,33 @@ def test_parse_statistics_xg_and_shots_on_target():
     # Ligas sin cobertura de xG (p. ej. Liga BetPlay): queda en None
     no_xg = {"statistics": [{"type": "Corner Kicks", "value": 3}]}
     assert parse_statistics("1", [no_xg, no_xg]).home_xg is None
+
+
+def test_fixtures_statistics_batch_one_call_with_xg(tmp_path):
+    seen = []
+
+    def handler(req):
+        seen.append(req.url.params.get("ids"))
+        xg_home = [*STATS[0]["statistics"], {"type": "expected_goals", "value": "1.45"}]
+        xg_away = [*STATS[1]["statistics"], {"type": "expected_goals", "value": "0.39"}]
+        return httpx.Response(
+            200,
+            json={
+                "errors": [],
+                "response": [
+                    {
+                        "fixture": {"id": 1},
+                        "statistics": [{"statistics": xg_home}, {"statistics": xg_away}],
+                    },
+                    {"fixture": {"id": 2}, "statistics": []},
+                ],
+            },
+        )
+
+    c = _client(tmp_path, handler)
+    out = c.fixtures_statistics_batch(["1", "2"])
+    assert seen == ["1-2"] and c.http.calls_made == 1
+    assert (out["1"].home_xg, out["1"].away_xg) == (1.45, 0.39)
+    assert out["2"] is None
+    with pytest.raises(ValueError):
+        c.fixtures_statistics_batch([str(i) for i in range(21)])

@@ -41,6 +41,8 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       # Solo lo usa ingest-football (los demás comandos no llaman a APIs)
       API_FOOTBALL_KEY: ${{ inputs.command == 'ingest-football' && secrets.API_FOOTBALL_KEY || '' }}
+      # ingest-football: lotes de 20 partidos para el xG histórico (900 × 20 = 18.000 partidos)
+      FOOTBALL_XG_BACKFILL_CALLS: "900"
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6

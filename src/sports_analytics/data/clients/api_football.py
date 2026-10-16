@@ -249,6 +249,19 @@ class ApiFootballClient:
         API-Football solo los conserva unos días después del partido."""
         return self._get("/odds", {"fixture": fixture_id, "bet": bet_id})
 
+    def fixtures_statistics_batch(self, fixture_ids: list[str]) -> dict[str, FixtureStats | None]:
+        """Estadísticas de hasta 20 partidos en UNA llamada (/fixtures?ids=a-b-c).
+        Verificado el 16-oct-2026: cada partido trae el mismo bloque ``statistics`` que
+        /fixtures/statistics, con expected_goals en las ligas que lo publican."""
+        if not 0 < len(fixture_ids) <= 20:
+            raise ValueError("fixtures_statistics_batch admite entre 1 y 20 partidos")
+        items = self._get("/fixtures", {"ids": "-".join(fixture_ids)}, ttl=TTL_FINISHED)
+        out: dict[str, FixtureStats | None] = {}
+        for it in items:
+            fid = str(it["fixture"]["id"])
+            out[fid] = parse_statistics(fid, it.get("statistics") or [])
+        return out
+
     def fixture_statistics(self, fixture_id: str) -> FixtureStats | None:
         items = self._get("/fixtures/statistics", {"fixture": fixture_id}, ttl=TTL_FINISHED)
         return parse_statistics(fixture_id, items)

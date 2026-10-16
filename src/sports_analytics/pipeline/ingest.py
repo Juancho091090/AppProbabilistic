@@ -190,6 +190,44 @@ def fetch_football_stats(
     session.commit()
 
 
+def backfill_xg(
+    session: Session, client: ApiFootballClient, max_calls: int, report: IngestReport
+) -> int:
+    """xG y tiros al arco de partidos antiguos, 20 por llamada. Cada partido pedido queda
+    marcado (xg_checked) para no repetirlo aunque la API no publique su xG."""
+    pending = repo.football_matches_missing_xg(session, max_calls * 20)
+    found = 0
+    for start in range(0, len(pending), 20):
+        chunk = pending[start : start + 20]
+        try:
+            stats = client.fixtures_statistics_batch(chunk)
+        except BudgetExceeded:
+            break
+        except ApiError as exc:
+            report.failures[f"xg:{chunk[0]}"] = str(exc)
+            continue
+        groups: dict[tuple[str, ...], list[dict[str, Any]]] = {}
+        for ext_id in chunk:
+            st = stats.get(ext_id)
+            row: dict[str, Any] = {"external_id": ext_id, "xg_checked": True}
+            if st is not None and st.home_xg is not None and st.away_xg is not None:
+                found += 1
+                row |= {"home_xg": st.home_xg, "away_xg": st.away_xg}
+            if st is not None and st.home_shots_on_target is not None:
+                row |= {
+                    "home_shots_on_target": st.home_shots_on_target,
+                    "away_shots_on_target": st.away_shots_on_target,
+                }
+            # Solo se escriben columnas con dato: nunca se borra lo que ya había.
+            groups.setdefault(tuple(sorted(row)), []).append(row)
+        for rows in groups.values():
+            repo.upsert_football_statistics(session, rows)
+        session.commit()
+    report.add("football:xg_backfill_checked", len(pending))
+    report.add("football:xg_backfill_found", found)
+    return found
+
+
 def sync_market_odds(
     session: Session,
     client: ApiFootballClient,

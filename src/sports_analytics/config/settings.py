@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     # Ingesta (presupuestos por ejecución)
     football_history_seasons: int = Field(default=3, ge=1)  # actual + 2 anteriores
     football_stats_per_run: int = Field(default=2500, ge=0)  # llamadas /fixtures/statistics
+    football_xg_backfill_calls: int = Field(default=150, ge=0)  # lotes de 20 partidos
     football_priority_stats_per_team: int = Field(default=15, ge=0)  # equipos que juegan hoy
     report_days_ahead: int = Field(default=0, ge=0, le=2)  # 1 = informe la noche anterior
     football_odds_calls_per_run: int = Field(default=300, ge=0)  # /odds (benchmark de mercado)

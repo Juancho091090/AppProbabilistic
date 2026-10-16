@@ -332,6 +332,13 @@ def run_daily(
                     ingest.sync_football_stats(
                         session, svc.football, config, settings, coverage, report
                     )
+                    try:
+                        ingest.backfill_xg(
+                            session, svc.football, settings.football_xg_backfill_calls, report
+                        )
+                    except Exception as exc:  # noqa: BLE001 - el histórico no frena el informe
+                        session.rollback()
+                        report.failures["xg_backfill"] = str(exc)[:200]
                     report.calls["api_football"] = svc.football.http.calls_made
                     repo.record_data_source(
                         session,

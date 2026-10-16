@@ -122,6 +122,8 @@ class FootballStatistics(TimestampMixin, Base):
     home_xg: Mapped[float | None] = mapped_column(Float)
     away_xg: Mapped[float | None] = mapped_column(Float)
     available: Mapped[bool] = mapped_column(Boolean, default=True)  # False = API sin datos
+    # True = ya se pidió el xG en el lote histórico (aunque la API no lo tuviera)
+    xg_checked: Mapped[bool | None] = mapped_column(Boolean)
 
     match: Mapped[FootballMatchRow] = relationship(back_populates="statistics")
 
