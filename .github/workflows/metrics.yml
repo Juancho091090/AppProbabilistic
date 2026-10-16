@@ -19,6 +19,9 @@ on:
       tennis_days:
         description: "Días de tenis a evaluar"
         default: "180"
+      variants:
+        description: 'Solo ab-test: JSON {"nombre": {"ruta.con.puntos": valor}}'
+        required: false
 
 permissions:
   contents: write
@@ -45,10 +48,12 @@ jobs:
       - name: Migraciones
         run: alembic upgrade head
       - name: Calcular métricas
+        env:
+          AB_VARIANTS: ${{ inputs.variants }}
         run: |
           if [ "${{ inputs.mode }}" = "ab-test" ]; then
             sports-analytics ab-test --days "${{ inputs.football_days || '150' }}" \
-              --output "$RUNNER_TEMP/ab.json"
+              --output "$RUNNER_TEMP/ab.json" ${AB_VARIANTS:+--variants "$AB_VARIANTS"}
             exit 0
           fi
           sports-analytics export-metrics \

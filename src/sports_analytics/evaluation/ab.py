@@ -33,6 +33,16 @@ def with_overrides(config: AppConfig, overrides: dict[str, Any]) -> AppConfig:
     return config.model_copy(update={"models": ModelsConfig(**data)})
 
 
+def _line_brier(rows: Sequence[dict], key: str, total: str, line: float) -> float:
+    pairs = [(r[key][line], float(r[total] > line)) for r in rows if r.get(key) and line in r[key]]
+    return float(np.mean([(p - y) ** 2 for p, y in pairs])) if pairs else float("nan")
+
+
+def _line_mean(rows: Sequence[dict], key: str, line: float) -> float:
+    vals = [r[key][line] for r in rows if r.get(key) and line in r[key]]
+    return float(np.mean(vals)) if vals else float("nan")
+
+
 def _summary(rows: Sequence[dict]) -> dict[str, Any]:
     p = np.array([r["p"] for r in rows])
     y = np.array([r["y"] for r in rows])
@@ -47,6 +57,9 @@ def _summary(rows: Sequence[dict]) -> dict[str, Any]:
         "brier": sc.brier_multiclass(p, y),
         "fav": sc.favorite_accuracy(p, y),
         "ece": sc.ece(pooled_p, pooled_y),
+        "goals25_brier": _line_brier(rows, "goal_lines", "goals", 2.5),
+        "goals25_pred": _line_mean(rows, "goal_lines", 2.5),
+        "goals25_real": float(np.mean([r["goals"] > 2.5 for r in rows])),
         "home_pred": float(p[:, 0].mean()),
         "home_real": float((y == 0).mean()),
     }
@@ -117,6 +130,9 @@ def to_markdown(results: dict[str, Any], start: date, end: date) -> str:
         "brier": "{:.4f}",
         "fav": "{:.1%}",
         "ece": "{:.4f}",
+        "goals25_brier": "{:.4f}",
+        "goals25_pred": "{:.1%}",
+        "goals25_real": "{:.1%}",
         "home_pred": "{:.1%}",
         "home_real": "{:.1%}",
     }
@@ -128,6 +144,9 @@ def to_markdown(results: dict[str, Any], start: date, end: date) -> str:
         "brier": "Brier multiclase",
         "fav": "Acierto del favorito",
         "ece": "ECE",
+        "goals25_brier": "Brier más de 2.5 goles",
+        "goals25_pred": "Más de 2.5 predicho",
+        "goals25_real": "Más de 2.5 real",
         "home_pred": "Local predicho",
         "home_real": "Local real",
     }

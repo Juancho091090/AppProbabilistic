@@ -173,13 +173,17 @@ def _ab_test(args: argparse.Namespace) -> int:
     start = end - timedelta(days=args.days)
     with session_scope(settings.database_url) as session:
         hist = repo.load_football_history(session, now_utc() - timedelta(days=3 * 365))
-    variants = {
-        "actual": {},
-        "fase_a": {
-            "football.league_effects.enabled": True,
-            "confidence.method": "favorite_probability",
-        },
-    }
+    variants = (
+        json.loads(args.variants)
+        if args.variants
+        else {
+            "actual": {},
+            "fase_a": {
+                "football.league_effects.enabled": True,
+                "confidence.method": "favorite_probability",
+            },
+        }
+    )
     names = {c.key: c.name for c in config.competitions.football}
     res = run_ab(hist, config, variants, start, end, settings.tz, args.refit_days, names)
     md = to_markdown(res, start, end)
@@ -439,6 +443,11 @@ def build_parser() -> argparse.ArgumentParser:
     ab.add_argument("--days", type=int, default=150)
     ab.add_argument("--refit-days", type=int, default=7)
     ab.add_argument("--output", default="reports/metrics/ab.json")
+    ab.add_argument(
+        "--variants",
+        default=None,
+        help='JSON {"nombre": {"ruta.con.puntos": valor}}; la primera es la referencia',
+    )
     ab.set_defaults(func=_ab_test)
 
     sub.add_parser("ingest-football", help="Carga solo fútbol (sin Tennis API)").set_defaults(

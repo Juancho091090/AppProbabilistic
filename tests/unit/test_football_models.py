@@ -299,3 +299,26 @@ def test_dixon_coles_recovers_true_rho(recency):
     base = PoissonGoalsModel(prior_strength=2).fit(matches, as_of, rec)
     dc = DixonColesModel(base=base, rho_bounds=(-0.3, 0.3)).fit_rho(matches, as_of, rec)
     assert -0.17 < dc.rho < -0.05
+
+
+def test_poisson_xg_weight_uses_xg_only_when_enabled():
+    from datetime import timedelta
+
+    from sports_analytics.models.football.poisson import PoissonGoalsModel
+    from tests.synthetic import football_league
+
+    matches, _ = football_league(n_teams=8, rounds=3)
+    as_of = matches[-1].kickoff_utc + timedelta(days=1)
+    rec = {"method": "exponential", "half_life_days": {"football": 180}, "min_weight": 0.05}
+    # xG del equipo local de cada partido inflado: con peso > 0 cambia su ataque
+    with_xg = [
+        m.model_copy(update={"home_xg": m.home_goals + 2.0, "away_xg": float(m.away_goals)})
+        for m in matches
+    ]
+    base = PoissonGoalsModel(xg_weight=0.0).fit(with_xg, as_of, rec)
+    plain = PoissonGoalsModel(xg_weight=0.0).fit(matches, as_of, rec)
+    xg = PoissonGoalsModel(xg_weight=0.5).fit(with_xg, as_of, rec)
+    team = matches[0].home_team
+    assert base.strength(team).attack == plain.strength(team).attack  # peso 0: ignora el xG
+    assert xg.strength(team).attack != base.strength(team).attack
+    assert xg.mu_home == base.mu_home  # las medias siguen siendo de goles reales

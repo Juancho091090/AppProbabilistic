@@ -44,6 +44,9 @@ class PoissonGoalsModel:
     min_matches: int = 6
     prior_strength: float = 5.0
     iterations: int = 15
+    # Peso del xG en las fuerzas de ataque/defensa: objetivo = (1-w)·goles + w·xG cuando el
+    # partido tiene xG (si no, goles). Las medias μ siguen saliendo de los goles reales.
+    xg_weight: float = 0.0
     mu_home: float = 1.45
     mu_away: float = 1.15
     teams: dict[str, TeamStrength] = field(default_factory=dict)
@@ -57,6 +60,7 @@ class PoissonGoalsModel:
             max_goals=cfg["max_goals"],
             min_matches=cfg["min_matches"],
             prior_strength=cfg["prior_strength"],
+            xg_weight=float(cfg.get("xg_weight", 0.0)),
         )
 
     def fit(
@@ -77,6 +81,8 @@ class PoissonGoalsModel:
         ag = np.array([m.away_goals for m in train], dtype=float)
         self.mu_home = float(np.average(hg, weights=w))
         self.mu_away = float(np.average(ag, weights=w))
+        if self.xg_weight > 0:
+            hg, ag = self._xg_targets(train, hg, ag)
         # Medias esperadas por partido: las de su competición si hay efectos por liga
         means = [self._means(m.competition_key) for m in train]
         muh = np.array([x[0] for x in means])
@@ -116,6 +122,15 @@ class PoissonGoalsModel:
                 float(att[i]), float(dfn[i]), float(weighted_n[i]), int(counts[i])
             )
         return self
+
+    def _xg_targets(self, train, hg: np.ndarray, ag: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        hx = np.array([np.nan if m.home_xg is None else m.home_xg for m in train], dtype=float)
+        ax = np.array([np.nan if m.away_xg is None else m.away_xg for m in train], dtype=float)
+        has = ~np.isnan(hx) & ~np.isnan(ax)
+        wx = self.xg_weight
+        hg2 = np.where(has, (1 - wx) * hg + wx * np.nan_to_num(hx), hg)
+        ag2 = np.where(has, (1 - wx) * ag + wx * np.nan_to_num(ax), ag)
+        return hg2, ag2
 
     # ------------------------------------------------------------- predicción
 
