@@ -35,7 +35,7 @@ football:
     max_goals: 10
     min_matches: 6              # mínimo de partidos por equipo para estimar
     prior_strength: 5.0         # partidos "virtuales" de la media de liga (shrinkage)
-    xg_weight: 0.0             # 0 = solo goles; se decide con A/B (ab-test)
+    xg_weight: 0.7             # A/B 16-oct (2.573 partidos): RPS 0.2073→0.2068, log-loss 1.0140→1.0124; meseta 0.7–1.0
   dixon_coles:
     rho_default: -0.10
     rho_bounds: [-0.20, 0.05]
