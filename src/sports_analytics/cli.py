@@ -192,6 +192,28 @@ def _ab_test(args: argparse.Namespace) -> int:
     return 0
 
 
+def _ingest_football(_: argparse.Namespace) -> int:
+    """Solo fútbol: temporadas pendientes y estadísticas (no llama a la Tennis API)."""
+    from sports_analytics.data.clients.api_football import ApiFootballClient
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.pipeline.ingest import IngestReport, sync_football
+
+    settings, config = get_settings(), get_config()
+    report = IngestReport()
+    with session_scope(settings.database_url) as s:
+        sync_football(s, ApiFootballClient(settings), config, settings, report)
+    lines = [f"- {k}: {v}" for k, v in sorted(report.loaded.items())]
+    lines += [f"- fallo {k}: {v[:160]}" for k, v in report.failures.items()]
+    lines.append(f"- llamadas API-Football: {report.calls.get('api_football')}")
+    text = "\n".join(lines)
+    print(text)
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import _escape_annotation
+
+        print(f"::notice title=ingesta-futbol::{_escape_annotation(text)}")
+    return 0
+
+
 def _track_record(_: argparse.Namespace) -> int:
     """Aciertos reales frente a esperados, con detalle por partido (solo lectura)."""
     from sqlalchemy import select
@@ -404,6 +426,10 @@ def build_parser() -> argparse.ArgumentParser:
     ab.add_argument("--refit-days", type=int, default=7)
     ab.add_argument("--output", default="reports/metrics/ab.json")
     ab.set_defaults(func=_ab_test)
+
+    sub.add_parser("ingest-football", help="Carga solo fútbol (sin Tennis API)").set_defaults(
+        func=_ingest_football
+    )
 
     sub.add_parser("track-record", help="Aciertos reales vs esperados (sin APIs)").set_defaults(
         func=_track_record

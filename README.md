@@ -78,7 +78,7 @@ Cobertura y esquemas **verificados con las claves reales** en
 
 Todo parámetro de negocio vive en YAML (nada está fijo en el código):
 
-* `config/competitions.yaml`: las 26 competiciones de fútbol con su ID de API-Football
+* `config/competitions.yaml`: las 28 competiciones de fútbol con su ID de API-Football
   (verificados), tipo y temporada. Lista blanca: lo que no está aquí se excluye; los
   amistosos se excluyen salvo `include_friendlies: true`.
 * `config/tennis.yaml`: filtro del circuito principal (`min_rank_id: 2` excluye ITF y

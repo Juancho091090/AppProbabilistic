@@ -12,7 +12,7 @@ on:
         description: "backtest | market-benchmark | fit-recalibration"
         default: backtest
         type: choice
-        options: [backtest, market-benchmark, fit-recalibration, data-audit, track-record]
+        options: [backtest, market-benchmark, fit-recalibration, data-audit, track-record, ingest-football]
       sport:
         description: "football | tennis (solo backtest)"
         default: football
@@ -39,6 +39,8 @@ jobs:
       APP_TIMEZONE: America/Bogota
       LOG_LEVEL: WARNING
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # Solo lo usa ingest-football (los demás comandos no llaman a APIs)
+      API_FOOTBALL_KEY: ${{ inputs.command == 'ingest-football' && secrets.API_FOOTBALL_KEY || '' }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -52,7 +54,9 @@ jobs:
         run: |
           CMD="${{ inputs.command }}"
           [ "${{ github.event_name }}" = "schedule" ] && CMD=fit-recalibration
-          if [ "$CMD" = "track-record" ]; then
+          if [ "$CMD" = "ingest-football" ]; then
+            sports-analytics ingest-football
+          elif [ "$CMD" = "track-record" ]; then
             sports-analytics track-record
           elif [ "$CMD" = "data-audit" ]; then
             sports-analytics data-audit

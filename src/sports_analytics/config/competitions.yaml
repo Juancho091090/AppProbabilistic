@@ -78,6 +78,20 @@ football:
     api_football_id: 94
     kind: league
     season_mode: split
+  # Verificadas el 16-oct-2026 (diagnóstico league_lookup): temporada 2026-27,
+  # estadísticas por partido y alineaciones; histórico desde 2011 (TUR) y 2016 (KSA).
+  - key: tur_super_lig
+    name: Süper Lig
+    country: Turkey
+    api_football_id: 203
+    kind: league
+    season_mode: split
+  - key: ksa_pro_league
+    name: Saudi Pro League
+    country: Saudi-Arabia
+    api_football_id: 307
+    kind: league
+    season_mode: split
   - key: ecu_ligapro
     name: LigaPro Serie A
     country: Ecuador

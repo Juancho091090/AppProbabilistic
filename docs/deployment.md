@@ -70,7 +70,7 @@ siempre a las 07:00 de Bogotá. GitHub puede retrasar los cron unos minutos en h
 
 ## 6. Primera ejecución (carga de histórico)
 
-* **Fútbol:** la primera corrida descarga 3 temporadas de las 26 competiciones (~78
+* **Fútbol:** la primera corrida descarga 3 temporadas de las 28 competiciones (~84
   llamadas) y hasta 2.500 estadísticas de partidos. Las estadísticas restantes se
   completan en los días siguientes.
 * **Tenis:** cada día se refrescan los últimos 3 días y se usan ~30 llamadas para
