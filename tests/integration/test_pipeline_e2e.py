@@ -575,8 +575,14 @@ def test_scheduled_run_does_not_resend_same_day(env, app_config):
     settings, *_rest, services = env
     # Día 1 ya se envió en test_day1_full_pipeline: una corrida programada no debe reenviar
     s2 = settings.model_copy(update={"skip_if_already_sent": True})
-    out = run_daily(s2, app_config, services(), now=DAY1 + timedelta(hours=1))
+    svc = services()
+    calls_before = svc.tennis.http.calls_made if svc.tennis else 0
+    out = run_daily(s2, app_config, svc, now=DAY1 + timedelta(hours=1))
     assert not out.telegram_sent and not out.email_sent
+    # Regresión 16-oct-2026: un cron tardío ingería todo y agotaba la cuota de tenis
+    # del informe de la noche. Ahora sale antes de cualquier llamada a las APIs.
+    assert out.status == "skipped"
+    assert (svc.tennis.http.calls_made if svc.tennis else 0) == calls_before
 
 
 def test_evening_run_reports_next_day(env, app_config):
@@ -592,15 +598,16 @@ def test_evening_run_reports_next_day(env, app_config):
         settings, transport=httpx.MockTransport(tn), sleep=lambda s: None, min_interval=0
     )
     evening_before = DAY1 - timedelta(hours=12, minutes=15)  # 31-may 18:45 Bogotá
-    s2 = settings.model_copy(update={"skip_if_already_sent": True})
     shutil.rmtree(settings.cache_dir, ignore_errors=True)
-    out = run_daily(s2, app_config, svc, now=evening_before, send=True, days_ahead=1)
+    out = run_daily(settings, app_config, svc, now=evening_before, send=False, days_ahead=1)
     assert out.payload.report_date == DAY1.date()  # informe de los partidos del 1-jun
     assert out.payload.n_football == 2 and "Fecha: 2024-06-01" in out.markdown
     with session_scope(URL) as s:
         assert s.get(PipelineRun, out.run_id).run_date == DAY1.date()
-    # El 1-jun ya se había enviado (test_day1): el guard de no reenvío usa la fecha del informe
-    assert not out.telegram_sent and not out.email_sent
+    # El guard de no reenvío usa la fecha del INFORME (1-jun, ya enviado en test_day1)
+    s2 = settings.model_copy(update={"skip_if_already_sent": True})
+    again = run_daily(s2, app_config, services(), now=evening_before, send=True, days_ahead=1)
+    assert again.status == "skipped" and not again.telegram_sent and not again.email_sent
 
 
 def test_tennis_fixtures_have_priority_over_backfill(env, app_config):

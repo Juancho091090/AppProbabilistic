@@ -51,7 +51,7 @@ def _run_daily(args: argparse.Namespace) -> int:
 
         text = "\n".join([summary, *[f"- {i}" for i in outcome.issues]])
         print(f"::notice title=resultado-envio::{_escape_annotation(text)}")
-    return 0 if outcome.status in ("success", "partial") else 1
+    return 0 if outcome.status in ("success", "partial", "skipped") else 1
 
 
 def _settle(_: argparse.Namespace) -> int:

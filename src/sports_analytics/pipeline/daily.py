@@ -289,6 +289,18 @@ def run_daily(
         run = repo.start_run(session, "daily", today)
         session.commit()
         outcome.run_id = run.id
+        # Respaldo o cron tardío con el informe ya enviado: salir ANTES de ingerir, para no
+        # gastar la cuota diaria (sobre todo la de la Tennis API) del siguiente informe.
+        if settings.skip_if_already_sent and repo.report_already_sent(
+            session, today, exclude_run_id=run.id
+        ):
+            log.info("report_already_sent_skip_all", extra={"date": today.isoformat()})
+            run.details = {"skipped": "already_sent", "local_time": to_local(now, tz).isoformat()}
+            repo.finish_run(session, run, "skipped")
+            session.commit()
+            outcome.status = "skipped"
+            outcome.issues = [f"Informe del {today.isoformat()} ya enviado: no se repite"]
+            return outcome
         try:
             # 1) Ingesta + partidos del día
             football_fixtures: list[tuple[FootballMatch, str]] = []

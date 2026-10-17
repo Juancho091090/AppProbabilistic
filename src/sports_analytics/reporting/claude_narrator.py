@@ -237,7 +237,7 @@ class ClaudeNarrator:
         try:
             response = self._get_client().messages.create(
                 model=self.settings.anthropic_model,
-                max_tokens=4000,
+                max_tokens=12000,  # jornadas de fin de semana: ~40 partidos con texto
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": json.dumps(compact, ensure_ascii=False)}],
             )
