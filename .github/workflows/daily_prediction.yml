@@ -1,20 +1,16 @@
 name: daily-prediction
 
 # Horario (America/Bogota = UTC-5 todo el año, sin horario de verano):
-# * Lunes a viernes, informe de los partidos del día hacia las 07:00:
-#   cron 11:37 UTC = 06:37 Bogotá.
-# * Viernes y sábado, informe la NOCHE ANTERIOR con los partidos de sábado y domingo (hay
-#   ligas desde las 05:00): cron 23:45 UTC = 18:45 Bogotá, para llegar hacia las 19:00.
-#   Sábado y domingo por la mañana no hay corrida (ese informe ya salió la víspera).
-# Respaldo: el 7 y el 8-oct-2026 GitHub no disparó ningún cron de este repositorio. Una
-# tarea programada externa llama a workflow_dispatch con skip_if_sent=true a la misma hora;
-# si el cron sí corre, la segunda ejecución no reenvía.
-# Los cron van fuera del minuto 00: GitHub retrasa (o incluso omite) los cron en punto por
-# alta carga. El 7-oct-2026 el cron de las 12:00 UTC no se había disparado a las 12:12 UTC.
+# * Desde el 25-oct-2026, TODOS los días: informe la NOCHE ANTERIOR con los partidos del día
+#   siguiente (hay tenis y ligas que empiezan de madrugada). cron 23:45 UTC = 18:45 Bogotá,
+#   para llegar hacia las 19:00. Ya no hay corrida por la mañana.
+# Respaldo: GitHub dispara sus cron tarde o no los dispara. Una tarea programada externa
+# llama a workflow_dispatch con skip_if_sent=true a las 18:49; si el informe de esa fecha ya
+# salió, la corrida termina antes de llamar a ninguna API (no gasta cuota ni reenvía).
+# Los cron van fuera del minuto 00: GitHub retrasa (o incluso omite) los cron en punto.
 on:
   schedule:
-    - cron: "37 11 * * 1-5"
-    - cron: "45 23 * * 5,6"
+    - cron: "45 23 * * *"
   workflow_dispatch:
     inputs:
       send:
@@ -22,10 +18,10 @@ on:
         type: boolean
         default: true
       days_ahead:
-        description: "0 = partidos de hoy · 1 = partidos de mañana"
+        description: "0 = partidos de hoy · 1 = partidos de mañana (horario normal)"
         type: choice
         options: ["0", "1"]
-        default: "0"
+        default: "1"
       skip_if_sent:
         description: "No reenviar si el informe de esa fecha ya salió (respaldo programado)"
         type: boolean
@@ -91,7 +87,12 @@ jobs:
       - name: Pipeline diario (ingesta, resultados, modelos, informe, envío)
         run: |
           AHEAD="${{ inputs.days_ahead || '0' }}"
-          [ "${{ github.event.schedule }}" = "45 23 * * 5,6" ] && AHEAD=1
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Cron de las 18:45; si GitHub lo dispara tan tarde que en Bogotá ya es el día
+            # siguiente (antes del mediodía), el informe que tocaba ya es el de HOY.
+            AHEAD=1
+            [ "$(TZ=America/Bogota date +%H)" -lt 12 ] && AHEAD=0
+          fi
           echo "Informe de los partidos de: $(TZ=America/Bogota date -d "+$AHEAD day" +%F) (days_ahead=$AHEAD)"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" = "false" ]; then
             sports-analytics run-daily --no-send --days-ahead "$AHEAD" --output reports/output/daily.md

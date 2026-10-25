@@ -409,6 +409,7 @@ def test_day1_full_pipeline(env, app_config):
     assert out.payload.n_tennis("ATP") == 1 and "Superficie: clay" in md
     # Narrativa de Claude validada e insertada; probabilidades intactas
     assert "Resumen de la jornada." in md
+    assert "- Ambos marcan: Sí " in md  # BTTS visible (report_btts: true)
     f = out.payload.football[0].forecasts[0]
     assert f"{f.markets['1x2']['home'] * 100:.1f}%" in md
     # Envíos
