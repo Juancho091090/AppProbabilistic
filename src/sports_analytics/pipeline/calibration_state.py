@@ -72,6 +72,10 @@ def load_calibration_state(
 ) -> CalibrationState:
     pairs = repo.settled_predictions(session, sport)
     ens = _event_matrix(pairs, sport, model_version, as_of)
+    if not calibration_cfg.get("live_adjustments", True):
+        # Desactivado (26-oct-2026): calibrar y re-ponderar con las predicciones FINALES
+        # ya calibradas crea un ciclo que se alimenta a sí mismo (aplanó el empate).
+        return CalibrationState(None, None, len(ens))
 
     calibrator = None
     if ens:

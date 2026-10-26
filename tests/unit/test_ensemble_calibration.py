@@ -252,3 +252,22 @@ def test_confidence_favorite_probability_method():
         **{**common, "cfg": {**cfg, "method": "data_agreement"}},
     )
     assert old.level == ConfidenceLevel.HIGH and old.score == 1.0
+
+
+def test_live_adjustments_can_be_disabled(monkeypatch):
+    """Regresión 26-oct-2026: el calibrador en vivo se reajustaba sobre sus propias salidas."""
+    from datetime import UTC, datetime
+
+    from sports_analytics.pipeline import calibration_state as cs
+
+    monkeypatch.setattr(cs.repo, "settled_predictions", lambda session, sport: [])
+    st = cs.load_calibration_state(
+        None,
+        "football",
+        "v",
+        ["elo"],
+        {"elo": 1.0},
+        {"live_adjustments": False, "min_samples_platt": 1, "min_samples_isotonic": 2},
+        datetime(2026, 10, 26, tzinfo=UTC),
+    )
+    assert st.calibrator is None and st.weights is None

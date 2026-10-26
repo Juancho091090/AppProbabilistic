@@ -99,6 +99,12 @@ tennis:
     markov: 0.20
 
 calibration:
+  # Calibrador y pesos ajustados con las predicciones reales del informe. DESACTIVADO el
+  # 26-oct-2026: se activó solo al pasar de 200 partidos (16-oct) sin validación fuera
+  # de muestra y se reajustaba sobre sus propias salidas. Del 18 al 25-oct el empate quedó
+  # casi constante (desviación 0.3-0.8 pp frente a 3-4 pp antes) y la log-loss real subió
+  # de 1.007 a 1.041. La calibración validada es recalibration_1x2 (abajo).
+  live_adjustments: false
   min_samples_platt: 200
   min_samples_isotonic: 1000
   n_bins: 10
