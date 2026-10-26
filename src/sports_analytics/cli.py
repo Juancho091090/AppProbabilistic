@@ -392,6 +392,61 @@ def _market_benchmark(_: argparse.Namespace) -> int:
     return 0
 
 
+def _market_patterns(_: argparse.Namespace) -> int:
+    """Reglas sistemáticas sobre precios reales guardados (investigación, sin APIs)."""
+    from sqlalchemy import select
+
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.models import Competition, FootballMatchRow
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.market.benchmark import EVENT_INDEX
+    from sports_analytics.market.patterns import priced_match, to_markdown
+
+    cfg = get_config().models
+    with session_scope(get_settings().database_url) as s:
+        quotes = repo.load_market_quotes(s)
+        rows = s.execute(
+            select(FootballMatchRow, Competition.name)
+            .join(Competition, Competition.id == FootballMatchRow.competition_id)
+            .where(
+                FootballMatchRow.external_id.in_(list(quotes)),
+                FootballMatchRow.status == "finished",
+                FootballMatchRow.home_goals.is_not(None),
+            )
+        ).all()
+        # Predicción del informe (modelo final, la más reciente por partido)
+        model: dict[str, dict] = {}
+        for p, _r in repo.settled_predictions(s, sport="football"):
+            if p.market != "1x2" or p.model != cfg.version or p.event not in EVENT_INDEX:
+                continue
+            e = model.setdefault(p.event_id, {"date": p.prediction_date, "p": [None] * 3})
+            if p.prediction_date > e["date"]:
+                e.update(date=p.prediction_date, p=[None] * 3)
+            if p.prediction_date == e["date"]:
+                e["p"][EVENT_INDEX[p.event]] = p.probability
+                e["conf"] = p.confidence
+        matches = []
+        for m, comp in rows:
+            y = 0 if m.home_goals > m.away_goals else 1 if m.home_goals == m.away_goals else 2
+            e = model.get(m.external_id)
+            probs = tuple(e["p"]) if e and None not in e["p"] else None
+            pm = priced_match(
+                m.external_id,
+                comp,
+                quotes[m.external_id],
+                y,
+                cfg.market.preferred_bookmakers,
+                probs,
+                e.get("conf") if e else None,
+            )
+            if pm:
+                matches.append(pm)
+    md = to_markdown(matches)
+    print(md)
+    _publish(md, "patrones-mercado")
+    return 0
+
+
 def _publish(md: str, title: str) -> None:
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
@@ -459,6 +514,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("ingest-football", help="Carga solo fútbol (sin Tennis API)").set_defaults(
         func=_ingest_football
     )
+
+    sub.add_parser(
+        "market-patterns", help="Reglas sistemáticas sobre precios reales (sin APIs)"
+    ).set_defaults(func=_market_patterns)
 
     sub.add_parser("track-record", help="Aciertos reales vs esperados (sin APIs)").set_defaults(
         func=_track_record

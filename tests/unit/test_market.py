@@ -292,3 +292,20 @@ def test_divergence_table_says_who_was_closer():
     assert up["n"] == 4 and abs(up["observed"] - 0.25) < 1e-9 and up["closer_to"] == "mercado"
     down = next(r for r in rows if r["side"] == "modelo por debajo")
     assert down["n"] == 4  # visitante −15 pp en los 4 partidos
+
+
+def test_market_patterns_roi_and_rules():
+    from sports_analytics.market.odds import OddsQuote
+    from sports_analytics.market.patterns import evaluate_rules, priced_match, to_markdown
+
+    q = [OddsQuote(4, "Ref", 2.0, 3.5, 4.0), OddsQuote(8, "Otra", 2.1, 3.3, 3.8)]
+    ms = [
+        priced_match(str(i), "L", q, y, [4], (0.6, 0.2, 0.2), "high")
+        for i, y in enumerate([0, 0, 1, 2])
+    ]
+    rows = {r["rule"]: r for r in evaluate_rules(ms, samples=200)}
+    fav = rows["Favorito del mercado (todos)"]
+    assert fav["n"] == 4 and fav["hits"] == 2 and abs(fav["roi"] - 0.0) < 1e-9  # 2×(+1) + 2×(−1)
+    assert abs(rows["Favorito del mercado (todos)"]["roi_best"] - 0.05) < 1e-9  # mejor precio 2.1
+    assert rows["Favorito del modelo con confianza Alta"]["n"] == 4
+    assert "Reglas sistemáticas" in to_markdown(ms)
