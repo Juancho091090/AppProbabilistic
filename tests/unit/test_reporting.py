@@ -159,6 +159,30 @@ def test_narrative_rejects_invented_numbers_and_betting(payload, text):
     assert narrative is None and problems
 
 
+def test_isolated_bad_factor_is_dropped_not_whole_narrative(payload):
+    """Regresión 25-oct-2026: una palabra prohibida en 8 de ~40 factores tumbaba todo."""
+    compact = compact_payload(payload)
+    eid = compact["matches"][0]["event_id"]
+    raw = _valid_raw(compact)
+    raw["matches"][eid] = [
+        "Los modelos coinciden en la dirección del resultado.",
+        "La probabilidad combinada de empate o visitante es alta.",
+        "Hay datos suficientes de ambos equipos.",
+    ]
+    for other in compact["matches"][1:]:
+        raw["matches"][other["event_id"]] = [
+            "Los modelos coinciden.",
+            "Hay datos suficientes.",
+            "Sin incidencias de datos.",
+        ]
+    narrative, problems = validate_narrative(raw, compact)
+    assert narrative is not None and problems  # se informa, pero no se muestra
+    assert all("combinada" not in f for fs in narrative.matches.values() for f in fs)
+    # Resumen inválido: se rechaza todo
+    raw["summary"] = "Jornada segura."
+    assert validate_narrative(raw, compact)[0] is None
+
+
 class _FakeClaude:
     def __init__(self, reply=None, exc=None):
         self.reply, self.exc, self.calls = reply, exc, []

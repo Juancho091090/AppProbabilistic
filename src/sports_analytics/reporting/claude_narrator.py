@@ -48,6 +48,8 @@ BANNED_TERMS = [
     "segura",
 ]
 
+MAX_BAD_FACTOR_SHARE = 0.25
+
 SYSTEM_PROMPT = """Eres un analista de datos deportivos. Redactas en español explicaciones \
 breves de probabilidades YA calculadas por modelos estadísticos.
 
@@ -57,7 +59,8 @@ estimes ni inventes cifras, porcentajes o estadísticas.
 - Si mencionas un porcentaje, cópialo exactamente con un decimal tal como aparece en "pct".
 - No modifiques ni reinterpretes probabilidades. No digas qué resultado "va a pasar".
 - Lenguaje de analítica estadística. Prohibido cualquier lenguaje de apuestas \
-(apuesta, pick, stake, cuota, valor, segura, etc.).
+(apuesta, pick, stake, cuota, valor, segura, fija, combinada, etc.). Para sumar \
+probabilidades di "conjunta" o "sumadas", nunca "combinada".
 - Señala datos faltantes o desacuerdo entre modelos cuando el JSON lo indique. \
 Las incidencias técnicas descríbelas solo como "datos no disponibles", sin detalles \
 de proveedores, límites de consultas ni errores.
@@ -195,6 +198,8 @@ def validate_narrative(
     summary = str(raw.get("summary") or "").strip()
     res = validate_text(summary, allowed)
     problems += [f"summary: {p}" for p in res.problems]
+    summary_bad = not res.ok
+    n_factors = bad_factors = 0
     matches: dict[str, list[str]] = {}
     for event_id, factors in (raw.get("matches") or {}).items():
         if event_id not in valid_ids or not isinstance(factors, list):
@@ -203,15 +208,20 @@ def validate_narrative(
         for factor in factors[:3]:
             text = str(factor).strip()
             r = validate_text(text, allowed)
+            n_factors += 1
             if r.ok and text:
                 clean.append(text)
             else:
+                bad_factors += 1
                 problems += [f"{event_id}: {p}" for p in r.problems]
         if clean:
             matches[event_id] = clean
-    if problems:
+    # Un factor inválido se descarta (nunca se muestra). Se rechaza TODA la narrativa si
+    # falla el resumen o si los factores inválidos superan el 25 %: señal de que la
+    # respuesta no es fiable en general.
+    if summary_bad or (n_factors and bad_factors / n_factors > MAX_BAD_FACTOR_SHARE):
         return None, problems
-    return Narrative(summary, matches), []
+    return Narrative(summary, matches), problems
 
 
 class ClaudeNarrator:
@@ -248,6 +258,8 @@ class ClaudeNarrator:
             log.warning("claude_narrative_failed", extra={"error": self.last_error})
             return None
         narrative, problems = validate_narrative(raw, compact)
+        if narrative is not None and problems:
+            log.warning("claude_factors_dropped", extra={"problems": problems[:10]})
         if narrative is None:
             self.last_error = "rechazada por validación: " + " | ".join(problems[:8])
             log.warning("claude_narrative_rejected", extra={"problems": problems[:10]})
