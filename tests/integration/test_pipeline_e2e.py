@@ -28,6 +28,7 @@ from sports_analytics.db.models import (
     MarketOdds,
     MarketOddsCheck,
     ModelMetric,
+    PaperSelection,
     PipelineRun,
     PredictionResult,
     PredictionRow,
@@ -453,6 +454,10 @@ def test_day1_full_pipeline(env, app_config):
         )  # el lote de xG no borra los córners
         odds = s.scalars(select(MarketOdds)).all()
         assert sorted(o.bookmaker_id for o in odds) == [4, 8, 8]
+        # Registro simulado: selecciones con el precio de la casa de referencia ahora
+        paper = s.scalars(select(PaperSelection)).all()
+        assert paper and all(p.status == "open" and p.price_taken > 1 for p in paper)
+        assert {p.rule for p in paper} >= {"mercado_favorito"}
         checks = s.scalars(select(MarketOddsCheck)).all()
         assert len(checks) == 2 and not any(c.final for c in checks)  # aún no empiezan
     # El mercado es solo para evaluar: nunca aparece en el informe ni en el correo
@@ -510,6 +515,12 @@ def test_day2_settles_results(env, app_config):
             )
         }
         assert metrics["mercado"].n == metrics["ensemble_v1@mercado"].n == 6  # 2 partidos × 3
+        # Registro simulado: liquidado con resultado y precio de cierre de la misma casa
+        paper = s.scalars(select(PaperSelection)).all()
+        assert paper and all(p.status == "settled" for p in paper)
+        up1 = [p for p in paper if p.event_id == "up1"]
+        assert all(p.outcome == int(p.selection == "home") for p in up1)  # up1 terminó 2-0
+        assert all(p.price_close and p.fair_prob_close for p in paper)
     from sports_analytics.pipeline.results import live_market_pairs
 
     with session_scope(URL) as s:

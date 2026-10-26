@@ -115,3 +115,37 @@ jobs:
           path: reports/output/
           retention-days: 30
           if-no-files-found: ignore
+
+  # Registro simulado (sin dinero real): publica el estado en la rama metrics-data
+  # (paper/latest.json y paper/sheet_update.json) para la sincronización con Google Sheets.
+  registro-simulado:
+    needs: daily
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      APP_TIMEZONE: America/Bogota
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - run: alembic upgrade head
+      - name: Exportar registro
+        run: sports-analytics export-paper --output-dir "$RUNNER_TEMP/paper"
+      - name: Publicar en la rama metrics-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin metrics-data
+          git switch -C metrics-data origin/metrics-data
+          mkdir -p paper
+          cp "$RUNNER_TEMP/paper/latest.json" "$RUNNER_TEMP/paper/sheet_update.json" paper/
+          git add paper
+          git commit -m "registro simulado $(TZ=America/Bogota date +%F-%H%M) (run ${GITHUB_RUN_ID})" || exit 0
+          git push origin metrics-data

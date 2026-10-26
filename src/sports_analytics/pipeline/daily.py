@@ -26,6 +26,7 @@ from sports_analytics.evaluation.track_record import lines_record, track_record
 from sports_analytics.models.football.predictor import FootballPredictor
 from sports_analytics.models.outputs import MatchForecast
 from sports_analytics.models.tennis.predictor import TennisPredictor
+from sports_analytics.paper import registry as paper
 from sports_analytics.pipeline import ingest
 from sports_analytics.pipeline.calibration_state import load_calibration_state
 from sports_analytics.pipeline.recalibration import load_recalibrator
@@ -410,6 +411,7 @@ def run_daily(
                 )
             n_saved = repo.save_forecasts(session, forecasts, run.id, today)
             session.commit()
+            _paper_trading(session, config, forecasts, today, now, report, issues)
 
             # 4) Informe (números de Python; narrativa de Claude validada)
             payload.data_issues = issues + payload.data_issues
@@ -519,6 +521,34 @@ def run_daily(
         },
     )
     return outcome
+
+
+def _paper_trading(session, config, forecasts, today, now, report, issues) -> None:
+    """Registro simulado: liquida las selecciones ya jugadas y registra las nuevas con el
+    precio de este momento. Nunca frena el informe."""
+    pcfg = config.models.paper_trading
+    if not pcfg.get("enabled"):
+        return
+    try:
+        res = paper.settle_selections(
+            session, lambda ids: repo.load_market_quotes(session, ids), now
+        )
+        ids = [f.event_id for f in forecasts if f.sport == "football"]
+        n = paper.create_selections(
+            session,
+            forecasts,
+            repo.load_market_quotes(session, ids),
+            pcfg.get("rules", []),
+            config.models.market.preferred_bookmakers,
+            today,
+            now,
+        )
+        session.commit()
+        report.add("paper:created", n)
+        report.add("paper:settled", res["settled"])
+    except Exception as exc:  # noqa: BLE001
+        session.rollback()
+        issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
 
 
 def _notify_failure(svc: Services, settings: Settings, message: str, send: bool) -> None:

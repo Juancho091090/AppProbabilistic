@@ -473,6 +473,36 @@ def _export_live(args: argparse.Namespace) -> int:
     return 0
 
 
+def _export_paper(args: argparse.Namespace) -> int:
+    """Registro simulado para la hoja: todas las filas y el bloque a actualizar."""
+    import json
+
+    from sports_analytics.core.timeutils import now_utc
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.paper.registry import export_rows, sheet_updates
+
+    settings = get_settings()
+    with session_scope(settings.database_url) as s:
+        rows = export_rows(s, settings.tz)
+    since = now_utc() - timedelta(days=args.days)
+    block = sheet_updates(rows, since, args.tab)
+    out = Path(args.output_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "latest.json").write_text(
+        json.dumps(rows, ensure_ascii=False, indent=0), encoding="utf-8"
+    )
+    (out / "sheet_update.json").write_text(
+        json.dumps(
+            {"generated_at": now_utc().isoformat(), "total_rows": len(rows), "block": block},
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    n_block = len(block["formulas"]) if block else 0
+    print(f"{len(rows)} selecciones; bloque a actualizar: {n_block} filas")
+    return 0
+
+
 def _market_patterns(_: argparse.Namespace) -> int:
     """Reglas sistemáticas sobre precios reales guardados (investigación, sin APIs)."""
     from sqlalchemy import select
@@ -595,6 +625,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("ingest-football", help="Carga solo fútbol (sin Tennis API)").set_defaults(
         func=_ingest_football
     )
+
+    pp = sub.add_parser("export-paper", help="Registro simulado (JSON para la hoja)")
+    pp.add_argument("--output-dir", default="reports/paper")
+    pp.add_argument("--days", type=int, default=3, help="filas creadas o liquidadas en N días")
+    pp.add_argument("--tab", default="Registro simulado")
+    pp.set_defaults(func=_export_paper)
 
     lv = sub.add_parser("export-live", help="Partidos reales del informe (JSON para la hoja)")
     lv.add_argument("--output", default="reports/metrics/live.json")

@@ -157,6 +157,36 @@ class MarketOddsCheck(Base):
     final: Mapped[bool] = mapped_column(Boolean, default=False)  # consultado tras el inicio
 
 
+class PaperSelection(Base):
+    """Registro simulado (sin dinero real): una selección por regla y partido con el
+    precio a la hora del informe; al terminar el partido se añaden precio de cierre y
+    resultado para medir rendimiento y CLV."""
+
+    __tablename__ = "paper_selections"
+    __table_args__ = (UniqueConstraint("rule", "event_id", "selection", name="uq_paper_selection"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    report_date: Mapped[date] = mapped_column(Date)
+    rule: Mapped[str] = mapped_column(String(60))
+    event_id: Mapped[str] = mapped_column(String(60))
+    competition: Mapped[str] = mapped_column(String(200))
+    match_label: Mapped[str] = mapped_column(String(200))
+    kickoff_utc: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    selection: Mapped[str] = mapped_column(String(10))  # home | draw | away
+    bookmaker_id: Mapped[int] = mapped_column(Integer)
+    bookmaker_name: Mapped[str] = mapped_column(String(80))
+    price_taken: Mapped[float] = mapped_column(Float)
+    fair_prob_taken: Mapped[float] = mapped_column(Float)
+    model_prob: Mapped[float | None] = mapped_column(Float)
+    confidence: Mapped[str | None] = mapped_column(String(10))
+    price_close: Mapped[float | None] = mapped_column(Float)
+    fair_prob_close: Mapped[float | None] = mapped_column(Float)
+    outcome: Mapped[int | None] = mapped_column(Integer)  # 1 acertó, 0 no
+    status: Mapped[str] = mapped_column(String(10), default="open", index=True)
+    settled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class TennisMatchRow(TimestampMixin, Base):
     __tablename__ = "tennis_matches"
     __table_args__ = (

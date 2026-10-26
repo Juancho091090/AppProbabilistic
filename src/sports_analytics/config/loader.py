@@ -95,6 +95,7 @@ class ModelsConfig(BaseModel):
     calibration: dict[str, Any]
     confidence: dict[str, Any]
     market: MarketConfig = Field(default_factory=MarketConfig)
+    paper_trading: dict[str, Any] = Field(default_factory=lambda: {"enabled": False, "rules": []})
 
     @model_validator(mode="after")
     def _check_weights(self) -> ModelsConfig:
