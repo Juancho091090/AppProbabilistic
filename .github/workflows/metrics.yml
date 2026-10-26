@@ -60,6 +60,7 @@ jobs:
             --football-days "${{ inputs.football_days || '150' }}" \
             --tennis-days "${{ inputs.tennis_days || '180' }}" \
             --output "$RUNNER_TEMP/metrics.json"
+          sports-analytics export-live --output "$RUNNER_TEMP/live.json"
       - name: Publicar en la rama metrics-data
         run: |
           git config user.name "github-actions[bot]"
@@ -80,6 +81,7 @@ jobs:
           else
             cp "$RUNNER_TEMP/metrics.json" metrics/latest.json
             cp "$RUNNER_TEMP/metrics.json" "metrics/$(TZ=America/Bogota date +%F).json"
+            cp "$RUNNER_TEMP/live.json" metrics/live.json
           fi
           git add metrics experiments
           git commit -m "métricas $(TZ=America/Bogota date +%F) (run ${GITHUB_RUN_ID})" || exit 0

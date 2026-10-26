@@ -392,6 +392,87 @@ def _market_benchmark(_: argparse.Namespace) -> int:
     return 0
 
 
+def _export_live(args: argparse.Namespace) -> int:
+    """Partidos reales del informe ya jugados (modelo final + mercado), para la hoja."""
+    import json
+
+    from sqlalchemy import select
+    from sqlalchemy.orm import aliased
+
+    from sports_analytics.core.timeutils import to_local
+    from sports_analytics.db import repository as repo
+    from sports_analytics.db.models import FootballMatchRow, Team
+    from sports_analytics.db.session import session_scope
+    from sports_analytics.market.benchmark import EVENT_INDEX
+    from sports_analytics.market.odds import overround
+
+    settings, cfg = get_settings(), get_config().models
+    rows_out = []
+    with session_scope(settings.database_url) as s:
+        preds: dict[str, dict] = {}
+        for p, _r in repo.settled_predictions(s, sport="football"):
+            key = p.event_id
+            e = preds.setdefault(
+                key, {"date": p.prediction_date, "p": [None] * 3, "o25": None, "comp": None}
+            )
+            if p.prediction_date > e["date"]:
+                e.update(date=p.prediction_date, p=[None] * 3, o25=None)
+            if p.prediction_date != e["date"]:
+                continue
+            e["comp"] = p.competition
+            if p.market == "1x2" and p.model == cfg.version and p.event in EVENT_INDEX:
+                e["p"][EVENT_INDEX[p.event]] = p.probability
+            elif p.market == "goals_total" and p.line_key == "2.5":
+                e["o25"] = p.probability
+        ids = [k for k, e in preds.items() if None not in e["p"]]
+        h, a = aliased(Team), aliased(Team)
+        matches = {
+            m.external_id: (m, hn, an)
+            for m, hn, an in s.execute(
+                select(FootballMatchRow, h.name, a.name)
+                .join(h, h.id == FootballMatchRow.home_team_id)
+                .join(a, a.id == FootballMatchRow.away_team_id)
+                .where(FootballMatchRow.external_id.in_(ids))
+            )
+        }
+        quotes = repo.load_market_quotes(s, ids)
+        for ext in ids:
+            if ext not in matches:
+                continue
+            m, hn, an = matches[ext]
+            if m.home_goals is None or m.status != "finished":
+                continue
+            e = preds[ext]
+            ref = None
+            qs = quotes.get(ext) or []
+            by_id = {q.bookmaker_id: q for q in qs}
+            ref = next((by_id[b] for b in cfg.market.preferred_bookmakers if b in by_id), None)
+            if ref is None and qs:
+                ref = min(qs, key=lambda q: overround(q.prices))
+            rows_out.append(
+                {
+                    "kickoff_local": to_local(m.kickoff_utc, settings.tz).date().isoformat(),
+                    "report_date": e["date"].isoformat(),
+                    "competition": e["comp"],
+                    "match": f"{hn} vs {an}",
+                    "p": [round(x, 4) for x in e["p"]],
+                    "goals": [m.home_goals, m.away_goals],
+                    "p_over25": round(e["o25"], 4) if e["o25"] is not None else None,
+                    "market": (
+                        {"bookmaker": ref.bookmaker_name, "prices": list(ref.prices)}
+                        if ref
+                        else None
+                    ),
+                }
+            )
+    rows_out.sort(key=lambda r: (r["kickoff_local"], r["competition"], r["match"]))
+    out = Path(args.output)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(rows_out, ensure_ascii=False, indent=0), encoding="utf-8")
+    print(f"{len(rows_out)} partidos → {out}")
+    return 0
+
+
 def _market_patterns(_: argparse.Namespace) -> int:
     """Reglas sistemáticas sobre precios reales guardados (investigación, sin APIs)."""
     from sqlalchemy import select
@@ -514,6 +595,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("ingest-football", help="Carga solo fútbol (sin Tennis API)").set_defaults(
         func=_ingest_football
     )
+
+    lv = sub.add_parser("export-live", help="Partidos reales del informe (JSON para la hoja)")
+    lv.add_argument("--output", default="reports/metrics/live.json")
+    lv.set_defaults(func=_export_live)
 
     sub.add_parser(
         "market-patterns", help="Reglas sistemáticas sobre precios reales (sin APIs)"
