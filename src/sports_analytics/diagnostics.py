@@ -12,7 +12,7 @@ Nunca imprime claves: solo nombres de variables y resultados.
 from __future__ import annotations
 
 import os
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -833,6 +833,74 @@ def check_xg_batch(settings: Settings) -> list[str]:
     return lines
 
 
+def check_odds_markets(settings: Settings) -> list[str]:
+    """2 llamadas: /odds?fixture= SIN filtro de mercado para dos partidos próximos con
+    precios guardados; lista los mercados (id, nombre) y las selecciones de goles, BTTS y
+    córners que ofrece cada casa."""
+    from sqlalchemy import select
+
+    from sports_analytics.db.models import (
+        Competition,
+        FootballMatchRow,
+        MarketOddsCheck,
+    )
+    from sports_analytics.db.session import session_scope
+
+    lines = ["## API-Football: mercados disponibles en /odds", ""]
+    if settings.api_football_key is None or settings.database_url is None:
+        return [*lines, "❌ falta API_FOOTBALL_KEY o DATABASE_URL"]
+    now = datetime.now(UTC)
+    with session_scope(settings.database_url) as s:
+        rows = s.execute(
+            select(FootballMatchRow.external_id, Competition.name, FootballMatchRow.kickoff_utc)
+            .join(Competition, Competition.id == FootballMatchRow.competition_id)
+            .join(MarketOddsCheck, MarketOddsCheck.match_id == FootballMatchRow.id)
+            .where(
+                FootballMatchRow.kickoff_utc > now,
+                FootballMatchRow.kickoff_utc < now + timedelta(days=3),
+                MarketOddsCheck.bookmakers > 0,
+            )
+            .order_by(FootballMatchRow.kickoff_utc)
+        ).all()
+    picked, seen = [], set()
+    for ext, comp, ko in rows:
+        if comp not in seen:
+            picked.append((ext, comp, ko))
+            seen.add(comp)
+        if len(picked) == 2:
+            break
+    client = ApiFootballClient(settings)
+    keys = ("goal", "both", "corner")
+    for ext, comp, ko in picked:
+        items = client.http.get("/odds", {"fixture": ext}).get("response", [])
+        lines.append(f"### {comp} · fixture {ext} · {str(ko)[:16]}")
+        bets: dict[tuple[int, str], list[str]] = {}
+        for it in items:
+            for bk in it.get("bookmakers") or []:
+                for b in bk.get("bets") or []:
+                    key = (b.get("id"), b.get("name"))
+                    bets.setdefault(key, []).append(str(bk.get("name")))
+                    if bk.get("id") in (4, 8) and any(
+                        k in str(b.get("name")).lower() for k in keys
+                    ):
+                        vals = ", ".join(
+                            f"{v.get('value')}={v.get('odd')}" for v in (b.get("values") or [])[:12]
+                        )
+                        lines.append(
+                            f"- {bk.get('name')} · [{b.get('id')}] {b.get('name')}: {vals}"
+                        )
+        lines.append(
+            "- mercados (id · nombre · nº de casas): "
+            + "; ".join(
+                f"{k[0]} {k[1]} ({len(v)})"
+                for k, v in sorted(bets.items(), key=lambda kv: kv[0][0] or 0)
+            )
+        )
+        lines.append("")
+    lines.append(f"Llamadas usadas: {client.http.calls_made}")
+    return lines
+
+
 def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None = None) -> str:
     """``sections``: lista separada por comas (football_rapid, api_football, tennis, others)
     o ``all``. Permite no gastar cuota en APIs ya verificadas."""
@@ -852,6 +920,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "tennis_structure": lambda: check_tennis_tournament(settings),
         "league_lookup": lambda: check_league_lookup(settings),
         "xg_batch": lambda: check_xg_batch(settings),
+        "odds_markets": lambda: check_odds_markets(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
