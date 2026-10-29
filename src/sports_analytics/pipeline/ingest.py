@@ -37,7 +37,7 @@ from sports_analytics.data.clients.tennis_api import (
 from sports_analytics.data.filters import filter_football_league
 from sports_analytics.db import repository as repo
 from sports_analytics.db.models import DataSource
-from sports_analytics.market.odds import parse_odds_response
+from sports_analytics.market.odds import parse_line_odds, parse_odds_response
 
 log = get_logger(__name__)
 
@@ -252,18 +252,24 @@ def sync_market_odds(
         e for e in repo.matches_needing_odds(session, since, now, budget) if e not in targets
     ][: budget - len(targets)]
     ids = repo.football_match_ids(session, targets)
-    with_prices = 0
+    with_prices = n_lines = 0
     for i, ext in enumerate(targets):
         if ext not in ids:
             continue
         match_id, kickoff = ids[ext]
         try:
-            quotes = parse_odds_response(client.fixture_odds(ext, mcfg.bet_id), mcfg.bet_id)
+            # Con mercados de línea se pide /odds sin filtro: misma llamada, todos los mercados.
+            items = client.fixture_odds(ext, None if mcfg.line_markets else mcfg.bet_id)
         except BudgetExceeded:
             break
         except ApiError as exc:
             report.failures[f"odds:{ext}"] = str(exc)
             continue
+        quotes = parse_odds_response(items, mcfg.bet_id)
+        if mcfg.line_markets:
+            n_lines += repo.save_market_lines(
+                session, match_id, parse_line_odds(items, mcfg.line_markets), now
+            )
         repo.save_market_quotes(session, match_id, quotes, now, final=kickoff <= now)
         with_prices += bool(quotes)
         if i % 50 == 49:
@@ -271,6 +277,7 @@ def sync_market_odds(
     session.commit()
     report.add("football:market_checked", len(targets))
     report.add("football:market_with_prices", with_prices)
+    report.add("football:market_line_prices", n_lines)
 
 
 def football_fixtures_today(

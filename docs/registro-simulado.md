@@ -1,7 +1,7 @@
 # Registro simulado (sin dinero real)
 
-Mide, con reglas fijadas de antemano, si alguna forma de elegir resultados 1X2 tendría
-ventaja frente al mercado. No es una recomendación y no aparece en el informe diario.
+Mide, con reglas fijadas de antemano, si alguna forma de elegir resultados (1X2, goles,
+córners y ambos marcan) tendría ventaja frente al mercado. No es una recomendación y no aparece en el informe diario.
 
 ## Flujo automático (cada noche)
 
@@ -28,6 +28,17 @@ ventaja frente al mercado. No es una recomendación y no aparece en el informe d
 | `modelo_alta` | Favorito del modelo con confianza Alta |
 | `modelo_valor_esperado` | Probabilidad del modelo × precio > 1 (control: en el histórico pierde) |
 | `mercado_favorito` | Favorito del mercado en todos los partidos (referencia) |
+| `goles_2_5_modelo` | Más/menos de 2.5 goles: el lado al que el modelo (Dixon-Coles) da ≥ 50 % |
+| `corners_8_5_modelo` | Más/menos de 8.5 córners: el lado al que el modelo de córners da ≥ 50 % |
+| `btts_modelo` | Ambos marcan sí/no: el lado al que el modelo da ≥ 50 % |
+
+Mercados de línea: los precios salen de la misma llamada a `/odds` (sin filtro de
+apuesta; ids de API-Football 5, 8 y 45, verificados el 29-oct-2026) y se guardan en
+`market_lines` solo para las líneas de `market.line_markets`. Se toma la casa preferida
+si ofrece esa línea exacta; si no, la de menor margen que la ofrezca; si ninguna la
+ofrece, no hay selección (pasa a menudo con 8.5 córners, cuando las casas abren en 9.5
+o 10). Goles y ambos marcan se liquidan con el marcador; córners, con las estadísticas
+del partido (anulado si no llegan en 7 días).
 
 Una regla no se modifica con los resultados: un cambio crea una regla nueva con otra clave.
 

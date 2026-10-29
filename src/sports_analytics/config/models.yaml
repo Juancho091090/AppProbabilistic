@@ -148,9 +148,16 @@ market:
   fallback: consensus        # consensus | none
   devig_method: proportional # reparte el margen en proporción a cada implícita
   bootstrap_samples: 2000    # IC 95 % de la diferencia de log-loss
+  # Líneas que se guardan de la misma llamada a /odds (sin coste extra de llamadas).
+  # "" = mercado sin línea (ambos marcan).
+  line_markets:
+    goals_total: ["2.5"]
+    corners_total: ["8.5"]
+    btts: [""]
 
 # Registro simulado (sin dinero real): reglas fijadas de antemano. Precio a la hora del
 # informe frente al precio de cierre (CLV) y resultado. No aparece en el informe diario.
 paper_trading:
   enabled: true
-  rules: [mercado_favorito_60, modelo_alta, modelo_valor_esperado, mercado_favorito]
+  rules: [mercado_favorito_60, modelo_alta, modelo_valor_esperado, mercado_favorito,
+          goles_2_5_modelo, corners_8_5_modelo, btts_modelo]

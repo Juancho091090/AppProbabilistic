@@ -82,6 +82,8 @@ class MarketConfig(BaseModel):
     fallback: Literal["consensus", "none"] = "consensus"
     devig_method: Literal["proportional"] = "proportional"
     bootstrap_samples: int = Field(default=2000, ge=0)
+    # Mercados de línea guardados de la misma llamada a /odds (vacío = solo 1X2).
+    line_markets: dict[str, list[str]] = Field(default_factory=dict)
 
 
 class ModelsConfig(BaseModel):

@@ -244,10 +244,14 @@ class ApiFootballClient:
     def fixtures_by_league_season(self, league_id: int, season: int) -> list[dict[str, Any]]:
         return self._get("/fixtures", {"league": league_id, "season": season}, ttl=TTL_SEASON)
 
-    def fixture_odds(self, fixture_id: str, bet_id: int = 1) -> list[dict[str, Any]]:
+    def fixture_odds(self, fixture_id: str, bet_id: int | None = 1) -> list[dict[str, Any]]:
         """Precios pre-partido de un partido (sin caché: cambian hasta el inicio).
-        API-Football solo los conserva unos días después del partido."""
-        return self._get("/odds", {"fixture": fixture_id, "bet": bet_id})
+        API-Football solo los conserva unos días después del partido. ``bet_id=None``
+        trae todos los mercados en la misma llamada (1X2, goles, ambos marcan, córners…)."""
+        params: dict[str, Any] = {"fixture": fixture_id}
+        if bet_id is not None:
+            params["bet"] = bet_id
+        return self._get("/odds", params)
 
     def fixtures_statistics_batch(self, fixture_ids: list[str]) -> dict[str, FixtureStats | None]:
         """Estadísticas de hasta 20 partidos en UNA llamada (/fixtures?ids=a-b-c).

@@ -531,7 +531,10 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
         return
     try:
         res = paper.settle_selections(
-            session, lambda ids: repo.load_market_quotes(session, ids), now
+            session,
+            lambda ids: repo.load_market_quotes(session, ids),
+            now,
+            lines_by_event=lambda ids: repo.load_market_lines(session, ids),
         )
         ids = [f.event_id for f in forecasts if f.sport == "football"]
         n = paper.create_selections(
@@ -542,6 +545,7 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
             config.models.market.preferred_bookmakers,
             today,
             now,
+            line_quotes=repo.load_market_lines(session, ids),
         )
         session.commit()
         report.add("paper:created", n)

@@ -141,3 +141,86 @@ def reference_probs(
         f"consenso ({len(quotes)} casas)",
         margin,
     )
+
+
+# ------------------------------------------------- mercados de línea (sí/no)
+
+# Mercado interno -> id de apuesta en API-Football (verificado el 29-oct-2026 con
+# /odds sin filtro: 5 "Goals Over/Under", 8 "Both Teams Score", 45 "Corners Over Under").
+LINE_BETS = {"goals_total": 5, "btts": 8, "corners_total": 45}
+
+
+@dataclass(frozen=True)
+class LineQuote:
+    """Precios de un mercado de dos lados: ``yes`` = más de / sí, ``no`` = menos de / no.
+    ``line`` es "2.5", "8.5"… o "" en ambos marcan."""
+
+    bookmaker_id: int
+    bookmaker_name: str
+    market: str
+    line: str
+    yes: float
+    no: float
+    source_updated_at: datetime | None = None
+
+    @property
+    def prices(self) -> tuple[float, float]:
+        return (self.yes, self.no)
+
+
+def _line_values(market: str, values: Iterable[dict[str, Any]], lines: Sequence[str]):
+    """{línea: {"yes": precio, "no": precio}} solo para las líneas pedidas."""
+    out: dict[str, dict[str, float]] = {}
+    for v in values or []:
+        label = str(v.get("value", "")).strip()
+        try:
+            odd = float(v.get("odd"))
+        except (TypeError, ValueError):
+            continue
+        if odd <= 1.0:
+            continue
+        if market == "btts":
+            side, line = {"Yes": "yes", "No": "no"}.get(label), ""
+        else:
+            head, _, rest = label.partition(" ")
+            side = {"Over": "yes", "Under": "no"}.get(head)
+            try:
+                line = f"{float(rest):g}"
+            except ValueError:
+                continue
+        if side and line in lines:
+            out.setdefault(line, {})[side] = odd
+    return out
+
+
+def parse_line_odds(
+    items: Iterable[dict[str, Any]], lines: dict[str, Sequence[str]]
+) -> list[LineQuote]:
+    """Respuesta de ``/odds`` (sin filtro de apuesta) → precios de los mercados de línea.
+
+    ``lines``: mercado → líneas a guardar, p. ej. {"goals_total": ["2.5"], "btts": [""]}.
+    Se ignoran casas sin ambos lados de la línea."""
+    quotes: list[LineQuote] = []
+    for item in items:
+        updated = _parse_dt(item.get("update"))
+        for bk in item.get("bookmakers") or []:
+            for market, wanted in lines.items():
+                bet_id = LINE_BETS.get(market)
+                bet = next((b for b in bk.get("bets") or [] if b.get("id") == bet_id), None)
+                if not bet:
+                    continue
+                wanted_keys = [f"{float(w):g}" if w else "" for w in wanted]
+                for line, sides in _line_values(market, bet.get("values"), wanted_keys).items():
+                    if "yes" in sides and "no" in sides:
+                        quotes.append(
+                            LineQuote(
+                                int(bk["id"]),
+                                str(bk.get("name", "")),
+                                market,
+                                line,
+                                sides["yes"],
+                                sides["no"],
+                                updated,
+                            )
+                        )
+    return quotes

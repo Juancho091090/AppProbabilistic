@@ -25,6 +25,7 @@ from sports_analytics.db.models import (
     DataSource,
     FootballMatchRow,
     FootballStatistics,
+    MarketLine,
     MarketOdds,
     MarketOddsCheck,
     ModelMetric,
@@ -82,7 +83,7 @@ class FakeFootballApi:
         # Benchmark de mercado: up1 con Pinnacle (preferida) y Bet365; up2 solo Bet365
         self.odds = {
             "up1": [
-                _bookmaker(4, "Pinnacle", "1.80", "3.70", "4.60"),
+                _bookmaker(4, "Pinnacle", "1.80", "3.70", "4.60", lines=True),
                 _bookmaker(8, "Bet365", "1.75", "3.60", "4.50"),
             ],
             "up2": [_bookmaker(8, "Bet365", "2.50", "3.10", "2.90")],
@@ -173,7 +174,7 @@ class FakeFootballApi:
                 ]
             )
         elif path == "/odds":
-            assert q["bet"] == "1"
+            assert "bet" not in q  # sin filtro: 1X2 y mercados de línea en una llamada
             resp = [
                 {"update": "2024-06-01T10:00:00+00:00", "bookmakers": bks}
                 for bks in [self.odds.get(q["fixture"])]
@@ -184,9 +185,28 @@ class FakeFootballApi:
         return httpx.Response(200, json={"errors": [], "response": resp})
 
 
-def _bookmaker(bid, name, h, d, a):
+def _bookmaker(bid, name, h, d, a, lines=False):
     vals = [{"value": "Home", "odd": h}, {"value": "Draw", "odd": d}, {"value": "Away", "odd": a}]
-    return {"id": bid, "name": name, "bets": [{"id": 1, "name": "Match Winner", "values": vals}]}
+    bets = [{"id": 1, "name": "Match Winner", "values": vals}]
+    if lines:
+        ou = lambda o, u, x: [  # noqa: E731
+            {"value": f"Over {x}", "odd": o},
+            {"value": f"Under {x}", "odd": u},
+        ]
+        bets += [
+            {"id": 5, "name": "Goals Over/Under", "values": ou("1.90", "1.95", "2.5")},
+            {
+                "id": 8,
+                "name": "Both Teams Score",
+                "values": [{"value": "Yes", "odd": "1.85"}, {"value": "No", "odd": "1.95"}],
+            },
+            {
+                "id": 45,
+                "name": "Corners Over Under",
+                "values": ou("1.60", "2.30", "8.5") + ou("1.80", "2.00", "9.5"),
+            },
+        ]
+    return {"id": bid, "name": name, "bets": bets}
 
 
 # ------------------------------------------------------------- Tennis API falsa
@@ -458,6 +478,20 @@ def test_day1_full_pipeline(env, app_config):
         paper = s.scalars(select(PaperSelection)).all()
         assert paper and all(p.status == "open" and p.price_taken > 1 for p in paper)
         assert {p.rule for p in paper} >= {"mercado_favorito"}
+        # Mercados de línea: solo up1 (Pinnacle) los trae; un lado por regla
+        lines = s.scalars(select(MarketLine)).all()
+        assert {(x.market, x.line) for x in lines} == {
+            ("goals_total", "2.5"),
+            ("btts", ""),
+            ("corners_total", "8.5"),
+        }
+        line_sel = [p for p in paper if p.market != "1x2"]
+        assert {p.rule for p in line_sel} == {
+            "goles_2_5_modelo",
+            "corners_8_5_modelo",
+            "btts_modelo",
+        }
+        assert all(p.event_id == "up1" and p.selection in ("yes", "no") for p in line_sel)
         checks = s.scalars(select(MarketOddsCheck)).all()
         assert len(checks) == 2 and not any(c.final for c in checks)  # aún no empiezan
     # El mercado es solo para evaluar: nunca aparece en el informe ni en el correo
@@ -519,8 +553,12 @@ def test_day2_settles_results(env, app_config):
         paper = s.scalars(select(PaperSelection)).all()
         assert paper and all(p.status == "settled" for p in paper)
         up1 = [p for p in paper if p.event_id == "up1"]
-        assert all(p.outcome == int(p.selection == "home") for p in up1)  # up1 terminó 2-0
+        assert all(p.outcome == int(p.selection == "home") for p in up1 if p.market == "1x2")
         assert all(p.price_close and p.fair_prob_close for p in paper)
+        # up1 terminó 2-0 con 10 córners: menos de 2.5, ambos marcan No, más de 8.5 córners
+        happened = {"goals_total": False, "btts": False, "corners_total": True}
+        for p in (p for p in up1 if p.market != "1x2"):
+            assert p.outcome == int(happened[p.market] == (p.selection == "yes")), p.rule
     from sports_analytics.pipeline.results import live_market_pairs
 
     with session_scope(URL) as s:

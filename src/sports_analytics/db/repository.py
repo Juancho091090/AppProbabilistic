@@ -18,6 +18,7 @@ from sports_analytics.db.models import (
     DataSource,
     FootballMatchRow,
     FootballStatistics,
+    MarketLine,
     MarketOdds,
     MarketOddsCheck,
     PipelineRun,
@@ -28,7 +29,7 @@ from sports_analytics.db.models import (
     Team,
     TennisMatchRow,
 )
-from sports_analytics.market.odds import OddsQuote
+from sports_analytics.market.odds import LineQuote, OddsQuote
 from sports_analytics.models.outputs import MatchForecast
 
 FOOTBALL_PROVIDER = "api_football"
@@ -664,6 +665,56 @@ def load_market_quotes(
                 o.odd_home,
                 o.odd_draw,
                 o.odd_away,
+                o.source_updated_at,
+            )
+        )
+    return out
+
+
+def save_market_lines(
+    session: Session, match_id: int, quotes: Sequence[LineQuote], fetched_at: datetime
+) -> int:
+    rows = [
+        {
+            "match_id": match_id,
+            "bookmaker_id": q.bookmaker_id,
+            "bookmaker_name": q.bookmaker_name[:80],
+            "market": q.market,
+            "line": q.line,
+            "odd_yes": q.yes,
+            "odd_no": q.no,
+            "source_updated_at": q.source_updated_at,
+            "fetched_at": fetched_at,
+        }
+        for q in quotes
+    ]
+    _upsert(
+        session,
+        MarketLine,
+        rows,
+        ["match_id", "bookmaker_id", "market", "line"],
+        ["bookmaker_name", "odd_yes", "odd_no", "source_updated_at", "fetched_at"],
+    )
+    return len(rows)
+
+
+def load_market_lines(session: Session, external_ids: Iterable[str]) -> dict[str, list[LineQuote]]:
+    """Precios de mercados de línea por partido (clave: external_id del partido)."""
+    q = (
+        select(FootballMatchRow.external_id, MarketLine)
+        .join(FootballMatchRow, FootballMatchRow.id == MarketLine.match_id)
+        .where(FootballMatchRow.external_id.in_(list(set(external_ids))))
+    )
+    out: dict[str, list[LineQuote]] = {}
+    for ext, o in session.execute(q):
+        out.setdefault(ext, []).append(
+            LineQuote(
+                o.bookmaker_id,
+                o.bookmaker_name,
+                o.market,
+                o.line,
+                o.odd_yes,
+                o.odd_no,
                 o.source_updated_at,
             )
         )

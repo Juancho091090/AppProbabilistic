@@ -146,6 +146,25 @@ class MarketOdds(TimestampMixin, Base):
     fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class MarketLine(Base):
+    """Precios de mercados de dos lados (más/menos de goles o córners, ambos marcan) por
+    casa. ``odd_yes`` = más de / sí; ``odd_no`` = menos de / no. Solo investigación."""
+
+    __tablename__ = "market_lines"
+    __table_args__ = (UniqueConstraint("match_id", "bookmaker_id", "market", "line"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    match_id: Mapped[int] = mapped_column(ForeignKey("football_matches.id"), index=True)
+    bookmaker_id: Mapped[int] = mapped_column(Integer)
+    bookmaker_name: Mapped[str] = mapped_column(String(80))
+    market: Mapped[str] = mapped_column(String(20))
+    line: Mapped[str] = mapped_column(String(10), default="")
+    odd_yes: Mapped[float] = mapped_column(Float)
+    odd_no: Mapped[float] = mapped_column(Float)
+    source_updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
 class MarketOddsCheck(Base):
     """Partidos ya consultados en /odds (con o sin precios) para no repetir llamadas."""
 
@@ -173,7 +192,10 @@ class PaperSelection(Base):
     competition: Mapped[str] = mapped_column(String(200))
     match_label: Mapped[str] = mapped_column(String(200))
     kickoff_utc: Mapped[datetime] = mapped_column(DateTime(timezone=True))
-    selection: Mapped[str] = mapped_column(String(10))  # home | draw | away
+    # 1x2 (home | draw | away) o mercado de línea (yes = más de / sí, no = menos de / no)
+    market: Mapped[str] = mapped_column(String(20), default="1x2", server_default="1x2")
+    line: Mapped[str] = mapped_column(String(10), default="", server_default="")
+    selection: Mapped[str] = mapped_column(String(10))
     bookmaker_id: Mapped[int] = mapped_column(Integer)
     bookmaker_name: Mapped[str] = mapped_column(String(80))
     price_taken: Mapped[float] = mapped_column(Float)
