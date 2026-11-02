@@ -12572,6 +12572,30 @@
 "kickoff_local": "2026-10-25",
 "report_date": "2026-10-25",
 "competition": "Liga 1",
+"match": "Deportivo Garcilaso vs Club Deportivo Los Chankas",
+"p": [
+0.5735,
+0.2431,
+0.1835
+],
+"goals": [
+4,
+1
+],
+"p_over25": 0.4834,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.59,
+3.9,
+5.17
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga 1",
 "match": "Sport Boys vs FC Cajamarca",
 "p": [
 0.5284,
@@ -12620,6 +12644,78 @@
 "kickoff_local": "2026-10-25",
 "report_date": "2026-10-25",
 "competition": "Liga BetPlay (Primera A)",
+"match": "Alianza Valledupar vs Internacional de Bogota",
+"p": [
+0.4356,
+0.2392,
+0.3252
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4664,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.29,
+3.21,
+3.33
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Atletico Nacional vs Independiente Medellin",
+"p": [
+0.5903,
+0.2449,
+0.1648
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5105,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.79,
+3.78,
+4.42
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Deportes Tolima vs Deportivo Pasto",
+"p": [
+0.5936,
+0.2394,
+0.167
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.3563,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.39,
+4.6,
+8.79
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga BetPlay (Primera A)",
 "match": "Fortaleza FC vs Deportivo Cali",
 "p": [
 0.2402,
@@ -12637,6 +12733,102 @@
 3.49,
 3.18,
 2.24
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga MX",
+"match": "Atlas vs Puebla",
+"p": [
+0.5688,
+0.243,
+0.1882
+],
+"goals": [
+4,
+3
+],
+"p_over25": 0.4891,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.66,
+4.08,
+5.29
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga MX",
+"match": "Club America vs CF Pachuca",
+"p": [
+0.6087,
+0.248,
+0.1433
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.5456,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.66,
+4.28,
+4.95
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga MX",
+"match": "Club Queretaro vs Cruz Azul",
+"p": [
+0.2386,
+0.2463,
+0.515
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.5619,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.78,
+3.83,
+1.96
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga MX",
+"match": "Club Tijuana vs Santos Laguna",
+"p": [
+0.5066,
+0.245,
+0.2484
+],
+"goals": [
+4,
+1
+],
+"p_over25": 0.6232,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.11,
+3.73,
+3.44
 ]
 }
 },
@@ -12668,6 +12860,54 @@
 "kickoff_local": "2026-10-25",
 "report_date": "2026-10-25",
 "competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Estudiantes de Rio Cuarto",
+"p": [
+0.6227,
+0.2399,
+0.1374
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.3239,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.75,
+3.41,
+5.82
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga Profesional Argentina",
+"match": "Central Cordoba de Santiago vs Velez Sarsfield",
+"p": [
+0.2711,
+0.2411,
+0.4878
+],
+"goals": [
+0,
+5
+],
+"p_over25": 0.4294,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.03,
+3.47,
+2.01
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga Profesional Argentina",
 "match": "Independiente vs Boca Juniors",
 "p": [
 0.2334,
@@ -12685,6 +12925,54 @@
 3.98,
 3.07,
 2.19
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "Liga Profesional Argentina",
+"match": "River Plate vs Racing Club",
+"p": [
+0.5767,
+0.2427,
+0.1806
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4673,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.5,
+4.32,
+7.09
+]
+}
+},
+{
+"kickoff_local": "2026-10-25",
+"report_date": "2026-10-25",
+"competition": "LigaPro Serie A",
+"match": "Aucas vs Barcelona SC",
+"p": [
+0.4821,
+0.2362,
+0.2817
+],
+"goals": [
+0,
+4
+],
+"p_over25": 0.3555,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.9,
+3.41,
+4.29
 ]
 }
 },
@@ -13261,6 +13549,3880 @@
 1.93,
 3.4,
 4.52
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Brasileirão Serie A",
+"match": "Coritiba vs Gremio",
+"p": [
+0.4514,
+0.2445,
+0.304
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.5495,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.26,
+3.52,
+3.26
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Brasileirão Serie A",
+"match": "Flamengo vs Atletico-MG",
+"p": [
+0.6346,
+0.2556,
+0.1098
+],
+"goals": [
+3,
+2
+],
+"p_over25": 0.4862,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.26,
+6.3,
+12.06
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "LaLiga",
+"match": "Sevilla vs Osasuna",
+"p": [
+0.4471,
+0.2411,
+0.3118
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4777,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.83,
+3.53,
+4.99
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Jaguares vs Llaneros",
+"p": [
+0.3513,
+0.2391,
+0.4096
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4431,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.91,
+3.37,
+2.46
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Santa Fe vs Bucaramanga",
+"p": [
+0.4616,
+0.2364,
+0.302
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.3793,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.0,
+3.45,
+3.86
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Liga Profesional Argentina",
+"match": "Instituto Cordoba vs Deportivo Riestra",
+"p": [
+0.5848,
+0.2375,
+0.1778
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.3136,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.82,
+3.25,
+5.58
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Liga Profesional Argentina",
+"match": "Union Santa Fe vs Estudiantes L.P.",
+"p": [
+0.29,
+0.2395,
+0.4705
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.3964,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.81,
+3.19,
+2.75
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Mushuc Runa SC",
+"p": [
+0.3029,
+0.2415,
+0.4557
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.4524,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.44,
+3.26,
+3.0
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Ligue 1",
+"match": "Paris Saint Germain vs Lyon",
+"p": [
+0.6379,
+0.2687,
+0.0934
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6725,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.34,
+5.76,
+8.85
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Primeira Liga",
+"match": "Santa Clara vs Benfica",
+"p": [
+0.1462,
+0.254,
+0.5998
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.4408,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+8.02,
+5.37,
+1.37
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Süper Lig",
+"match": "Beşiktaş vs Başakşehir",
+"p": [
+0.5806,
+0.2548,
+0.1646
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6016,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.38,
+5.57,
+7.32
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Süper Lig",
+"match": "Galatasaray vs Fenerbahçe",
+"p": [
+0.4286,
+0.249,
+0.3224
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.6563,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.98,
+3.91,
+3.65
+]
+}
+},
+{
+"kickoff_local": "2026-10-26",
+"report_date": "2026-10-26",
+"competition": "Süper Lig",
+"match": "Rizespor vs Trabzonspor",
+"p": [
+0.2937,
+0.2489,
+0.4574
+],
+"goals": [
+3,
+4
+],
+"p_over25": 0.5724,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.8,
+4.13,
+1.88
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Liga 1",
+"match": "Juan Pablo II College vs Sport Huancayo",
+"p": [
+0.3658,
+0.257,
+0.3772
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6089,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.08,
+3.19,
+1.9
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Junior",
+"p": [
+0.2122,
+0.2738,
+0.514
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.443,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.6,
+3.35,
+2.74
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Cucuta vs Águilas Doradas",
+"p": [
+0.3515,
+0.2782,
+0.3704
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.5051,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.99,
+3.06,
+2.59
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Liga Profesional Argentina",
+"match": "Argentinos JRS vs Independ. Rivadavia",
+"p": [
+0.4374,
+0.2888,
+0.2738
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4403,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.08,
+3.16,
+4.21
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Saudi Pro League",
+"match": "Abha vs Al-Faisaly FC",
+"p": [
+0.3843,
+0.292,
+0.3237
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.4326,
+"market": null
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Serie A",
+"match": "AS Roma vs Cagliari",
+"p": [
+0.7605,
+0.1765,
+0.0631
+],
+"goals": [
+4,
+2
+],
+"p_over25": 0.5553,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.31,
+5.51,
+10.8
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Serie A",
+"match": "Sassuolo vs Lazio",
+"p": [
+0.2915,
+0.2765,
+0.4321
+],
+"goals": [
+2,
+6
+],
+"p_over25": 0.4827,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.72,
+3.58,
+2.08
+]
+}
+},
+{
+"kickoff_local": "2026-10-27",
+"report_date": "2026-10-27",
+"competition": "Serie A",
+"match": "Torino vs Como",
+"p": [
+0.1852,
+0.2418,
+0.573
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.5278,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.85,
+3.91,
+1.75
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Brasileirão Serie A",
+"match": "Bahia vs Sao Paulo",
+"p": [
+0.4606,
+0.2802,
+0.2592
+],
+"goals": [
+3,
+2
+],
+"p_over25": 0.4634,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.91,
+3.77,
+4.09
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Brasileirão Serie A",
+"match": "Fluminense vs Internacional",
+"p": [
+0.5164,
+0.2723,
+0.2113
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.4444,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.85,
+3.68,
+4.49
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Brasileirão Serie A",
+"match": "RB Bragantino vs Chapecoense-sc",
+"p": [
+0.6705,
+0.2089,
+0.1207
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.578,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.28,
+6.35,
+9.27
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Brasileirão Serie A",
+"match": "Remo vs Botafogo",
+"p": [
+0.277,
+0.2787,
+0.4443
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.4809,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.65,
+3.59,
+2.64
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Brasileirão Serie A",
+"match": "Santos vs Palmeiras",
+"p": [
+0.2751,
+0.269,
+0.4559
+],
+"goals": [
+0,
+0
+],
+"p_over25": 0.5108,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.48,
+3.63,
+2.12
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga 1",
+"match": "ADT vs UCV Moquegua",
+"p": [
+0.5021,
+0.2773,
+0.2206
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4401,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.42,
+4.31,
+6.98
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga 1",
+"match": "Alianza Atletico vs Deportivo Garcilaso",
+"p": [
+0.3449,
+0.2822,
+0.373
+],
+"goals": [
+3,
+2
+],
+"p_over25": 0.4877,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.68,
+3.95,
+4.76
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga 1",
+"match": "Cienciano vs Atletico Grau",
+"p": [
+0.5408,
+0.2601,
+0.1991
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.479,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.24,
+5.87,
+9.73
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga 1",
+"match": "FC Cajamarca vs UTC Cajamarca",
+"p": [
+0.5554,
+0.2255,
+0.2191
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.6641,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.28,
+3.62,
+2.92
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Internacional de Bogota vs Independiente Medellin",
+"p": [
+0.26,
+0.2756,
+0.4644
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.4784,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.99,
+3.26,
+2.46
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Once Caldas vs Alianza Valledupar",
+"p": [
+0.5776,
+0.2586,
+0.1638
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4468,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.45,
+4.31,
+7.5
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Liga MX",
+"match": "Club America vs Club Tijuana",
+"p": [
+0.6162,
+0.2143,
+0.1694
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.635,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.59,
+4.48,
+5.5
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Serie A",
+"match": "AC Milan vs Bologna",
+"p": [
+0.5687,
+0.2515,
+0.1798
+],
+"goals": [
+2,
+4
+],
+"p_over25": 0.4943,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.74,
+3.71,
+5.32
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Serie A",
+"match": "Genoa vs Juventus",
+"p": [
+0.1405,
+0.2473,
+0.6122
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4301,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+5.07,
+3.41,
+1.85
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Serie A",
+"match": "Monza vs Napoli",
+"p": [
+0.2064,
+0.2332,
+0.5605
+],
+"goals": [
+1,
+4
+],
+"p_over25": 0.5708,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.89,
+4.06,
+1.71
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Serie A",
+"match": "Parma vs Udinese",
+"p": [
+0.3666,
+0.2964,
+0.337
+],
+"goals": [
+0,
+0
+],
+"p_over25": 0.4304,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.81,
+3.14,
+2.83
+]
+}
+},
+{
+"kickoff_local": "2026-10-28",
+"report_date": "2026-10-28",
+"competition": "Serie A",
+"match": "Venezia vs Inter",
+"p": [
+0.0708,
+0.1542,
+0.775
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.6846,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+7.5,
+5.47,
+1.39
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Brasileirão Serie A",
+"match": "Atletico-MG vs Cruzeiro",
+"p": [
+0.3764,
+0.281,
+0.3425
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.4867,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.72,
+3.68,
+2.54
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Brasileirão Serie A",
+"match": "Gremio vs Atletico Paranaense",
+"p": [
+0.2836,
+0.263,
+0.4534
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5539,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.36,
+3.45,
+3.16
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Brasileirão Serie A",
+"match": "Vasco DA Gama vs Flamengo",
+"p": [
+0.1848,
+0.2577,
+0.5575
+],
+"goals": [
+1,
+4
+],
+"p_over25": 0.4551,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.17,
+3.78,
+1.9
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Liga 1",
+"match": "Club Deportivo Los Chankas vs Cusco",
+"p": [
+0.3046,
+0.263,
+0.4324
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.5655,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.83,
+3.48,
+2.4
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Liga 1",
+"match": "FBC Melgar vs Comerciantes Unidos",
+"p": [
+0.6578,
+0.2117,
+0.1305
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.5845,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.35,
+5.02,
+8.59
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Liga 1",
+"match": "Sporting Cristal vs Alianza Lima",
+"p": [
+0.2472,
+0.2657,
+0.4871
+],
+"goals": [
+3,
+2
+],
+"p_over25": 0.5026,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.93,
+3.02,
+2.6
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Liga BetPlay (Primera A)",
+"match": "America de Cali vs Fortaleza FC",
+"p": [
+0.6464,
+0.2447,
+0.1089
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.4003,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.53,
+4.04,
+6.81
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Atletico Nacional vs Santa Fe",
+"p": [
+0.5363,
+0.2681,
+0.1956
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4394,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.47,
+4.77,
+6.29
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Saudi Pro League",
+"match": "Al Khaleej Saihat vs Al-Hazm",
+"p": [
+0.45,
+0.265,
+0.2849
+],
+"goals": [
+4,
+2
+],
+"p_over25": 0.5367,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.98,
+3.71,
+3.65
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Saudi Pro League",
+"match": "Al Riyadh vs Al-Qadisiyah FC",
+"p": [
+0.0799,
+0.1659,
+0.7542
+],
+"goals": [
+0,
+6
+],
+"p_over25": 0.6421,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+8.0,
+5.54,
+1.34
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Saudi Pro League",
+"match": "Al-Nassr vs Al Kholood",
+"p": [
+0.8479,
+0.1209,
+0.0313
+],
+"goals": [
+5,
+3
+],
+"p_over25": 0.6936,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.19,
+8.08,
+10.98
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Serie A",
+"match": "Fiorentina vs Atalanta",
+"p": [
+0.3423,
+0.2645,
+0.3932
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.5708,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.39,
+3.81,
+2.91
+]
+}
+},
+{
+"kickoff_local": "2026-10-29",
+"report_date": "2026-10-29",
+"competition": "Serie A",
+"match": "Frosinone vs Lecce",
+"p": [
+0.6103,
+0.2137,
+0.1759
+],
+"goals": [
+5,
+1
+],
+"p_over25": 0.656,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.68,
+4.36,
+4.82
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "2. Bundesliga",
+"match": "Arminia Bielefeld vs Eintracht Braunschweig",
+"p": [
+0.536,
+0.2422,
+0.2218
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.5826,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.93,
+3.71,
+4.1
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "2. Bundesliga",
+"match": "Energie Cottbus vs VfL Bochum",
+"p": [
+0.4718,
+0.2381,
+0.2901
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.6493,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.17,
+3.79,
+2.21
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Brasileirão Serie A",
+"match": "Corinthians vs Mirassol",
+"p": [
+0.3721,
+0.2971,
+0.3309
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4278,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.88,
+3.59,
+4.54
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Bundesliga",
+"match": "SV Elversberg vs FSV Mainz 05",
+"p": [
+0.4498,
+0.2399,
+0.3103
+],
+"goals": [
+4,
+1
+],
+"p_over25": 0.6542,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.6,
+3.85,
+2.05
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "LaLiga",
+"match": "Villarreal vs Espanyol",
+"p": [
+0.6506,
+0.2154,
+0.1339
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.5669,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.4,
+5.4,
+7.63
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Bucaramanga vs Deportivo Pasto",
+"p": [
+0.5678,
+0.2732,
+0.159
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.3819,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.58,
+3.79,
+6.61
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Deportivo Pereira vs Jaguares",
+"p": [
+0.3977,
+0.2912,
+0.3112
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.4385,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.22,
+3.71,
+3.06
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga MX",
+"match": "Atletico San Luis vs Atlas",
+"p": [
+0.434,
+0.2594,
+0.3066
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.5708,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.71,
+3.67,
+2.57
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga MX",
+"match": "FC Juarez vs Club Queretaro",
+"p": [
+0.2948,
+0.2571,
+0.4481
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.582,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.06,
+3.59,
+2.35
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga MX",
+"match": "Puebla vs U.N.A.M. - Pumas",
+"p": [
+0.2462,
+0.2763,
+0.4775
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.4489,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.77,
+3.74,
+2.0
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga Profesional Argentina",
+"match": "Estudiantes de Rio Cuarto vs Gimnasia L.P.",
+"p": [
+0.1565,
+0.2681,
+0.5754
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.3974,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.33,
+3.45,
+1.95
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga Profesional Argentina",
+"match": "Huracan vs Tigre",
+"p": [
+0.4125,
+0.3102,
+0.2773
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.3664,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.31,
+2.97,
+3.82
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga Profesional Argentina",
+"match": "Racing Club vs Aldosivi",
+"p": [
+0.6335,
+0.2362,
+0.1303
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.4824,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.78,
+3.68,
+5.03
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Liga Profesional Argentina",
+"match": "Sarmiento Junin vs Rosario Central",
+"p": [
+0.2116,
+0.2759,
+0.5125
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.438,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.51,
+3.62,
+1.87
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Ligue 1",
+"match": "Le Havre vs Paris Saint Germain",
+"p": [
+0.0538,
+0.1449,
+0.8013
+],
+"goals": [
+1,
+5
+],
+"p_over25": 0.6521,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+10.15,
+6.65,
+1.29
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Ligue 1",
+"match": "Lille vs Lens",
+"p": [
+0.3879,
+0.2638,
+0.3483
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.5673,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.71,
+3.3,
+2.83
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Ligue 1",
+"match": "Nice vs Rennes",
+"p": [
+0.2896,
+0.245,
+0.4654
+],
+"goals": [
+5,
+2
+],
+"p_over25": 0.6234,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.77,
+3.52,
+2.63
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Primeira Liga",
+"match": "Casa Pia vs Sporting CP",
+"p": [
+0.0682,
+0.1767,
+0.7551
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.5279,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+10.31,
+6.35,
+1.28
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Saudi Pro League",
+"match": "Abha vs Al-Ittihad FC",
+"p": [
+0.1599,
+0.2374,
+0.6028
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.5065,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.97,
+4.42,
+1.6
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Saudi Pro League",
+"match": "Al Diriyah vs NEOM",
+"p": [
+0.3502,
+0.3074,
+0.3424
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.3946,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.54,
+3.55,
+2.69
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Saudi Pro League",
+"match": "Al Shabab vs Al-Ahli Jeddah",
+"p": [
+0.1354,
+0.1971,
+0.6675
+],
+"goals": [
+6,
+1
+],
+"p_over25": 0.637,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.99,
+3.85,
+2.2
+]
+}
+},
+{
+"kickoff_local": "2026-10-30",
+"report_date": "2026-10-30",
+"competition": "Süper Lig",
+"match": "Konyaspor vs Galatasaray",
+"p": [
+0.1787,
+0.2305,
+0.5907
+],
+"goals": [
+0,
+4
+],
+"p_over25": 0.5747,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+5.15,
+4.44,
+1.62
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "2. Bundesliga",
+"match": "1. FC Kaiserslautern vs Hertha BSC",
+"p": [
+0.3796,
+0.2709,
+0.3495
+],
+"goals": [
+0,
+3
+],
+"p_over25": 0.5447,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.0,
+3.65,
+2.36
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "2. Bundesliga",
+"match": "Karlsruher SC vs 1. FC Heidenheim",
+"p": [
+0.344,
+0.2419,
+0.4141
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.6529,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.33,
+3.9,
+2.11
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "2. Bundesliga",
+"match": "SV Darmstadt 98 vs 1. FC Magdeburg",
+"p": [
+0.3503,
+0.249,
+0.4007
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.6378,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.0,
+3.67,
+2.35
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "2. Bundesliga",
+"match": "VfL Wolfsburg vs VfL Osnabrück",
+"p": [
+0.5162,
+0.2303,
+0.2535
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6618,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.56,
+4.93,
+5.34
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Brasileirão Serie A",
+"match": "Coritiba vs Vitoria",
+"p": [
+0.3874,
+0.2823,
+0.3303
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.4802,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.23,
+3.54,
+3.33
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "Bayer Leverkusen vs VfB Stuttgart",
+"p": [
+0.5754,
+0.2149,
+0.2097
+],
+"goals": [
+2,
+4
+],
+"p_over25": 0.6885,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.68,
+4.54,
+4.77
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "Bayern München vs Borussia Dortmund",
+"p": [
+0.7164,
+0.1687,
+0.1149
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.73,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.32,
+6.23,
+8.96
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "Borussia Mönchengladbach vs SC Paderborn 07",
+"p": [
+0.3446,
+0.2607,
+0.3947
+],
+"goals": [
+0,
+0
+],
+"p_over25": 0.5638,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.24,
+3.81,
+3.16
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "FC Augsburg vs SC Freiburg",
+"p": [
+0.304,
+0.2402,
+0.4557
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.663,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.84,
+3.77,
+2.45
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "FC Schalke 04 vs RB Leipzig",
+"p": [
+0.3263,
+0.261,
+0.4127
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.5732,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+4.06,
+3.86,
+1.92
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Bundesliga",
+"match": "Werder Bremen vs 1899 Hoffenheim",
+"p": [
+0.3574,
+0.252,
+0.3906
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6158,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.32,
+3.92,
+2.95
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Eredivisie",
+"match": "Ajax vs AZ Alkmaar",
+"p": [
+0.5148,
+0.2307,
+0.2545
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.6473,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.78,
+4.41,
+4.11
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Eredivisie",
+"match": "Cambuur vs GO Ahead Eagles",
+"p": [
+0.479,
+0.2299,
+0.2911
+],
+"goals": [
+4,
+0
+],
+"p_over25": 0.676,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.7,
+3.94,
+2.46
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Eredivisie",
+"match": "Feyenoord vs Fortuna Sittard",
+"p": [
+0.7784,
+0.1519,
+0.0696
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.6834,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.16,
+8.94,
+15.64
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Eredivisie",
+"match": "Heerenveen vs NEC Nijmegen",
+"p": [
+0.4924,
+0.2366,
+0.2709
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.6454,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.13,
+3.9,
+3.28
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Eredivisie",
+"match": "PSV Eindhoven vs Willem II",
+"p": [
+0.9176,
+0.0686,
+0.0138
+],
+"goals": [
+7,
+0
+],
+"p_over25": 0.8169,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.07,
+16.52,
+22.83
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LaLiga",
+"match": "Barcelona vs Alaves",
+"p": [
+0.8408,
+0.1222,
+0.037
+],
+"goals": [
+6,
+1
+],
+"p_over25": 0.7228,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.11,
+11.01,
+21.37
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LaLiga",
+"match": "Levante vs Atletico Madrid",
+"p": [
+0.1988,
+0.2273,
+0.5739
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.6174,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+5.48,
+5.06,
+1.52
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LaLiga",
+"match": "Rayo Vallecano vs Celta Vigo",
+"p": [
+0.4141,
+0.2863,
+0.2996
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.4524,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.59,
+3.22,
+3.05
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LaLiga",
+"match": "Real Betis vs Malaga",
+"p": [
+0.7346,
+0.1842,
+0.0811
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5875,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.31,
+5.95,
+9.77
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga 1",
+"match": "Alianza Atletico vs Juan Pablo II College",
+"p": [
+0.5022,
+0.2473,
+0.2506
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.5926,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.87,
+3.64,
+3.64
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Llaneros vs Junior",
+"p": [
+0.2956,
+0.2888,
+0.4155
+],
+"goals": [
+3,
+2
+],
+"p_over25": 0.452,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.68,
+3.49,
+2.59
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga MX",
+"match": "CF Pachuca vs Tigres UANL",
+"p": [
+0.3697,
+0.2895,
+0.3408
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.4258,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.01,
+3.72,
+3.78
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga MX",
+"match": "Club America vs Toluca",
+"p": [
+0.4571,
+0.2532,
+0.2897
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.5686,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.39,
+3.76,
+2.89
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga MX",
+"match": "Guadalajara Chivas vs Atlante FC",
+"p": [
+0.6309,
+0.2346,
+0.1345
+],
+"goals": [
+4,
+2
+],
+"p_over25": 0.4905,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.46,
+4.93,
+6.77
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga MX",
+"match": "Monterrey vs Club Tijuana",
+"p": [
+0.4525,
+0.2489,
+0.2986
+],
+"goals": [
+3,
+3
+],
+"p_over25": 0.616,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.62,
+4.29,
+5.48
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga Profesional Argentina",
+"match": "Deportivo Riestra vs Talleres Cordoba",
+"p": [
+0.365,
+0.3437,
+0.2913
+],
+"goals": [
+0,
+3
+],
+"p_over25": 0.2728,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.49,
+3.05,
+3.31
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga Profesional Argentina",
+"match": "Estudiantes L.P. vs Instituto Cordoba",
+"p": [
+0.4158,
+0.3086,
+0.2757
+],
+"goals": [
+3,
+3
+],
+"p_over25": 0.3717,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.04,
+3.14,
+4.47
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Liga Profesional Argentina",
+"match": "Velez Sarsfield vs San Lorenzo",
+"p": [
+0.5153,
+0.2988,
+0.1858
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.3405,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.03,
+3.26,
+4.32
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LigaPro Serie A",
+"match": "Delfin SC vs Deportivo Cuenca",
+"p": [
+0.344,
+0.3281,
+0.3279
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.3226,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.1,
+3.32,
+3.73
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LigaPro Serie A",
+"match": "Emelec vs Leones del Norte",
+"p": [
+0.4163,
+0.2927,
+0.2909
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.4347,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.82,
+3.69,
+4.43
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "LigaPro Serie A",
+"match": "Macara vs Barcelona SC",
+"p": [
+0.5247,
+0.2803,
+0.1949
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.4041,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.0,
+3.23,
+4.22
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Ligue 1",
+"match": "Estac Troyes vs Le Mans",
+"p": [
+0.3576,
+0.2592,
+0.3832
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5981,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.22,
+3.43,
+3.52
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Aston Villa vs Fulham",
+"p": [
+0.6105,
+0.2339,
+0.1556
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.5262,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.08,
+3.66,
+3.69
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Bournemouth vs Leeds",
+"p": [
+0.5647,
+0.2387,
+0.1966
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5733,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.17,
+3.42,
+3.68
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Brentford vs Nottingham Forest",
+"p": [
+0.4672,
+0.2585,
+0.2743
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5577,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.19,
+3.67,
+3.37
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Chelsea vs Manchester United",
+"p": [
+0.4638,
+0.2443,
+0.2919
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6279,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.04,
+3.79,
+3.67
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Coventry vs Sunderland",
+"p": [
+0.3369,
+0.2876,
+0.3755
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.4713,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.21,
+3.35,
+2.41
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Hull City vs Ipswich",
+"p": [
+0.5712,
+0.2383,
+0.1905
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.5646,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.88,
+3.4,
+2.61
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Manchester City vs Brighton",
+"p": [
+0.5422,
+0.2324,
+0.2254
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.6167,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.7,
+4.4,
+4.66
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Premier League",
+"match": "Tottenham vs Crystal Palace",
+"p": [
+0.4112,
+0.2684,
+0.3204
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5295,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.69,
+4.17,
+5.04
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Primeira Liga",
+"match": "FC Porto vs Estoril",
+"p": [
+0.8053,
+0.152,
+0.0427
+],
+"goals": [
+4,
+0
+],
+"p_over25": 0.5937,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.18,
+7.48,
+16.94
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Primeira Liga",
+"match": "Moreirense vs Estrela",
+"p": [
+0.4389,
+0.2716,
+0.2894
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.4953,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.21,
+3.26,
+2.43
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Saudi Pro League",
+"match": "Al Taawon vs Al-Ettifaq",
+"p": [
+0.3712,
+0.2659,
+0.3629
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.5575,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.52,
+3.82,
+2.57
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Saudi Pro League",
+"match": "Al-Fayha vs Al-Faisaly FC",
+"p": [
+0.3497,
+0.2866,
+0.3636
+],
+"goals": [
+4,
+1
+],
+"p_over25": 0.4618,
+"market": null
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Saudi Pro League",
+"match": "Al-Hilal Saudi FC vs Al-Fateh",
+"p": [
+0.9072,
+0.0788,
+0.0141
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.7864,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.08,
+14.04,
+18.24
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Serie A",
+"match": "AC Milan vs Inter",
+"p": [
+0.2774,
+0.242,
+0.4806
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.6255,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.7,
+3.62,
+2.09
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Serie A",
+"match": "Bologna vs Monza",
+"p": [
+0.6322,
+0.2214,
+0.1464
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5591,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.72,
+3.93,
+5.17
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Serie A",
+"match": "Udinese vs AS Roma",
+"p": [
+0.1177,
+0.2059,
+0.6764
+],
+"goals": [
+2,
+5
+],
+"p_over25": 0.5604,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+5.91,
+4.52,
+1.56
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Süper Lig",
+"match": "Erzurumspor FK vs Çorum FK",
+"p": [
+0.3456,
+0.282,
+0.3725
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.4674,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.86,
+3.31,
+2.64
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Süper Lig",
+"match": "Fenerbahçe vs Göztepe",
+"p": [
+0.6294,
+0.2111,
+0.1595
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.6364,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.35,
+5.72,
+8.22
+]
+}
+},
+{
+"kickoff_local": "2026-10-31",
+"report_date": "2026-10-31",
+"competition": "Süper Lig",
+"match": "Kocaelispor vs Rizespor",
+"p": [
+0.4252,
+0.2936,
+0.2812
+],
+"goals": [
+0,
+0
+],
+"p_over25": 0.4167,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.95,
+3.45,
+2.49
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "2. Bundesliga",
+"match": "FC St. Pauli vs 1. FC Nürnberg",
+"p": [
+0.3029,
+0.2741,
+0.423
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.4823,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.15,
+3.74,
+3.34
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "2. Bundesliga",
+"match": "Hannover 96 vs Dynamo Dresden",
+"p": [
+0.5199,
+0.2444,
+0.2357
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5869,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.05,
+3.87,
+3.5
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "2. Bundesliga",
+"match": "SpVgg Greuther Fürth vs Holstein Kiel",
+"p": [
+0.4068,
+0.262,
+0.3312
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.5658,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.56,
+3.77,
+2.66
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Bundesliga",
+"match": "Eintracht Frankfurt vs Hamburger SV",
+"p": [
+0.4828,
+0.2456,
+0.2716
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.6054,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.54,
+4.86,
+5.73
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Bundesliga",
+"match": "Union Berlin vs 1. FC Köln",
+"p": [
+0.4067,
+0.2646,
+0.3287
+],
+"goals": [
+1,
+1
+],
+"p_over25": 0.5469,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.84,
+3.53,
+2.56
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Eredivisie",
+"match": "Excelsior vs Twente",
+"p": [
+0.1704,
+0.2227,
+0.6068
+],
+"goals": [
+0,
+9
+],
+"p_over25": 0.5804,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+6.25,
+4.74,
+1.51
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Eredivisie",
+"match": "Groningen vs Sparta Rotterdam",
+"p": [
+0.5888,
+0.2171,
+0.1941
+],
+"goals": [
+2,
+3
+],
+"p_over25": 0.6603,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.75,
+4.38,
+4.29
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Eredivisie",
+"match": "PEC Zwolle vs ADO Den Haag",
+"p": [
+0.4151,
+0.2584,
+0.3265
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.5672,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.3,
+3.83,
+2.99
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Eredivisie",
+"match": "Telstar vs Utrecht",
+"p": [
+0.3406,
+0.2544,
+0.405
+],
+"goals": [
+4,
+2
+],
+"p_over25": 0.6051,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.44,
+3.83,
+2.09
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LaLiga",
+"match": "Athletic Club vs Real Sociedad",
+"p": [
+0.4342,
+0.2591,
+0.3067
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5634,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.04,
+3.69,
+3.79
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LaLiga",
+"match": "Elche vs Valencia",
+"p": [
+0.4336,
+0.2722,
+0.2942
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.5003,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.32,
+3.38,
+3.36
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LaLiga",
+"match": "Getafe vs Sevilla",
+"p": [
+0.3508,
+0.3192,
+0.3299
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.3404,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.45,
+3.05,
+2.46
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LaLiga",
+"match": "Racing Santander vs Real Madrid",
+"p": [
+0.0711,
+0.1377,
+0.7911
+],
+"goals": [
+0,
+3
+],
+"p_over25": 0.7691,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+11.5,
+8.03,
+1.22
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Liga 1",
+"match": "Atletico Grau vs Universitario",
+"p": [
+0.1912,
+0.2811,
+0.5277
+],
+"goals": [
+1,
+3
+],
+"p_over25": 0.3767,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+7.36,
+4.65,
+1.42
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Liga 1",
+"match": "Cusco vs Sport Boys",
+"p": [
+0.4996,
+0.2674,
+0.2331
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.4834,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.44,
+4.6,
+6.9
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Liga 1",
+"match": "UCV Moquegua vs Club Deportivo Los Chankas",
+"p": [
+0.3151,
+0.2952,
+0.3897
+],
+"goals": [
+0,
+0
+],
+"p_over25": 0.433,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.99,
+3.48,
+3.56
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Liga Profesional Argentina",
+"match": "Boca Juniors vs River Plate",
+"p": [
+0.4938,
+0.2893,
+0.2169
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.3899,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.25,
+3.15,
+3.71
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LigaPro Serie A",
+"match": "Independiente del Valle vs LDU de Quito",
+"p": [
+0.603,
+0.2393,
+0.1578
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5087,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.99,
+3.65,
+3.72
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "LigaPro Serie A",
+"match": "Universidad Catolica vs Aucas",
+"p": [
+0.5597,
+0.2633,
+0.177
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.438,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.17,
+3.25,
+3.61
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Ligue 1",
+"match": "Lyon vs Angers",
+"p": [
+0.7229,
+0.1913,
+0.0858
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5659,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.42,
+5.09,
+7.53
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Ligue 1",
+"match": "Marseille vs Toulouse",
+"p": [
+0.4575,
+0.2452,
+0.2973
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6252,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.95,
+4.02,
+3.77
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Ligue 1",
+"match": "Paris FC vs Monaco",
+"p": [
+0.3409,
+0.2623,
+0.3968
+],
+"goals": [
+3,
+1
+],
+"p_over25": 0.5737,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.55,
+3.6,
+2.81
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Ligue 1",
+"match": "Strasbourg vs Auxerre",
+"p": [
+0.5577,
+0.2378,
+0.2045
+],
+"goals": [
+5,
+1
+],
+"p_over25": 0.5789,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.88,
+4.0,
+4.09
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Premier League",
+"match": "Liverpool vs Arsenal",
+"p": [
+0.2549,
+0.2685,
+0.4766
+],
+"goals": [
+0,
+1
+],
+"p_over25": 0.4834,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.86,
+3.46,
+2.59
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Primeira Liga",
+"match": "Academico Viseu vs Rio Ave",
+"p": [
+0.6562,
+0.2153,
+0.1285
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5717,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.93,
+3.53,
+4.34
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Primeira Liga",
+"match": "Arouca vs Nacional",
+"p": [
+0.5858,
+0.2419,
+0.1723
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.527,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.6,
+4.24,
+5.78
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Primeira Liga",
+"match": "Maritimo vs Santa Clara",
+"p": [
+0.2458,
+0.2954,
+0.4588
+],
+"goals": [
+0,
+2
+],
+"p_over25": 0.3874,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.35,
+3.04,
+2.48
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Primeira Liga",
+"match": "SC Braga vs Famalicao",
+"p": [
+0.5368,
+0.2711,
+0.1921
+],
+"goals": [
+3,
+0
+],
+"p_over25": 0.4205,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.65,
+3.89,
+5.85
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Serie A",
+"match": "Como vs Venezia",
+"p": [
+0.8142,
+0.1434,
+0.0424
+],
+"goals": [
+1,
+0
+],
+"p_over25": 0.6406,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.33,
+6.12,
+8.52
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Serie A",
+"match": "Frosinone vs Torino",
+"p": [
+0.5608,
+0.2122,
+0.227
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.7172,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.03,
+3.98,
+3.55
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Serie A",
+"match": "Juventus vs Napoli",
+"p": [
+0.508,
+0.2608,
+0.2312
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.5011,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+2.32,
+3.41,
+3.33
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Serie A",
+"match": "Lazio vs Cagliari",
+"p": [
+0.6632,
+0.2219,
+0.1149
+],
+"goals": [
+2,
+1
+],
+"p_over25": 0.5069,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.48,
+4.51,
+7.52
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Serie A",
+"match": "Lecce vs Genoa",
+"p": [
+0.3364,
+0.3023,
+0.3614
+],
+"goals": [
+1,
+2
+],
+"p_over25": 0.4084,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+3.37,
+3.01,
+2.52
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Süper Lig",
+"match": "Amed vs Eyüpspor",
+"p": [
+0.7885,
+0.1538,
+0.0576
+],
+"goals": [
+5,
+1
+],
+"p_over25": 0.6243,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.28,
+6.24,
+10.82
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Süper Lig",
+"match": "Başakşehir vs Samsunspor",
+"p": [
+0.5596,
+0.2397,
+0.2008
+],
+"goals": [
+5,
+2
+],
+"p_over25": 0.5699,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.8,
+4.03,
+4.36
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Süper Lig",
+"match": "Kasımpaşa vs Beşiktaş",
+"p": [
+0.1932,
+0.2582,
+0.5486
+],
+"goals": [
+2,
+2
+],
+"p_over25": 0.4644,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+5.41,
+4.59,
+1.58
+]
+}
+},
+{
+"kickoff_local": "2026-11-01",
+"report_date": "2026-11-01",
+"competition": "Süper Lig",
+"match": "Trabzonspor vs Gaziantep FK",
+"p": [
+0.7211,
+0.1837,
+0.0952
+],
+"goals": [
+2,
+0
+],
+"p_over25": 0.6347,
+"market": {
+"bookmaker": "Pinnacle",
+"prices": [
+1.23,
+7.5,
+11.11
 ]
 }
 }
