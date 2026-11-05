@@ -19146,10 +19146,10 @@
 "fair_prob_taken": 0.5492,
 "model_prob": 0.5378,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5232,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1009,
@@ -19165,10 +19165,10 @@
 "fair_prob_taken": 0.708,
 "model_prob": 0.7179,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6845,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1010,
@@ -19184,10 +19184,10 @@
 "fair_prob_taken": 0.5897,
 "model_prob": 0.573,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.589,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1011,
@@ -19203,10 +19203,10 @@
 "fair_prob_taken": 0.2656,
 "model_prob": 0.2971,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 3.31,
+"fair_prob_close": 0.2931,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1012,
@@ -19222,10 +19222,10 @@
 "fair_prob_taken": 0.4687,
 "model_prob": 0.4444,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 2.27,
+"fair_prob_close": 0.4274,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1013,
@@ -19241,10 +19241,10 @@
 "fair_prob_taken": 0.6892,
 "model_prob": 0.5761,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.29,
+"fair_prob_close": 0.7357,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1014,
@@ -19260,10 +19260,10 @@
 "fair_prob_taken": 0.7294,
 "model_prob": 0.7464,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.22,
+"fair_prob_close": 0.7685,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1015,
@@ -19279,10 +19279,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.5283,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.527,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1016,
@@ -19298,10 +19298,10 @@
 "fair_prob_taken": 0.8193,
 "model_prob": 0.8032,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.13,
+"fair_prob_close": 0.8503,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1017,
@@ -19317,10 +19317,10 @@
 "fair_prob_taken": 0.8193,
 "model_prob": 0.8032,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.13,
+"fair_prob_close": 0.8503,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1018,
@@ -19336,10 +19336,10 @@
 "fair_prob_taken": 0.1158,
 "model_prob": 0.152,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 9.86,
+"fair_prob_close": 0.0974,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1019,
@@ -19355,10 +19355,10 @@
 "fair_prob_taken": 0.8193,
 "model_prob": 0.8032,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.13,
+"fair_prob_close": 0.8503,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1020,
@@ -19469,10 +19469,10 @@
 "fair_prob_taken": 0.567,
 "model_prob": 0.5061,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5501,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1026,
@@ -19488,10 +19488,10 @@
 "fair_prob_taken": 0.7721,
 "model_prob": 0.7242,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.21,
+"fair_prob_close": 0.7721,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1027,
@@ -19507,10 +19507,10 @@
 "fair_prob_taken": 0.5897,
 "model_prob": 0.5443,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5362,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1028,
@@ -19526,10 +19526,10 @@
 "fair_prob_taken": 0.2466,
 "model_prob": 0.2709,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 4.34,
+"fair_prob_close": 0.2236,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1029,
@@ -19545,10 +19545,10 @@
 "fair_prob_taken": 0.2511,
 "model_prob": 0.3371,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 5.71,
+"fair_prob_close": 0.1699,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1030,
@@ -19564,10 +19564,10 @@
 "fair_prob_taken": 0.5023,
 "model_prob": 0.392,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.6065,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1031,
@@ -19583,10 +19583,10 @@
 "fair_prob_taken": 0.5888,
 "model_prob": 0.6362,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.622,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1032,
@@ -19602,10 +19602,10 @@
 "fair_prob_taken": 0.7174,
 "model_prob": 0.7381,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.6998,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1033,
@@ -19621,10 +19621,10 @@
 "fair_prob_taken": 0.5263,
 "model_prob": 0.5662,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5148,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1034,
@@ -19640,10 +19640,10 @@
 "fair_prob_taken": 0.4143,
 "model_prob": 0.4382,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 2.62,
+"fair_prob_close": 0.3702,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1035,
@@ -19659,10 +19659,10 @@
 "fair_prob_taken": 0.4143,
 "model_prob": 0.4382,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 2.62,
+"fair_prob_close": 0.3702,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1036,
@@ -19678,10 +19678,10 @@
 "fair_prob_taken": 0.4323,
 "model_prob": 0.5595,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.4909,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1037,
@@ -19697,10 +19697,10 @@
 "fair_prob_taken": 0.52,
 "model_prob": 0.5431,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.527,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1038,
@@ -19716,10 +19716,10 @@
 "fair_prob_taken": 0.697,
 "model_prob": 0.6212,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.652,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1039,
@@ -19735,10 +19735,10 @@
 "fair_prob_taken": 0.697,
 "model_prob": 0.6212,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.652,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1040,
@@ -19754,10 +19754,10 @@
 "fair_prob_taken": 0.1914,
 "model_prob": 0.2408,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 4.36,
+"fair_prob_close": 0.2168,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1041,
@@ -19773,10 +19773,10 @@
 "fair_prob_taken": 0.1116,
 "model_prob": 0.138,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 7.21,
+"fair_prob_close": 0.1311,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1042,
@@ -19792,10 +19792,10 @@
 "fair_prob_taken": 0.697,
 "model_prob": 0.6212,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.652,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1043,
@@ -19811,10 +19811,10 @@
 "fair_prob_taken": 0.5445,
 "model_prob": 0.5779,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5619,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1044,
@@ -19830,10 +19830,10 @@
 "fair_prob_taken": 0.5594,
 "model_prob": 0.5514,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5594,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1045,
@@ -19849,10 +19849,10 @@
 "fair_prob_taken": 0.496,
 "model_prob": 0.517,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.473,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1046,
@@ -19868,10 +19868,10 @@
 "fair_prob_taken": 0.2164,
 "model_prob": 0.3233,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 4.41,
+"fair_prob_close": 0.2163,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1047,
@@ -19887,10 +19887,10 @@
 "fair_prob_taken": 0.506,
 "model_prob": 0.387,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-03T23:50:16.362229+00:00"
+"price_close": 2.0,
+"fair_prob_close": 0.477,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1048,
@@ -19906,10 +19906,10 @@
 "fair_prob_taken": 0.6063,
 "model_prob": 0.5389,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.662,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1049,
@@ -19925,10 +19925,10 @@
 "fair_prob_taken": 0.5725,
 "model_prob": 0.5552,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.66,
+"fair_prob_close": 0.5733,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1050,
@@ -19944,10 +19944,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.577,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.5943,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1051,
@@ -19963,10 +19963,10 @@
 "fair_prob_taken": 0.6768,
 "model_prob": 0.3848,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.38,
+"fair_prob_close": 0.7011,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1052,
@@ -19982,10 +19982,10 @@
 "fair_prob_taken": 0.1921,
 "model_prob": 0.2615,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.56,
+"fair_prob_close": 0.174,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1053,
@@ -20001,10 +20001,10 @@
 "fair_prob_taken": 0.1311,
 "model_prob": 0.3537,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 7.75,
+"fair_prob_close": 0.1248,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1054,
@@ -20020,10 +20020,10 @@
 "fair_prob_taken": 0.6768,
 "model_prob": 0.3848,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.38,
+"fair_prob_close": 0.7011,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1055,
@@ -20039,10 +20039,10 @@
 "fair_prob_taken": 0.593,
 "model_prob": 0.5919,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.49,
+"fair_prob_close": 0.6452,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1056,
@@ -20058,10 +20058,10 @@
 "fair_prob_taken": 0.4103,
 "model_prob": 0.5454,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.25,
+"fair_prob_close": 0.4231,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1057,
@@ -20077,10 +20077,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.5763,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1058,
@@ -20096,10 +20096,10 @@
 "fair_prob_taken": 0.4843,
 "model_prob": 0.6166,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.06,
+"fair_prob_close": 0.471,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1059,
@@ -20115,10 +20115,10 @@
 "fair_prob_taken": 0.4843,
 "model_prob": 0.6166,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.06,
+"fair_prob_close": 0.471,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1060,
@@ -20134,10 +20134,10 @@
 "fair_prob_taken": 0.4843,
 "model_prob": 0.6166,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.06,
+"fair_prob_close": 0.471,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1061,
@@ -20153,10 +20153,10 @@
 "fair_prob_taken": 0.6244,
 "model_prob": 0.6392,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6361,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1062,
@@ -20172,10 +20172,10 @@
 "fair_prob_taken": 0.6165,
 "model_prob": 0.694,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6305,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1063,
@@ -20191,10 +20191,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6393,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6667,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1064,
@@ -20210,10 +20210,10 @@
 "fair_prob_taken": 0.2628,
 "model_prob": 0.2957,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.24,
+"fair_prob_close": 0.2285,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1065,
@@ -20229,10 +20229,10 @@
 "fair_prob_taken": 0.496,
 "model_prob": 0.4681,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.79,
+"fair_prob_close": 0.5413,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1066,
@@ -20248,10 +20248,10 @@
 "fair_prob_taken": 0.4742,
 "model_prob": 0.5951,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.71,
+"fair_prob_close": 0.5627,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1067,
@@ -20267,10 +20267,10 @@
 "fair_prob_taken": 0.4113,
 "model_prob": 0.5049,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.22,
+"fair_prob_close": 0.4278,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1068,
@@ -20286,10 +20286,10 @@
 "fair_prob_taken": 0.4416,
 "model_prob": 0.5297,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.492,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1069,
@@ -20305,10 +20305,10 @@
 "fair_prob_taken": 0.2677,
 "model_prob": 0.2943,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.38,
+"fair_prob_close": 0.2869,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1070,
@@ -20324,10 +20324,10 @@
 "fair_prob_taken": 0.2576,
 "model_prob": 0.3209,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.08,
+"fair_prob_close": 0.2377,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1071,
@@ -20343,10 +20343,10 @@
 "fair_prob_taken": 0.4747,
 "model_prob": 0.3848,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.04,
+"fair_prob_close": 0.4754,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1072,
@@ -20362,10 +20362,10 @@
 "fair_prob_taken": 0.3896,
 "model_prob": 0.5036,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.47,
+"fair_prob_close": 0.3901,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1073,
@@ -20381,10 +20381,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.5453,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6667,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1074,
@@ -20400,10 +20400,10 @@
 "fair_prob_taken": 0.2445,
 "model_prob": 0.2766,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.87,
+"fair_prob_close": 0.2505,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1075,
@@ -20419,10 +20419,10 @@
 "fair_prob_taken": 0.4389,
 "model_prob": 0.4058,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.28,
+"fair_prob_close": 0.4252,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1076,
@@ -20438,10 +20438,10 @@
 "fair_prob_taken": 0.6025,
 "model_prob": 0.5479,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.62,
+"fair_prob_close": 0.593,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1077,
@@ -20457,10 +20457,10 @@
 "fair_prob_taken": 0.5897,
 "model_prob": 0.6497,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.69,
+"fair_prob_close": 0.5622,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1078,
@@ -20476,10 +20476,10 @@
 "fair_prob_taken": 0.6125,
 "model_prob": 0.5839,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.5943,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1079,
@@ -20495,10 +20495,10 @@
 "fair_prob_taken": 0.2368,
 "model_prob": 0.2603,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.2,
+"fair_prob_close": 0.2305,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1080,
@@ -20514,10 +20514,10 @@
 "fair_prob_taken": 0.2306,
 "model_prob": 0.3557,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.48,
+"fair_prob_close": 0.2161,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1081,
@@ -20533,10 +20533,10 @@
 "fair_prob_taken": 0.5326,
 "model_prob": 0.3839,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5533,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1082,
@@ -20552,10 +20552,10 @@
 "fair_prob_taken": 0.6186,
 "model_prob": 0.6024,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6386,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1083,
@@ -20571,10 +20571,10 @@
 "fair_prob_taken": 0.6321,
 "model_prob": 0.7711,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6324,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1084,
@@ -20590,10 +20590,10 @@
 "fair_prob_taken": 0.6203,
 "model_prob": 0.6273,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.5974,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1085,
@@ -20609,10 +20609,10 @@
 "fair_prob_taken": 0.2235,
 "model_prob": 0.2495,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.61,
+"fair_prob_close": 0.2097,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1086,
@@ -20628,10 +20628,10 @@
 "fair_prob_taken": 0.2151,
 "model_prob": 0.4073,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.19,
+"fair_prob_close": 0.1862,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1087,
@@ -20647,10 +20647,10 @@
 "fair_prob_taken": 0.5614,
 "model_prob": 0.3431,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.6041,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1088,
@@ -20666,10 +20666,10 @@
 "fair_prob_taken": 0.607,
 "model_prob": 0.5931,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.6089,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1089,
@@ -20685,10 +20685,10 @@
 "fair_prob_taken": 0.6479,
 "model_prob": 0.7556,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6463,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1090,
@@ -20704,10 +20704,10 @@
 "fair_prob_taken": 0.5714,
 "model_prob": 0.6134,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5333,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1091,
@@ -20723,10 +20723,10 @@
 "fair_prob_taken": 0.6393,
 "model_prob": 0.5105,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.39,
+"fair_prob_close": 0.6938,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1092,
@@ -20742,10 +20742,10 @@
 "fair_prob_taken": 0.1562,
 "model_prob": 0.2486,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 7.85,
+"fair_prob_close": 0.1229,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1093,
@@ -20761,10 +20761,10 @@
 "fair_prob_taken": 0.2045,
 "model_prob": 0.2409,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.26,
+"fair_prob_close": 0.1833,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1094,
@@ -20780,10 +20780,10 @@
 "fair_prob_taken": 0.6393,
 "model_prob": 0.5105,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.39,
+"fair_prob_close": 0.6938,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1095,
@@ -20799,10 +20799,10 @@
 "fair_prob_taken": 0.5181,
 "model_prob": 0.5227,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.98,
+"fair_prob_close": 0.4884,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1096,
@@ -20818,10 +20818,10 @@
 "fair_prob_taken": 0.55,
 "model_prob": 0.5152,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5497,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1097,
@@ -20837,10 +20837,10 @@
 "fair_prob_taken": 0.5263,
 "model_prob": 0.5051,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.56,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1098,
@@ -20856,10 +20856,10 @@
 "fair_prob_taken": 0.4801,
 "model_prob": 0.5809,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5195,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1099,
@@ -20875,10 +20875,10 @@
 "fair_prob_taken": 0.4801,
 "model_prob": 0.5809,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5195,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1100,
@@ -20894,10 +20894,10 @@
 "fair_prob_taken": 0.69,
 "model_prob": 0.5707,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.24,
+"fair_prob_close": 0.7573,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1101,
@@ -20913,10 +20913,10 @@
 "fair_prob_taken": 0.564,
 "model_prob": 0.6689,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.5959,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1102,
@@ -20932,10 +20932,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.5053,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1103,
@@ -20951,10 +20951,10 @@
 "fair_prob_taken": 0.823,
 "model_prob": 0.704,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.1,
+"fair_prob_close": 0.877,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1104,
@@ -20970,10 +20970,10 @@
 "fair_prob_taken": 0.823,
 "model_prob": 0.704,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.1,
+"fair_prob_close": 0.877,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1105,
@@ -20989,10 +20989,10 @@
 "fair_prob_taken": 0.1182,
 "model_prob": 0.1917,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 11.6,
+"fair_prob_close": 0.0832,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1106,
@@ -21008,10 +21008,10 @@
 "fair_prob_taken": 0.0589,
 "model_prob": 0.1043,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 24.24,
+"fair_prob_close": 0.0398,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1107,
@@ -21027,10 +21027,10 @@
 "fair_prob_taken": 0.823,
 "model_prob": 0.704,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.1,
+"fair_prob_close": 0.877,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1108,
@@ -21046,10 +21046,10 @@
 "fair_prob_taken": 0.7372,
 "model_prob": 0.5954,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.22,
+"fair_prob_close": 0.7575,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1109,
@@ -21065,10 +21065,10 @@
 "fair_prob_taken": 0.5928,
 "model_prob": 0.5577,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.6041,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1110,
@@ -21084,10 +21084,10 @@
 "fair_prob_taken": 0.3478,
 "model_prob": 0.5719,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.75,
+"fair_prob_close": 0.3373,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1111,
@@ -21103,10 +21103,10 @@
 "fair_prob_taken": 0.9014,
 "model_prob": 0.6065,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.05,
+"fair_prob_close": 0.9113,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1112,
@@ -21122,10 +21122,10 @@
 "fair_prob_taken": 0.9014,
 "model_prob": 0.6065,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.05,
+"fair_prob_close": 0.9113,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1113,
@@ -21141,10 +21141,10 @@
 "fair_prob_taken": 0.0688,
 "model_prob": 0.2175,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 15.44,
+"fair_prob_close": 0.062,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1114,
@@ -21160,10 +21160,10 @@
 "fair_prob_taken": 0.0298,
 "model_prob": 0.176,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 35.8,
+"fair_prob_close": 0.0267,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1115,
@@ -21179,10 +21179,10 @@
 "fair_prob_taken": 0.9014,
 "model_prob": 0.6065,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.05,
+"fair_prob_close": 0.9113,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1116,
@@ -21198,10 +21198,10 @@
 "fair_prob_taken": 0.5065,
 "model_prob": 0.6921,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.94,
+"fair_prob_close": 0.4987,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1117,
@@ -21217,10 +21217,10 @@
 "fair_prob_taken": 0.6056,
 "model_prob": 0.6573,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.54,
+"fair_prob_close": 0.6121,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1118,
@@ -21236,10 +21236,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.617,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1119,
@@ -21255,10 +21255,10 @@
 "fair_prob_taken": 0.1913,
 "model_prob": 0.2342,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.2,
+"fair_prob_close": 0.1852,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1120,
@@ -21274,10 +21274,10 @@
 "fair_prob_taken": 0.2277,
 "model_prob": 0.3173,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.23,
+"fair_prob_close": 0.2276,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1121,
@@ -21293,10 +21293,10 @@
 "fair_prob_taken": 0.581,
 "model_prob": 0.4485,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.64,
+"fair_prob_close": 0.5872,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1122,
@@ -21312,10 +21312,10 @@
 "fair_prob_taken": 0.5492,
 "model_prob": 0.5921,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.61,
+"fair_prob_close": 0.5945,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1123,
@@ -21331,10 +21331,10 @@
 "fair_prob_taken": 0.5263,
 "model_prob": 0.6765,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5497,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1124,
@@ -21350,10 +21350,10 @@
 "fair_prob_taken": 0.4517,
 "model_prob": 0.574,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.0,
+"fair_prob_close": 0.4638,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1125,
@@ -21369,10 +21369,10 @@
 "fair_prob_taken": 0.695,
 "model_prob": 0.6396,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7385,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1126,
@@ -21388,10 +21388,10 @@
 "fair_prob_taken": 0.695,
 "model_prob": 0.6396,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7385,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1127,
@@ -21407,10 +21407,10 @@
 "fair_prob_taken": 0.1153,
 "model_prob": 0.153,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 10.48,
+"fair_prob_close": 0.0916,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1128,
@@ -21426,10 +21426,10 @@
 "fair_prob_taken": 0.1897,
 "model_prob": 0.2074,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.65,
+"fair_prob_close": 0.1699,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1129,
@@ -21445,10 +21445,10 @@
 "fair_prob_taken": 0.695,
 "model_prob": 0.6396,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7385,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1130,
@@ -21464,10 +21464,10 @@
 "fair_prob_taken": 0.6416,
 "model_prob": 0.6144,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6825,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1131,
@@ -21483,10 +21483,10 @@
 "fair_prob_taken": 0.6031,
 "model_prob": 0.7186,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6086,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1132,
@@ -21502,10 +21502,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6302,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7111,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1133,
@@ -21521,10 +21521,10 @@
 "fair_prob_taken": 0.387,
 "model_prob": 0.3763,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.11,
+"fair_prob_close": 0.457,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1134,
@@ -21540,10 +21540,10 @@
 "fair_prob_taken": 0.5207,
 "model_prob": 0.5209,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5142,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1135,
@@ -21559,10 +21559,10 @@
 "fair_prob_taken": 0.5395,
 "model_prob": 0.5318,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.56,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1136,
@@ -21578,10 +21578,10 @@
 "fair_prob_taken": 0.2935,
 "model_prob": 0.3738,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.33,
+"fair_prob_close": 0.2898,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1137,
@@ -21597,10 +21597,10 @@
 "fair_prob_taken": 0.4209,
 "model_prob": 0.3472,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.25,
+"fair_prob_close": 0.4289,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1138,
@@ -21616,10 +21616,10 @@
 "fair_prob_taken": 0.6207,
 "model_prob": 0.5839,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.54,
+"fair_prob_close": 0.6216,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1139,
@@ -21635,10 +21635,10 @@
 "fair_prob_taken": 0.6136,
 "model_prob": 0.7211,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6244,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1140,
@@ -21654,10 +21654,10 @@
 "fair_prob_taken": 0.6522,
 "model_prob": 0.6013,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6792,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1141,
@@ -21673,10 +21673,10 @@
 "fair_prob_taken": 0.4102,
 "model_prob": 0.4951,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.01,
+"fair_prob_close": 0.4796,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1142,
@@ -21692,10 +21692,10 @@
 "fair_prob_taken": 0.4102,
 "model_prob": 0.4951,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.01,
+"fair_prob_close": 0.4796,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1143,
@@ -21711,10 +21711,10 @@
 "fair_prob_taken": 0.6163,
 "model_prob": 0.6019,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.59,
+"fair_prob_close": 0.6035,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1144,
@@ -21730,10 +21730,10 @@
 "fair_prob_taken": 0.5447,
 "model_prob": 0.5226,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.74,
+"fair_prob_close": 0.5445,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1145,
@@ -21749,10 +21749,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6244,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6627,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1146,
@@ -21768,10 +21768,10 @@
 "fair_prob_taken": 0.3824,
 "model_prob": 0.4636,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.51,
+"fair_prob_close": 0.3843,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1147,
@@ -21787,10 +21787,10 @@
 "fair_prob_taken": 0.3824,
 "model_prob": 0.4636,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.51,
+"fair_prob_close": 0.3843,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1148,
@@ -21806,10 +21806,10 @@
 "fair_prob_taken": 0.4974,
 "model_prob": 0.588,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.97,
+"fair_prob_close": 0.4883,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1149,
@@ -21825,10 +21825,10 @@
 "fair_prob_taken": 0.5851,
 "model_prob": 0.5069,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.602,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1150,
@@ -21844,10 +21844,10 @@
 "fair_prob_taken": 0.5491,
 "model_prob": 0.5567,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5438,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1151,
@@ -21863,10 +21863,10 @@
 "fair_prob_taken": 0.6597,
 "model_prob": 0.6361,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6666,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1152,
@@ -21882,10 +21882,10 @@
 "fair_prob_taken": 0.6597,
 "model_prob": 0.6361,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6666,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1153,
@@ -21901,10 +21901,10 @@
 "fair_prob_taken": 0.2088,
 "model_prob": 0.2394,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.73,
+"fair_prob_close": 0.2015,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1154,
@@ -21920,10 +21920,10 @@
 "fair_prob_taken": 0.6597,
 "model_prob": 0.6361,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6666,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1155,
@@ -21939,10 +21939,10 @@
 "fair_prob_taken": 0.5299,
 "model_prob": 0.5066,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5349,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1156,
@@ -21958,10 +21958,10 @@
 "fair_prob_taken": 0.5959,
 "model_prob": 0.7201,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.59,
+"fair_prob_close": 0.5964,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1157,
@@ -21977,10 +21977,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.553,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5467,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1158,
@@ -21996,10 +21996,10 @@
 "fair_prob_taken": 0.2672,
 "model_prob": 0.3681,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.99,
+"fair_prob_close": 0.2427,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1159,
@@ -22015,10 +22015,10 @@
 "fair_prob_taken": 0.4728,
 "model_prob": 0.3636,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.5018,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1160,
@@ -22034,10 +22034,10 @@
 "fair_prob_taken": 0.6705,
 "model_prob": 0.7309,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.7152,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1161,
@@ -22053,10 +22053,10 @@
 "fair_prob_taken": 0.6076,
 "model_prob": 0.5448,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.6035,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1162,
@@ -22072,10 +22072,10 @@
 "fair_prob_taken": 0.5714,
 "model_prob": 0.6657,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.5943,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1163,
@@ -22091,10 +22091,10 @@
 "fair_prob_taken": 0.6997,
 "model_prob": 0.6714,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.739,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1164,
@@ -22110,10 +22110,10 @@
 "fair_prob_taken": 0.6997,
 "model_prob": 0.6714,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.739,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1165,
@@ -22129,10 +22129,10 @@
 "fair_prob_taken": 0.1712,
 "model_prob": 0.1815,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 6.32,
+"fair_prob_close": 0.152,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1166,
@@ -22148,10 +22148,10 @@
 "fair_prob_taken": 0.1291,
 "model_prob": 0.1471,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 8.81,
+"fair_prob_close": 0.109,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1167,
@@ -22167,10 +22167,10 @@
 "fair_prob_taken": 0.6997,
 "model_prob": 0.6714,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.739,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1168,
@@ -22186,10 +22186,10 @@
 "fair_prob_taken": 0.7308,
 "model_prob": 0.8093,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.21,
+"fair_prob_close": 0.7835,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1169,
@@ -22205,10 +22205,10 @@
 "fair_prob_taken": 0.5963,
 "model_prob": 0.7033,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.5963,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1170,
@@ -22224,10 +22224,10 @@
 "fair_prob_taken": 0.5,
 "model_prob": 0.667,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5511,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1171,
@@ -22243,10 +22243,10 @@
 "fair_prob_taken": 0.8238,
 "model_prob": 0.8291,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.12,
+"fair_prob_close": 0.8608,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1172,
@@ -22262,10 +22262,10 @@
 "fair_prob_taken": 0.8238,
 "model_prob": 0.8291,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.12,
+"fair_prob_close": 0.8608,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1173,
@@ -22281,10 +22281,10 @@
 "fair_prob_taken": 0.8238,
 "model_prob": 0.8291,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.12,
+"fair_prob_close": 0.8608,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1174,
@@ -22300,10 +22300,10 @@
 "fair_prob_taken": 0.5232,
 "model_prob": 0.5207,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.03,
+"fair_prob_close": 0.4781,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1175,
@@ -22319,10 +22319,10 @@
 "fair_prob_taken": 0.5132,
 "model_prob": 0.741,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.78,
+"fair_prob_close": 0.5352,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1176,
@@ -22338,10 +22338,10 @@
 "fair_prob_taken": 0.5685,
 "model_prob": 0.5645,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5333,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1177,
@@ -22357,10 +22357,10 @@
 "fair_prob_taken": 0.3112,
 "model_prob": 0.3864,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.08,
+"fair_prob_close": 0.3148,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1178,
@@ -22376,10 +22376,10 @@
 "fair_prob_taken": 0.4194,
 "model_prob": 0.349,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.44,
+"fair_prob_close": 0.3974,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1179,
@@ -22395,10 +22395,10 @@
 "fair_prob_taken": 0.6259,
 "model_prob": 0.5916,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6493,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1180,
@@ -22414,10 +22414,10 @@
 "fair_prob_taken": 0.7174,
 "model_prob": 0.8198,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7174,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1181,
@@ -22433,10 +22433,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6062,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.6998,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1182,
@@ -22452,10 +22452,10 @@
 "fair_prob_taken": 0.4483,
 "model_prob": 0.5962,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.22,
+"fair_prob_close": 0.437,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1183,
@@ -22471,10 +22471,10 @@
 "fair_prob_taken": 0.4483,
 "model_prob": 0.5962,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.22,
+"fair_prob_close": 0.437,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1184,
@@ -22490,10 +22490,10 @@
 "fair_prob_taken": 0.4297,
 "model_prob": 0.6005,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.06,
+"fair_prob_close": 0.4677,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1185,
@@ -22509,10 +22509,10 @@
 "fair_prob_taken": 0.3844,
 "model_prob": 0.5322,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.3,
+"fair_prob_close": 0.4057,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1186,
@@ -22528,10 +22528,10 @@
 "fair_prob_taken": 0.2602,
 "model_prob": 0.2773,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.57,
+"fair_prob_close": 0.2717,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1187,
@@ -22547,10 +22547,10 @@
 "fair_prob_taken": 0.2865,
 "model_prob": 0.339,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.5,
+"fair_prob_close": 0.2771,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1188,
@@ -22566,10 +22566,10 @@
 "fair_prob_taken": 0.4533,
 "model_prob": 0.3837,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.15,
+"fair_prob_close": 0.4512,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1189,
@@ -22585,10 +22585,10 @@
 "fair_prob_taken": 0.393,
 "model_prob": 0.5392,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.46,
+"fair_prob_close": 0.3911,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1190,
@@ -22604,10 +22604,10 @@
 "fair_prob_taken": 0.5934,
 "model_prob": 0.5668,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.69,
+"fair_prob_close": 0.5622,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1191,
@@ -22623,10 +22623,10 @@
 "fair_prob_taken": 0.5769,
 "model_prob": 0.5128,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.5943,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1192,
@@ -22642,10 +22642,10 @@
 "fair_prob_taken": 0.6207,
 "model_prob": 0.3956,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.635,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1193,
@@ -22661,10 +22661,10 @@
 "fair_prob_taken": 0.2087,
 "model_prob": 0.2814,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.71,
+"fair_prob_close": 0.2049,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1194,
@@ -22680,10 +22680,10 @@
 "fair_prob_taken": 0.1706,
 "model_prob": 0.323,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 6.03,
+"fair_prob_close": 0.1601,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1195,
@@ -22699,10 +22699,10 @@
 "fair_prob_taken": 0.6207,
 "model_prob": 0.3956,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.635,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1196,
@@ -22718,10 +22718,10 @@
 "fair_prob_taken": 0.5714,
 "model_prob": 0.5741,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.66,
+"fair_prob_close": 0.5808,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1197,
@@ -22737,10 +22737,10 @@
 "fair_prob_taken": 0.6051,
 "model_prob": 0.6183,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.6071,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1198,
@@ -22756,10 +22756,10 @@
 "fair_prob_taken": 0.5395,
 "model_prob": 0.5945,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5299,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1199,
@@ -22775,10 +22775,10 @@
 "fair_prob_taken": 0.6491,
 "model_prob": 0.442,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6752,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1200,
@@ -22794,10 +22794,10 @@
 "fair_prob_taken": 0.2044,
 "model_prob": 0.2523,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.1,
+"fair_prob_close": 0.1893,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1201,
@@ -22813,10 +22813,10 @@
 "fair_prob_taken": 0.1465,
 "model_prob": 0.3057,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 7.13,
+"fair_prob_close": 0.1354,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1202,
@@ -22832,10 +22832,10 @@
 "fair_prob_taken": 0.6491,
 "model_prob": 0.442,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6752,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1203,
@@ -22851,10 +22851,10 @@
 "fair_prob_taken": 0.5284,
 "model_prob": 0.5003,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.509,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1204,
@@ -22870,10 +22870,10 @@
 "fair_prob_taken": 0.4868,
 "model_prob": 0.5429,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.4893,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1205,
@@ -22889,10 +22889,10 @@
 "fair_prob_taken": 0.2456,
 "model_prob": 0.2639,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 3.94,
+"fair_prob_close": 0.2451,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1206,
@@ -22908,10 +22908,10 @@
 "fair_prob_taken": 0.2224,
 "model_prob": 0.27,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.17,
+"fair_prob_close": 0.1868,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1207,
@@ -22927,10 +22927,10 @@
 "fair_prob_taken": 0.532,
 "model_prob": 0.4661,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5681,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1208,
@@ -22946,10 +22946,10 @@
 "fair_prob_taken": 0.6591,
 "model_prob": 0.6889,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.6587,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1209,
@@ -22965,10 +22965,10 @@
 "fair_prob_taken": 0.5814,
 "model_prob": 0.5057,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6436,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1210,
@@ -22984,10 +22984,10 @@
 "fair_prob_taken": 0.8152,
 "model_prob": 0.8204,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.16,
+"fair_prob_close": 0.8396,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1211,
@@ -23003,10 +23003,10 @@
 "fair_prob_taken": 0.8152,
 "model_prob": 0.8204,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.16,
+"fair_prob_close": 0.8396,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1212,
@@ -23022,10 +23022,10 @@
 "fair_prob_taken": 0.5181,
 "model_prob": 0.5831,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.4961,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1213,
@@ -23041,10 +23041,10 @@
 "fair_prob_taken": 0.5844,
 "model_prob": 0.601,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.5844,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1214,
@@ -23060,10 +23060,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5472,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.4861,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1215,
@@ -23079,10 +23079,10 @@
 "fair_prob_taken": 0.604,
 "model_prob": 0.621,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.6158,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1216,
@@ -23098,10 +23098,10 @@
 "fair_prob_taken": 0.604,
 "model_prob": 0.621,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.6158,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1217,
@@ -23117,10 +23117,10 @@
 "fair_prob_taken": 0.604,
 "model_prob": 0.621,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.6158,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1218,
@@ -23136,10 +23136,10 @@
 "fair_prob_taken": 0.7055,
 "model_prob": 0.7021,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.41,
+"fair_prob_close": 0.6682,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1219,
@@ -23155,10 +23155,10 @@
 "fair_prob_taken": 0.6142,
 "model_prob": 0.6929,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6142,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1220,
@@ -23174,10 +23174,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.584,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.2,
+"fair_prob_close": 0.4211,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1221,
@@ -23193,10 +23193,10 @@
 "fair_prob_taken": 0.8074,
 "model_prob": 0.7558,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.14,
+"fair_prob_close": 0.8487,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1222,
@@ -23212,10 +23212,10 @@
 "fair_prob_taken": 0.8074,
 "model_prob": 0.7558,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.14,
+"fair_prob_close": 0.8487,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1223,
@@ -23231,10 +23231,10 @@
 "fair_prob_taken": 0.1225,
 "model_prob": 0.1552,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 9.49,
+"fair_prob_close": 0.1019,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1224,
@@ -23250,10 +23250,10 @@
 "fair_prob_taken": 0.0702,
 "model_prob": 0.089,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 19.59,
+"fair_prob_close": 0.0494,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1225,
@@ -23269,10 +23269,10 @@
 "fair_prob_taken": 0.8074,
 "model_prob": 0.7558,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.14,
+"fair_prob_close": 0.8487,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1226,
@@ -23288,10 +23288,10 @@
 "fair_prob_taken": 0.6635,
 "model_prob": 0.5925,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.42,
+"fair_prob_close": 0.6705,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1227,
@@ -23307,10 +23307,10 @@
 "fair_prob_taken": 0.6667,
 "model_prob": 0.6011,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6682,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1228,
@@ -23326,10 +23326,10 @@
 "fair_prob_taken": 0.6025,
 "model_prob": 0.6187,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6375,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1229,
@@ -23345,10 +23345,10 @@
 "fair_prob_taken": 0.6638,
 "model_prob": 0.4403,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6502,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1230,
@@ -23364,10 +23364,10 @@
 "fair_prob_taken": 0.1896,
 "model_prob": 0.241,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.05,
+"fair_prob_close": 0.1905,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1231,
@@ -23383,10 +23383,10 @@
 "fair_prob_taken": 0.1466,
 "model_prob": 0.3187,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 6.04,
+"fair_prob_close": 0.1593,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1232,
@@ -23402,10 +23402,10 @@
 "fair_prob_taken": 0.6638,
 "model_prob": 0.4403,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6502,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1233,
@@ -23421,10 +23421,10 @@
 "fair_prob_taken": 0.5581,
 "model_prob": 0.5449,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6201,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1234,
@@ -23440,10 +23440,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5487,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.473,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1235,
@@ -23459,10 +23459,10 @@
 "fair_prob_taken": 0.6509,
 "model_prob": 0.5847,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.7179,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1236,
@@ -23478,10 +23478,10 @@
 "fair_prob_taken": 0.2023,
 "model_prob": 0.2329,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.62,
+"fair_prob_close": 0.1712,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1237,
@@ -23497,10 +23497,10 @@
 "fair_prob_taken": 0.1468,
 "model_prob": 0.1824,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 8.67,
+"fair_prob_close": 0.111,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1238,
@@ -23516,10 +23516,10 @@
 "fair_prob_taken": 0.6509,
 "model_prob": 0.5847,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.7179,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1239,
@@ -23535,10 +23535,10 @@
 "fair_prob_taken": 0.4935,
 "model_prob": 0.5234,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.05,
+"fair_prob_close": 0.4716,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1240,
@@ -23554,10 +23554,10 @@
 "fair_prob_taken": 0.6171,
 "model_prob": 0.5501,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6171,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1241,
@@ -23573,10 +23573,10 @@
 "fair_prob_taken": 0.5628,
 "model_prob": 0.5294,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.589,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1242,
@@ -23592,10 +23592,10 @@
 "fair_prob_taken": 0.3161,
 "model_prob": 0.337,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.86,
+"fair_prob_close": 0.3377,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1243,
@@ -23611,10 +23611,10 @@
 "fair_prob_taken": 0.4054,
 "model_prob": 0.3861,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 2.49,
+"fair_prob_close": 0.3879,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1244,
@@ -23630,10 +23630,10 @@
 "fair_prob_taken": 0.611,
 "model_prob": 0.6215,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.71,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1245,
@@ -23649,10 +23649,10 @@
 "fair_prob_taken": 0.6156,
 "model_prob": 0.6419,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7111,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1246,
@@ -23668,10 +23668,10 @@
 "fair_prob_taken": 0.2348,
 "model_prob": 0.2735,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.61,
+"fair_prob_close": 0.2088,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1247,
@@ -23687,10 +23687,10 @@
 "fair_prob_taken": 0.2064,
 "model_prob": 0.3377,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 4.89,
+"fair_prob_close": 0.1969,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1248,
@@ -23706,10 +23706,10 @@
 "fair_prob_taken": 0.5588,
 "model_prob": 0.3888,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.62,
+"fair_prob_close": 0.5943,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1249,
@@ -23725,10 +23725,10 @@
 "fair_prob_taken": 0.6643,
 "model_prob": 0.6545,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.22,
+"fair_prob_close": 0.7711,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1250,
@@ -23744,10 +23744,10 @@
 "fair_prob_taken": 0.6142,
 "model_prob": 0.7572,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6107,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1251,
@@ -23763,10 +23763,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.5781,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6391,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1252,
@@ -23782,10 +23782,10 @@
 "fair_prob_taken": 0.7076,
 "model_prob": 0.7313,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.26,
+"fair_prob_close": 0.7648,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1253,
@@ -23801,10 +23801,10 @@
 "fair_prob_taken": 0.7076,
 "model_prob": 0.7313,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.26,
+"fair_prob_close": 0.7648,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1254,
@@ -23820,10 +23820,10 @@
 "fair_prob_taken": 0.7076,
 "model_prob": 0.7313,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.26,
+"fair_prob_close": 0.7648,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1255,
@@ -23839,10 +23839,10 @@
 "fair_prob_taken": 0.5429,
 "model_prob": 0.5559,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.68,
+"fair_prob_close": 0.5714,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1256,
@@ -23858,10 +23858,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5838,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1257,
@@ -23877,10 +23877,10 @@
 "fair_prob_taken": 0.6413,
 "model_prob": 0.4574,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.716,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1258,
@@ -23896,10 +23896,10 @@
 "fair_prob_taken": 0.2192,
 "model_prob": 0.2522,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 5.21,
+"fair_prob_close": 0.1842,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1259,
@@ -23915,10 +23915,10 @@
 "fair_prob_taken": 0.1395,
 "model_prob": 0.2904,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 9.61,
+"fair_prob_close": 0.0998,
+"result": "Falló",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1260,
@@ -23934,10 +23934,10 @@
 "fair_prob_taken": 0.6413,
 "model_prob": 0.4574,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-04T23:50:20.088742+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.716,
+"result": "Acertó",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 },
 {
 "n": 1261,
@@ -24261,5 +24261,1981 @@
 "fair_prob_close": null,
 "result": "Pendiente",
 "updated": "2026-11-04T23:50:20.088742+00:00"
+},
+{
+"n": 1278,
+"id": 1278,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Süper Lig",
+"match": "Gaziantep FK vs Kasımpaşa",
+"kickoff_local": "2026-11-06 12:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.98,
+"fair_prob_taken": 0.4884,
+"model_prob": 0.5468,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1279,
+"id": 1279,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Süper Lig",
+"match": "Gaziantep FK vs Kasımpaşa",
+"kickoff_local": "2026-11-06 12:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.57,
+"fair_prob_taken": 0.5933,
+"model_prob": 0.634,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1280,
+"id": 1280,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Süper Lig",
+"match": "Gaziantep FK vs Kasımpaşa",
+"kickoff_local": "2026-11-06 12:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5628,
+"model_prob": 0.511,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1281,
+"id": 1281,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Süper Lig",
+"match": "Gaziantep FK vs Kasımpaşa",
+"kickoff_local": "2026-11-06 12:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.76,
+"fair_prob_taken": 0.35,
+"model_prob": 0.4084,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1282,
+"id": 1282,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Süper Lig",
+"match": "Gaziantep FK vs Kasımpaşa",
+"kickoff_local": "2026-11-06 12:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.61,
+"fair_prob_taken": 0.3701,
+"model_prob": 0.3122,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1283,
+"id": 1283,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "2. Bundesliga",
+"match": "Eintracht Braunschweig vs Energie Cottbus",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.47,
+"fair_prob_taken": 0.6508,
+"model_prob": 0.6756,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1284,
+"id": 1284,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "2. Bundesliga",
+"match": "Eintracht Braunschweig vs Energie Cottbus",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.26,
+"fair_prob_taken": 0.7434,
+"model_prob": 0.8446,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1285,
+"id": 1285,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "2. Bundesliga",
+"match": "Eintracht Braunschweig vs Energie Cottbus",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.44,
+"fair_prob_taken": 0.6667,
+"model_prob": 0.6766,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1286,
+"id": 1286,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "2. Bundesliga",
+"match": "Eintracht Braunschweig vs Energie Cottbus",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.52,
+"fair_prob_taken": 0.2736,
+"model_prob": 0.3561,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1287,
+"id": 1287,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "2. Bundesliga",
+"match": "Eintracht Braunschweig vs Energie Cottbus",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.96,
+"fair_prob_taken": 0.4914,
+"model_prob": 0.4096,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1288,
+"id": 1288,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "2. Bundesliga",
+"match": "Dynamo Dresden vs SpVgg Greuther Fürth",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.62,
+"fair_prob_taken": 0.593,
+"model_prob": 0.6118,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1289,
+"id": 1289,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "2. Bundesliga",
+"match": "Dynamo Dresden vs SpVgg Greuther Fürth",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.28,
+"fair_prob_taken": 0.7294,
+"model_prob": 0.806,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1290,
+"id": 1290,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "2. Bundesliga",
+"match": "Dynamo Dresden vs SpVgg Greuther Fürth",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.5,
+"fair_prob_taken": 0.6296,
+"model_prob": 0.6148,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1291,
+"id": 1291,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "2. Bundesliga",
+"match": "Dynamo Dresden vs SpVgg Greuther Fürth",
+"kickoff_local": "2026-11-06 12:30",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.92,
+"fair_prob_taken": 0.5025,
+"model_prob": 0.5044,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1292,
+"id": 1292,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Racing Club",
+"kickoff_local": "2026-11-06 13:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.56,
+"fair_prob_taken": 0.61,
+"model_prob": 0.6002,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1293,
+"id": 1293,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Racing Club",
+"kickoff_local": "2026-11-06 13:00",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.05,
+"fair_prob_taken": 0.4605,
+"model_prob": 0.5734,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1294,
+"id": 1294,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Racing Club",
+"kickoff_local": "2026-11-06 13:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Bet365",
+"price_taken": 1.75,
+"fair_prob_taken": 0.5333,
+"model_prob": 0.5334,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1295,
+"id": 1295,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Racing Club",
+"kickoff_local": "2026-11-06 13:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.37,
+"fair_prob_taken": 0.2835,
+"model_prob": 0.3213,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1296,
+"id": 1296,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "Barracas Central vs Racing Club",
+"kickoff_local": "2026-11-06 13:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.27,
+"fair_prob_taken": 0.4208,
+"model_prob": 0.3808,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1297,
+"id": 1297,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Eredivisie",
+"match": "Willem II vs PEC Zwolle",
+"kickoff_local": "2026-11-06 14:00",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.58,
+"fair_prob_taken": 0.607,
+"model_prob": 0.5875,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1298,
+"id": 1298,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Eredivisie",
+"match": "Willem II vs PEC Zwolle",
+"kickoff_local": "2026-11-06 14:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.33,
+"fair_prob_taken": 0.7031,
+"model_prob": 0.7486,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1299,
+"id": 1299,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Eredivisie",
+"match": "Willem II vs PEC Zwolle",
+"kickoff_local": "2026-11-06 14:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.44,
+"fair_prob_taken": 0.6522,
+"model_prob": 0.6159,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1300,
+"id": 1300,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Eredivisie",
+"match": "Willem II vs PEC Zwolle",
+"kickoff_local": "2026-11-06 14:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.31,
+"fair_prob_taken": 0.4174,
+"model_prob": 0.47,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1301,
+"id": 1301,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Eredivisie",
+"match": "Willem II vs PEC Zwolle",
+"kickoff_local": "2026-11-06 14:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.31,
+"fair_prob_taken": 0.4174,
+"model_prob": 0.47,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1302,
+"id": 1302,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Bundesliga",
+"match": "Hamburger SV vs Borussia Mönchengladbach",
+"kickoff_local": "2026-11-06 14:30",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5783,
+"model_prob": 0.5827,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1303,
+"id": 1303,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Bundesliga",
+"match": "Hamburger SV vs Borussia Mönchengladbach",
+"kickoff_local": "2026-11-06 14:30",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.5,
+"fair_prob_taken": 0.625,
+"model_prob": 0.5856,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1304,
+"id": 1304,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Bundesliga",
+"match": "Hamburger SV vs Borussia Mönchengladbach",
+"kickoff_local": "2026-11-06 14:30",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "William Hill",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6076,
+"model_prob": 0.6053,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1305,
+"id": 1305,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Bundesliga",
+"match": "Hamburger SV vs Borussia Mönchengladbach",
+"kickoff_local": "2026-11-06 14:30",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.48,
+"fair_prob_taken": 0.3912,
+"model_prob": 0.467,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1306,
+"id": 1306,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Bundesliga",
+"match": "Hamburger SV vs Borussia Mönchengladbach",
+"kickoff_local": "2026-11-06 14:30",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.48,
+"fair_prob_taken": 0.3912,
+"model_prob": 0.467,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1307,
+"id": 1307,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Serie A",
+"match": "Venezia vs Udinese",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.83,
+"fair_prob_taken": 0.5284,
+"model_prob": 0.5596,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1308,
+"id": 1308,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Serie A",
+"match": "Venezia vs Udinese",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.58,
+"fair_prob_taken": 0.5949,
+"model_prob": 0.6524,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1309,
+"id": 1309,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Serie A",
+"match": "Venezia vs Udinese",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "William Hill",
+"price_taken": 1.6,
+"fair_prob_taken": 0.5844,
+"model_prob": 0.586,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1310,
+"id": 1310,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Serie A",
+"match": "Venezia vs Udinese",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.17,
+"fair_prob_taken": 0.3059,
+"model_prob": 0.3513,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1311,
+"id": 1311,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Serie A",
+"match": "Venezia vs Udinese",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.3,
+"fair_prob_taken": 0.4217,
+"model_prob": 0.3872,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1312,
+"id": 1312,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Ligue 1",
+"match": "Toulouse vs Strasbourg",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.61,
+"fair_prob_taken": 0.5995,
+"model_prob": 0.5733,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1313,
+"id": 1313,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Ligue 1",
+"match": "Toulouse vs Strasbourg",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.11,
+"fair_prob_taken": 0.4462,
+"model_prob": 0.5179,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1314,
+"id": 1314,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Ligue 1",
+"match": "Toulouse vs Strasbourg",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "William Hill",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6125,
+"model_prob": 0.5951,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1315,
+"id": 1315,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Ligue 1",
+"match": "Toulouse vs Strasbourg",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.44,
+"fair_prob_taken": 0.282,
+"model_prob": 0.3216,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1316,
+"id": 1316,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Ligue 1",
+"match": "Toulouse vs Strasbourg",
+"kickoff_local": "2026-11-06 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.09,
+"fair_prob_taken": 0.4641,
+"model_prob": 0.4261,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1317,
+"id": 1317,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga 1",
+"match": "Atletico Grau vs Cusco",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.99,
+"fair_prob_taken": 0.4777,
+"model_prob": 0.5558,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1318,
+"id": 1318,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga 1",
+"match": "Atletico Grau vs Cusco",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.85,
+"fair_prob_taken": 0.5,
+"model_prob": 0.5316,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1319,
+"id": 1319,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga 1",
+"match": "Atletico Grau vs Cusco",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.6,
+"fair_prob_taken": 0.5844,
+"model_prob": 0.5043,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1320,
+"id": 1320,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga 1",
+"match": "Atletico Grau vs Cusco",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.36,
+"fair_prob_taken": 0.396,
+"model_prob": 0.4189,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1321,
+"id": 1321,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Premier League",
+"match": "Everton vs Coventry",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 2.16,
+"fair_prob_taken": 0.4476,
+"model_prob": 0.5213,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1322,
+"id": 1322,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Premier League",
+"match": "Everton vs Coventry",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.51,
+"fair_prob_taken": 0.6216,
+"model_prob": 0.5587,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1323,
+"id": 1323,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Premier League",
+"match": "Everton vs Coventry",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.7,
+"fair_prob_taken": 0.5584,
+"model_prob": 0.5007,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1324,
+"id": 1324,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Premier League",
+"match": "Everton vs Coventry",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 4.06,
+"fair_prob_taken": 0.2383,
+"model_prob": 0.2547,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1325,
+"id": 1325,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Premier League",
+"match": "Everton vs Coventry",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5626,
+"model_prob": 0.5466,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1326,
+"id": 1326,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "LaLiga",
+"match": "Sevilla vs Alaves",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.71,
+"fair_prob_taken": 0.5649,
+"model_prob": 0.5448,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1327,
+"id": 1327,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "LaLiga",
+"match": "Sevilla vs Alaves",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.03,
+"fair_prob_taken": 0.47,
+"model_prob": 0.5292,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1328,
+"id": 1328,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "LaLiga",
+"match": "Sevilla vs Alaves",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "William Hill",
+"price_taken": 1.91,
+"fair_prob_taken": 0.492,
+"model_prob": 0.5108,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1329,
+"id": 1329,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "LaLiga",
+"match": "Sevilla vs Alaves",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 4.26,
+"fair_prob_taken": 0.2272,
+"model_prob": 0.3124,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1330,
+"id": 1330,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "LaLiga",
+"match": "Sevilla vs Alaves",
+"kickoff_local": "2026-11-06 15:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.95,
+"fair_prob_taken": 0.4963,
+"model_prob": 0.4106,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1331,
+"id": 1331,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Primeira Liga",
+"match": "Famalicao vs Arouca",
+"kickoff_local": "2026-11-06 15:45",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.74,
+"fair_prob_taken": 0.5515,
+"model_prob": 0.5553,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1332,
+"id": 1332,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Primeira Liga",
+"match": "Famalicao vs Arouca",
+"kickoff_local": "2026-11-06 15:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6026,
+"model_prob": 0.6737,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1333,
+"id": 1333,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Primeira Liga",
+"match": "Famalicao vs Arouca",
+"kickoff_local": "2026-11-06 15:45",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 1.9,
+"fair_prob_taken": 0.496,
+"model_prob": 0.5095,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1334,
+"id": 1334,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Primeira Liga",
+"match": "Famalicao vs Arouca",
+"kickoff_local": "2026-11-06 15:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.14,
+"fair_prob_taken": 0.4459,
+"model_prob": 0.462,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1335,
+"id": 1335,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Independiente vs Deportivo Riestra",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.52,
+"fair_prob_taken": 0.6238,
+"model_prob": 0.7,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1336,
+"id": 1336,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Independiente vs Deportivo Riestra",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.52,
+"fair_prob_taken": 0.6171,
+"model_prob": 0.6288,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1337,
+"id": 1337,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "Independiente vs Deportivo Riestra",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betano",
+"price_taken": 1.52,
+"fair_prob_taken": 0.6171,
+"model_prob": 0.6418,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1338,
+"id": 1338,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga Profesional Argentina",
+"match": "Independiente vs Deportivo Riestra",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 3.6,
+"fair_prob_taken": 0.2612,
+"model_prob": 0.2983,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1339,
+"id": 1339,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "Independiente vs Deportivo Riestra",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.62,
+"fair_prob_taken": 0.5805,
+"model_prob": 0.5396,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1340,
+"id": 1340,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "San Lorenzo vs Platense",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.41,
+"fair_prob_taken": 0.669,
+"model_prob": 0.7024,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1341,
+"id": 1341,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "San Lorenzo vs Platense",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 2.15,
+"fair_prob_taken": 0.4342,
+"model_prob": 0.5152,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1342,
+"id": 1342,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "San Lorenzo vs Platense",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betano",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5594,
+"model_prob": 0.6219,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1343,
+"id": 1343,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga Profesional Argentina",
+"match": "San Lorenzo vs Platense",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.66,
+"fair_prob_taken": 0.3556,
+"model_prob": 0.4052,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1344,
+"id": 1344,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "San Lorenzo vs Platense",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.66,
+"fair_prob_taken": 0.3556,
+"model_prob": 0.4052,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1345,
+"id": 1345,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Union Santa Fe vs Velez Sarsfield",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.74,
+"fair_prob_taken": 0.5457,
+"model_prob": 0.5264,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1346,
+"id": 1346,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Union Santa Fe vs Velez Sarsfield",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.75,
+"fair_prob_taken": 0.5333,
+"model_prob": 0.5562,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1347,
+"id": 1347,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "Union Santa Fe vs Velez Sarsfield",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Bet365",
+"price_taken": 1.8,
+"fair_prob_taken": 0.52,
+"model_prob": 0.5249,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1348,
+"id": 1348,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "Union Santa Fe vs Velez Sarsfield",
+"kickoff_local": "2026-11-06 17:15",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.64,
+"fair_prob_taken": 0.3582,
+"model_prob": 0.3785,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1349,
+"id": 1349,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Brasileirão Serie A",
+"match": "Vitoria vs Fluminense",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.82,
+"fair_prob_taken": 0.5285,
+"model_prob": 0.5986,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1350,
+"id": 1350,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Brasileirão Serie A",
+"match": "Vitoria vs Fluminense",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.57,
+"fair_prob_taken": 0.5943,
+"model_prob": 0.5155,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1351,
+"id": 1351,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Brasileirão Serie A",
+"match": "Vitoria vs Fluminense",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 2.0,
+"fair_prob_taken": 0.4737,
+"model_prob": 0.5317,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1352,
+"id": 1352,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Brasileirão Serie A",
+"match": "Vitoria vs Fluminense",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.55,
+"fair_prob_taken": 0.3751,
+"model_prob": 0.4667,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1353,
+"id": 1353,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Brasileirão Serie A",
+"match": "Vitoria vs Fluminense",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.55,
+"fair_prob_taken": 0.3751,
+"model_prob": 0.4667,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1354,
+"id": 1354,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Internacional de Bogota",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5509,
+"model_prob": 0.6001,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1355,
+"id": 1355,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Internacional de Bogota",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6026,
+"model_prob": 0.6515,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1356,
+"id": 1356,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Internacional de Bogota",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 2.0,
+"fair_prob_taken": 0.4737,
+"model_prob": 0.5317,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1357,
+"id": 1357,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Internacional de Bogota",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.69,
+"fair_prob_taken": 0.3518,
+"model_prob": 0.3764,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1358,
+"id": 1358,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Chico vs Internacional de Bogota",
+"kickoff_local": "2026-11-06 18:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.6,
+"fair_prob_taken": 0.364,
+"model_prob": 0.326,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1359,
+"id": 1359,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Banfield vs Atletico Tucuman",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.66,
+"fair_prob_taken": 0.5733,
+"model_prob": 0.5774,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1360,
+"id": 1360,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Banfield vs Atletico Tucuman",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.65,
+"fair_prob_taken": 0.5658,
+"model_prob": 0.5545,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1361,
+"id": 1361,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "Banfield vs Atletico Tucuman",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Bet365",
+"price_taken": 1.91,
+"fair_prob_taken": 0.5,
+"model_prob": 0.5154,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1362,
+"id": 1362,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "Banfield vs Atletico Tucuman",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.44,
+"fair_prob_taken": 0.3879,
+"model_prob": 0.3858,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1363,
+"id": 1363,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Tigre vs Sarmiento Junin",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.54,
+"fair_prob_taken": 0.616,
+"model_prob": 0.5481,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1364,
+"id": 1364,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga Profesional Argentina",
+"match": "Tigre vs Sarmiento Junin",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6026,
+"model_prob": 0.6233,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1365,
+"id": 1365,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga Profesional Argentina",
+"match": "Tigre vs Sarmiento Junin",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betano",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5438,
+"model_prob": 0.5196,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1366,
+"id": 1366,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga Profesional Argentina",
+"match": "Tigre vs Sarmiento Junin",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.03,
+"fair_prob_taken": 0.4652,
+"model_prob": 0.5185,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1367,
+"id": 1367,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga Profesional Argentina",
+"match": "Tigre vs Sarmiento Junin",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.03,
+"fair_prob_taken": 0.4652,
+"model_prob": 0.5185,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1368,
+"id": 1368,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Atletico San Luis vs FC Juarez",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.75,
+"fair_prob_taken": 0.5455,
+"model_prob": 0.584,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1369,
+"id": 1369,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Atletico San Luis vs FC Juarez",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.45,
+"fair_prob_taken": 0.6437,
+"model_prob": 0.5781,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1370,
+"id": 1370,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga MX",
+"match": "Atletico San Luis vs FC Juarez",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betano",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5594,
+"model_prob": 0.5877,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1371,
+"id": 1371,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga MX",
+"match": "Atletico San Luis vs FC Juarez",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.75,
+"fair_prob_taken": 0.5444,
+"model_prob": 0.566,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1372,
+"id": 1372,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Necaxa vs Club Tijuana",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.62,
+"fair_prob_taken": 0.5878,
+"model_prob": 0.6253,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1373,
+"id": 1373,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Necaxa vs Club Tijuana",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.28,
+"fair_prob_taken": 0.7294,
+"model_prob": 0.7709,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1374,
+"id": 1374,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga MX",
+"match": "Necaxa vs Club Tijuana",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.47,
+"fair_prob_taken": 0.6415,
+"model_prob": 0.6424,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1375,
+"id": 1375,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga MX",
+"match": "Necaxa vs Club Tijuana",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 2.75,
+"fair_prob_taken": 0.3475,
+"model_prob": 0.4537,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1376,
+"id": 1376,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga MX",
+"match": "Necaxa vs Club Tijuana",
+"kickoff_local": "2026-11-06 20:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.42,
+"fair_prob_taken": 0.3949,
+"model_prob": 0.31,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1377,
+"id": 1377,
+"report_date": "2026-11-06",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Atlante FC vs Santos Laguna",
+"kickoff_local": "2026-11-06 22:00",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.58,
+"fair_prob_taken": 0.602,
+"model_prob": 0.5711,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1378,
+"id": 1378,
+"report_date": "2026-11-06",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga MX",
+"match": "Atlante FC vs Santos Laguna",
+"kickoff_local": "2026-11-06 22:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.3,
+"fair_prob_taken": 0.7174,
+"model_prob": 0.8126,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1379,
+"id": 1379,
+"report_date": "2026-11-06",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga MX",
+"match": "Atlante FC vs Santos Laguna",
+"kickoff_local": "2026-11-06 22:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.47,
+"fair_prob_taken": 0.6415,
+"model_prob": 0.5894,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1380,
+"id": 1380,
+"report_date": "2026-11-06",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga MX",
+"match": "Atlante FC vs Santos Laguna",
+"kickoff_local": "2026-11-06 22:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.23,
+"fair_prob_taken": 0.428,
+"model_prob": 0.4724,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
+},
+{
+"n": 1381,
+"id": 1381,
+"report_date": "2026-11-06",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga MX",
+"match": "Atlante FC vs Santos Laguna",
+"kickoff_local": "2026-11-06 22:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.23,
+"fair_prob_taken": 0.428,
+"model_prob": 0.4724,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-05T23:50:33.225490+00:00"
 }
 ]
