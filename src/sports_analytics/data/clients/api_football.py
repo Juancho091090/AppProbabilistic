@@ -91,6 +91,10 @@ def _check_errors(payload: dict[str, Any], path: str) -> None:
         raise ApiError(PROVIDER, f"{path}: {msg}")
 
 
+def _no_errors(payload: Any) -> bool:
+    return isinstance(payload, dict) and not payload.get("errors")
+
+
 def _to_int(value: Any) -> int | None:
     if value is None:
         return None
@@ -188,7 +192,9 @@ class ApiFootballClient:
         self.http.close()
 
     def _get(self, path: str, params: dict[str, Any] | None = None, ttl: float = 0) -> Any:
-        payload = self.http.get(path, params, cache_ttl=ttl)
+        # Nunca se guardan en caché respuestas con "errors" (plan, cuota, parámetros): con
+        # TTL largo bloquearían datos válidos durante días.
+        payload = self.http.get(path, params, cache_ttl=ttl, cacheable=_no_errors)
         _check_errors(payload, path)
         return payload.get("response", [])
 

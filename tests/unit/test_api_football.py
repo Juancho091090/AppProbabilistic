@@ -322,3 +322,31 @@ def test_fixtures_statistics_batch_one_call_with_xg(tmp_path):
     assert out["2"] is None
     with pytest.raises(ValueError):
         c.fixtures_statistics_batch([str(i) for i in range(21)])
+
+
+def test_error_responses_are_never_cached(tmp_path):
+    """Un error de plan (HTTP 200 con "errors") no queda en caché: al renovar el plan, la
+    siguiente consulta vuelve a la API en lugar de repetir el error guardado."""
+    state = {"plan": "free", "calls": 0}
+
+    def handler(request):
+        state["calls"] += 1
+        if state["plan"] == "free":
+            err = {"plan": "Free plans do not have access to this season"}
+            return httpx.Response(200, json={"errors": err, "response": []})
+        return httpx.Response(200, json={"errors": [], "response": [FIXTURE]})
+
+    client = _client(tmp_path, handler)
+    with pytest.raises(ApiError, match="Free plans"):
+        client.fixtures_by_league_season(13, 2026)
+    state["plan"] = "pro"
+    assert len(client.fixtures_by_league_season(13, 2026)) == 1
+    assert len(client.fixtures_by_league_season(13, 2026)) == 1  # ahora sí desde caché
+    assert state["calls"] == 2 and client.http.cache_hits == 1
+
+
+def test_cached_error_from_older_version_is_ignored(tmp_path):
+    client = _client(tmp_path, lambda r: httpx.Response(200, json={"errors": [], "response": []}))
+    key = 'api_football/fixtures?{"league": 13, "season": 2026}'
+    client.http.cache.set(key, {"errors": {"plan": "Free plans"}, "response": []})
+    assert client.fixtures_by_league_season(13, 2026) == []  # no lanza el error guardado

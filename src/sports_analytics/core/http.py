@@ -164,10 +164,15 @@ class HttpApiClient:
         params: Mapping[str, Any] | None = None,
         *,
         cache_ttl: float = 0,
+        cacheable: Callable[[Any], bool] | None = None,
     ) -> Any:
+        """``cacheable``: decide si una respuesta 200 es válida para guardarla en caché. Una
+        respuesta en caché que no lo sea se ignora (p. ej. errores de plan guardados antes)."""
         params = {k: v for k, v in (params or {}).items() if v is not None}
         cache_key = f"{self.provider}{path}?{json.dumps(params, sort_keys=True, default=str)}"
         cached = self.cache.get(cache_key, cache_ttl)
+        if cached is not None and cacheable is not None and not cacheable(cached):
+            cached = None
         if cached is not None:
             self.cache_hits += 1
             log.info(
@@ -217,7 +222,7 @@ class HttpApiClient:
                 )
                 if response.status_code < 400:
                     data = response.json()
-                    if cache_ttl > 0:
+                    if cache_ttl > 0 and (cacheable is None or cacheable(data)):
                         self.cache.set(cache_key, data)
                     return data
                 # El cuerpo del error (p. ej. "You are not subscribed to this API") es
