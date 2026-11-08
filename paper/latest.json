@@ -30755,10 +30755,10 @@
 "fair_prob_taken": 0.6495,
 "model_prob": 0.5796,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.46,
+"fair_prob_close": 0.6413,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1620,
@@ -30774,10 +30774,10 @@
 "fair_prob_taken": 0.6154,
 "model_prob": 0.672,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1621,
@@ -30793,10 +30793,10 @@
 "fair_prob_taken": 0.48,
 "model_prob": 0.5695,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5148,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1622,
@@ -30812,10 +30812,10 @@
 "fair_prob_taken": 0.7702,
 "model_prob": 0.6113,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7181,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1623,
@@ -30831,10 +30831,10 @@
 "fair_prob_taken": 0.7702,
 "model_prob": 0.6113,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7181,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1624,
@@ -30850,10 +30850,10 @@
 "fair_prob_taken": 0.1482,
 "model_prob": 0.2212,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 5.31,
+"fair_prob_close": 0.1758,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1625,
@@ -30869,10 +30869,10 @@
 "fair_prob_taken": 0.0817,
 "model_prob": 0.1676,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 8.8,
+"fair_prob_close": 0.1061,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1626,
@@ -30888,10 +30888,10 @@
 "fair_prob_taken": 0.7702,
 "model_prob": 0.6113,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.3,
+"fair_prob_close": 0.7181,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1627,
@@ -30907,10 +30907,10 @@
 "fair_prob_taken": 0.5652,
 "model_prob": 0.5127,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.66,
+"fair_prob_close": 0.5819,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1628,
@@ -30926,10 +30926,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.6286,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6845,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1629,
@@ -30945,10 +30945,10 @@
 "fair_prob_taken": 0.6156,
 "model_prob": 0.555,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1630,
@@ -30964,10 +30964,10 @@
 "fair_prob_taken": 0.3329,
 "model_prob": 0.3567,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.65,
+"fair_prob_close": 0.3661,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1631,
@@ -30983,10 +30983,10 @@
 "fair_prob_taken": 0.404,
 "model_prob": 0.3753,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.61,
+"fair_prob_close": 0.3717,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1632,
@@ -31002,10 +31002,10 @@
 "fair_prob_taken": 0.6835,
 "model_prob": 0.5299,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.635,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1633,
@@ -31021,10 +31021,10 @@
 "fair_prob_taken": 0.6496,
 "model_prob": 0.7037,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.31,
+"fair_prob_close": 0.7127,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1634,
@@ -31040,10 +31040,10 @@
 "fair_prob_taken": 0.5395,
 "model_prob": 0.5681,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.5897,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1635,
@@ -31059,10 +31059,10 @@
 "fair_prob_taken": 0.8037,
 "model_prob": 0.7999,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.7968,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1636,
@@ -31078,10 +31078,10 @@
 "fair_prob_taken": 0.8037,
 "model_prob": 0.7999,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.7968,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1637,
@@ -31097,10 +31097,10 @@
 "fair_prob_taken": 0.1258,
 "model_prob": 0.1575,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 7.12,
+"fair_prob_close": 0.1332,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1638,
@@ -31116,10 +31116,10 @@
 "fair_prob_taken": 0.8037,
 "model_prob": 0.7999,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.7968,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1639,
@@ -31135,10 +31135,10 @@
 "fair_prob_taken": 0.6281,
 "model_prob": 0.5809,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6459,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1640,
@@ -31154,10 +31154,10 @@
 "fair_prob_taken": 0.5751,
 "model_prob": 0.6471,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5561,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1641,
@@ -31173,10 +31173,10 @@
 "fair_prob_taken": 0.5714,
 "model_prob": 0.5466,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.5789,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1642,
@@ -31192,10 +31192,10 @@
 "fair_prob_taken": 0.5043,
 "model_prob": 0.556,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5092,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1643,
@@ -31211,10 +31211,10 @@
 "fair_prob_taken": 0.5043,
 "model_prob": 0.556,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5092,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1644,
@@ -31230,10 +31230,10 @@
 "fair_prob_taken": 0.4249,
 "model_prob": 0.5022,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.29,
+"fair_prob_close": 0.4217,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1645,
@@ -31249,10 +31249,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.6927,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1646,
@@ -31268,10 +31268,10 @@
 "fair_prob_taken": 0.6156,
 "model_prob": 0.5463,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1647,
@@ -31287,10 +31287,10 @@
 "fair_prob_taken": 0.4611,
 "model_prob": 0.4514,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.05,
+"fair_prob_close": 0.4734,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1648,
@@ -31306,10 +31306,10 @@
 "fair_prob_taken": 0.6604,
 "model_prob": 0.6122,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.49,
+"fair_prob_close": 0.6452,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1649,
@@ -31325,10 +31325,10 @@
 "fair_prob_taken": 0.7174,
 "model_prob": 0.6665,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.31,
+"fair_prob_close": 0.7158,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1650,
@@ -31344,10 +31344,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6038,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6436,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1651,
@@ -31363,10 +31363,10 @@
 "fair_prob_taken": 0.5952,
 "model_prob": 0.6018,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5621,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1652,
@@ -31382,10 +31382,10 @@
 "fair_prob_taken": 0.5952,
 "model_prob": 0.6018,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5621,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1653,
@@ -31401,10 +31401,10 @@
 "fair_prob_taken": 0.5711,
 "model_prob": 0.6692,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5729,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1654,
@@ -31420,10 +31420,10 @@
 "fair_prob_taken": 0.4642,
 "model_prob": 0.5309,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.02,
+"fair_prob_close": 0.4642,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1655,
@@ -31439,10 +31439,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.6017,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.4852,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1656,
@@ -31458,10 +31458,10 @@
 "fair_prob_taken": 0.217,
 "model_prob": 0.2312,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 3.67,
+"fair_prob_close": 0.2604,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1657,
@@ -31477,10 +31477,10 @@
 "fair_prob_taken": 0.4818,
 "model_prob": 0.4647,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.21,
+"fair_prob_close": 0.4324,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1658,
@@ -31496,10 +31496,10 @@
 "fair_prob_taken": 0.5969,
 "model_prob": 0.6199,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.5959,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1659,
@@ -31515,10 +31515,10 @@
 "fair_prob_taken": 0.6088,
 "model_prob": 0.6486,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6082,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1660,
@@ -31534,10 +31534,10 @@
 "fair_prob_taken": 0.6087,
 "model_prob": 0.6218,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6087,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1661,
@@ -31553,10 +31553,10 @@
 "fair_prob_taken": 0.4483,
 "model_prob": 0.4895,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.14,
+"fair_prob_close": 0.4419,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1662,
@@ -31572,10 +31572,10 @@
 "fair_prob_taken": 0.5934,
 "model_prob": 0.5582,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5685,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1663,
@@ -31591,10 +31591,10 @@
 "fair_prob_taken": 0.6845,
 "model_prob": 0.663,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1664,
@@ -31610,10 +31610,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.5912,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1665,
@@ -31629,10 +31629,10 @@
 "fair_prob_taken": 0.4118,
 "model_prob": 0.463,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.24,
+"fair_prob_close": 0.4331,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1666,
@@ -31648,10 +31648,10 @@
 "fair_prob_taken": 0.4118,
 "model_prob": 0.463,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T02:19:53.863499+00:00"
+"price_close": 2.24,
+"fair_prob_close": 0.4331,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1667,
@@ -31667,10 +31667,10 @@
 "fair_prob_taken": 0.4742,
 "model_prob": 0.5378,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.08,
+"fair_prob_close": 0.4653,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1668,
@@ -31686,10 +31686,10 @@
 "fair_prob_taken": 0.4881,
 "model_prob": 0.5506,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.4882,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1669,
@@ -31705,10 +31705,10 @@
 "fair_prob_taken": 0.4517,
 "model_prob": 0.5065,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.1,
+"fair_prob_close": 0.44,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1670,
@@ -31724,10 +31724,10 @@
 "fair_prob_taken": 0.4937,
 "model_prob": 0.4866,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.87,
+"fair_prob_close": 0.5177,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1671,
@@ -31743,10 +31743,10 @@
 "fair_prob_taken": 0.6766,
 "model_prob": 0.5971,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.38,
+"fair_prob_close": 0.6947,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1672,
@@ -31762,10 +31762,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.6292,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1673,
@@ -31781,10 +31781,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6197,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6792,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1674,
@@ -31800,10 +31800,10 @@
 "fair_prob_taken": 0.2248,
 "model_prob": 0.2778,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.37,
+"fair_prob_close": 0.221,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1675,
@@ -31819,10 +31819,10 @@
 "fair_prob_taken": 0.2172,
 "model_prob": 0.2407,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.44,
+"fair_prob_close": 0.2175,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1676,
@@ -31838,10 +31838,10 @@
 "fair_prob_taken": 0.5581,
 "model_prob": 0.4815,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5615,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1677,
@@ -31857,10 +31857,10 @@
 "fair_prob_taken": 0.4207,
 "model_prob": 0.5007,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.39,
+"fair_prob_close": 0.404,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1678,
@@ -31876,10 +31876,10 @@
 "fair_prob_taken": 0.5995,
 "model_prob": 0.5407,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.6005,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1679,
@@ -31895,10 +31895,10 @@
 "fair_prob_taken": 0.625,
 "model_prob": 0.5346,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6667,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1680,
@@ -31914,10 +31914,10 @@
 "fair_prob_taken": 0.4058,
 "model_prob": 0.4209,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.35,
+"fair_prob_close": 0.4129,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1681,
@@ -31933,10 +31933,10 @@
 "fair_prob_taken": 0.4058,
 "model_prob": 0.4209,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.35,
+"fair_prob_close": 0.4129,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1682,
@@ -31952,10 +31952,10 @@
 "fair_prob_taken": 0.6114,
 "model_prob": 0.5859,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.61,
+"fair_prob_close": 0.5985,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1683,
@@ -31971,10 +31971,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.658,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1684,
@@ -31990,10 +31990,10 @@
 "fair_prob_taken": 0.6296,
 "model_prob": 0.5945,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1685,
@@ -32009,10 +32009,10 @@
 "fair_prob_taken": 0.2261,
 "model_prob": 0.2407,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.26,
+"fair_prob_close": 0.2276,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1686,
@@ -32028,10 +32028,10 @@
 "fair_prob_taken": 0.5293,
 "model_prob": 0.5123,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.78,
+"fair_prob_close": 0.5448,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1687,
@@ -32047,10 +32047,10 @@
 "fair_prob_taken": 0.6451,
 "model_prob": 0.6159,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.47,
+"fair_prob_close": 0.6549,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1688,
@@ -32066,10 +32066,10 @@
 "fair_prob_taken": 0.7579,
 "model_prob": 0.7533,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.23,
+"fair_prob_close": 0.7579,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1689,
@@ -32085,10 +32085,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6273,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6627,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1690,
@@ -32104,10 +32104,10 @@
 "fair_prob_taken": 0.2863,
 "model_prob": 0.3481,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.55,
+"fair_prob_close": 0.2728,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1691,
@@ -32123,10 +32123,10 @@
 "fair_prob_taken": 0.4617,
 "model_prob": 0.4061,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.98,
+"fair_prob_close": 0.4892,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1692,
@@ -32142,10 +32142,10 @@
 "fair_prob_taken": 0.5678,
 "model_prob": 0.524,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.69,
+"fair_prob_close": 0.5689,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1693,
@@ -32161,10 +32161,10 @@
 "fair_prob_taken": 0.63,
 "model_prob": 0.6059,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6328,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1694,
@@ -32180,10 +32180,10 @@
 "fair_prob_taken": 0.6296,
 "model_prob": 0.5533,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6154,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1695,
@@ -32199,10 +32199,10 @@
 "fair_prob_taken": 0.396,
 "model_prob": 0.5509,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.63,
+"fair_prob_close": 0.3685,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1696,
@@ -32218,10 +32218,10 @@
 "fair_prob_taken": 0.396,
 "model_prob": 0.5509,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.63,
+"fair_prob_close": 0.3685,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1697,
@@ -32237,10 +32237,10 @@
 "fair_prob_taken": 0.5758,
 "model_prob": 0.5685,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6265,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1698,
@@ -32256,10 +32256,10 @@
 "fair_prob_taken": 0.5872,
 "model_prob": 0.5101,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5758,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1699,
@@ -32275,10 +32275,10 @@
 "fair_prob_taken": 0.6026,
 "model_prob": 0.5994,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.625,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1700,
@@ -32294,10 +32294,10 @@
 "fair_prob_taken": 0.4705,
 "model_prob": 0.5039,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.5057,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1701,
@@ -32313,10 +32313,10 @@
 "fair_prob_taken": 0.4705,
 "model_prob": 0.5039,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.5057,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1702,
@@ -32332,10 +32332,10 @@
 "fair_prob_taken": 0.5919,
 "model_prob": 0.5947,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.6108,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1703,
@@ -32351,10 +32351,10 @@
 "fair_prob_taken": 0.6316,
 "model_prob": 0.726,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6309,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1704,
@@ -32370,10 +32370,10 @@
 "fair_prob_taken": 0.6156,
 "model_prob": 0.6185,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.589,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1705,
@@ -32389,10 +32389,10 @@
 "fair_prob_taken": 0.215,
 "model_prob": 0.2705,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.92,
+"fair_prob_close": 0.1963,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1706,
@@ -32408,10 +32408,10 @@
 "fair_prob_taken": 0.5472,
 "model_prob": 0.4923,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.69,
+"fair_prob_close": 0.5715,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1707,
@@ -32427,10 +32427,10 @@
 "fair_prob_taken": 0.654,
 "model_prob": 0.6718,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6882,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1708,
@@ -32446,10 +32446,10 @@
 "fair_prob_taken": 0.6142,
 "model_prob": 0.6424,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.47,
+"fair_prob_close": 0.6343,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1709,
@@ -32465,10 +32465,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6547,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6792,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1710,
@@ -32484,10 +32484,10 @@
 "fair_prob_taken": 0.4215,
 "model_prob": 0.5085,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5228,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1711,
@@ -32503,10 +32503,10 @@
 "fair_prob_taken": 0.4215,
 "model_prob": 0.5085,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5228,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1712,
@@ -32522,10 +32522,10 @@
 "fair_prob_taken": 0.555,
 "model_prob": 0.5342,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.71,
+"fair_prob_close": 0.5682,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1713,
@@ -32541,10 +32541,10 @@
 "fair_prob_taken": 0.4752,
 "model_prob": 0.5506,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.94,
+"fair_prob_close": 0.4961,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1714,
@@ -32560,10 +32560,10 @@
 "fair_prob_taken": 0.48,
 "model_prob": 0.5178,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.48,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1715,
@@ -32579,10 +32579,10 @@
 "fair_prob_taken": 0.2017,
 "model_prob": 0.2438,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.2,
+"fair_prob_close": 0.2319,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1716,
@@ -32598,10 +32598,10 @@
 "fair_prob_taken": 0.5263,
 "model_prob": 0.4881,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.03,
+"fair_prob_close": 0.4799,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1717,
@@ -32617,10 +32617,10 @@
 "fair_prob_taken": 0.6452,
 "model_prob": 0.6164,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.49,
+"fair_prob_close": 0.6444,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1718,
@@ -32636,10 +32636,10 @@
 "fair_prob_taken": 0.5887,
 "model_prob": 0.5419,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.598,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1719,
@@ -32655,10 +32655,10 @@
 "fair_prob_taken": 0.625,
 "model_prob": 0.6372,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6453,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1720,
@@ -32674,10 +32674,10 @@
 "fair_prob_taken": 0.4618,
 "model_prob": 0.5322,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.03,
+"fair_prob_close": 0.4802,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1721,
@@ -32693,10 +32693,10 @@
 "fair_prob_taken": 0.4618,
 "model_prob": 0.5322,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.03,
+"fair_prob_close": 0.4802,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1722,
@@ -32712,10 +32712,10 @@
 "fair_prob_taken": 0.5561,
 "model_prob": 0.5748,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.74,
+"fair_prob_close": 0.5584,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1723,
@@ -32731,10 +32731,10 @@
 "fair_prob_taken": 0.6117,
 "model_prob": 0.6774,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.54,
+"fair_prob_close": 0.6111,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1724,
@@ -32750,10 +32750,10 @@
 "fair_prob_taken": 0.5814,
 "model_prob": 0.6042,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6076,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1725,
@@ -32769,10 +32769,10 @@
 "fair_prob_taken": 0.2957,
 "model_prob": 0.3292,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.08,
+"fair_prob_close": 0.3172,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1726,
@@ -32788,10 +32788,10 @@
 "fair_prob_taken": 0.4349,
 "model_prob": 0.4185,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.41,
+"fair_prob_close": 0.4053,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1727,
@@ -32807,10 +32807,10 @@
 "fair_prob_taken": 0.6005,
 "model_prob": 0.59,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.63,
+"fair_prob_close": 0.5945,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1728,
@@ -32826,10 +32826,10 @@
 "fair_prob_taken": 0.6667,
 "model_prob": 0.722,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6667,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1729,
@@ -32845,10 +32845,10 @@
 "fair_prob_taken": 0.6341,
 "model_prob": 0.5833,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6087,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1730,
@@ -32864,10 +32864,10 @@
 "fair_prob_taken": 0.5158,
 "model_prob": 0.5954,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5188,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1731,
@@ -32883,10 +32883,10 @@
 "fair_prob_taken": 0.5158,
 "model_prob": 0.5954,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5188,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1732,
@@ -32902,10 +32902,10 @@
 "fair_prob_taken": 0.6152,
 "model_prob": 0.6044,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6485,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1733,
@@ -32921,10 +32921,10 @@
 "fair_prob_taken": 0.6463,
 "model_prob": 0.6544,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6463,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1734,
@@ -32940,10 +32940,10 @@
 "fair_prob_taken": 0.598,
 "model_prob": 0.6274,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6087,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1735,
@@ -32959,10 +32959,10 @@
 "fair_prob_taken": 0.6198,
 "model_prob": 0.5071,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.623,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1736,
@@ -32978,10 +32978,10 @@
 "fair_prob_taken": 0.1658,
 "model_prob": 0.2562,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 5.95,
+"fair_prob_close": 0.1634,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1737,
@@ -32997,10 +32997,10 @@
 "fair_prob_taken": 0.2144,
 "model_prob": 0.2367,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.55,
+"fair_prob_close": 0.2136,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1738,
@@ -33016,10 +33016,10 @@
 "fair_prob_taken": 0.6198,
 "model_prob": 0.5071,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.623,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1739,
@@ -33035,10 +33035,10 @@
 "fair_prob_taken": 0.5524,
 "model_prob": 0.6445,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.77,
+"fair_prob_close": 0.5496,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1740,
@@ -33054,10 +33054,10 @@
 "fair_prob_taken": 0.5887,
 "model_prob": 0.552,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5758,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1741,
@@ -33073,10 +33073,10 @@
 "fair_prob_taken": 0.5867,
 "model_prob": 0.6401,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6087,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1742,
@@ -33092,10 +33092,10 @@
 "fair_prob_taken": 0.5047,
 "model_prob": 0.6694,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.99,
+"fair_prob_close": 0.4893,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1743,
@@ -33111,10 +33111,10 @@
 "fair_prob_taken": 0.5047,
 "model_prob": 0.6694,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.99,
+"fair_prob_close": 0.4893,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1744,
@@ -33130,10 +33130,10 @@
 "fair_prob_taken": 0.5047,
 "model_prob": 0.6694,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.99,
+"fair_prob_close": 0.4893,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1745,
@@ -33149,10 +33149,10 @@
 "fair_prob_taken": 0.5308,
 "model_prob": 0.5655,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.86,
+"fair_prob_close": 0.5255,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1746,
@@ -33168,10 +33168,10 @@
 "fair_prob_taken": 0.6312,
 "model_prob": 0.62,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.49,
+"fair_prob_close": 0.6339,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1747,
@@ -33187,10 +33187,10 @@
 "fair_prob_taken": 0.5769,
 "model_prob": 0.5979,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5628,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1748,
@@ -33206,10 +33206,10 @@
 "fair_prob_taken": 0.2609,
 "model_prob": 0.2794,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.93,
+"fair_prob_close": 0.248,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1749,
@@ -33225,10 +33225,10 @@
 "fair_prob_taken": 0.4781,
 "model_prob": 0.4685,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.97,
+"fair_prob_close": 0.4948,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1750,
@@ -33244,10 +33244,10 @@
 "fair_prob_taken": 0.6674,
 "model_prob": 0.6173,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.6079,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1751,
@@ -33263,10 +33263,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.7078,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1752,
@@ -33282,10 +33282,10 @@
 "fair_prob_taken": 0.6595,
 "model_prob": 0.6327,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.5943,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1753,
@@ -33301,10 +33301,10 @@
 "fair_prob_taken": 0.5185,
 "model_prob": 0.5606,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.79,
+"fair_prob_close": 0.5431,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1754,
@@ -33320,10 +33320,10 @@
 "fair_prob_taken": 0.5185,
 "model_prob": 0.5606,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.79,
+"fair_prob_close": 0.5431,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1755,
@@ -33339,10 +33339,10 @@
 "fair_prob_taken": 0.6108,
 "model_prob": 0.5969,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.61,
+"fair_prob_close": 0.6015,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1756,
@@ -33358,10 +33358,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.8135,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1757,
@@ -33377,10 +33377,10 @@
 "fair_prob_taken": 0.6076,
 "model_prob": 0.6163,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6076,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1758,
@@ -33396,10 +33396,10 @@
 "fair_prob_taken": 0.2334,
 "model_prob": 0.245,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.07,
+"fair_prob_close": 0.2394,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1759,
@@ -33415,10 +33415,10 @@
 "fair_prob_taken": 0.2237,
 "model_prob": 0.2971,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.44,
+"fair_prob_close": 0.2194,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1760,
@@ -33434,10 +33434,10 @@
 "fair_prob_taken": 0.5429,
 "model_prob": 0.4579,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5412,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1761,
@@ -33453,10 +33453,10 @@
 "fair_prob_taken": 0.6201,
 "model_prob": 0.666,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6229,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1762,
@@ -33472,10 +33472,10 @@
 "fair_prob_taken": 0.5553,
 "model_prob": 0.509,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.76,
+"fair_prob_close": 0.5344,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1763,
@@ -33491,10 +33491,10 @@
 "fair_prob_taken": 0.5628,
 "model_prob": 0.5951,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5423,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1764,
@@ -33510,10 +33510,10 @@
 "fair_prob_taken": 0.4198,
 "model_prob": 0.4478,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.4,
+"fair_prob_close": 0.4041,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1765,
@@ -33529,10 +33529,10 @@
 "fair_prob_taken": 0.4198,
 "model_prob": 0.4478,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.4,
+"fair_prob_close": 0.4041,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1766,
@@ -33548,10 +33548,10 @@
 "fair_prob_taken": 0.5564,
 "model_prob": 0.5264,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.74,
+"fair_prob_close": 0.5573,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1767,
@@ -33567,10 +33567,10 @@
 "fair_prob_taken": 0.5781,
 "model_prob": 0.5575,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5681,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1768,
@@ -33586,10 +33586,10 @@
 "fair_prob_taken": 0.5628,
 "model_prob": 0.5634,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.56,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1769,
@@ -33605,10 +33605,10 @@
 "fair_prob_taken": 0.1868,
 "model_prob": 0.2066,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 5.55,
+"fair_prob_close": 0.1743,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1770,
@@ -33624,10 +33624,10 @@
 "fair_prob_taken": 0.5796,
 "model_prob": 0.552,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.62,
+"fair_prob_close": 0.5971,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1771,
@@ -33643,10 +33643,10 @@
 "fair_prob_taken": 0.7586,
 "model_prob": 0.7037,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.27,
+"fair_prob_close": 0.7567,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1772,
@@ -33662,10 +33662,10 @@
 "fair_prob_taken": 0.7031,
 "model_prob": 0.7736,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.7031,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1773,
@@ -33681,10 +33681,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6857,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6951,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1774,
@@ -33700,10 +33700,10 @@
 "fair_prob_taken": 0.6849,
 "model_prob": 0.6444,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6673,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1775,
@@ -33719,10 +33719,10 @@
 "fair_prob_taken": 0.6849,
 "model_prob": 0.6444,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6673,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1776,
@@ -33738,10 +33738,10 @@
 "fair_prob_taken": 0.152,
 "model_prob": 0.1687,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 5.95,
+"fair_prob_close": 0.1626,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1777,
@@ -33757,10 +33757,10 @@
 "fair_prob_taken": 0.1631,
 "model_prob": 0.1869,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 5.69,
+"fair_prob_close": 0.1701,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1778,
@@ -33776,10 +33776,10 @@
 "fair_prob_taken": 0.6849,
 "model_prob": 0.6444,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6673,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1779,
@@ -33795,10 +33795,10 @@
 "fair_prob_taken": 0.6636,
 "model_prob": 0.6635,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6674,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1780,
@@ -33814,10 +33814,10 @@
 "fair_prob_taken": 0.7031,
 "model_prob": 0.7473,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1781,
@@ -33833,10 +33833,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6181,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6296,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1782,
@@ -33852,10 +33852,10 @@
 "fair_prob_taken": 0.6241,
 "model_prob": 0.6376,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6451,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1783,
@@ -33871,10 +33871,10 @@
 "fair_prob_taken": 0.6241,
 "model_prob": 0.6376,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6451,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1784,
@@ -33890,10 +33890,10 @@
 "fair_prob_taken": 0.6241,
 "model_prob": 0.6376,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6451,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1785,
@@ -33909,10 +33909,10 @@
 "fair_prob_taken": 0.5499,
 "model_prob": 0.5212,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.81,
+"fair_prob_close": 0.5383,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1786,
@@ -33928,10 +33928,10 @@
 "fair_prob_taken": 0.6284,
 "model_prob": 0.711,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6346,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1787,
@@ -33947,10 +33947,10 @@
 "fair_prob_taken": 0.5814,
 "model_prob": 0.5643,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.62,
+"fair_prob_close": 0.5814,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1788,
@@ -33966,10 +33966,10 @@
 "fair_prob_taken": 0.2694,
 "model_prob": 0.2996,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.7,
+"fair_prob_close": 0.2637,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1789,
@@ -33985,10 +33985,10 @@
 "fair_prob_taken": 0.4663,
 "model_prob": 0.4337,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.08,
+"fair_prob_close": 0.469,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1790,
@@ -34004,10 +34004,10 @@
 "fair_prob_taken": 0.5116,
 "model_prob": 0.555,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.81,
+"fair_prob_close": 0.5383,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1791,
@@ -34023,10 +34023,10 @@
 "fair_prob_taken": 0.6162,
 "model_prob": 0.6712,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.6005,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1792,
@@ -34042,10 +34042,10 @@
 "fair_prob_taken": 0.5628,
 "model_prob": 0.5907,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5628,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1793,
@@ -34061,10 +34061,10 @@
 "fair_prob_taken": 0.3836,
 "model_prob": 0.4461,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.55,
+"fair_prob_close": 0.3827,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1794,
@@ -34080,10 +34080,10 @@
 "fair_prob_taken": 0.3836,
 "model_prob": 0.4461,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.55,
+"fair_prob_close": 0.3827,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1795,
@@ -34099,10 +34099,10 @@
 "fair_prob_taken": 0.5321,
 "model_prob": 0.5144,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5396,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1796,
@@ -34118,10 +34118,10 @@
 "fair_prob_taken": 0.5751,
 "model_prob": 0.6022,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.71,
+"fair_prob_close": 0.5547,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1797,
@@ -34137,10 +34137,10 @@
 "fair_prob_taken": 0.5423,
 "model_prob": 0.5367,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5423,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1798,
@@ -34156,10 +34156,10 @@
 "fair_prob_taken": 0.3779,
 "model_prob": 0.4279,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.48,
+"fair_prob_close": 0.394,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1799,
@@ -34175,10 +34175,10 @@
 "fair_prob_taken": 0.3779,
 "model_prob": 0.4279,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.48,
+"fair_prob_close": 0.394,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1800,
@@ -34194,10 +34194,10 @@
 "fair_prob_taken": 0.595,
 "model_prob": 0.633,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.96,
+"fair_prob_close": 0.4974,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1801,
@@ -34213,10 +34213,10 @@
 "fair_prob_taken": 0.4921,
 "model_prob": 0.5388,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.04,
+"fair_prob_close": 0.4646,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1802,
@@ -34232,10 +34232,10 @@
 "fair_prob_taken": 0.6025,
 "model_prob": 0.6424,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.52,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1803,
@@ -34251,10 +34251,10 @@
 "fair_prob_taken": 0.5715,
 "model_prob": 0.5711,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5829,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1804,
@@ -34270,10 +34270,10 @@
 "fair_prob_taken": 0.5222,
 "model_prob": 0.5394,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.83,
+"fair_prob_close": 0.5234,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1805,
@@ -34289,10 +34289,10 @@
 "fair_prob_taken": 0.6171,
 "model_prob": 0.5643,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6171,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1806,
@@ -34308,10 +34308,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.5152,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5511,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1807,
@@ -34327,10 +34327,10 @@
 "fair_prob_taken": 0.4249,
 "model_prob": 0.4525,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.29,
+"fair_prob_close": 0.4178,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1808,
@@ -34346,10 +34346,10 @@
 "fair_prob_taken": 0.4249,
 "model_prob": 0.4525,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.29,
+"fair_prob_close": 0.4178,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1809,
@@ -34365,10 +34365,10 @@
 "fair_prob_taken": 0.6133,
 "model_prob": 0.6085,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.632,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1810,
@@ -34384,10 +34384,10 @@
 "fair_prob_taken": 0.6479,
 "model_prob": 0.6062,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6479,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1811,
@@ -34403,10 +34403,10 @@
 "fair_prob_taken": 0.6341,
 "model_prob": 0.6255,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6604,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1812,
@@ -34422,10 +34422,10 @@
 "fair_prob_taken": 0.2979,
 "model_prob": 0.3744,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.26,
+"fair_prob_close": 0.2992,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1813,
@@ -34441,10 +34441,10 @@
 "fair_prob_taken": 0.4525,
 "model_prob": 0.3793,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.18,
+"fair_prob_close": 0.4474,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1814,
@@ -34460,10 +34460,10 @@
 "fair_prob_taken": 0.5844,
 "model_prob": 0.5627,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.7,
+"fair_prob_close": 0.5696,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1815,
@@ -34479,10 +34479,10 @@
 "fair_prob_taken": 0.5814,
 "model_prob": 0.5072,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.5959,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1816,
@@ -34498,10 +34498,10 @@
 "fair_prob_taken": 0.5423,
 "model_prob": 0.5467,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.52,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1817,
@@ -34517,10 +34517,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6707,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6699,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1818,
@@ -34536,10 +34536,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6707,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6699,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1819,
@@ -34555,10 +34555,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6707,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6699,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1820,
@@ -34574,10 +34574,10 @@
 "fair_prob_taken": 0.6415,
 "model_prob": 0.6707,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.45,
+"fair_prob_close": 0.6699,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1821,
@@ -34593,10 +34593,10 @@
 "fair_prob_taken": 0.5878,
 "model_prob": 0.5636,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.46,
+"fair_prob_close": 0.6532,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1822,
@@ -34612,10 +34612,10 @@
 "fair_prob_taken": 0.5844,
 "model_prob": 0.5484,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.5844,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1823,
@@ -34631,10 +34631,10 @@
 "fair_prob_taken": 0.496,
 "model_prob": 0.507,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.56,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1824,
@@ -34650,10 +34650,10 @@
 "fair_prob_taken": 0.261,
 "model_prob": 0.3054,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.03,
+"fair_prob_close": 0.2372,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1825,
@@ -34669,10 +34669,10 @@
 "fair_prob_taken": 0.4235,
 "model_prob": 0.4084,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.2,
+"fair_prob_close": 0.4344,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1826,
@@ -34688,10 +34688,10 @@
 "fair_prob_taken": 0.65,
 "model_prob": 0.6049,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6396,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1827,
@@ -34707,10 +34707,10 @@
 "fair_prob_taken": 0.581,
 "model_prob": 0.5435,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.599,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1828,
@@ -34726,10 +34726,10 @@
 "fair_prob_taken": 0.6667,
 "model_prob": 0.6171,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1829,
@@ -34745,10 +34745,10 @@
 "fair_prob_taken": 0.497,
 "model_prob": 0.4891,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.11,
+"fair_prob_close": 0.4622,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1830,
@@ -34764,10 +34764,10 @@
 "fair_prob_taken": 0.4961,
 "model_prob": 0.5311,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.5115,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1831,
@@ -34783,10 +34783,10 @@
 "fair_prob_taken": 0.4752,
 "model_prob": 0.5627,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.01,
+"fair_prob_close": 0.4766,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1832,
@@ -34802,10 +34802,10 @@
 "fair_prob_taken": 0.52,
 "model_prob": 0.5548,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5628,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1833,
@@ -34821,10 +34821,10 @@
 "fair_prob_taken": 0.2315,
 "model_prob": 0.2477,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.64,
+"fair_prob_close": 0.21,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1834,
@@ -34840,10 +34840,10 @@
 "fair_prob_taken": 0.5146,
 "model_prob": 0.4995,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5267,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1835,
@@ -34859,10 +34859,10 @@
 "fair_prob_taken": 0.468,
 "model_prob": 0.5381,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.1,
+"fair_prob_close": 0.4656,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1836,
@@ -34878,10 +34878,10 @@
 "fair_prob_taken": 0.6388,
 "model_prob": 0.6414,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6244,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1837,
@@ -34897,10 +34897,10 @@
 "fair_prob_taken": 0.508,
 "model_prob": 0.5313,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.508,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1838,
@@ -34916,10 +34916,10 @@
 "fair_prob_taken": 0.6677,
 "model_prob": 0.5989,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6405,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1839,
@@ -34935,10 +34935,10 @@
 "fair_prob_taken": 0.2047,
 "model_prob": 0.242,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.51,
+"fair_prob_close": 0.2159,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1840,
@@ -34954,10 +34954,10 @@
 "fair_prob_taken": 0.1276,
 "model_prob": 0.1591,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 6.78,
+"fair_prob_close": 0.1436,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1841,
@@ -34973,10 +34973,10 @@
 "fair_prob_taken": 0.6677,
 "model_prob": 0.5989,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6405,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1842,
@@ -34992,10 +34992,10 @@
 "fair_prob_taken": 0.4709,
 "model_prob": 0.5255,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.92,
+"fair_prob_close": 0.4947,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1843,
@@ -35011,10 +35011,10 @@
 "fair_prob_taken": 0.4651,
 "model_prob": 0.5476,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.99,
+"fair_prob_close": 0.4651,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1844,
@@ -35030,10 +35030,10 @@
 "fair_prob_taken": 0.4577,
 "model_prob": 0.5061,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.473,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1845,
@@ -35049,10 +35049,10 @@
 "fair_prob_taken": 0.5341,
 "model_prob": 0.631,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5429,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1846,
@@ -35068,10 +35068,10 @@
 "fair_prob_taken": 0.5341,
 "model_prob": 0.631,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5429,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1847,
@@ -35087,10 +35087,10 @@
 "fair_prob_taken": 0.5341,
 "model_prob": 0.631,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5429,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1848,
@@ -35106,10 +35106,10 @@
 "fair_prob_taken": 0.4987,
 "model_prob": 0.5303,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.04,
+"fair_prob_close": 0.4756,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1849,
@@ -35125,10 +35125,10 @@
 "fair_prob_taken": 0.4474,
 "model_prob": 0.5069,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.15,
+"fair_prob_close": 0.4386,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1850,
@@ -35144,10 +35144,10 @@
 "fair_prob_taken": 0.5,
 "model_prob": 0.5147,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.48,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1851,
@@ -35163,10 +35163,10 @@
 "fair_prob_taken": 0.597,
 "model_prob": 0.6101,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6438,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1852,
@@ -35182,10 +35182,10 @@
 "fair_prob_taken": 0.6949,
 "model_prob": 0.6025,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.32,
+"fair_prob_close": 0.7215,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1853,
@@ -35201,10 +35201,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.7842,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1854,
@@ -35220,10 +35220,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5037,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.4852,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1855,
@@ -35239,10 +35239,10 @@
 "fair_prob_taken": 0.7994,
 "model_prob": 0.765,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.16,
+"fair_prob_close": 0.8294,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1856,
@@ -35258,10 +35258,10 @@
 "fair_prob_taken": 0.7994,
 "model_prob": 0.765,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.16,
+"fair_prob_close": 0.8294,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1857,
@@ -35277,10 +35277,10 @@
 "fair_prob_taken": 0.1259,
 "model_prob": 0.165,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 8.75,
+"fair_prob_close": 0.11,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1858,
@@ -35296,10 +35296,10 @@
 "fair_prob_taken": 0.7994,
 "model_prob": 0.765,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.16,
+"fair_prob_close": 0.8294,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1859,
@@ -35315,10 +35315,10 @@
 "fair_prob_taken": 0.6293,
 "model_prob": 0.5428,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6337,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1860,
@@ -35334,10 +35334,10 @@
 "fair_prob_taken": 0.6361,
 "model_prob": 0.7386,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6355,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1861,
@@ -35353,10 +35353,10 @@
 "fair_prob_taken": 0.6076,
 "model_prob": 0.5561,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.6,
+"fair_prob_close": 0.5897,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1862,
@@ -35372,10 +35372,10 @@
 "fair_prob_taken": 0.2169,
 "model_prob": 0.2471,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 4.7,
+"fair_prob_close": 0.2065,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1863,
@@ -35391,10 +35391,10 @@
 "fair_prob_taken": 0.1908,
 "model_prob": 0.2402,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 6.1,
+"fair_prob_close": 0.1591,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1864,
@@ -35410,10 +35410,10 @@
 "fair_prob_taken": 0.5923,
 "model_prob": 0.5127,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6344,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1865,
@@ -35429,10 +35429,10 @@
 "fair_prob_taken": 0.5066,
 "model_prob": 0.5327,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6308,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1866,
@@ -35448,10 +35448,10 @@
 "fair_prob_taken": 0.557,
 "model_prob": 0.5733,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.557,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1867,
@@ -35467,10 +35467,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.5167,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.4852,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1868,
@@ -35486,10 +35486,10 @@
 "fair_prob_taken": 0.4311,
 "model_prob": 0.5674,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.18,
+"fair_prob_close": 0.4389,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1869,
@@ -35505,10 +35505,10 @@
 "fair_prob_taken": 0.4311,
 "model_prob": 0.5674,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.18,
+"fair_prob_close": 0.4389,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1870,
@@ -35524,10 +35524,10 @@
 "fair_prob_taken": 0.3089,
 "model_prob": 0.6328,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.02,
+"fair_prob_close": 0.3089,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1871,
@@ -35543,10 +35543,10 @@
 "fair_prob_taken": 0.4879,
 "model_prob": 0.5874,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.91,
+"fair_prob_close": 0.4879,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1872,
@@ -35562,10 +35562,10 @@
 "fair_prob_taken": 0.8283,
 "model_prob": 0.5879,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.14,
+"fair_prob_close": 0.8283,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1873,
@@ -35581,10 +35581,10 @@
 "fair_prob_taken": 0.848,
 "model_prob": 0.575,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.08,
+"fair_prob_close": 0.848,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1874,
@@ -35600,10 +35600,10 @@
 "fair_prob_taken": 0.1002,
 "model_prob": 0.2698,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 9.14,
+"fair_prob_close": 0.1002,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1875,
@@ -35619,10 +35619,10 @@
 "fair_prob_taken": 0.0518,
 "model_prob": 0.1552,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 17.68,
+"fair_prob_close": 0.0518,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1876,
@@ -35638,10 +35638,10 @@
 "fair_prob_taken": 0.848,
 "model_prob": 0.575,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.08,
+"fair_prob_close": 0.848,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1877,
@@ -35657,10 +35657,10 @@
 "fair_prob_taken": 0.6377,
 "model_prob": 0.6336,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6485,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1878,
@@ -35676,10 +35676,10 @@
 "fair_prob_taken": 0.6667,
 "model_prob": 0.5532,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6667,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1879,
@@ -35695,10 +35695,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6423,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6792,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1880,
@@ -35714,10 +35714,10 @@
 "fair_prob_taken": 0.3914,
 "model_prob": 0.4467,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.59,
+"fair_prob_close": 0.3749,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1881,
@@ -35733,10 +35733,10 @@
 "fair_prob_taken": 0.3914,
 "model_prob": 0.4467,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.59,
+"fair_prob_close": 0.3749,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1882,
@@ -35752,10 +35752,10 @@
 "fair_prob_taken": 0.5321,
 "model_prob": 0.5122,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.5051,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1883,
@@ -35771,10 +35771,10 @@
 "fair_prob_taken": 0.5923,
 "model_prob": 0.5797,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.61,
+"fair_prob_close": 0.5882,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1884,
@@ -35790,10 +35790,10 @@
 "fair_prob_taken": 0.5628,
 "model_prob": 0.554,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5628,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1885,
@@ -35809,10 +35809,10 @@
 "fair_prob_taken": 0.4504,
 "model_prob": 0.5107,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.26,
+"fair_prob_close": 0.4318,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1886,
@@ -35828,10 +35828,10 @@
 "fair_prob_taken": 0.4504,
 "model_prob": 0.5107,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.26,
+"fair_prob_close": 0.4318,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1887,
@@ -35847,10 +35847,10 @@
 "fair_prob_taken": 0.6377,
 "model_prob": 0.7147,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.68,
+"fair_prob_close": 0.5736,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1888,
@@ -35866,10 +35866,10 @@
 "fair_prob_taken": 0.6,
 "model_prob": 0.5881,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5747,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1889,
@@ -35885,10 +35885,10 @@
 "fair_prob_taken": 0.6496,
 "model_prob": 0.7006,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.53,
+"fair_prob_close": 0.6107,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1890,
@@ -35904,10 +35904,10 @@
 "fair_prob_taken": 0.4146,
 "model_prob": 0.4866,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.31,
+"fair_prob_close": 0.4204,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1891,
@@ -35923,10 +35923,10 @@
 "fair_prob_taken": 0.4146,
 "model_prob": 0.4866,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.31,
+"fair_prob_close": 0.4204,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1892,
@@ -35942,10 +35942,10 @@
 "fair_prob_taken": 0.7238,
 "model_prob": 0.6813,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.7137,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1893,
@@ -35961,10 +35961,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.6535,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1894,
@@ -35980,10 +35980,10 @@
 "fair_prob_taken": 0.7096,
 "model_prob": 0.6816,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.7096,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1895,
@@ -35999,10 +35999,10 @@
 "fair_prob_taken": 0.54,
 "model_prob": 0.5681,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5181,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1896,
@@ -36018,10 +36018,10 @@
 "fair_prob_taken": 0.54,
 "model_prob": 0.5681,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.88,
+"fair_prob_close": 0.5181,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1897,
@@ -36037,10 +36037,10 @@
 "fair_prob_taken": 0.4462,
 "model_prob": 0.5121,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.1,
+"fair_prob_close": 0.4531,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1898,
@@ -36056,10 +36056,10 @@
 "fair_prob_taken": 0.5228,
 "model_prob": 0.5013,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.77,
+"fair_prob_close": 0.5255,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1899,
@@ -36075,10 +36075,10 @@
 "fair_prob_taken": 0.6187,
 "model_prob": 0.622,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5674,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1900,
@@ -36094,10 +36094,10 @@
 "fair_prob_taken": 0.6187,
 "model_prob": 0.622,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5674,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1901,
@@ -36113,10 +36113,10 @@
 "fair_prob_taken": 0.6187,
 "model_prob": 0.622,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.5674,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1902,
@@ -36132,10 +36132,10 @@
 "fair_prob_taken": 0.6834,
 "model_prob": 0.6288,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.34,
+"fair_prob_close": 0.7112,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1903,
@@ -36151,10 +36151,10 @@
 "fair_prob_taken": 0.6142,
 "model_prob": 0.6693,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.44,
+"fair_prob_close": 0.6479,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1904,
@@ -36170,10 +36170,10 @@
 "fair_prob_taken": 0.5,
 "model_prob": 0.5631,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.52,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1905,
@@ -36189,10 +36189,10 @@
 "fair_prob_taken": 0.784,
 "model_prob": 0.8104,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.8074,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1906,
@@ -36208,10 +36208,10 @@
 "fair_prob_taken": 0.784,
 "model_prob": 0.8104,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.8074,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1907,
@@ -36227,10 +36227,10 @@
 "fair_prob_taken": 0.784,
 "model_prob": 0.8104,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.8074,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1908,
@@ -36246,10 +36246,10 @@
 "fair_prob_taken": 0.4716,
 "model_prob": 0.53,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.29,
+"fair_prob_close": 0.4232,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1909,
@@ -36265,10 +36265,10 @@
 "fair_prob_taken": 0.599,
 "model_prob": 0.5548,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.56,
+"fair_prob_close": 0.5979,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1910,
@@ -36284,10 +36284,10 @@
 "fair_prob_taken": 0.5,
 "model_prob": 0.5206,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.48,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1911,
@@ -36303,10 +36303,10 @@
 "fair_prob_taken": 0.62,
 "model_prob": 0.6618,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6411,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1912,
@@ -36322,10 +36322,10 @@
 "fair_prob_taken": 0.62,
 "model_prob": 0.6618,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6411,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1913,
@@ -36341,10 +36341,10 @@
 "fair_prob_taken": 0.62,
 "model_prob": 0.6618,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6411,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1914,
@@ -36360,10 +36360,10 @@
 "fair_prob_taken": 0.62,
 "model_prob": 0.6618,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6411,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1915,
@@ -36379,10 +36379,10 @@
 "fair_prob_taken": 0.4803,
 "model_prob": 0.551,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.99,
+"fair_prob_close": 0.4818,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1916,
@@ -36398,10 +36398,10 @@
 "fair_prob_taken": 0.5263,
 "model_prob": 0.5594,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.8,
+"fair_prob_close": 0.5263,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1917,
@@ -36417,10 +36417,10 @@
 "fair_prob_taken": 0.4372,
 "model_prob": 0.5064,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.1,
+"fair_prob_close": 0.44,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1918,
@@ -36436,10 +36436,10 @@
 "fair_prob_taken": 0.4896,
 "model_prob": 0.5847,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.96,
+"fair_prob_close": 0.4878,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1919,
@@ -36455,10 +36455,10 @@
 "fair_prob_taken": 0.4896,
 "model_prob": 0.5847,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.96,
+"fair_prob_close": 0.4878,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1920,
@@ -36474,10 +36474,10 @@
 "fair_prob_taken": 0.5381,
 "model_prob": 0.6406,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.76,
+"fair_prob_close": 0.5417,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1921,
@@ -36493,10 +36493,10 @@
 "fair_prob_taken": 0.6881,
 "model_prob": 0.6848,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.36,
+"fair_prob_close": 0.6881,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1922,
@@ -36512,10 +36512,10 @@
 "fair_prob_taken": 0.4737,
 "model_prob": 0.5651,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.473,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1923,
@@ -36531,10 +36531,10 @@
 "fair_prob_taken": 0.286,
 "model_prob": 0.3088,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 3.28,
+"fair_prob_close": 0.2919,
+"result": "Acertó",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1924,
@@ -36550,10 +36550,10 @@
 "fair_prob_taken": 0.3482,
 "model_prob": 0.3819,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.75,
+"fair_prob_close": 0.3482,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1925,
@@ -36569,10 +36569,10 @@
 "fair_prob_taken": 0.3658,
 "model_prob": 0.3092,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-07T23:50:23.058018+00:00"
+"price_close": 2.66,
+"fair_prob_close": 0.3599,
+"result": "Falló",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 },
 {
 "n": 1926,
@@ -37295,5 +37295,328 @@
 "fair_prob_close": null,
 "result": "Pendiente",
 "updated": "2026-11-07T23:50:23.058018+00:00"
+},
+{
+"n": 1964,
+"id": 1964,
+"report_date": "2026-11-09",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.78,
+"fair_prob_taken": 0.5352,
+"model_prob": 0.5748,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1965,
+"id": 1965,
+"report_date": "2026-11-09",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6026,
+"model_prob": 0.6364,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1966,
+"id": 1966,
+"report_date": "2026-11-09",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 1.73,
+"fair_prob_taken": 0.5483,
+"model_prob": 0.5217,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1967,
+"id": 1967,
+"report_date": "2026-11-09",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 3.86,
+"fair_prob_taken": 0.2459,
+"model_prob": 0.2821,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1968,
+"id": 1968,
+"report_date": "2026-11-09",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 4.77,
+"fair_prob_taken": 0.199,
+"model_prob": 0.2621,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1969,
+"id": 1969,
+"report_date": "2026-11-09",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "LigaPro Serie A",
+"match": "Mushuc Runa SC vs Delfin SC",
+"kickoff_local": "2026-11-09 13:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.71,
+"fair_prob_taken": 0.5551,
+"model_prob": 0.4558,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1970,
+"id": 1970,
+"report_date": "2026-11-09",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5497,
+"model_prob": 0.5262,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1971,
+"id": 1971,
+"report_date": "2026-11-09",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.44,
+"fair_prob_taken": 0.6479,
+"model_prob": 0.702,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1972,
+"id": 1972,
+"report_date": "2026-11-09",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 2.1,
+"fair_prob_taken": 0.4517,
+"model_prob": 0.5219,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1973,
+"id": 1973,
+"report_date": "2026-11-09",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 3.68,
+"fair_prob_taken": 0.255,
+"model_prob": 0.2744,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1974,
+"id": 1974,
+"report_date": "2026-11-09",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 4.71,
+"fair_prob_taken": 0.1993,
+"model_prob": 0.2837,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1975,
+"id": 1975,
+"report_date": "2026-11-09",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "LigaPro Serie A",
+"match": "Tecnico Universitario vs Manta FC",
+"kickoff_local": "2026-11-09 15:30",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5457,
+"model_prob": 0.4419,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1976,
+"id": 1976,
+"report_date": "2026-11-09",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Junior vs Cucuta",
+"kickoff_local": "2026-11-09 19:00",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.65,
+"fair_prob_taken": 0.5758,
+"model_prob": 0.5554,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1977,
+"id": 1977,
+"report_date": "2026-11-09",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Junior vs Cucuta",
+"kickoff_local": "2026-11-09 19:00",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Betano",
+"price_taken": 1.55,
+"fair_prob_taken": 0.6026,
+"model_prob": 0.6635,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1978,
+"id": 1978,
+"report_date": "2026-11-09",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Junior vs Cucuta",
+"kickoff_local": "2026-11-09 19:00",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.73,
+"fair_prob_taken": 0.5483,
+"model_prob": 0.558,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1979,
+"id": 1979,
+"report_date": "2026-11-09",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Junior vs Cucuta",
+"kickoff_local": "2026-11-09 19:00",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 4.3,
+"fair_prob_taken": 0.2185,
+"model_prob": 0.2356,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
+},
+{
+"n": 1980,
+"id": 1980,
+"report_date": "2026-11-09",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "Liga BetPlay (Primera A)",
+"match": "Junior vs Cucuta",
+"kickoff_local": "2026-11-09 19:00",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.57,
+"fair_prob_taken": 0.5984,
+"model_prob": 0.5712,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-08T23:50:34.206214+00:00"
 }
 ]
