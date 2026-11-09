@@ -699,8 +699,8 @@ def check_email(settings: Settings, send_test: bool = True) -> list[str]:
     raw = settings.email_to or ""
     if not raw.strip():
         return [*lines, "❌ `EMAIL_TO` está vacío o no está definido."]
-    if ";" in raw:
-        lines.append("❌ Usa `;` como separador: debe ser coma (`,`).")
+    if re.search(r"[;\n]", raw):
+        lines.append("ℹ️ Separador distinto de coma (`;` o salto de línea): se acepta igual.")
     recipients = settings.email_recipients
     lines.append(f"Destinatarios: {len(recipients)}")
     ok = True

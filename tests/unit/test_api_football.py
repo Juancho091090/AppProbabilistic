@@ -362,3 +362,8 @@ def test_check_email_validates_and_masks(tmp_path):
     assert "Destinatarios: 3" in out and "an*******@gmail.com ✅" in out
     assert "formato inválido" in out and "repetidas" in out
     assert "ana.perez@gmail.com" not in out
+
+
+def test_email_recipients_accept_newlines_and_semicolons(tmp_path):
+    s = Settings(cache_dir=str(tmp_path), email_to=" a@x.com\nb@y.co ; c@z.org,\n")
+    assert s.email_recipients == ["a@x.com", "b@y.co", "c@z.org"]

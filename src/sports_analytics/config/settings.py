@@ -7,6 +7,7 @@ no viven aquí sino en los YAML de este mismo paquete (ver ``loader.py``).
 
 from __future__ import annotations
 
+import re
 from functools import lru_cache
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -64,7 +65,7 @@ class Settings(BaseSettings):
     smtp_password: SecretStr | None = None
     smtp_use_tls: bool = True
     email_from: str | None = None
-    email_to: str | None = None  # admite varios separados por coma
+    email_to: str | None = None  # varios separados por coma, punto y coma o salto de línea
 
     # Base de datos
     database_url: str = "postgresql+psycopg://sports:sports@localhost:5432/sports"
@@ -104,7 +105,7 @@ class Settings(BaseSettings):
     def email_recipients(self) -> list[str]:
         if not self.email_to:
             return []
-        return [addr.strip() for addr in self.email_to.split(",") if addr.strip()]
+        return [a for a in re.split(r"[,;\s]+", self.email_to) if a]
 
     @property
     def telegram_enabled(self) -> bool:
