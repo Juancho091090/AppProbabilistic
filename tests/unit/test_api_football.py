@@ -350,3 +350,15 @@ def test_cached_error_from_older_version_is_ignored(tmp_path):
     key = 'api_football/fixtures?{"league": 13, "season": 2026}'
     client.http.cache.set(key, {"errors": {"plan": "Free plans"}, "response": []})
     assert client.fixtures_by_league_season(13, 2026) == []  # no lanza el error guardado
+
+
+def test_check_email_validates_and_masks(tmp_path):
+    from sports_analytics.diagnostics import check_email
+
+    s = Settings(
+        cache_dir=str(tmp_path), email_to="ana.perez@gmail.com, malo@x, ana.perez@gmail.com"
+    )
+    out = "\n".join(check_email(s, send_test=False))
+    assert "Destinatarios: 3" in out and "an*******@gmail.com ✅" in out
+    assert "formato inválido" in out and "repetidas" in out
+    assert "ana.perez@gmail.com" not in out

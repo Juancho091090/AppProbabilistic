@@ -12,6 +12,7 @@ Nunca imprime claves: solo nombres de variables y resultados.
 from __future__ import annotations
 
 import os
+import re
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -682,6 +683,51 @@ def check_tennis_tournament(settings: Settings) -> list[str]:
     return lines
 
 
+_EMAIL_RE = re.compile(r"^[^@\s,;]+@[^@\s,;]+\.[A-Za-z]{2,}$")
+
+
+def mask_email(addr: str) -> str:
+    """jcsoto613@gmail.com -> jc*******@gmail.com (suficiente para reconocerlo sin
+    publicar la dirección completa en los registros del workflow)."""
+    user, _, domain = addr.partition("@")
+    return f"{user[:2]}{'*' * max(len(user) - 2, 1)}@{domain}"
+
+
+def check_email(settings: Settings, send_test: bool = True) -> list[str]:
+    """Valida EMAIL_TO (formato, duplicados, separadores) y envía un correo de prueba."""
+    lines = ["## Correo (destinatarios)", ""]
+    raw = settings.email_to or ""
+    if not raw.strip():
+        return [*lines, "❌ `EMAIL_TO` está vacío o no está definido."]
+    if ";" in raw:
+        lines.append("❌ Usa `;` como separador: debe ser coma (`,`).")
+    recipients = settings.email_recipients
+    lines.append(f"Destinatarios: {len(recipients)}")
+    ok = True
+    for i, addr in enumerate(recipients, 1):
+        valid = bool(_EMAIL_RE.match(addr))
+        ok &= valid
+        lines.append(f"{i}. {mask_email(addr)} {'✅' if valid else '❌ formato inválido'}")
+    if len({a.lower() for a in recipients}) < len(recipients):
+        lines.append("⚠️ Hay direcciones repetidas.")
+    if not settings.email_enabled:
+        return [*lines, "❌ Falta `SMTP_HOST` o `EMAIL_FROM`: no se puede enviar."]
+    if not (ok and send_test):
+        return lines
+    from sports_analytics.reporting.email import EmailService
+
+    try:
+        EmailService(settings)._send(
+            "Prueba de destinatarios · Informe deportivo",
+            "Correo de prueba enviado por el diagnóstico del sistema para confirmar que "
+            "esta dirección recibe el informe diario. No requiere respuesta.",
+        )
+        lines.append("✅ Correo de prueba enviado a todos los destinatarios.")
+    except Exception as exc:  # noqa: BLE001 - se informa el tipo, sin secretos
+        lines.append(f"❌ Falló el envío: {type(exc).__name__}: {str(exc)[:150]}")
+    return lines
+
+
 def check_claude(settings: Settings) -> list[str]:
     """Llamada mínima real a la API de Anthropic (unos pocos tokens) para validar la clave."""
     lines = ["## Claude (Anthropic)", ""]
@@ -921,6 +967,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "league_lookup": lambda: check_league_lookup(settings),
         "xg_batch": lambda: check_xg_batch(settings),
         "odds_markets": lambda: check_odds_markets(settings),
+        "email": lambda: check_email(settings),
     }
     body: list[str] = ["# Diagnóstico de APIs", ""]
     for name, fn in checks.items():
