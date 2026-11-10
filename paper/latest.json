@@ -37538,10 +37538,10 @@
 "fair_prob_taken": 0.5758,
 "model_prob": 0.5554,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-08T23:50:34.206214+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5518,
+"result": "Falló",
+"updated": "2026-11-10T23:53:12.924475+00:00"
 },
 {
 "n": 1977,
@@ -37557,10 +37557,10 @@
 "fair_prob_taken": 0.6026,
 "model_prob": 0.6635,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-08T23:50:34.206214+00:00"
+"price_close": 1.55,
+"fair_prob_close": 0.6026,
+"result": "Falló",
+"updated": "2026-11-10T23:53:12.924475+00:00"
 },
 {
 "n": 1978,
@@ -37576,10 +37576,10 @@
 "fair_prob_taken": 0.5483,
 "model_prob": 0.558,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-08T23:50:34.206214+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5714,
+"result": "Falló",
+"updated": "2026-11-10T23:53:12.924475+00:00"
 },
 {
 "n": 1979,
@@ -37595,10 +37595,10 @@
 "fair_prob_taken": 0.2185,
 "model_prob": 0.2356,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-08T23:50:34.206214+00:00"
+"price_close": 3.98,
+"fair_prob_close": 0.24,
+"result": "Falló",
+"updated": "2026-11-10T23:53:12.924475+00:00"
 },
 {
 "n": 1980,
@@ -37614,9 +37614,9 @@
 "fair_prob_taken": 0.5984,
 "model_prob": 0.5712,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-08T23:50:34.206214+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5458,
+"result": "Acertó",
+"updated": "2026-11-10T23:53:12.924475+00:00"
 }
 ]
