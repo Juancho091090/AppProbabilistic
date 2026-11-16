@@ -409,6 +409,9 @@ def env(engine, tmp_path_factory):
             ),
             narrator=ClaudeNarrator(settings, client=FakeClaudeClient()),
             telegram=TelegramService(settings, transport=httpx.MockTransport(tg_handler)),
+            channel=TelegramService(
+                settings, transport=httpx.MockTransport(tg_handler), chat_id="@canal"
+            ),
             email=EmailService(settings, smtp_factory=FakeSMTP),
         )
 
@@ -435,6 +438,11 @@ def test_day1_full_pipeline(env, app_config):
     assert f"{f.markets['1x2']['home'] * 100:.1f}%" in md
     # Envíos
     assert out.telegram_sent and tg_msgs and all(m["parse_mode"] == "HTML" for m in tg_msgs)
+    channel_msgs = [m for m in tg_msgs if m["chat_id"] == "@canal"]
+    assert out.channel_sent and len(channel_msgs) == 1
+    assert not any(i.startswith("Canal") for i in out.issues)  # mercado leído sin errores
+    assert "JC Probabilidades" in channel_msgs[0]["text"]
+    assert "Pinnacle" not in channel_msgs[0]["text"]
     assert out.email_sent and FakeSMTP.sent
     mail = FakeSMTP.sent[-1]
     assert [a.get_filename() for a in mail.iter_attachments()] == ["informe_2024-06-01.pdf"]
@@ -500,6 +508,9 @@ def test_day1_full_pipeline(env, app_config):
         run = s.get(PipelineRun, out.run_id)
         assert run.status == out.status and run.predictions_generated == len(preds)
         assert run.telegram_sent and run.email_sent and run.report_markdown
+        # Canal público: mensaje propio y registro de lo publicado (con su regla)
+        published = run.details["channel_event_ids"]
+        assert all(x["rule"] in ("modelo_alta", "mercado_favorito_60") for x in published)
         assert run.details["loaded"].get("football:statistics_priority", 0) > 0
 
 

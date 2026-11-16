@@ -23,6 +23,7 @@ from sports_analytics.data.schemas import FootballMatch, TennisMatch
 from sports_analytics.db import repository as repo
 from sports_analytics.db.session import session_scope
 from sports_analytics.evaluation.track_record import lines_record, track_record
+from sports_analytics.market.odds import devig
 from sports_analytics.models.football.predictor import FootballPredictor
 from sports_analytics.models.outputs import MatchForecast
 from sports_analytics.models.tennis.predictor import TennisPredictor
@@ -468,7 +469,7 @@ def run_daily(
             if already:
                 log.info("report_already_sent_today", extra={"date": today.isoformat()})
                 run.details = {**(run.details or {}), "skipped_send": "already_sent_today"}
-            channel_ids: list[str] | None = None
+            channel_ids: list[dict] | None = None
             if send and not settings.dry_run and not already:
                 if svc.telegram:
                     try:
@@ -478,13 +479,17 @@ def run_daily(
                         issues.append(f"Telegram: {exc}")
                 if svc.channel:
                     try:
-                        selected = select_channel_forecasts(payload)
+                        selected = select_channel_forecasts(
+                            payload, _market_fair(session, config, forecasts, issues)
+                        )
                         svc.channel.send_message(
                             render_channel_message(payload, selected), parse_mode="HTML"
                         )
                         outcome.channel_sent = True
                         # Registro de lo publicado: base del informe mensual de transparencia
-                        channel_ids = [f.event_id for f in selected]
+                        channel_ids = [
+                            {"event_id": p.forecast.event_id, "rule": p.rule} for p in selected
+                        ]
                     except Exception as exc:
                         issues.append(f"Canal de Telegram: {exc}")
                 if svc.email:
@@ -573,6 +578,22 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
     except Exception as exc:  # noqa: BLE001
         session.rollback()
         issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
+
+
+def _market_fair(session, config, forecasts, issues) -> dict[str, tuple[float, ...]]:
+    """1X2 sin margen de la casa de referencia (misma lógica que el registro simulado).
+    Si falla, el canal publica solo los partidos de confianza Alta."""
+    try:
+        ids = [f.event_id for f in forecasts if f.sport == "football"]
+        out = {}
+        for event_id, quotes in repo.load_market_quotes(session, ids).items():
+            q = paper.reference_quote(quotes, config.models.market.preferred_bookmakers)
+            if q is not None:
+                out[event_id] = tuple(devig(q.prices))
+        return out
+    except Exception as exc:  # noqa: BLE001 - el canal no debe frenar el informe
+        issues.append(f"Canal: mercado no disponible ({type(exc).__name__})")
+        return {}
 
 
 def _notify_failure(svc: Services, settings: Settings, message: str, send: bool) -> None:

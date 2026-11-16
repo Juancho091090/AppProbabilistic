@@ -8,6 +8,8 @@ from sports_analytics.config.settings import Settings
 from sports_analytics.reporting.channel import (
     CHANNEL_DISCLAIMER,
     NO_MATCHES,
+    RULE_MARKET,
+    RULE_MODEL,
     favorite_probability,
     render_channel_message,
     select_channel_forecasts,
@@ -30,14 +32,14 @@ def _with_confidence(payload, football: str, tennis: str):  # noqa: F811
 def test_selects_only_high_confidence(payload):  # noqa: F811
     p = _with_confidence(payload, "high", "medium")
     selected = select_channel_forecasts(p)
-    assert [f.sport for f in selected] == ["football"]
+    assert [(x.forecast.sport, x.rule) for x in selected] == [("football", RULE_MODEL)]
 
 
 def test_selection_is_capped_and_sorted_by_favorite(payload):  # noqa: F811
     p = _with_confidence(payload, "high", "high")
     assert len(select_channel_forecasts(p, max_items=1)) == 1
     both = select_channel_forecasts(p)
-    probs = [favorite_probability(f) for f in both]
+    probs = [favorite_probability(x.forecast) for x in both]
     assert probs == sorted(probs, reverse=True)
 
 
@@ -82,3 +84,23 @@ def test_channel_uses_same_bot_with_its_own_chat_id():
     )
     svc.send_message("<b>hola</b>")
     assert sent[0]["chat_id"] == "@JCProbabilidades"
+
+
+def test_market_favorites_fill_when_few_high(payload):  # noqa: F811
+    p = _with_confidence(payload, "medium", "low")
+    fid = p.football[0].forecasts[0].event_id
+    picks = select_channel_forecasts(p, {fid: (0.66, 0.20, 0.14)})
+    assert [(x.forecast.event_id, x.rule) for x in picks] == [(fid, RULE_MARKET)]
+    msg = render_channel_message(p, picks)
+    assert "Favoritos claros del mercado" in msg and "Mercado 66%" in msg
+    assert "Favorito: <b>Arsenal</b>" in msg
+
+
+def test_market_below_threshold_or_enough_high_is_not_added(payload):  # noqa: F811
+    p = _with_confidence(payload, "medium", "low")
+    fid = p.football[0].forecasts[0].event_id
+    assert select_channel_forecasts(p, {fid: (0.55, 0.25, 0.20)}) == []
+    # con suficientes partidos Alta no se completa con el mercado
+    p2 = _with_confidence(payload, "high", "high")
+    picks = select_channel_forecasts(p2, {fid: (0.80, 0.12, 0.08)}, min_items=2)
+    assert all(x.rule == RULE_MODEL for x in picks)
