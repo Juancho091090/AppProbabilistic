@@ -1,0 +1,41 @@
+name: short-sample
+
+# Short de ejemplo (datos ficticios, sin base de datos) para revisar diseño y voz.
+# Lo genera con Google TTS y lo envía al chat personal de Telegram.
+on:
+  workflow_dispatch:
+    inputs:
+      voice:
+        description: "Voz de Google TTS (Chirp 3 HD)"
+        default: "es-US-Chirp3-HD-Charon"
+
+permissions:
+  contents: read
+
+jobs:
+  short:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
+      GOOGLE_TTS_VOICE: ${{ inputs.voice }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: ffmpeg
+        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Instalar dependencias
+        run: pip install -e .
+      - name: Generar y enviar el Short
+        run: sports-analytics short-sample --send --output data/short_prueba.mp4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: short-prueba
+          path: data/short_prueba.mp4
+          if-no-files-found: ignore

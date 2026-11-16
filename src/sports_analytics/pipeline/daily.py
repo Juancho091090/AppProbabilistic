@@ -72,6 +72,7 @@ class DailyOutcome:
     markdown: str = ""
     telegram_sent: bool = False
     channel_sent: bool = False
+    short_sent: bool = False
     email_sent: bool = False
     narrative: bool = False
     pdf: bytes | None = None
@@ -477,11 +478,17 @@ def run_daily(
                         outcome.telegram_sent = True
                     except Exception as exc:
                         issues.append(f"Telegram: {exc}")
+                fair = (
+                    _market_fair(session, config, forecasts, issues)
+                    if svc.channel or settings.short_enabled
+                    else {}
+                )
+                n_high = sum(
+                    1 for p in select_channel_forecasts(payload, fair) if p.rule == "modelo_alta"
+                )
                 if svc.channel:
                     try:
-                        selected = select_channel_forecasts(
-                            payload, _market_fair(session, config, forecasts, issues)
-                        )
+                        selected = select_channel_forecasts(payload, fair)
                         svc.channel.send_message(
                             render_channel_message(payload, selected), parse_mode="HTML"
                         )
@@ -492,6 +499,11 @@ def run_daily(
                         ]
                     except Exception as exc:
                         issues.append(f"Canal de Telegram: {exc}")
+                if settings.short_enabled and svc.telegram:
+                    try:
+                        outcome.short_sent = _daily_short(settings, payload, fair, n_high, svc)
+                    except Exception as exc:  # noqa: BLE001 - el video no frena el informe
+                        issues.append(redact(f"Short: {type(exc).__name__}: {exc}")[:300])
                 if svc.email:
                     try:
                         svc.email.send_daily_report(
@@ -578,6 +590,34 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
     except Exception as exc:  # noqa: BLE001
         session.rollback()
         issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
+
+
+def _daily_short(settings, payload, fair, n_high, svc) -> bool:
+    """Genera el Short del día y lo envía al chat personal para revisarlo y subirlo."""
+    import tempfile
+    from pathlib import Path
+
+    from sports_analytics.video.render import render_short
+    from sports_analytics.video.script import build_short_script
+    from sports_analytics.video.tts import GoogleTTS
+
+    script = build_short_script(payload, fair, n_high)
+    if script is None:
+        return False
+    tts = None
+    if settings.google_tts_api_key:
+        tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = render_short(script, Path(tmp) / "short.mp4", payload.timezone, tts)
+            caption = (
+                f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n{script.description}"
+            )
+            svc.telegram.send_video(path, caption)
+    finally:
+        if tts:
+            tts.close()
+    return True
 
 
 def _market_fair(session, config, forecasts, issues) -> dict[str, tuple[float, ...]]:

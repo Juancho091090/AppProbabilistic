@@ -51,7 +51,8 @@ class TelegramService:
             raise ValueError("Telegram no configurado (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)")
         token = settings.telegram_bot_token.get_secret_value()
         register_secret(token)
-        self._url = f"{settings.telegram_api_base_url}/bot{token}/sendMessage"
+        self._base = f"{settings.telegram_api_base_url}/bot{token}"
+        self._url = f"{self._base}/sendMessage"
         self.chat_id = target
         self._client = httpx.Client(timeout=settings.http_timeout_seconds, transport=transport)
 
@@ -76,6 +77,23 @@ class TelegramService:
             sent += 1
         log.info("telegram_sent", extra={"messages": sent})
         return sent
+
+    def send_video(self, path, caption: str = "") -> None:
+        """Envía un video (máx. 50 MB por la Bot API). El caption admite 1024 caracteres."""
+        with open(path, "rb") as fh:
+            resp = self._client.post(
+                f"{self._base}/sendVideo",
+                data={
+                    "chat_id": self.chat_id,
+                    "caption": caption[:1024],
+                    "supports_streaming": "true",
+                },
+                files={"video": ("short.mp4", fh, "video/mp4")},
+                timeout=180,
+            )
+        if resp.status_code >= 400:
+            raise RuntimeError(f"Telegram HTTP {resp.status_code}: {resp.text[:200]}")
+        log.info("telegram_video_sent")
 
     def send_daily_report(self, html_text: str) -> int:
         return self.send_message(html_text, parse_mode="HTML")

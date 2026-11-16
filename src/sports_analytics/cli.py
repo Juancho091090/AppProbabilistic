@@ -570,6 +570,33 @@ def _publish(md: str, title: str) -> None:
         emit_annotations(md)
 
 
+def _short_sample(args: argparse.Namespace) -> int:
+    """Short de ejemplo (sin base de datos): prueba de diseño, voz y envío."""
+    from pathlib import Path
+
+    from sports_analytics.config.settings import get_settings
+    from sports_analytics.video.render import render_short
+    from sports_analytics.video.sample import sample_payload
+    from sports_analytics.video.script import build_short_script
+    from sports_analytics.video.tts import GoogleTTS
+
+    settings = get_settings()
+    payload, fair, n_high = sample_payload()
+    script = build_short_script(payload, fair, n_high)
+    tts = None
+    if settings.google_tts_api_key and not args.no_voice:
+        tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
+    path = render_short(script, Path(args.output), payload.timezone, tts)
+    print(f"Video: {path} · voz: {'sí' if tts else 'no'}")
+    if args.send:
+        from sports_analytics.reporting.telegram import TelegramService
+
+        svc = TelegramService(settings)
+        svc.send_video(path, f"🎬 Short de prueba\n\n{script.title}\n\n{script.description}")
+        print("Enviado por Telegram")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="sports-analytics",
@@ -592,6 +619,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="0 = partidos de hoy; 1 = partidos de mañana (informe la noche anterior)",
     )
     daily.set_defaults(func=_run_daily)
+
+    sh = sub.add_parser("short-sample", help="Short de ejemplo (diseño, voz y envío)")
+    sh.add_argument("--output", default="data/short_prueba.mp4")
+    sh.add_argument("--no-voice", action="store_true", help="Sin Google TTS")
+    sh.add_argument("--send", action="store_true", help="Enviar al chat personal")
+    sh.set_defaults(func=_short_sample)
 
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(
         func=_settle

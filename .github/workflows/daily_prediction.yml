@@ -53,6 +53,9 @@ jobs:
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       # Canal público @JCProbabilidades (variable, no secreto). Vacío = no se publica
       TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_CHANNEL_ID }}
+      # Short diario: variable SHORT_ENABLED=true para activarlo; voz con Google TTS
+      SHORT_ENABLED: ${{ vars.SHORT_ENABLED || 'false' }}
+      GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
       SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
@@ -75,6 +78,10 @@ jobs:
 
       - name: Instalar dependencias
         run: pip install -e .
+
+      - name: ffmpeg (solo si el Short está activo)
+        if: vars.SHORT_ENABLED == 'true'
+        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
 
       - name: Verificar base de datos configurada
         run: |
