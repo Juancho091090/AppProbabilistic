@@ -45,10 +45,19 @@ class GoogleTTS:
         }
         resp = self._client.post(TTS_URL, params={"key": self._key}, json=body)
         if resp.status_code >= 400:
-            # Sin la URL: lleva la clave
-            raise RuntimeError(f"Google TTS HTTP {resp.status_code}: {resp.text[:200]}")
+            # Sin la URL (lleva la clave). Se resume el error con su motivo (ErrorInfo.reason)
+            raise RuntimeError(f"Google TTS HTTP {resp.status_code}: {_error_summary(resp)}")
         self.characters += len(text)
         return base64.b64decode(resp.json()["audioContent"])
+
+
+def _error_summary(resp: httpx.Response) -> str:
+    try:
+        err = resp.json()["error"]
+    except Exception:  # noqa: BLE001
+        return resp.text[:300]
+    reasons = [d.get("reason") for d in err.get("details", []) if d.get("reason")]
+    return f"{err.get('status')} · {err.get('message', '')[:200]} · motivo: {', '.join(reasons) or '-'}"
 
 
 def wav_duration(data: bytes) -> float:
