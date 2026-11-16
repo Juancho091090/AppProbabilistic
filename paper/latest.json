@@ -43352,10 +43352,10 @@
 "fair_prob_taken": 0.4819,
 "model_prob": 0.5046,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.96,
+"fair_prob_close": 0.4935,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2283,
@@ -43371,10 +43371,10 @@
 "fair_prob_taken": 0.6722,
 "model_prob": 0.7279,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.39,
+"fair_prob_close": 0.6698,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2284,
@@ -43390,10 +43390,10 @@
 "fair_prob_taken": 0.5333,
 "model_prob": 0.547,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.56,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2285,
@@ -43409,10 +43409,10 @@
 "fair_prob_taken": 0.4966,
 "model_prob": 0.5068,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.4986,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2286,
@@ -43428,10 +43428,10 @@
 "fair_prob_taken": 0.4148,
 "model_prob": 0.5659,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 2.3,
+"fair_prob_close": 0.4177,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2287,
@@ -43447,10 +43447,10 @@
 "fair_prob_taken": 0.6026,
 "model_prob": 0.7262,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.58,
+"fair_prob_close": 0.5907,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2288,
@@ -43466,10 +43466,10 @@
 "fair_prob_taken": 0.4577,
 "model_prob": 0.5408,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.473,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2289,
@@ -43485,10 +43485,10 @@
 "fair_prob_taken": 0.5229,
 "model_prob": 0.6469,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5206,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2290,
@@ -43504,10 +43504,10 @@
 "fair_prob_taken": 0.5229,
 "model_prob": 0.6469,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5206,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2291,
@@ -43523,10 +43523,10 @@
 "fair_prob_taken": 0.5229,
 "model_prob": 0.6469,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.85,
+"fair_prob_close": 0.5206,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2292,
@@ -43542,10 +43542,10 @@
 "fair_prob_taken": 0.6284,
 "model_prob": 0.5781,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6344,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2293,
@@ -43561,10 +43561,10 @@
 "fair_prob_taken": 0.5317,
 "model_prob": 0.6223,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.75,
+"fair_prob_close": 0.5407,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2294,
@@ -43580,10 +43580,10 @@
 "fair_prob_taken": 0.5759,
 "model_prob": 0.5393,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.557,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2295,
@@ -43599,10 +43599,10 @@
 "fair_prob_taken": 0.4592,
 "model_prob": 0.5293,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.97,
+"fair_prob_close": 0.4894,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2296,
@@ -43618,10 +43618,10 @@
 "fair_prob_taken": 0.4592,
 "model_prob": 0.5293,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.97,
+"fair_prob_close": 0.4894,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2297,
@@ -43637,10 +43637,10 @@
 "fair_prob_taken": 0.4738,
 "model_prob": 0.5465,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.4948,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2298,
@@ -43656,10 +43656,10 @@
 "fair_prob_taken": 0.4642,
 "model_prob": 0.5479,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.72,
+"fair_prob_close": 0.5438,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2299,
@@ -43675,10 +43675,10 @@
 "fair_prob_taken": 0.7249,
 "model_prob": 0.5769,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.15,
+"fair_prob_close": 0.813,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2300,
@@ -43694,10 +43694,10 @@
 "fair_prob_taken": 0.8612,
 "model_prob": 0.6508,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.09,
+"fair_prob_close": 0.8734,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2301,
@@ -43713,10 +43713,10 @@
 "fair_prob_taken": 0.8612,
 "model_prob": 0.6508,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.09,
+"fair_prob_close": 0.8734,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2302,
@@ -43732,10 +43732,10 @@
 "fair_prob_taken": 0.0993,
 "model_prob": 0.2293,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 9.64,
+"fair_prob_close": 0.0988,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2303,
@@ -43751,10 +43751,10 @@
 "fair_prob_taken": 0.0395,
 "model_prob": 0.1199,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 34.19,
+"fair_prob_close": 0.0278,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2304,
@@ -43770,10 +43770,10 @@
 "fair_prob_taken": 0.8612,
 "model_prob": 0.6508,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.09,
+"fair_prob_close": 0.8734,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2305,
@@ -43789,10 +43789,10 @@
 "fair_prob_taken": 0.5607,
 "model_prob": 0.5566,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.86,
+"fair_prob_close": 0.5194,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2306,
@@ -43808,10 +43808,10 @@
 "fair_prob_taken": 0.5053,
 "model_prob": 0.5804,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.93,
+"fair_prob_close": 0.4948,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2307,
@@ -43827,10 +43827,10 @@
 "fair_prob_taken": 0.5658,
 "model_prob": 0.5106,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.4,
+"fair_prob_close": 0.6627,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2308,
@@ -43846,10 +43846,10 @@
 "fair_prob_taken": 0.7525,
 "model_prob": 0.7284,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.807,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2309,
@@ -43865,10 +43865,10 @@
 "fair_prob_taken": 0.7525,
 "model_prob": 0.7284,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.807,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2310,
@@ -43884,10 +43884,10 @@
 "fair_prob_taken": 0.1606,
 "model_prob": 0.1818,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 6.88,
+"fair_prob_close": 0.1396,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2311,
@@ -43903,10 +43903,10 @@
 "fair_prob_taken": 0.7525,
 "model_prob": 0.7284,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.19,
+"fair_prob_close": 0.807,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2312,
@@ -43922,10 +43922,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5271,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.84,
+"fair_prob_close": 0.508,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2313,
@@ -43941,10 +43941,10 @@
 "fair_prob_taken": 0.5316,
 "model_prob": 0.5952,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.78,
+"fair_prob_close": 0.5316,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2314,
@@ -43960,10 +43960,10 @@
 "fair_prob_taken": 0.5423,
 "model_prob": 0.5685,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5423,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2315,
@@ -43979,10 +43979,10 @@
 "fair_prob_taken": 0.3761,
 "model_prob": 0.4061,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 2.53,
+"fair_prob_close": 0.3595,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2316,
@@ -43998,10 +43998,10 @@
 "fair_prob_taken": 0.6847,
 "model_prob": 0.5869,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.43,
+"fair_prob_close": 0.669,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2317,
@@ -44017,10 +44017,10 @@
 "fair_prob_taken": 0.5814,
 "model_prob": 0.6889,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.5,
+"fair_prob_close": 0.6259,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2318,
@@ -44036,10 +44036,10 @@
 "fair_prob_taken": 0.6729,
 "model_prob": 0.6144,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.33,
+"fair_prob_close": 0.6998,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2319,
@@ -44055,10 +44055,10 @@
 "fair_prob_taken": 0.2257,
 "model_prob": 0.2434,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 4.27,
+"fair_prob_close": 0.2265,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2320,
@@ -44074,10 +44074,10 @@
 "fair_prob_taken": 0.2646,
 "model_prob": 0.3803,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 3.52,
+"fair_prob_close": 0.2748,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2321,
@@ -44093,10 +44093,10 @@
 "fair_prob_taken": 0.5097,
 "model_prob": 0.3763,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.94,
+"fair_prob_close": 0.4986,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2322,
@@ -44112,10 +44112,10 @@
 "fair_prob_taken": 0.5627,
 "model_prob": 0.5089,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.64,
+"fair_prob_close": 0.5879,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2323,
@@ -44131,10 +44131,10 @@
 "fair_prob_taken": 0.5677,
 "model_prob": 0.5868,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.66,
+"fair_prob_close": 0.5699,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2324,
@@ -44150,10 +44150,10 @@
 "fair_prob_taken": 0.496,
 "model_prob": 0.537,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.83,
+"fair_prob_close": 0.5107,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2325,
@@ -44169,10 +44169,10 @@
 "fair_prob_taken": 0.6573,
 "model_prob": 0.5193,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.41,
+"fair_prob_close": 0.684,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2326,
@@ -44188,10 +44188,10 @@
 "fair_prob_taken": 0.2017,
 "model_prob": 0.2531,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 5.01,
+"fair_prob_close": 0.1925,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2327,
@@ -44207,10 +44207,10 @@
 "fair_prob_taken": 0.141,
 "model_prob": 0.2276,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 7.81,
+"fair_prob_close": 0.1235,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2328,
@@ -44226,10 +44226,10 @@
 "fair_prob_taken": 0.6573,
 "model_prob": 0.5193,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.41,
+"fair_prob_close": 0.684,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2329,
@@ -44245,10 +44245,10 @@
 "fair_prob_taken": 0.6127,
 "model_prob": 0.5493,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.48,
+"fair_prob_close": 0.6364,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2330,
@@ -44264,10 +44264,10 @@
 "fair_prob_taken": 0.4868,
 "model_prob": 0.5246,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.95,
+"fair_prob_close": 0.4868,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2331,
@@ -44283,10 +44283,10 @@
 "fair_prob_taken": 0.3538,
 "model_prob": 0.5038,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 2.55,
+"fair_prob_close": 0.3625,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2332,
@@ -44302,10 +44302,10 @@
 "fair_prob_taken": 0.6289,
 "model_prob": 0.4465,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.59,
+"fair_prob_close": 0.5971,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2333,
@@ -44321,10 +44321,10 @@
 "fair_prob_taken": 0.1273,
 "model_prob": 0.2708,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 6.58,
+"fair_prob_close": 0.1443,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2334,
@@ -44340,10 +44340,10 @@
 "fair_prob_taken": 0.2438,
 "model_prob": 0.2826,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 3.67,
+"fair_prob_close": 0.2587,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2335,
@@ -44359,10 +44359,10 @@
 "fair_prob_taken": 0.6289,
 "model_prob": 0.4465,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.59,
+"fair_prob_close": 0.5971,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2336,
@@ -44378,10 +44378,10 @@
 "fair_prob_taken": 0.4574,
 "model_prob": 0.5203,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5564,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2337,
@@ -44397,10 +44397,10 @@
 "fair_prob_taken": 0.5587,
 "model_prob": 0.6744,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.71,
+"fair_prob_close": 0.5558,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2338,
@@ -44416,10 +44416,10 @@
 "fair_prob_taken": 0.504,
 "model_prob": 0.5107,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 2.25,
+"fair_prob_close": 0.411,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2339,
@@ -44435,10 +44435,10 @@
 "fair_prob_taken": 0.5405,
 "model_prob": 0.6831,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.84,
+"fair_prob_close": 0.5265,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2340,
@@ -44454,10 +44454,10 @@
 "fair_prob_taken": 0.5405,
 "model_prob": 0.6831,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.84,
+"fair_prob_close": 0.5265,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2341,
@@ -44473,10 +44473,10 @@
 "fair_prob_taken": 0.5405,
 "model_prob": 0.6831,
 "confidence": "Alta",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.84,
+"fair_prob_close": 0.5265,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2342,
@@ -44492,10 +44492,10 @@
 "fair_prob_taken": 0.5604,
 "model_prob": 0.5843,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.66,
+"fair_prob_close": 0.5797,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2343,
@@ -44511,10 +44511,10 @@
 "fair_prob_taken": 0.5105,
 "model_prob": 0.6181,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.87,
+"fair_prob_close": 0.5092,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2344,
@@ -44530,10 +44530,10 @@
 "fair_prob_taken": 0.5897,
 "model_prob": 0.5429,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.589,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2345,
@@ -44549,10 +44549,10 @@
 "fair_prob_taken": 0.6195,
 "model_prob": 0.5238,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6372,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2346,
@@ -44568,10 +44568,10 @@
 "fair_prob_taken": 0.144,
 "model_prob": 0.2055,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 7.58,
+"fair_prob_close": 0.1278,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2347,
@@ -44587,10 +44587,10 @@
 "fair_prob_taken": 0.2365,
 "model_prob": 0.2708,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 4.12,
+"fair_prob_close": 0.2351,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2348,
@@ -44606,10 +44606,10 @@
 "fair_prob_taken": 0.6195,
 "model_prob": 0.5238,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.52,
+"fair_prob_close": 0.6372,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2349,
@@ -44625,10 +44625,10 @@
 "fair_prob_taken": 0.5356,
 "model_prob": 0.5419,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.78,
+"fair_prob_close": 0.534,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2350,
@@ -44644,10 +44644,10 @@
 "fair_prob_taken": 0.6134,
 "model_prob": 0.5718,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.51,
+"fair_prob_close": 0.6118,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2351,
@@ -44663,10 +44663,10 @@
 "fair_prob_taken": 0.5148,
 "model_prob": 0.5604,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.73,
+"fair_prob_close": 0.5299,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2352,
@@ -44682,10 +44682,10 @@
 "fair_prob_taken": 0.6033,
 "model_prob": 0.556,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.6019,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2353,
@@ -44701,10 +44701,10 @@
 "fair_prob_taken": 0.2232,
 "model_prob": 0.2405,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 4.11,
+"fair_prob_close": 0.2299,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2354,
@@ -44720,10 +44720,10 @@
 "fair_prob_taken": 0.1735,
 "model_prob": 0.2035,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 5.62,
+"fair_prob_close": 0.1682,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2355,
@@ -44739,10 +44739,10 @@
 "fair_prob_taken": 0.6033,
 "model_prob": 0.556,
 "confidence": "Media",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.57,
+"fair_prob_close": 0.6019,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2356,
@@ -44758,10 +44758,10 @@
 "fair_prob_taken": 0.5145,
 "model_prob": 0.6523,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.65,
+"fair_prob_close": 0.5769,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2357,
@@ -44777,10 +44777,10 @@
 "fair_prob_taken": 0.443,
 "model_prob": 0.5092,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 2.1,
+"fair_prob_close": 0.443,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2358,
@@ -44796,10 +44796,10 @@
 "fair_prob_taken": 0.5362,
 "model_prob": 0.5757,
 "confidence": null,
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.67,
+"fair_prob_close": 0.557,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2359,
@@ -44815,10 +44815,10 @@
 "fair_prob_taken": 0.622,
 "model_prob": 0.2893,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 1.81,
+"fair_prob_close": 0.5222,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2360,
@@ -44834,10 +44834,10 @@
 "fair_prob_taken": 0.2283,
 "model_prob": 0.31,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 3.3,
+"fair_prob_close": 0.2864,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2361,
@@ -44853,10 +44853,10 @@
 "fair_prob_taken": 0.1497,
 "model_prob": 0.4007,
 "confidence": "Baja",
-"price_close": null,
-"fair_prob_close": null,
-"result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"price_close": 4.94,
+"fair_prob_close": 0.1913,
+"result": "Falló",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 },
 {
 "n": 2362,
@@ -44872,9 +44872,807 @@
 "fair_prob_taken": 0.622,
 "model_prob": 0.2893,
 "confidence": "Baja",
+"price_close": 1.81,
+"fair_prob_close": 0.5222,
+"result": "Acertó",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2363,
+"id": 2363,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.53,
+"fair_prob_taken": 0.6295,
+"model_prob": 0.5474,
+"confidence": null,
 "price_close": null,
 "fair_prob_close": null,
 "result": "Pendiente",
-"updated": "2026-11-15T23:50:21.220786+00:00"
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2364,
+"id": 2364,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.72,
+"fair_prob_taken": 0.5474,
+"model_prob": 0.6287,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2365,
+"id": 2365,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.73,
+"fair_prob_taken": 0.5483,
+"model_prob": 0.5762,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2366,
+"id": 2366,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado con 60 % o más",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 1.44,
+"fair_prob_taken": 0.67,
+"model_prob": 0.5125,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2367,
+"id": 2367,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 6.73,
+"fair_prob_taken": 0.1434,
+"model_prob": 0.2415,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2368,
+"id": 2368,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 5.17,
+"fair_prob_taken": 0.1866,
+"model_prob": 0.2461,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2369,
+"id": 2369,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Wales vs Portugal",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 1.44,
+"fair_prob_taken": 0.67,
+"model_prob": 0.5125,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2370,
+"id": 2370,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Denmark vs Norway",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.48,
+"fair_prob_taken": 0.6485,
+"model_prob": 0.6432,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2371,
+"id": 2371,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Denmark vs Norway",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.57,
+"fair_prob_taken": 0.5974,
+"model_prob": 0.6741,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2372,
+"id": 2372,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Denmark vs Norway",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 3.5,
+"fair_prob_taken": 0.2693,
+"model_prob": 0.6473,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2373,
+"id": 2373,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Denmark vs Norway",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.32,
+"fair_prob_taken": 0.4182,
+"model_prob": 0.4701,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2374,
+"id": 2374,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Denmark vs Norway",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.32,
+"fair_prob_taken": 0.4182,
+"model_prob": 0.4701,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2375,
+"id": 2375,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Ukraine vs Georgia",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.67,
+"fair_prob_taken": 0.574,
+"model_prob": 0.5635,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2376,
+"id": 2376,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Ukraine vs Georgia",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.74,
+"fair_prob_taken": 0.5445,
+"model_prob": 0.5688,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2377,
+"id": 2377,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Ukraine vs Georgia",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 1.9,
+"fair_prob_taken": 0.5,
+"model_prob": 0.5072,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2378,
+"id": 2378,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Ukraine vs Georgia",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.52,
+"fair_prob_taken": 0.2742,
+"model_prob": 0.2853,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2379,
+"id": 2379,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Ukraine vs Georgia",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.21,
+"fair_prob_taken": 0.4368,
+"model_prob": 0.4252,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2380,
+"id": 2380,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.51,
+"fair_prob_taken": 0.6344,
+"model_prob": 0.5952,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2381,
+"id": 2381,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.76,
+"fair_prob_taken": 0.5381,
+"model_prob": 0.5807,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2382,
+"id": 2382,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: No",
+"bookmaker": "Betfair",
+"price_taken": 1.65,
+"fair_prob_taken": 0.5714,
+"model_prob": 0.5337,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2383,
+"id": 2383,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Empate",
+"bookmaker": "Pinnacle",
+"price_taken": 3.32,
+"fair_prob_taken": 0.29,
+"model_prob": 0.3034,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2384,
+"id": 2384,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 4.21,
+"fair_prob_taken": 0.2287,
+"model_prob": 0.3092,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2385,
+"id": 2385,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Hungary vs Northern Ireland",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.0,
+"fair_prob_taken": 0.4814,
+"model_prob": 0.3874,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2386,
+"id": 2386,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Israel vs Austria",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.71,
+"fair_prob_taken": 0.5615,
+"model_prob": 0.5508,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2387,
+"id": 2387,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Israel vs Austria",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.0,
+"fair_prob_taken": 0.4751,
+"model_prob": 0.5595,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2388,
+"id": 2388,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Israel vs Austria",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.57,
+"fair_prob_taken": 0.6025,
+"model_prob": 0.5761,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2389,
+"id": 2389,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Israel vs Austria",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 1.82,
+"fair_prob_taken": 0.5286,
+"model_prob": 0.5497,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2390,
+"id": 2390,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Israel vs Austria",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 1.82,
+"fair_prob_taken": 0.5286,
+"model_prob": 0.5497,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2391,
+"id": 2391,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Rep. Of Ireland vs Kosovo",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.58,
+"fair_prob_taken": 0.607,
+"model_prob": 0.5252,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2392,
+"id": 2392,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Rep. Of Ireland vs Kosovo",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.03,
+"fair_prob_taken": 0.4672,
+"model_prob": 0.527,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2393,
+"id": 2393,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Rep. Of Ireland vs Kosovo",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 2.1,
+"fair_prob_taken": 0.4517,
+"model_prob": 0.527,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2394,
+"id": 2394,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Rep. Of Ireland vs Kosovo",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Visitante",
+"bookmaker": "Pinnacle",
+"price_taken": 3.85,
+"fair_prob_taken": 0.2506,
+"model_prob": 0.3286,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2395,
+"id": 2395,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Rep. Of Ireland vs Kosovo",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.15,
+"fair_prob_taken": 0.4488,
+"model_prob": 0.3912,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2396,
+"id": 2396,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Poland vs Sweden",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5751,
+"model_prob": 0.5784,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2397,
+"id": 2397,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Poland vs Sweden",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 1.75,
+"fair_prob_taken": 0.5407,
+"model_prob": 0.5946,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2398,
+"id": 2398,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Poland vs Sweden",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.5,
+"fair_prob_taken": 0.6296,
+"model_prob": 0.6009,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2399,
+"id": 2399,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Poland vs Sweden",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 2.33,
+"fair_prob_taken": 0.4146,
+"model_prob": 0.42,
+"confidence": "Baja",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2400,
+"id": 2400,
+"report_date": "2026-11-17",
+"rule": "Goles 2.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Bosnia & Herzegovina vs Romania",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Más de 2.5 goles",
+"bookmaker": "Pinnacle",
+"price_taken": 1.81,
+"fair_prob_taken": 0.5299,
+"model_prob": 0.525,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2401,
+"id": 2401,
+"report_date": "2026-11-17",
+"rule": "Córners 8.5: lado del modelo (más/menos)",
+"competition": "UEFA Nations League",
+"match": "Bosnia & Herzegovina vs Romania",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Menos de 8.5 córners",
+"bookmaker": "Pinnacle",
+"price_taken": 2.01,
+"fair_prob_taken": 0.4711,
+"model_prob": 0.5126,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2402,
+"id": 2402,
+"report_date": "2026-11-17",
+"rule": "Ambos marcan: lado del modelo (sí/no)",
+"competition": "UEFA Nations League",
+"match": "Bosnia & Herzegovina vs Romania",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Ambos marcan: Sí",
+"bookmaker": "Betfair",
+"price_taken": 1.67,
+"fair_prob_taken": 0.5628,
+"model_prob": 0.5366,
+"confidence": null,
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2403,
+"id": 2403,
+"report_date": "2026-11-17",
+"rule": "Valor esperado del modelo positivo (control)",
+"competition": "UEFA Nations League",
+"match": "Bosnia & Herzegovina vs Romania",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.89,
+"fair_prob_taken": 0.5097,
+"model_prob": 0.5625,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
+},
+{
+"n": 2404,
+"id": 2404,
+"report_date": "2026-11-17",
+"rule": "Favorito del mercado, todos (referencia)",
+"competition": "UEFA Nations League",
+"match": "Bosnia & Herzegovina vs Romania",
+"kickoff_local": "2026-11-17 14:45",
+"selection": "Local",
+"bookmaker": "Pinnacle",
+"price_taken": 1.89,
+"fair_prob_taken": 0.5097,
+"model_prob": 0.5625,
+"confidence": "Media",
+"price_close": null,
+"fair_prob_close": null,
+"result": "Pendiente",
+"updated": "2026-11-16T23:50:44.594408+00:00"
 }
 ]
