@@ -15,7 +15,7 @@ from sports_analytics.core.logging import get_logger, register_secret
 
 log = get_logger(__name__)
 TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
-DEFAULT_VOICE = "es-US-Chirp3-HD-Charon"
+DEFAULT_VOICE = "es-US-Chirp3-HD-Puck"
 
 
 class GoogleTTS:

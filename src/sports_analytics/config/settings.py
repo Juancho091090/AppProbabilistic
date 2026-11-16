@@ -61,7 +61,7 @@ class Settings(BaseSettings):
     # Short diario (video vertical): se genera tras el informe y llega al chat personal
     short_enabled: bool = False
     google_tts_api_key: SecretStr | None = None
-    google_tts_voice: str = "es-US-Chirp3-HD-Charon"
+    google_tts_voice: str = "es-US-Chirp3-HD-Puck"
     short_music_file: str | None = None  # pista propia; sin ella, música generada por código
     telegram_api_base_url: str = "https://api.telegram.org"
 

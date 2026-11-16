@@ -7,7 +7,7 @@ on:
     inputs:
       voice:
         description: "Voz de Google TTS (Chirp 3 HD)"
-        default: "es-US-Chirp3-HD-Charon"
+        default: "es-US-Chirp3-HD-Puck"
 
 permissions:
   contents: read

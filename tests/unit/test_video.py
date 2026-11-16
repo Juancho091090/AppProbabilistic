@@ -72,7 +72,7 @@ def test_google_tts_request_and_hidden_key():
     def handler(request):
         seen.append(request)
         body = json.loads(request.content)
-        assert body["voice"] == {"languageCode": "es-US", "name": "es-US-Chirp3-HD-Charon"}
+        assert body["voice"] == {"languageCode": "es-US", "name": "es-US-Chirp3-HD-Puck"}
         return httpx.Response(200, json={"audioContent": base64.b64encode(_wav(1.5)).decode()})
 
     tts = GoogleTTS("clave-secreta-123", transport=httpx.MockTransport(handler))
