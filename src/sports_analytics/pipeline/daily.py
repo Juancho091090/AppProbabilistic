@@ -609,7 +609,9 @@ def _daily_short(settings, payload, fair, n_high, svc) -> bool:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
     try:
         with tempfile.TemporaryDirectory() as tmp:
-            path = render_short(script, Path(tmp) / "short.mp4", payload.timezone, tts)
+            path = render_short(
+                script, Path(tmp) / "short.mp4", payload.timezone, tts, settings.short_music_file
+            )
             caption = (
                 f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n{script.description}"
             )

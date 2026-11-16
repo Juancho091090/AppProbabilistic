@@ -14,7 +14,8 @@ import pytest
 from sports_analytics.config.settings import Settings
 from sports_analytics.pipeline.daily import _daily_short
 from sports_analytics.reporting.telegram import TelegramService
-from sports_analytics.video.render import _captions, render_short, timeline
+from sports_analytics.video.audio import RATE, generate_music, mix_soundtrack, sfx
+from sports_analytics.video.render import _captions, render_short, sfx_events, timeline, word_times
 from sports_analytics.video.sample import sample_payload
 from sports_analytics.video.script import build_short_script, pick_open_match
 from sports_analytics.video.tts import GoogleTTS, concat_wavs, wav_duration
@@ -95,8 +96,8 @@ def test_timeline_uses_voice_durations():
     s = build_short_script(payload, fair, n)
     fake = SimpleNamespace(synthesize=lambda text: _wav(2.0))
     tl = timeline(s, fake)
-    assert [round(t.duration, 2) for t in tl] == [2.35] * 4
-    assert tl[1].start == pytest.approx(2.35)
+    assert [round(t.duration, 2) for t in tl] == [2.35, 2.56, 2.56, 2.56]
+    assert tl[1].start == pytest.approx(2.35) and tl[1].lead == pytest.approx(0.21)
 
 
 @pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="sin ffmpeg")
@@ -130,7 +131,7 @@ def test_daily_short_sends_video_to_personal_chat(monkeypatch):
     payload, fair, n = sample_payload()
     sent = {}
 
-    def fake_render(script, path, tz, tts):
+    def fake_render(script, path, tz, tts, music=None):
         path.write_bytes(b"mp4")
         return path
 
@@ -167,3 +168,50 @@ def test_all_font_weights_are_bundled():
     assert weights
     for w in weights:
         assert (render.ASSETS / f"Inter-{w}.otf").is_file(), w
+
+
+def _arr(wav_bytes: bytes):
+    import numpy as np
+
+    with wave.open(io.BytesIO(wav_bytes)) as w:
+        assert w.getframerate() == RATE
+        return np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16) / 32768
+
+
+def test_music_is_generated_and_normalized():
+    m = generate_music(5.0)
+    assert len(m) == 5 * RATE and 0.99 <= abs(m).max() <= 1.0
+    for kind in ("whoosh", "pop", "hit"):
+        assert abs(sfx(kind)).max() > 0.1
+
+
+def test_mix_ducks_music_under_voice_and_never_clips():
+    import numpy as np
+
+    loud = io.BytesIO()
+    with wave.open(loud, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(24000)
+        tt = np.arange(24000 * 2) / 24000
+        w.writeframes((np.sin(2 * np.pi * 220 * tt) * 0.5 * 32767).astype(np.int16).tobytes())
+    x = _arr(mix_soundtrack([(3.0, loud.getvalue())], 8.0, [(1.0, "hit")]))
+    assert len(x) == 8 * RATE and abs(x).max() <= 0.98
+    # sin voz: solo música (más baja que la voz)
+    assert np.sqrt(np.mean(x[int(6.5 * RATE) : int(6.9 * RATE)] ** 2)) < 0.2
+
+
+def test_sfx_events_follow_scenes():
+    payload, fair, n = sample_payload()
+    tl = timeline(build_short_script(payload, fair, n))
+    ev = sfx_events(tl)
+    whooshes = [t for t, k in ev if k == "whoosh"]
+    assert whooshes == [ts.start for ts in tl[1:]]
+    assert sum(1 for _, k in ev if k == "pop") == 1 + len(tl[2].scene.data["duels"])
+
+
+def test_word_times_cover_speech_after_lead():
+    payload, fair, n = sample_payload()
+    scene = build_short_script(payload, fair, n).scenes[1]
+    wt = word_times(scene, 5.0, lead=0.2)
+    assert wt[0][0] == pytest.approx(0.2) and wt[-1][1] == pytest.approx(5.0 - 0.35)

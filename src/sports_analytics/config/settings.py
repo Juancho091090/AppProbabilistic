@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     short_enabled: bool = False
     google_tts_api_key: SecretStr | None = None
     google_tts_voice: str = "es-US-Chirp3-HD-Charon"
+    short_music_file: str | None = None  # pista propia; sin ella, música generada por código
     telegram_api_base_url: str = "https://api.telegram.org"
 
     # Email

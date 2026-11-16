@@ -586,7 +586,7 @@ def _short_sample(args: argparse.Namespace) -> int:
     tts = None
     if settings.google_tts_api_key and not args.no_voice:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
-    path = render_short(script, Path(args.output), payload.timezone, tts)
+    path = render_short(script, Path(args.output), payload.timezone, tts, settings.short_music_file)
     print(f"Video: {path} · voz: {'sí' if tts else 'no'}")
     if args.send:
         from sports_analytics.reporting.telegram import TelegramService

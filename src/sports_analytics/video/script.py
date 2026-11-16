@@ -57,8 +57,10 @@ def _dec(x: float) -> str:
     return f"{x:.1f}".replace(".", ",")
 
 
-def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[tuple[str, str, str]]:
-    """(título, valor, frase narrada) de cada factor."""
+def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[dict]:
+    """Duelos de la escena "¿por qué?": dos valores enfrentados y la frase narrada.
+
+    ``fmt``: int (Elo), dec (goles) o pct (probabilidades)."""
     out = []
     elo = f.context.get("elo") or {}
     if elo:
@@ -68,22 +70,37 @@ def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[tuple[str, str,
             say = f"En Elo están casi igualados: {h:.0f} contra {a:.0f}."
         else:
             better = f.home_or_a if diff > 0 else f.away_or_b
-            say = f"{better} tiene más Elo, {max(h, a):.0f} contra {min(h, a):.0f}, pero no tanto como para inclinar el partido."
-        out.append(("Elo", f"{h:.0f} vs {a:.0f}", say))
+            say = (
+                f"{better} tiene más Elo, {max(h, a):.0f} contra {min(h, a):.0f}, "
+                "pero no tanto como para inclinar el partido."
+            )
+        out.append(
+            {
+                "title": "Fuerza (Elo)",
+                "left": (f.home_or_a, float(h)),
+                "right": (f.away_or_b, float(a)),
+                "fmt": "int",
+                "say": say,
+            }
+        )
     lam = f.context.get("lambda") or {}
     if lam:
         out.append(
-            (
-                "Goles esperados",
-                f"{_dec(lam['home'])} – {_dec(lam['away'])}",
-                f"El modelo espera {_dec(lam['home'])} goles de {f.home_or_a} "
-                f"y {_dec(lam['away'])} de {f.away_or_b}.",
-            )
+            {
+                "title": "Goles esperados",
+                "left": (f.home_or_a, float(lam["home"])),
+                "right": (f.away_or_b, float(lam["away"])),
+                "fmt": "dec",
+                "say": (
+                    f"El modelo espera {_dec(lam['home'])} goles de {f.home_or_a} "
+                    f"y {_dec(lam['away'])} de {f.away_or_b}."
+                ),
+            }
         )
     if fair:
         labels = (f.home_or_a, "el empate", f.away_or_b)
         i = max(range(3), key=lambda k: fair[k])
-        model = list(f.markets["1x2"].values())
+        model = [f.markets["1x2"][k] for k in ("home", "draw", "away")]
         if abs(fair[i] - model[i]) >= 0.08:
             say = (
                 f"Ojo: el mercado sí ve favorito a {labels[i]}, con {_pct(fair[i])} por ciento, "
@@ -93,7 +110,16 @@ def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[tuple[str, str,
             say = (
                 f"Y el mercado lo ve parecido: su favorito no pasa del {_pct(fair[i])} por ciento."
             )
-        out.append(("Mercado", f"{labels[i].capitalize()} {_pct(fair[i])}%", say))
+        name = "Empate" if i == 1 else labels[i]
+        out.append(
+            {
+                "title": f"Favorito del mercado: {name}",
+                "left": ("Mercado", float(fair[i])),
+                "right": ("Modelo", float(model[i])),
+                "fmt": "pct",
+                "say": say,
+            }
+        )
     return out
 
 
@@ -126,8 +152,8 @@ def build_short_script(
     factors = _why(f, (market_fair or {}).get(f.event_id))
     why = Scene(
         "why",
-        " ".join(s for _, _, s in factors) or "Los dos equipos llegan con números muy similares.",
-        {"cards": [(t, v) for t, v, _ in factors]},
+        " ".join(x["say"] for x in factors) or "Los dos equipos llegan con números muy similares.",
+        {"duels": factors},
     )
     if n_high:
         cta_say = (
