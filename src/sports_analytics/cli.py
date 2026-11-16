@@ -41,6 +41,7 @@ def _run_daily(args: argparse.Namespace) -> int:
             Path(args.output).with_suffix(".pdf").write_bytes(outcome.pdf)
     summary = (
         f"Estado: {outcome.status} · Telegram: {outcome.telegram_sent} · "
+        f"Canal: {outcome.channel_sent} · "
         f"Email: {outcome.email_sent} · Narrativa Claude: {outcome.narrative}"
     )
     print(summary)

@@ -56,6 +56,8 @@ class Settings(BaseSettings):
     # Telegram
     telegram_bot_token: SecretStr | None = None
     telegram_chat_id: str | None = None
+    # Canal público (@JCProbabilidades): mensaje propio, más corto que el informe personal
+    telegram_channel_id: str | None = None
     telegram_api_base_url: str = "https://api.telegram.org"
 
     # Email
@@ -110,6 +112,10 @@ class Settings(BaseSettings):
     @property
     def telegram_enabled(self) -> bool:
         return bool(self.telegram_bot_token and self.telegram_chat_id)
+
+    @property
+    def telegram_channel_enabled(self) -> bool:
+        return bool(self.telegram_bot_token and self.telegram_channel_id)
 
     @property
     def email_enabled(self) -> bool:

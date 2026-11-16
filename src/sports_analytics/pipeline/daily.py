@@ -40,6 +40,7 @@ from sports_analytics.reporting.builder import (
     render_email_summary,
     render_markdown,
 )
+from sports_analytics.reporting.channel import render_channel_message, select_channel_forecasts
 from sports_analytics.reporting.claude_narrator import ClaudeNarrator
 from sports_analytics.reporting.payload import CompetitionSection, DailyReportPayload
 from sports_analytics.reporting.pdf import render_pdf
@@ -58,6 +59,7 @@ class Services:
     tennis: TennisApiClient | None = None
     narrator: ClaudeNarrator | None = None
     telegram: Any | None = None
+    channel: Any | None = None  # canal público de Telegram
     email: Any | None = None
 
 
@@ -68,6 +70,7 @@ class DailyOutcome:
     payload: DailyReportPayload | None
     markdown: str = ""
     telegram_sent: bool = False
+    channel_sent: bool = False
     email_sent: bool = False
     narrative: bool = False
     pdf: bytes | None = None
@@ -85,6 +88,10 @@ def build_services(settings: Settings) -> Services:
         from sports_analytics.reporting.telegram import TelegramService
 
         svc.telegram = TelegramService(settings)
+    if settings.telegram_channel_enabled:
+        from sports_analytics.reporting.telegram import TelegramService
+
+        svc.channel = TelegramService(settings, chat_id=settings.telegram_channel_id)
     if settings.email_enabled:
         from sports_analytics.reporting.email import EmailService
 
@@ -461,6 +468,7 @@ def run_daily(
             if already:
                 log.info("report_already_sent_today", extra={"date": today.isoformat()})
                 run.details = {**(run.details or {}), "skipped_send": "already_sent_today"}
+            channel_ids: list[str] | None = None
             if send and not settings.dry_run and not already:
                 if svc.telegram:
                     try:
@@ -468,6 +476,17 @@ def run_daily(
                         outcome.telegram_sent = True
                     except Exception as exc:
                         issues.append(f"Telegram: {exc}")
+                if svc.channel:
+                    try:
+                        selected = select_channel_forecasts(payload)
+                        svc.channel.send_message(
+                            render_channel_message(payload, selected), parse_mode="HTML"
+                        )
+                        outcome.channel_sent = True
+                        # Registro de lo publicado: base del informe mensual de transparencia
+                        channel_ids = [f.event_id for f in selected]
+                    except Exception as exc:
+                        issues.append(f"Canal de Telegram: {exc}")
                 if svc.email:
                     try:
                         svc.email.send_daily_report(
@@ -493,6 +512,7 @@ def run_daily(
                 "forecasts": len(forecasts),
                 "narrative": narrative is not None,
                 "local_time": to_local(now, tz).isoformat(),
+                **({"channel_event_ids": channel_ids} if channel_ids is not None else {}),
             }
             outcome.status = "success" if not issues else "partial"
             repo.finish_run(session, run, outcome.status)

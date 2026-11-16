@@ -39,13 +39,20 @@ def split_message(text: str, limit: int = TELEGRAM_LIMIT - 96) -> list[str]:
 
 
 class TelegramService:
-    def __init__(self, settings: Settings, transport: httpx.BaseTransport | None = None):
-        if not settings.telegram_enabled:
+    def __init__(
+        self,
+        settings: Settings,
+        transport: httpx.BaseTransport | None = None,
+        chat_id: str | None = None,
+    ):
+        """``chat_id`` permite usar el mismo bot para otro destino (p. ej. el canal público)."""
+        target = chat_id or settings.telegram_chat_id
+        if not (settings.telegram_bot_token and target):
             raise ValueError("Telegram no configurado (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)")
         token = settings.telegram_bot_token.get_secret_value()
         register_secret(token)
         self._url = f"{settings.telegram_api_base_url}/bot{token}/sendMessage"
-        self.chat_id = settings.telegram_chat_id
+        self.chat_id = target
         self._client = httpx.Client(timeout=settings.http_timeout_seconds, transport=transport)
 
     def close(self) -> None:
