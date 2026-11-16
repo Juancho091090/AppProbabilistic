@@ -151,3 +151,19 @@ def test_daily_short_sends_video_to_personal_chat(monkeypatch):
     )
     assert _daily_short(settings, payload, fair, n, svc) is True
     assert sent["url"].endswith("/sendVideo") and b"Atl\xc3\xa9tico de Madrid" in sent["body"]
+
+
+def test_all_font_weights_are_bundled():
+    """Pillow busca en las fuentes del sistema si falta el archivo: en CI no las hay."""
+    import re
+    from pathlib import Path
+
+    from sports_analytics.video import render
+
+    src = Path(render.__file__).read_text(encoding="utf-8")
+    weights = set(re.findall(r'font\("(\w+)"', src)) | set(
+        re.findall(r'_fit\([^)]*?"(\w+)", \d+', src)
+    )
+    assert weights
+    for w in weights:
+        assert (render.ASSETS / f"Inter-{w}.otf").is_file(), w
