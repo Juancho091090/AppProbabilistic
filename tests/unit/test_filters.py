@@ -20,8 +20,8 @@ def test_football_whitelisted(app_config, league_id, name):
 
 
 def test_football_unknown_league_excluded(app_config):
-    # 40 = Championship (Inglaterra), no autorizada
-    result = filter_football_league(40, "Championship", app_config.competitions)
+    # 41 = League One (Inglaterra), no autorizada
+    result = filter_football_league(41, "League One", app_config.competitions)
     assert not result.included
     assert result.reason == "not_in_whitelist"
 
