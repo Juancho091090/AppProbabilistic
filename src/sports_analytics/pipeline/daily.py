@@ -636,7 +636,8 @@ def _daily_short(settings, payload, fair, n_high, svc, recap=None) -> bool:
                 settings.short_theme,
             )
             caption = (
-                f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n{script.description}"
+                f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n"
+                f"{script.description}\n\n📌 Comentario para fijar:\n{script.pinned_comment}"
             )
             svc.telegram.send_video(path, caption)
     finally:

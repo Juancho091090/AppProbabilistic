@@ -317,3 +317,11 @@ def test_send_video_retries_on_telegram_5xx(tmp_path):
     )
     with pytest.raises(RuntimeError):
         bad.send_video(video, "x", wait=0)
+
+
+def test_pinned_comment_invites_debate_and_points_to_telegram():
+    payload, fair, n = sample_payload()
+    s = build_short_script(payload, fair, n)
+    assert "Comenta L, E o V" in s.pinned_comment and "@JCProbabilidades" in s.pinned_comment
+    caption = f"{s.title}\n\n{s.description}\n\n📌 Comentario para fijar:\n{s.pinned_comment}"
+    assert len(caption) < 1024  # límite del pie de video en Telegram

@@ -642,7 +642,11 @@ def _short_sample(args: argparse.Namespace) -> int:
         from sports_analytics.reporting.telegram import TelegramService
 
         svc = TelegramService(settings)
-        svc.send_video(path, f"🎬 Short de prueba\n\n{script.title}\n\n{script.description}")
+        svc.send_video(
+            path,
+            f"🎬 Short de prueba\n\n{script.title}\n\n{script.description}"
+            f"\n\n📌 Comentario para fijar:\n{script.pinned_comment}",
+        )
         print("Enviado por Telegram")
     return 0
 

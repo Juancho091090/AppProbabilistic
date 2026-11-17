@@ -31,6 +31,7 @@ class ShortScript:
     title: str
     description: str
     scenes: list[Scene]
+    pinned_comment: str = ""  # para fijar en YouTube (en Shorts los enlaces no son clicables)
 
 
 def entropy(probs: Sequence[float]) -> float:
@@ -227,4 +228,9 @@ def build_short_script(
         scenes.insert(0, recap_scene(recap))
     if intro:
         scenes.insert(0, INTRO_SCENE)
-    return ShortScript(f.event_id, title[:100], description, scenes)
+    pinned = (
+        f"¿Tú qué ves en {f.home_or_a} vs {f.away_or_b}? Comenta L, E o V 👇\n\n"
+        "📊 Los partidos de confianza Alta de mañana están gratis en Telegram: "
+        "@JCProbabilidades (enlace en el perfil del canal)."
+    )
+    return ShortScript(f.event_id, title[:100], description, scenes, pinned)
