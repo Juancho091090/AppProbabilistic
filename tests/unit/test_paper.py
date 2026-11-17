@@ -132,3 +132,31 @@ def test_parse_line_odds_keeps_requested_lines_with_both_sides():
     lines = {"goals_total": ["2.5"], "btts": [""], "corners_total": ["8.5"]}
     got = {(q.market, q.line): q.prices for q in parse_line_odds(items, lines)}
     assert got == {("goals_total", "2.5"): (1.41, 2.99), ("corners_total", "8.5"): (1.5, 2.52)}
+
+
+def _hcand(prices, key="tur_super_lig", league=True):
+    q = OddsQuote(4, "Pinnacle", *prices)
+    f = SimpleNamespace(confidence="medium", competition_key=key)
+    return Candidate(
+        f, q, tuple(devig(q.prices)), (0.4, 0.3, 0.3), tuple(devig(q.prices, "power")), league
+    )
+
+
+def test_power_devig_gives_favourite_more_than_proportional():
+    prices = (1.36, 5.2, 9.0)
+    prop, powr = devig(prices), devig(prices, "power")
+    assert abs(sum(powr) - 1) < 1e-9 and powr[0] > prop[0] and powr[2] < prop[2]
+
+
+def test_hypothesis_rules_h1_h2():
+    h1, h2 = RULES["h1_favorito_70"][1], RULES["h2_favorito_60_tur_por"][1]
+    # 1.39 / 5.0 / 8.5: proporcional 69.4 %, potencia 70.8 % -> H1 entra
+    c = _hcand((1.39, 5.0, 8.5))
+    assert max(c.fair) < 0.70 <= max(c.fair_power)
+    assert h1(c) == [0] and h2(c) == [0]
+    # Copa internacional: H1 no cuenta aunque el favorito sea muy claro
+    assert h1(_hcand((1.2, 7.0, 13.0), "uefa_champions_league", league=False)) == []
+    # H2 solo Turquía y Portugal, umbral 60 %
+    assert h2(_hcand((1.55, 4.2, 6.0), "esp_laliga")) == []
+    assert h2(_hcand((1.55, 4.2, 6.0), "por_primeira_liga")) == [0]
+    assert h2(_hcand((2.1, 3.4, 3.6), "por_primeira_liga")) == []

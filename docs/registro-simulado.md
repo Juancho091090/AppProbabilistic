@@ -31,6 +31,12 @@ córners y ambos marcan) tendría ventaja frente al mercado. No es una recomenda
 | `goles_2_5_modelo` | Más/menos de 2.5 goles: el lado al que el modelo (Dixon-Coles) da ≥ 50 % |
 | `corners_8_5_modelo` | Más/menos de 8.5 córners: el lado al que el modelo de córners da ≥ 50 % |
 | `btts_modelo` | Ambos marcan sí/no: el lado al que el modelo da ≥ 50 % |
+| `h1_favorito_70` | **H1** (fijada el 17-nov-2026): favorito ≥ 70 %, solo ligas nacionales |
+| `h2_favorito_60_tur_por` | **H2** (fijada el 17-nov-2026): favorito ≥ 60 % en Süper Lig y Primeira Liga |
+
+En H1 y H2 la probabilidad sin margen (al tomar y al cierre) se calcula con el método de
+potencia, no con el proporcional; la definición completa y los criterios de decisión están
+en la pestaña "Hipótesis fijada" de la hoja.
 
 Mercados de línea: los precios salen de la misma llamada a `/odds` (sin filtro de
 apuesta; ids de API-Football 5, 8 y 45, verificados el 29-oct-2026) y se guardan en

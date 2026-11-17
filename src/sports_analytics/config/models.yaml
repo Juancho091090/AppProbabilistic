@@ -160,4 +160,5 @@ market:
 paper_trading:
   enabled: true
   rules: [mercado_favorito_60, modelo_alta, modelo_valor_esperado, mercado_favorito,
-          goles_2_5_modelo, corners_8_5_modelo, btts_modelo]
+          goles_2_5_modelo, corners_8_5_modelo, btts_modelo,
+          h1_favorito_70, h2_favorito_60_tur_por]

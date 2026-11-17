@@ -47,8 +47,10 @@ SIDES = ("yes", "no")  # yes = más de / sí; no = menos de / no
 class Candidate:
     forecast: MatchForecast
     quote: OddsQuote
-    fair: tuple[float, float, float]
+    fair: tuple[float, float, float]  # margen quitado proporcionalmente
     model: tuple[float, float, float]
+    fair_power: tuple[float, float, float] = (0.0, 0.0, 0.0)  # margen por potencia
+    is_league: bool = True  # liga nacional (no copas internacionales ni selecciones)
 
 
 # Cada regla devuelve los índices (0 local, 1 empate, 2 visitante) que selecciona.
@@ -76,7 +78,29 @@ RULES: dict[str, tuple[str, RuleFn]] = {
         "Favorito del mercado, todos (referencia)",
         lambda c: [_argmax(c.fair)],
     ),
+    # Hipótesis fijadas el 17-nov-2026 (pestaña "Hipótesis fijada"). No se modifican:
+    # un cambio debe crear una regla nueva con otra clave.
+    "h1_favorito_70": (
+        "H1 · Favorito con 70 % o más (ligas)",
+        lambda c: [_argmax(c.fair_power)] if c.is_league and max(c.fair_power) >= 0.70 else [],
+    ),
+    "h2_favorito_60_tur_por": (
+        "H2 · Favorito con 60 % o más (Turquía y Portugal)",
+        lambda c: (
+            [_argmax(c.fair_power)]
+            if c.forecast.competition_key in H2_COMPETITIONS and max(c.fair_power) >= 0.60
+            else []
+        ),
+    ),
 }
+
+H2_COMPETITIONS = frozenset({"tur_super_lig", "por_primeira_liga"})
+# Reglas cuya probabilidad sin margen (al tomar y al cierre) se calcula por potencia.
+POWER_RULES = frozenset({"h1_favorito_70", "h2_favorito_60_tur_por"})
+
+
+def _fair_for(rule: str, prices: Sequence[float]) -> list[float]:
+    return devig(prices, "power" if rule in POWER_RULES else "proportional")
 
 
 @dataclass(frozen=True)
@@ -189,9 +213,11 @@ def create_selections(
     report_date: date,
     now: datetime,
     line_quotes: dict[str, list[LineQuote]] | None = None,
+    league_keys: frozenset[str] | None = None,
 ) -> int:
     """Una fila por (regla, partido, resultado). Idempotente: no duplica ni reescribe el
-    precio tomado si el informe se vuelve a generar."""
+    precio tomado si el informe se vuelve a generar. ``league_keys``: competiciones que
+    son ligas nacionales (None = todas cuentan como liga)."""
     n = 0
     forecasts = list(forecasts)
     for f in forecasts:
@@ -215,6 +241,8 @@ def create_selections(
             q,
             tuple(devig(q.prices)),
             (float(x["home"]), float(x["draw"]), float(x["away"])),
+            tuple(devig(q.prices, "power")),
+            league_keys is None or f.competition_key in league_keys,
         )
         for rule in rules:
             if rule not in RULES:
@@ -242,7 +270,9 @@ def create_selections(
                         bookmaker_id=q.bookmaker_id,
                         bookmaker_name=q.bookmaker_name[:80],
                         price_taken=float(q.prices[i]),
-                        fair_prob_taken=float(cand.fair[i]),
+                        fair_prob_taken=float(
+                            cand.fair_power[i] if rule in POWER_RULES else cand.fair[i]
+                        ),
                         model_prob=float(cand.model[i]),
                         confidence=f.confidence,
                         status="open",
@@ -414,7 +444,7 @@ def settle_selections(
         )
         if close is not None and m.id in finals:
             r.price_close = float(close.prices[idx])
-            r.fair_prob_close = float(devig(close.prices)[idx])
+            r.fair_prob_close = float(_fair_for(r.rule, close.prices)[idx])
         r.status, r.settled_at = "settled", now
         settled += 1
     session.flush()

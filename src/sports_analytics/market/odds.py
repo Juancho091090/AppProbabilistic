@@ -60,7 +60,26 @@ def devig_proportional(prices: Sequence[float]) -> list[float]:
     return [p / total for p in implied]
 
 
-DEVIG_METHODS = {"proportional": devig_proportional}
+def devig_power(prices: Sequence[float]) -> list[float]:
+    """p_i = (1/o_i)^k con k tal que Σ p_i = 1. Carga más margen en las opciones menos
+    probables, como hace el mercado (sesgo favorito–longshot); la proporcional, en cambio,
+    infravalora al favorito."""
+    if len(prices) < 2 or any(o <= 1.0 for o in prices):
+        raise ValueError(f"Precios decimales inválidos: {prices}")
+    inv = [1.0 / o for o in prices]
+    lo, hi = 0.5, 5.0
+    for _ in range(80):  # bisección sobre k
+        k = (lo + hi) / 2
+        if sum(x**k for x in inv) > 1:
+            lo = k
+        else:
+            hi = k
+    p = [x ** ((lo + hi) / 2) for x in inv]
+    total = sum(p)
+    return [x / total for x in p]
+
+
+DEVIG_METHODS = {"proportional": devig_proportional, "power": devig_power}
 
 
 def devig(prices: Sequence[float], method: str = "proportional") -> list[float]:

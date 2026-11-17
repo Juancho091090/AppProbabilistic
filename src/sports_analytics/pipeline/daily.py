@@ -586,6 +586,9 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
             today,
             now,
             line_quotes=repo.load_market_lines(session, ids),
+            league_keys=frozenset(
+                c.key for c in config.competitions.football if c.kind == "league"
+            ),
         )
         session.commit()
         report.add("paper:created", n)
