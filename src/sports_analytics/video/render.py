@@ -88,7 +88,7 @@ THEMES: dict[str, dict[str, tuple]] = {
         "CAP_HL": (255, 160, 122),
     },
 }
-DEFAULT_THEME = "marino_lima"
+DEFAULT_THEME = "claro_cesped"
 BG_TOP = BG_BOTTOM = CARD = TEXT = MUTED = ACCENT = DRAW = MISS = (0, 0, 0)
 ON_ACCENT = TRACK = CAP_TEXT = CAP_HL = (0, 0, 0)
 

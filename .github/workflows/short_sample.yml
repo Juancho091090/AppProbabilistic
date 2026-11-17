@@ -9,8 +9,8 @@ on:
         description: "Voz de Google TTS (Chirp 3 HD)"
         default: "es-US-Chirp3-HD-Puck"
       theme:
-        description: "Paleta: marino_lima, grafito_turquesa, claro_cesped o noche_coral"
-        default: "marino_lima"
+        description: "Paleta: claro_cesped, marino_lima, grafito_turquesa o noche_coral"
+        default: "claro_cesped"
       intro:
         description: "Incluir la presentación del canal"
         type: boolean
