@@ -125,6 +125,14 @@ def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[dict]:
 
 GOOD_DAY, OK_DAY = 0.75, 0.5
 
+# Presentación del canal (~5 s): contexto para quien llega por primera vez.
+INTRO_SCENE = Scene(
+    "intro",
+    "Esto es JC Probabilidades: un modelo estadístico que analiza el fútbol y el tenis "
+    "cada día, con aciertos y fallos.",
+    {"tags": ["Fútbol y tenis", "Aciertos y fallos", "Todo con datos"]},
+)
+
 
 def recap_scene(recap) -> Scene:
     """Escena "así nos fue ayer": se cuentan aciertos y fallos, siempre todos."""
@@ -161,8 +169,10 @@ def build_short_script(
     market_fair: Mapping[str, Sequence[float]] | None = None,
     n_high: int = 0,
     recap=None,
+    intro: bool = False,
 ) -> ShortScript | None:
-    """``recap`` (video.recap.Recap) añade al inicio el resumen de ayer."""
+    """``recap`` (video.recap.Recap) añade el resumen de ayer; ``intro`` antepone una
+    presentación corta del canal (pensada para los primeros videos)."""
     f = pick_open_match(payload)
     if f is None:
         return None
@@ -215,4 +225,6 @@ def build_short_script(
     scenes = [hook, bars, why, cta]
     if recap and recap.n:
         scenes.insert(0, recap_scene(recap))
+    if intro:
+        scenes.insert(0, INTRO_SCENE)
     return ShortScript(f.event_id, title[:100], description, scenes)

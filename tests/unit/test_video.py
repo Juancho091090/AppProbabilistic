@@ -131,7 +131,7 @@ def test_daily_short_sends_video_to_personal_chat(monkeypatch):
     payload, fair, n = sample_payload()
     sent = {}
 
-    def fake_render(script, path, tz, tts, music=None):
+    def fake_render(script, path, tz, tts, music=None, theme=None):
         path.write_bytes(b"mp4")
         return path
 
@@ -244,3 +244,52 @@ def test_recap_scene_is_honest_on_good_and_bad_days():
     assert build_short_script(payload, fair, n).scenes[0].kind == "hook"
     ev = sfx_events(timeline(good))
     assert ev[0] == (0.0, "hit") and sum(1 for _, k in ev if k == "pop") == 1 + 5 + 3
+
+
+def test_sound_effects_stay_well_below_the_voice():
+    """Queja del 17-nov: el efecto de transición sonaba tan fuerte como la voz."""
+    import numpy as np
+
+    from sports_analytics.video.audio import SFX_LEVEL
+
+    voice_db = -18.0  # nivel típico de Google TTS
+    for kind in ("whoosh", "pop", "hit"):
+        x = sfx(kind) * SFX_LEVEL
+        rms_db = 20 * np.log10(np.sqrt(np.mean(x**2)))
+        assert rms_db <= voice_db - 14, kind
+        assert abs(x).max() < 0.15, kind
+
+
+def test_every_theme_renders_and_switches_colors():
+    from zoneinfo import ZoneInfo
+
+    from sports_analytics.video import render as R
+
+    payload, fair, n = sample_payload()
+    s = build_short_script(payload, fair, n, sample_recap_fn(), intro=True)
+    first = {}
+    try:
+        for name in R.THEMES:
+            R.set_theme(name)
+            tl = R.timeline(s)
+            img = R.frame(tl[0], 1.5, ZoneInfo("America/Bogota"), None, 30.0, {})
+            first[name] = img.convert("RGB").getpixel((10, 1000))
+    finally:
+        R.set_theme(None)
+    assert len(set(first.values())) == len(R.THEMES)  # el fondo cambia con la paleta
+    with pytest.raises(ValueError):
+        R.set_theme("no_existe")
+
+
+def test_intro_only_when_requested():
+    payload, fair, n = sample_payload()
+    with_intro = build_short_script(payload, fair, n, sample_recap_fn(), intro=True)
+    assert [x.kind for x in with_intro.scenes][:3] == ["intro", "recap", "hook"]
+    assert "JC Probabilidades" in with_intro.scenes[0].narration
+    assert build_short_script(payload, fair, n).scenes[0].kind == "hook"
+
+
+def sample_recap_fn():
+    from sports_analytics.video.sample import sample_recap
+
+    return sample_recap()

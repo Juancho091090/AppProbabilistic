@@ -619,11 +619,24 @@ def _short_sample(args: argparse.Namespace) -> int:
 
     settings = get_settings()
     payload, fair, n_high = sample_payload()
-    script = build_short_script(payload, fair, n_high, None if args.no_recap else sample_recap())
+    script = build_short_script(
+        payload,
+        fair,
+        n_high,
+        None if args.no_recap else sample_recap(),
+        args.intro or settings.short_intro,
+    )
     tts = None
     if settings.google_tts_api_key and not args.no_voice:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
-    path = render_short(script, Path(args.output), payload.timezone, tts, settings.short_music_file)
+    path = render_short(
+        script,
+        Path(args.output),
+        payload.timezone,
+        tts,
+        settings.short_music_file,
+        args.theme or settings.short_theme,
+    )
     print(f"Video: {path} · voz: {'sí' if tts else 'no'}")
     if args.send:
         from sports_analytics.reporting.telegram import TelegramService
@@ -662,6 +675,8 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--no-voice", action="store_true", help="Sin Google TTS")
     sh.add_argument("--send", action="store_true", help="Enviar al chat personal")
     sh.add_argument("--no-recap", action="store_true", help="Sin el resumen de ayer")
+    sh.add_argument("--intro", action="store_true", help="Con la presentación del canal")
+    sh.add_argument("--theme", default=None, help="Paleta (marino_lima, grafito_turquesa, ...)")
     sh.set_defaults(func=_short_sample)
 
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(

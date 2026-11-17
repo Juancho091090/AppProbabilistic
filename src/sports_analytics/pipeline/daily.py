@@ -619,7 +619,7 @@ def _daily_short(settings, payload, fair, n_high, svc, recap=None) -> bool:
     from sports_analytics.video.script import build_short_script
     from sports_analytics.video.tts import GoogleTTS
 
-    script = build_short_script(payload, fair, n_high, recap)
+    script = build_short_script(payload, fair, n_high, recap, settings.short_intro)
     if script is None:
         return False
     tts = None
@@ -628,7 +628,12 @@ def _daily_short(settings, payload, fair, n_high, svc, recap=None) -> bool:
     try:
         with tempfile.TemporaryDirectory() as tmp:
             path = render_short(
-                script, Path(tmp) / "short.mp4", payload.timezone, tts, settings.short_music_file
+                script,
+                Path(tmp) / "short.mp4",
+                payload.timezone,
+                tts,
+                settings.short_music_file,
+                settings.short_theme,
             )
             caption = (
                 f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n{script.description}"

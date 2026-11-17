@@ -125,23 +125,34 @@ def load_music(path: str, seconds: float) -> np.ndarray:
     return x / (np.max(np.abs(x)) or 1)
 
 
+# Nivel RMS de cada efecto (dBFS) tras aplicarle SFX_LEVEL. La voz de Google ronda −18 dB:
+# los efectos quedan 14–20 dB por debajo para acompañar, no para tapar (queja del 17-nov:
+# el "whoosh" de la transición sonaba tan fuerte como la voz).
+SFX_TARGET_DB = {"whoosh": -38.0, "pop": -34.0, "hit": -33.0}
+
+
+def _norm(x: np.ndarray, target_db: float) -> np.ndarray:
+    rms = np.sqrt(np.mean(x**2)) or 1.0
+    return x * (10 ** (target_db / 20) / rms)
+
+
 def sfx(kind: str) -> np.ndarray:
+    """Efecto ya nivelado (se suma tal cual a la mezcla)."""
     rng = np.random.default_rng({"whoosh": 1, "pop": 2, "hit": 3}.get(kind, 0))
-    if kind == "whoosh":
-        t = _t(0.5)
-        noise = rng.standard_normal(len(t))
-        env = np.sin(np.pi * t / 0.5) ** 2
-        return _lowpass(noise * env, 0.18) * 1.6
-    if kind == "pop":
-        t = _t(0.12)
-        freq = 520 + 600 * np.exp(-t * 40)
-        return np.sin(2 * np.pi * np.cumsum(freq) / RATE) * np.exp(-t * 35)
-    if kind == "hit":
-        t = _t(0.6)
-        boom = np.sin(2 * np.pi * (55 + 40 * np.exp(-t * 10)) * t) * np.exp(-t * 6)
-        crack = rng.standard_normal(len(t)) * np.exp(-t * 45) * 0.35
-        return boom + crack
-    return np.zeros(1)
+    if kind == "whoosh":  # soplo suave y corto, sin agudos
+        t = _t(0.32)
+        env = np.sin(np.pi * t / 0.32) ** 3
+        x = _lowpass(_lowpass(rng.standard_normal(len(t)) * env, 0.05), 0.08)
+    elif kind == "pop":  # "tic" suave
+        t = _t(0.09)
+        freq = 700 + 300 * np.exp(-t * 50)
+        x = np.sin(2 * np.pi * np.cumsum(freq) / RATE) * np.exp(-t * 45)
+    elif kind == "hit":  # golpe grave apagado, sin chasquido
+        t = _t(0.45)
+        x = np.sin(2 * np.pi * (60 + 30 * np.exp(-t * 12)) * t) * np.exp(-t * 9)
+    else:
+        return np.zeros(1)
+    return _norm(x, SFX_TARGET_DB[kind]) / SFX_LEVEL
 
 
 def _wav_to_array(data: bytes) -> np.ndarray:

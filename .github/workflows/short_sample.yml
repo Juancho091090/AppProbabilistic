@@ -8,6 +8,13 @@ on:
       voice:
         description: "Voz de Google TTS (Chirp 3 HD)"
         default: "es-US-Chirp3-HD-Puck"
+      theme:
+        description: "Paleta: marino_lima, grafito_turquesa, claro_cesped o noche_coral"
+        default: "marino_lima"
+      intro:
+        description: "Incluir la presentación del canal"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -32,7 +39,9 @@ jobs:
       - name: Instalar dependencias
         run: pip install -e .
       - name: Generar y enviar el Short
-        run: sports-analytics short-sample --send --output data/short_prueba.mp4
+        run: >-
+          sports-analytics short-sample --send --output data/short_prueba.mp4
+          --theme "${{ inputs.theme }}" ${{ inputs.intro && '--intro' || '' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:

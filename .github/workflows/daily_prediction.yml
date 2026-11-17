@@ -55,6 +55,8 @@ jobs:
       TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_CHANNEL_ID }}
       # Short diario: variable SHORT_ENABLED=true para activarlo; voz con Google TTS
       SHORT_ENABLED: ${{ vars.SHORT_ENABLED || 'false' }}
+      SHORT_THEME: ${{ vars.SHORT_THEME || 'marino_lima' }}
+      SHORT_INTRO: ${{ vars.SHORT_INTRO || 'false' }}
       GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}

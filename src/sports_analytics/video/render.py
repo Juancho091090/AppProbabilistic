@@ -25,9 +25,86 @@ from sports_analytics.video.tts import wav_duration
 
 W, H, FPS = 1080, 1920, 30
 ASSETS = Path(__file__).parent / "assets"
-NAVY, NAVY_2, CARD = (11, 31, 58), (4, 14, 30), (22, 52, 92)
-LIME, WHITE, GREY, SLATE = (198, 244, 50), (255, 255, 255), (170, 184, 204), (96, 132, 182)
-RED = (255, 107, 107)  # fallos en el resumen de ayer
+# Paletas: cada color es un PAPEL (fondo, tarjeta, texto, acento…), no un tono fijo.
+THEMES: dict[str, dict[str, tuple]] = {
+    # Marca original: azul marino + verde lima
+    "marino_lima": {
+        "BG_TOP": (11, 31, 58),
+        "BG_BOTTOM": (4, 14, 30),
+        "CARD": (22, 52, 92),
+        "TEXT": (255, 255, 255),
+        "MUTED": (170, 184, 204),
+        "ACCENT": (198, 244, 50),
+        "DRAW": (96, 132, 182),
+        "MISS": (255, 107, 107),
+        "ON_ACCENT": (11, 31, 58),
+        "TRACK": (4, 14, 30),
+        "CAP_TEXT": (255, 255, 255),
+        "CAP_HL": (198, 244, 50),
+    },
+    # Grafito con turquesa y ámbar (estilo de medios de datos deportivos)
+    "grafito_turquesa": {
+        "BG_TOP": (17, 24, 39),
+        "BG_BOTTOM": (8, 11, 20),
+        "CARD": (31, 41, 59),
+        "TEXT": (241, 245, 249),
+        "MUTED": (148, 163, 184),
+        "ACCENT": (45, 212, 191),
+        "DRAW": (251, 191, 36),
+        "MISS": (248, 113, 113),
+        "ON_ACCENT": (8, 11, 20),
+        "TRACK": (8, 11, 20),
+        "CAP_TEXT": (255, 255, 255),
+        "CAP_HL": (45, 212, 191),
+    },
+    # Claro editorial: fondo hueso, texto marino, acento verde césped
+    "claro_cesped": {
+        "BG_TOP": (246, 247, 242),
+        "BG_BOTTOM": (228, 232, 222),
+        "CARD": (255, 255, 255),
+        "TEXT": (11, 31, 58),
+        "MUTED": (90, 104, 124),
+        "ACCENT": (22, 140, 74),
+        "DRAW": (148, 163, 184),
+        "MISS": (214, 69, 69),
+        "ON_ACCENT": (255, 255, 255),
+        "TRACK": (226, 230, 236),
+        "CAP_TEXT": (255, 255, 255),
+        "CAP_HL": (134, 239, 172),
+    },
+    # Azul noche con coral (cálido, sin verde neón)
+    "noche_coral": {
+        "BG_TOP": (20, 27, 61),
+        "BG_BOTTOM": (10, 13, 33),
+        "CARD": (37, 46, 92),
+        "TEXT": (255, 255, 255),
+        "MUTED": (165, 175, 210),
+        "ACCENT": (255, 122, 89),
+        "DRAW": (129, 140, 248),
+        "MISS": (255, 92, 92),
+        "ON_ACCENT": (20, 27, 61),
+        "TRACK": (10, 13, 33),
+        "CAP_TEXT": (255, 255, 255),
+        "CAP_HL": (255, 160, 122),
+    },
+}
+DEFAULT_THEME = "marino_lima"
+BG_TOP = BG_BOTTOM = CARD = TEXT = MUTED = ACCENT = DRAW = MISS = (0, 0, 0)
+ON_ACCENT = TRACK = CAP_TEXT = CAP_HL = (0, 0, 0)
+
+
+def set_theme(name: str | None) -> str:
+    """Activa una paleta (por nombre) y limpia las cachés de dibujo que dependen del color."""
+    name = name or DEFAULT_THEME
+    if name not in THEMES:
+        raise ValueError(f"Paleta desconocida: {name}. Opciones: {', '.join(THEMES)}")
+    globals().update(THEMES[name])
+    for fn in _COLOR_CACHED:
+        fn.cache_clear()
+    return name
+
+
+_COLOR_CACHED: list = []  # se llena al final del módulo
 CHARS_PER_SECOND = 15.0  # ritmo estimado sin voz
 PAD = 0.35  # silencio al final de cada escena
 TRANS = 0.42  # duración de la transición entre escenas
@@ -137,7 +214,7 @@ def _gradient() -> Image.Image:
     d = ImageDraw.Draw(img, "RGBA")
     for y in range(H):
         k = (y / H) ** 1.2
-        rgb = tuple(int(NAVY[i] * (1 - k) + NAVY_2[i] * k) for i in range(3))
+        rgb = tuple(int(BG_TOP[i] * (1 - k) + BG_BOTTOM[i] * k) for i in range(3))
         d.line([(0, y), (W, y)], fill=(*rgb, 255))
     glow = Image.new("L", (W, H), 0)  # halo suave detrás del contenido
     ImageDraw.Draw(glow).ellipse((-200, 450, W + 200, 1350), fill=38)
@@ -157,7 +234,7 @@ def _particles() -> list[tuple[float, float, float, float, tuple]]:
             rnd.uniform(0, H),
             rnd.uniform(18, 70),  # velocidad (px/s)
             rnd.uniform(2, 6),  # radio
-            (*(LIME if rnd.random() < 0.35 else WHITE), rnd.randint(25, 70)),
+            (*(ACCENT if rnd.random() < 0.35 else TEXT), rnd.randint(25, 70)),
         )
         for _ in range(46)
     ]
@@ -183,13 +260,14 @@ def _logo() -> Image.Image:
     return logo
 
 
-def chrome(img: Image.Image, t_global: float, total: float) -> None:
+def chrome(img: Image.Image, t_global: float, total: float, logo: bool = True) -> None:
     """Logo, barra de progreso y usuario (fijos, no se desplazan con la escena)."""
-    put(img, _logo(), W / 2, 150)
+    if logo:
+        put(img, _logo(), W / 2, 150)
     d = ImageDraw.Draw(img, "RGBA")
     d.rectangle((0, 0, W, 12), fill=(*CARD, 255))
-    d.rectangle((0, 0, int(W * clamp01(t_global / total)), 12), fill=(*LIME, 255))
-    text(img, "@JCProbabilidades", "Medium", 36, GREY, W / 2, 1850)
+    d.rectangle((0, 0, int(W * clamp01(t_global / total)), 12), fill=(*ACCENT, 255))
+    text(img, "@JCProbabilidades", "Medium", 36, MUTED, W / 2, 1850)
 
 
 # ------------------------------------------------------------------ subtítulos
@@ -251,11 +329,11 @@ def draw_captions(img: Image.Image, scene: Scene, t: float, dur: float, lead: fl
         y = y0 + 18 + li * lh
         for k, w, ww in line:
             if k == current:
-                color = (*LIME, 255)
+                color = (*CAP_HL, 255)
             elif k < current:
-                color = (*WHITE, 255)
+                color = (*CAP_TEXT, 255)
             else:
-                color = (*WHITE, 120)
+                color = (*CAP_TEXT, 120)
             d.text((x, y), w, font=f, fill=color)
             x += ww + gap
 
@@ -267,9 +345,9 @@ def draw_captions(img: Image.Image, scene: Scene, t: float, dur: float, lead: fl
 def _vs_badge() -> Image.Image:
     size = 180
     img = Image.new("RGBA", (size * 2, size * 2), (0, 0, 0, 0))
-    ImageDraw.Draw(img).ellipse((8, 8, size * 2 - 8, size * 2 - 8), fill=(*LIME, 255))
+    ImageDraw.Draw(img).ellipse((8, 8, size * 2 - 8, size * 2 - 8), fill=(*ACCENT, 255))
     img = img.resize((size, size), Image.LANCZOS)
-    put(img, text_img("VS", "Black", 72, (*NAVY, 255)), size / 2, size / 2)
+    put(img, text_img("VS", "Black", 72, (*ON_ACCENT, 255)), size / 2, size / 2)
     return img
 
 
@@ -279,24 +357,21 @@ def _chip(label: str) -> Image.Image:
     w = int(f.getlength(label)) + 80
     img = Image.new("RGBA", (w, 84), (0, 0, 0, 0))
     ImageDraw.Draw(img).rounded_rectangle((0, 0, w - 1, 83), radius=42, fill=(*CARD, 255))
-    put(img, text_img(label, "Bold", 42, (*WHITE, 255)), w / 2, 42)
+    put(img, text_img(label, "Bold", 42, (*TEXT, 255)), w / 2, 42)
     return img
 
 
 def _hook(s: Scene, t: float, dur: float, tz: ZoneInfo, first: bool = True) -> Image.Image:
     img = layer()
-    d = ImageDraw.Draw(img, "RGBA")
-    if first and t < 0.35:  # destello inicial
-        d.rectangle((0, 0, W, H), fill=(*LIME, int(200 * (1 - t / 0.35))))
     k = ease_back(t / 0.45)
-    text(img, "EL PARTIDO MÁS ABIERTO", "Black", 56, LIME, W / 2, 395, scale=k)
-    text(img, "DE MAÑANA", "Black", 56, LIME, W / 2, 465, scale=k)
+    text(img, "EL PARTIDO MÁS ABIERTO", "Black", 56, ACCENT, W / 2, 395, scale=k)
+    text(img, "DE MAÑANA", "Black", 56, ACCENT, W / 2, 465, scale=k)
     home, away = s.data["home"], s.data["away"]
     sh, sa = fit_size(home, "Black", 122, 960), fit_size(away, "Black", 122, 960)
     a = ease((t - 0.2) / 0.5)
-    text(img, home, "Black", sh, WHITE, W / 2 - (1 - a) * W, 680, alpha=a)
+    text(img, home, "Black", sh, TEXT, W / 2 - (1 - a) * W, 680, alpha=a)
     b = ease((t - 0.35) / 0.5)
-    text(img, away, "Black", sa, WHITE, W / 2 + (1 - b) * W, 1030, alpha=b)
+    text(img, away, "Black", sa, TEXT, W / 2 + (1 - b) * W, 1030, alpha=b)
     v = (t - 0.7) / 0.4
     if v > 0:  # insignia VS con onda expansiva
         burst = clamp01((t - 0.8) / 0.6)
@@ -305,7 +380,7 @@ def _hook(s: Scene, t: float, dur: float, tz: ZoneInfo, first: bool = True) -> I
             r = 90 + 160 * ease(burst)
             ImageDraw.Draw(fx).ellipse(
                 (W / 2 - r, 855 - r, W / 2 + r, 855 + r),
-                outline=(*LIME, int(200 * (1 - burst))),
+                outline=(*ACCENT, int(200 * (1 - burst))),
                 width=6,
             )
             img.alpha_composite(fx)
@@ -317,7 +392,8 @@ def _hook(s: Scene, t: float, dur: float, tz: ZoneInfo, first: bool = True) -> I
     return img
 
 
-SEG_COLORS = (LIME, SLATE, WHITE)  # local, empate, visitante
+def seg_colors() -> tuple:
+    return (ACCENT, DRAW, TEXT)  # local, empate, visitante
 
 
 @lru_cache(maxsize=64)
@@ -330,7 +406,7 @@ def _donut(probs: tuple[float, float, float], progress: float) -> Image.Image:
     box = (10 * ss, 10 * ss, size - 10 * ss, size - 10 * ss)
     d.arc(box, 0, 360, fill=(*CARD, 255), width=thick * ss)
     start, sweep_end, gap = -90.0, -90.0 + 360 * progress, 1.6
-    for p, color in zip(probs, SEG_COLORS, strict=True):
+    for p, color in zip(probs, seg_colors(), strict=True):
         a0, a1 = start + gap, min(start + 360 * p - gap, sweep_end)
         if a1 > a0:
             d.arc(box, a0, a1, fill=(*color, 255), width=thick * ss)
@@ -345,7 +421,7 @@ def _legend_row(label: str, p: float, color: tuple) -> Image.Image:
     d.rounded_rectangle((0, 0, 859, 79), radius=40, fill=(*CARD, 235))
     d.ellipse((24, 22, 60, 58), fill=(*color, 255))
     size = fit_size(label, "Bold", 44, 560)
-    put(img, text_img(label, "Bold", size, (*WHITE, 255)), 84, 40, anchor="l")
+    put(img, text_img(label, "Bold", size, (*TEXT, 255)), 84, 40, anchor="l")
     put(img, text_img(f"{p * 100:.0f}%", "Black", 50, (*color, 255)), 830, 40, anchor="r")
     return img
 
@@ -356,9 +432,9 @@ def _stamp(label: str) -> Image.Image:
     w = int(f.getlength(label)) + 90
     img = Image.new("RGBA", (w, 130), (0, 0, 0, 0))
     ImageDraw.Draw(img).rounded_rectangle(
-        (4, 4, w - 5, 125), radius=24, fill=(*NAVY_2, 235), outline=(*LIME, 255), width=8
+        (4, 4, w - 5, 125), radius=24, fill=(*TRACK, 235), outline=(*ACCENT, 255), width=8
     )
-    put(img, text_img(label, "Black", 64, (*LIME, 255)), w / 2, 65)
+    put(img, text_img(label, "Black", 64, (*ACCENT, 255)), w / 2, 65)
     return img
 
 
@@ -368,16 +444,16 @@ def stamp_time(dur: float) -> float:
 
 def _probs(s: Scene, t: float, dur: float) -> Image.Image:
     img = layer()
-    text(img, "¿Quién gana mañana?", "ExtraBold", 62, WHITE, W / 2, 360, scale=ease_back(t / 0.45))
+    text(img, "¿Quién gana mañana?", "ExtraBold", 62, TEXT, W / 2, 360, scale=ease_back(t / 0.45))
     rows = s.data["rows"]
     probs = tuple(round(p, 3) for _, p in rows)
     prog = round(ease_in_out((t - 0.3) / 1.5), 2)
     put(img, _donut(probs, prog), W / 2, 780)
     top = max(probs)
-    text(img, f"{top * 100 * prog:.0f}%", "Black", 130, WHITE, W / 2, 760)
-    text(img, "máximo", "Medium", 38, GREY, W / 2, 850, alpha=prog)
+    text(img, f"{top * 100 * prog:.0f}%", "Black", 130, TEXT, W / 2, 760)
+    text(img, "máximo", "Medium", 38, MUTED, W / 2, 850, alpha=prog)
     acc = 0.0  # cada fila de la leyenda aparece cuando su tramo termina de dibujarse
-    for i, ((label, p), color) in enumerate(zip(rows, SEG_COLORS, strict=True)):
+    for i, ((label, p), color) in enumerate(zip(rows, seg_colors(), strict=True)):
         acc += p
         if prog <= 0:
             continue
@@ -420,7 +496,7 @@ def _duel_card(duel: dict, g: float) -> Image.Image:
     title = duel["title"]
     put(
         card,
-        text_img(title, "Bold", fit_size(title, "Bold", 40, 840), (*GREY, 255)),
+        text_img(title, "Bold", fit_size(title, "Bold", 40, 840), (*MUTED, 255)),
         40,
         46,
         anchor="l",
@@ -428,9 +504,9 @@ def _duel_card(duel: dict, g: float) -> Image.Image:
     (ll, lv), (rl, rv) = duel["left"], duel["right"]
     top = max(lv, rv) or 1
     half, cx, by = 380, 460, 150
-    lc = LIME if lv >= rv else WHITE
-    rc = LIME if rv > lv else WHITE
-    d.rounded_rectangle((cx - half, by - 22, cx + half, by + 22), radius=22, fill=(*NAVY_2, 255))
+    lc = ACCENT if lv >= rv else TEXT
+    rc = ACCENT if rv > lv else TEXT
+    d.rounded_rectangle((cx - half, by - 22, cx + half, by + 22), radius=22, fill=(*TRACK, 255))
     lw, rw = half * lv / top * g, half * rv / top * g
     if lw > 24:
         d.rounded_rectangle((cx - lw, by - 22, cx - 3, by + 22), radius=22, fill=(*lc, 255))
@@ -438,16 +514,16 @@ def _duel_card(duel: dict, g: float) -> Image.Image:
         d.rounded_rectangle((cx + 3, by - 22, cx + rw, by + 22), radius=22, fill=(*rc, 255))
     for label, anchor, x in ((ll, "l", 40), (rl, "r", 880)):
         size = fit_size(label, "Medium", 36, 380)
-        put(card, text_img(label, "Medium", size, (*WHITE, 255)), x, 98, anchor=anchor)
+        put(card, text_img(label, "Medium", size, (*TEXT, 255)), x, 98, anchor=anchor)
     put(card, text_img(_fmt(lv * g, duel["fmt"]), "Black", 56, (*lc, 255)), 40, 222, anchor="l")
     put(card, text_img(_fmt(rv * g, duel["fmt"]), "Black", 56, (*rc, 255)), 880, 222, anchor="r")
-    put(card, text_img("vs", "Bold", 40, (*GREY, 255)), cx, 222)
+    put(card, text_img("vs", "Bold", 40, (*MUTED, 255)), cx, 222)
     return card
 
 
 def _why(s: Scene, t: float, dur: float) -> Image.Image:
     img = layer()
-    text(img, "¿Por qué tan parejo?", "Black", 66, LIME, W / 2, 360, scale=ease_back(t / 0.45))
+    text(img, "¿Por qué tan parejo?", "Black", 66, ACCENT, W / 2, 360, scale=ease_back(t / 0.45))
     duels = s.data.get("duels") or []
     for i, (duel, t0) in enumerate(zip(duels, duel_times(len(duels), dur), strict=True)):
         lt = t - t0
@@ -474,7 +550,7 @@ def _confetti() -> list[tuple[float, float, float, tuple]]:
             rnd.uniform(0, 2 * math.pi),
             rnd.uniform(650, 1150),
             rnd.uniform(10, 18),
-            LIME if rnd.random() < 0.6 else WHITE,
+            ACCENT if rnd.random() < 0.6 else TEXT,
         )
         for _ in range(40)
     ]
@@ -485,8 +561,8 @@ def _pill(handle: str) -> Image.Image:
     label = f"Telegram · {handle}"
     size = fit_size(label, "Black", 56, 780)
     img = Image.new("RGBA", (900, 150), (0, 0, 0, 0))
-    ImageDraw.Draw(img).rounded_rectangle((0, 0, 899, 149), radius=75, fill=(*LIME, 255))
-    put(img, text_img(label, "Black", size, (*NAVY, 255)), 450, 75)
+    ImageDraw.Draw(img).rounded_rectangle((0, 0, 899, 149), radius=75, fill=(*ACCENT, 255))
+    put(img, text_img(label, "Black", size, (*ON_ACCENT, 255)), 450, 75)
     return img
 
 
@@ -497,8 +573,8 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
     img = layer()
     d = ImageDraw.Draw(img, "RGBA")
     k = ease_back(t / 0.45)
-    text(img, "¿Quieres los partidos", "ExtraBold", 64, WHITE, W / 2, 370, scale=k)
-    text(img, "con favorito claro?", "ExtraBold", 64, WHITE, W / 2, 450, scale=k)
+    text(img, "¿Quieres los partidos", "ExtraBold", 64, TEXT, W / 2, 370, scale=k)
+    text(img, "con favorito claro?", "ExtraBold", 64, TEXT, W / 2, 450, scale=k)
     n = s.data["n_high"]
     if n:
         c = ease((t - 0.4) / (CTA_LAND - 0.4))
@@ -511,7 +587,7 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
             r = 120 + 220 * ease(b)
             dfx.ellipse(
                 (W / 2 - r, 680 - r, W / 2 + r, 680 + r),
-                outline=(*LIME, int(180 * (1 - b))),
+                outline=(*ACCENT, int(180 * (1 - b))),
                 width=8,
             )
             if ct < 1.4:
@@ -522,15 +598,15 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
                     a = int(255 * (1 - ct / 1.4))
                     dfx.rectangle((x, y, x + size, y + size * 0.6), fill=(*color, a))
             img.alpha_composite(fx)
-        text(img, str(round(n * c)), "Black", 260, LIME, W / 2, 680, scale=0.7 + 0.3 * bounce)
-        text(img, "con confianza Alta mañana", "Bold", 52, WHITE, W / 2, 880, alpha=c)
+        text(img, str(round(n * c)), "Black", 260, ACCENT, W / 2, 680, scale=0.7 + 0.3 * bounce)
+        text(img, "con confianza Alta mañana", "Bold", 52, TEXT, W / 2, 880, alpha=c)
     else:
         text(
             img,
             "Cada noche, gratis",
             "Black",
             70,
-            LIME,
+            ACCENT,
             W / 2,
             700,
             scale=ease_back((t - 0.4) / 0.45),
@@ -540,7 +616,7 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
         ay = 990 + 14 * math.sin(t * 7)
         d.polygon(
             [(W / 2 - 34, ay - 20), (W / 2 + 34, ay - 20), (W / 2, ay + 22)],
-            fill=(*LIME, int(255 * clamp01(p))),
+            fill=(*ACCENT, int(255 * clamp01(p))),
         )
         pulse = 1 + 0.035 * math.sin(t * 6) * clamp01(p)
         put(
@@ -550,7 +626,42 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
             1110 + 120 * (1 - ease(p)),
             scale=ease_back(p) * pulse,
         )
-        text(img, DISCLAIMER, "Medium", 30, GREY, W / 2, 1245, alpha=clamp01(p))
+        text(img, DISCLAIMER, "Medium", 30, MUTED, W / 2, 1245, alpha=clamp01(p))
+    return img
+
+
+# ---------------------------------------------------------------- presentación
+
+
+@lru_cache(maxsize=1)
+def _big_logo() -> Image.Image:
+    size = 360
+    logo = Image.open(ASSETS / "logo.png").convert("RGBA").resize((size, size), Image.LANCZOS)
+    mask = Image.new("L", (size * 4, size * 4), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, size * 4 - 1, size * 4 - 1), fill=255)
+    logo.putalpha(mask.resize((size, size), Image.LANCZOS))
+    return logo
+
+
+def _intro(s: Scene, t: float, dur: float) -> Image.Image:
+    img = layer()
+    put(img, _big_logo(), W / 2, 520, scale=0.6 + 0.4 * ease_back(t / 0.5))
+    a = ease((t - 0.3) / 0.5)
+    text(img, "JC Probabilidades", "Black", 92, TEXT, W / 2, 800 + 30 * (1 - a), alpha=a)
+    b = ease((t - 0.6) / 0.5)
+    text(img, "Un modelo estadístico", "Bold", 54, ACCENT, W / 2, 905, alpha=b)
+    text(img, "analiza cada partido", "Bold", 54, ACCENT, W / 2, 970, alpha=b)
+    for i, tag in enumerate(s.data.get("tags", [])):
+        k = (t - 1.0 - 0.25 * i) / 0.35
+        if k > 0:
+            put(
+                img,
+                _chip(tag),
+                W / 2,
+                1110 + i * 100,
+                scale=0.7 + 0.3 * ease_back(k),
+                alpha=clamp01(k * 2),
+            )
     return img
 
 
@@ -570,7 +681,7 @@ def _ring(rate: float, progress: float) -> Image.Image:
     d.arc(box, 0, 360, fill=(*CARD, 255), width=thick * ss)
     sweep = 360 * rate * progress
     if sweep > 1:
-        d.arc(box, -90, -90 + sweep, fill=(*LIME, 255), width=thick * ss)
+        d.arc(box, -90, -90 + sweep, fill=(*ACCENT, 255), width=thick * ss)
     return img.resize((size // ss, size // ss), Image.LANCZOS)
 
 
@@ -579,19 +690,19 @@ def _recap_row(label: str, pick: str, hit: bool) -> Image.Image:
     img = Image.new("RGBA", (920, 84), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     d.rounded_rectangle((0, 0, 919, 83), radius=42, fill=(*CARD, 240))
-    color = LIME if hit else RED
+    color = ACCENT if hit else MISS
     d.ellipse((20, 14, 76, 70), fill=(*color, 255))
     if hit:
-        d.line([(34, 43), (45, 55), (63, 31)], fill=(*NAVY, 255), width=8, joint="curve")
+        d.line([(34, 43), (45, 55), (63, 31)], fill=(*ON_ACCENT, 255), width=8, joint="curve")
     else:
-        d.line([(36, 30), (60, 54)], fill=(*NAVY, 255), width=8)
-        d.line([(60, 30), (36, 54)], fill=(*NAVY, 255), width=8)
+        d.line([(36, 30), (60, 54)], fill=(*ON_ACCENT, 255), width=8)
+        d.line([(60, 30), (36, 54)], fill=(*ON_ACCENT, 255), width=8)
     size = fit_size(label, "Bold", 40, 540)
-    put(img, text_img(label, "Bold", size, (*WHITE, 255)), 98, 42, anchor="l")
+    put(img, text_img(label, "Bold", size, (*TEXT, 255)), 98, 42, anchor="l")
     fav = f"Fav.: {pick}"
     put(
         img,
-        text_img(fav, "Medium", fit_size(fav, "Medium", 32, 250), (*GREY, 255)),
+        text_img(fav, "Medium", fit_size(fav, "Medium", 32, 250), (*MUTED, 255)),
         895,
         42,
         anchor="r",
@@ -605,14 +716,11 @@ def recap_row_times(n_rows: int) -> list[float]:
 
 def _recap(s: Scene, t: float, dur: float, first: bool = True) -> Image.Image:
     img = layer()
-    d = ImageDraw.Draw(img, "RGBA")
-    if first and t < 0.35:
-        d.rectangle((0, 0, W, H), fill=(*LIME, int(200 * (1 - t / 0.35))))
     hits, n, mood = s.data["hits"], s.data["n"], s.data["mood"]
     title, color = {
-        "good": ("¡GRAN DÍA AYER!", LIME),
-        "ok": ("ASÍ NOS FUE AYER", WHITE),
-        "bad": ("AYER NO FUE NUESTRO DÍA", RED),
+        "good": ("¡GRAN DÍA AYER!", ACCENT),
+        "ok": ("ASÍ NOS FUE AYER", TEXT),
+        "bad": ("AYER NO FUE NUESTRO DÍA", MISS),
     }[mood]
     text(
         img,
@@ -628,8 +736,8 @@ def _recap(s: Scene, t: float, dur: float, first: bool = True) -> Image.Image:
     put(img, _ring(round(hits / n, 3), prog), W / 2, 640)
     land = ease_back((t - RECAP_SCORE_AT) / 0.35, 3.0) if t > RECAP_SCORE_AT else prog
     score = f"{round(hits * prog)}/{n}"
-    text(img, score, "Black", 150, WHITE, W / 2, 615, scale=0.75 + 0.25 * land)
-    text(img, "aciertos", "Medium", 38, GREY, W / 2, 712, alpha=prog)
+    text(img, score, "Black", 150, TEXT, W / 2, 615, scale=0.75 + 0.25 * land)
+    text(img, "aciertos", "Medium", 38, MUTED, W / 2, 712, alpha=prog)
     items = s.data["items"]
     shown = items[:RECAP_ROWS]
     for i, ((label, pick, hit), t0) in enumerate(
@@ -653,7 +761,7 @@ def _recap(s: Scene, t: float, dur: float, first: bool = True) -> Image.Image:
     )
     if extra > 0:
         note = f"+{extra} más · " + note
-    text(img, note, "Medium", 34, GREY, W / 2, 910 + len(shown) * 96 + 10, alpha=clamp01(tail_t))
+    text(img, note, "Medium", 34, MUTED, W / 2, 910 + len(shown) * 96 + 10, alpha=clamp01(tail_t))
     return img
 
 
@@ -671,6 +779,8 @@ class TimedScene:
 
 def content(ts: TimedScene, t: float, tz: ZoneInfo) -> Image.Image:
     s, dur, first = ts.scene, ts.duration, ts.start == 0
+    if s.kind == "intro":
+        return _intro(s, t, dur)
     if s.kind == "recap":
         return _recap(s, t, dur, first)
     if s.kind == "hook":
@@ -705,10 +815,10 @@ def frame(
         compose(img, cache[key], -W * e, 0)
         x = W * (1 - e)
         compose(img, cur, x, 0)
-        ImageDraw.Draw(img).rectangle((x - 70, 0, x, H), fill=(*LIME, 255))
+        ImageDraw.Draw(img).rectangle((x - 70, 0, x, H), fill=(*ACCENT, 255))
     else:
         img.alpha_composite(cur)
-    chrome(img, ts.start + t, total)
+    chrome(img, ts.start + t, total, logo=ts.scene.kind != "intro")
     draw_captions(img, ts.scene, t, ts.duration, ts.lead)
     return img
 
@@ -735,6 +845,9 @@ def sfx_events(scenes: list[TimedScene]) -> list[tuple[float, str]]:
             ev.append((0.0, "hit"))
         if kind == "hook":
             ev.append((s0 + 0.75, "pop"))
+        elif kind == "intro":
+            n_tags = len(ts.scene.data.get("tags", []))
+            ev += [(s0 + 1.0 + 0.25 * i, "pop") for i in range(n_tags)]
         elif kind == "recap":
             ev.append((s0 + RECAP_SCORE_AT, "hit"))
             n_rows = min(len(ts.scene.data["items"]), RECAP_ROWS)
@@ -758,8 +871,10 @@ def render_short(
     tz: str = "America/Bogota",
     tts=None,
     music_file: str | None = None,
+    theme: str | None = None,
 ) -> Path:
     """Genera el MP4 con voz (si hay ``tts``), música de fondo y efectos."""
+    set_theme(theme)
     from sports_analytics.video.audio import mix_soundtrack
 
     if shutil.which("ffmpeg") is None:
@@ -793,3 +908,21 @@ def render_short(
             if proc.wait() != 0:
                 raise RuntimeError("ffmpeg falló al generar el video")
     return out_path
+
+
+_COLOR_CACHED.extend(
+    [
+        _gradient,
+        _particles,
+        _vs_badge,
+        _chip,
+        _donut,
+        _legend_row,
+        _stamp,
+        _confetti,
+        _pill,
+        _ring,
+        _recap_row,
+    ]
+)
+set_theme(DEFAULT_THEME)

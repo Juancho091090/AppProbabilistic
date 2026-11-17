@@ -63,6 +63,8 @@ class Settings(BaseSettings):
     google_tts_api_key: SecretStr | None = None
     google_tts_voice: str = "es-US-Chirp3-HD-Puck"
     short_music_file: str | None = None  # pista propia; sin ella, música generada por código
+    short_theme: str = "marino_lima"  # paleta del video (video.render.THEMES)
+    short_intro: bool = False  # presentación corta del canal al inicio (primeros videos)
     telegram_api_base_url: str = "https://api.telegram.org"
 
     # Email
