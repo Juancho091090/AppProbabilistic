@@ -9,6 +9,9 @@ on:
       sections:
         description: "Secciones: all | football_rapid,api_football,tennis,others"
         default: "all"
+      countries:
+        description: "Solo league_lookup: países separados por coma (nombre en API-Football)"
+        required: false
   push:
     branches: [main]
     paths:
@@ -51,5 +54,6 @@ jobs:
           APP_TIMEZONE: America/Bogota
           LOG_LEVEL: WARNING
           DIAG_SECTIONS: ${{ github.event.inputs.sections || 'football_rapid,others' }}
+          DIAG_COUNTRIES: ${{ github.event.inputs.countries || 'Turkey,Saudi-Arabia' }}
           DIAG_TENNIS_STRUCTURE: ${{ github.event.inputs.sections == 'tennis_structure' && '1' || '' }}
         run: sports-analytics check-apis
