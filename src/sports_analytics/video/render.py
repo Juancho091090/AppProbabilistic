@@ -27,6 +27,7 @@ W, H, FPS = 1080, 1920, 30
 ASSETS = Path(__file__).parent / "assets"
 NAVY, NAVY_2, CARD = (11, 31, 58), (4, 14, 30), (22, 52, 92)
 LIME, WHITE, GREY, SLATE = (198, 244, 50), (255, 255, 255), (170, 184, 204), (96, 132, 182)
+RED = (255, 107, 107)  # fallos en el resumen de ayer
 CHARS_PER_SECOND = 15.0  # ritmo estimado sin voz
 PAD = 0.35  # silencio al final de cada escena
 TRANS = 0.42  # duración de la transición entre escenas
@@ -282,10 +283,10 @@ def _chip(label: str) -> Image.Image:
     return img
 
 
-def _hook(s: Scene, t: float, dur: float, tz: ZoneInfo) -> Image.Image:
+def _hook(s: Scene, t: float, dur: float, tz: ZoneInfo, first: bool = True) -> Image.Image:
     img = layer()
     d = ImageDraw.Draw(img, "RGBA")
-    if t < 0.35:  # destello inicial
+    if first and t < 0.35:  # destello inicial
         d.rectangle((0, 0, W, H), fill=(*LIME, int(200 * (1 - t / 0.35))))
     k = ease_back(t / 0.45)
     text(img, "EL PARTIDO MÁS ABIERTO", "Black", 56, LIME, W / 2, 395, scale=k)
@@ -553,6 +554,109 @@ def _cta(s: Scene, t: float, dur: float) -> Image.Image:
     return img
 
 
+# ------------------------------------------------------------ resumen de ayer
+
+RECAP_ROWS = 5
+RECAP_SCORE_AT = 1.0  # momento en que el marcador llega a su valor
+
+
+@lru_cache(maxsize=64)
+def _ring(rate: float, progress: float) -> Image.Image:
+    radius, thick, ss = 205, 40, 2
+    size = (radius * 2 + 20) * ss
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    box = (10 * ss, 10 * ss, size - 10 * ss, size - 10 * ss)
+    d.arc(box, 0, 360, fill=(*CARD, 255), width=thick * ss)
+    sweep = 360 * rate * progress
+    if sweep > 1:
+        d.arc(box, -90, -90 + sweep, fill=(*LIME, 255), width=thick * ss)
+    return img.resize((size // ss, size // ss), Image.LANCZOS)
+
+
+@lru_cache(maxsize=32)
+def _recap_row(label: str, pick: str, hit: bool) -> Image.Image:
+    img = Image.new("RGBA", (920, 84), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((0, 0, 919, 83), radius=42, fill=(*CARD, 240))
+    color = LIME if hit else RED
+    d.ellipse((20, 14, 76, 70), fill=(*color, 255))
+    if hit:
+        d.line([(34, 43), (45, 55), (63, 31)], fill=(*NAVY, 255), width=8, joint="curve")
+    else:
+        d.line([(36, 30), (60, 54)], fill=(*NAVY, 255), width=8)
+        d.line([(60, 30), (36, 54)], fill=(*NAVY, 255), width=8)
+    size = fit_size(label, "Bold", 40, 540)
+    put(img, text_img(label, "Bold", size, (*WHITE, 255)), 98, 42, anchor="l")
+    fav = f"Fav.: {pick}"
+    put(
+        img,
+        text_img(fav, "Medium", fit_size(fav, "Medium", 32, 250), (*GREY, 255)),
+        895,
+        42,
+        anchor="r",
+    )
+    return img
+
+
+def recap_row_times(n_rows: int) -> list[float]:
+    return [0.9 + 0.22 * i for i in range(n_rows)]
+
+
+def _recap(s: Scene, t: float, dur: float, first: bool = True) -> Image.Image:
+    img = layer()
+    d = ImageDraw.Draw(img, "RGBA")
+    if first and t < 0.35:
+        d.rectangle((0, 0, W, H), fill=(*LIME, int(200 * (1 - t / 0.35))))
+    hits, n, mood = s.data["hits"], s.data["n"], s.data["mood"]
+    title, color = {
+        "good": ("¡GRAN DÍA AYER!", LIME),
+        "ok": ("ASÍ NOS FUE AYER", WHITE),
+        "bad": ("AYER NO FUE NUESTRO DÍA", RED),
+    }[mood]
+    text(
+        img,
+        title,
+        "Black",
+        fit_size(title, "Black", 66, 960),
+        color,
+        W / 2,
+        360,
+        scale=ease_back(t / 0.45),
+    )
+    prog = round(ease((t - 0.25) / (RECAP_SCORE_AT - 0.25)), 2)
+    put(img, _ring(round(hits / n, 3), prog), W / 2, 640)
+    land = ease_back((t - RECAP_SCORE_AT) / 0.35, 3.0) if t > RECAP_SCORE_AT else prog
+    score = f"{round(hits * prog)}/{n}"
+    text(img, score, "Black", 150, WHITE, W / 2, 615, scale=0.75 + 0.25 * land)
+    text(img, "aciertos", "Medium", 38, GREY, W / 2, 712, alpha=prog)
+    items = s.data["items"]
+    shown = items[:RECAP_ROWS]
+    for i, ((label, pick, hit), t0) in enumerate(
+        zip(shown, recap_row_times(len(shown)), strict=True)
+    ):
+        k = (t - t0) / 0.35
+        if k > 0:
+            put(
+                img,
+                _recap_row(label, pick, hit),
+                W / 2 + 120 * (1 - ease(k)),
+                910 + i * 96,
+                alpha=clamp01(k * 2),
+            )
+    extra = len(items) - len(shown)
+    tail_t = (t - (recap_row_times(len(shown))[-1] + 0.3)) / 0.4 if shown else 0
+    note = (
+        "Publicados en Telegram · confianza Alta"
+        if s.data["source"] == "canal"
+        else "Confianza Alta del modelo"
+    )
+    if extra > 0:
+        note = f"+{extra} más · " + note
+    text(img, note, "Medium", 34, GREY, W / 2, 910 + len(shown) * 96 + 10, alpha=clamp01(tail_t))
+    return img
+
+
 # ------------------------------------------------------------------ línea de tiempo
 
 
@@ -566,9 +670,11 @@ class TimedScene:
 
 
 def content(ts: TimedScene, t: float, tz: ZoneInfo) -> Image.Image:
-    s, dur = ts.scene, ts.duration
+    s, dur, first = ts.scene, ts.duration, ts.start == 0
+    if s.kind == "recap":
+        return _recap(s, t, dur, first)
     if s.kind == "hook":
-        return _hook(s, t, dur, tz)
+        return _hook(s, t, dur, tz, first)
     if s.kind == "bars":
         return _probs(s, t, dur)
     if s.kind == "why":
@@ -625,8 +731,14 @@ def sfx_events(scenes: list[TimedScene]) -> list[tuple[float, str]]:
         s0, kind = ts.start, ts.scene.kind
         if i:
             ev.append((s0, "whoosh"))
+        if i == 0:
+            ev.append((0.0, "hit"))
         if kind == "hook":
-            ev += [(0.0, "hit"), (s0 + 0.75, "pop")]
+            ev.append((s0 + 0.75, "pop"))
+        elif kind == "recap":
+            ev.append((s0 + RECAP_SCORE_AT, "hit"))
+            n_rows = min(len(ts.scene.data["items"]), RECAP_ROWS)
+            ev += [(s0 + t0, "pop") for t0 in recap_row_times(n_rows)]
         elif kind == "bars" and max(p for _, p in ts.scene.data["rows"]) < 0.5:
             ev.append((s0 + stamp_time(ts.duration), "hit"))
         elif kind == "why":

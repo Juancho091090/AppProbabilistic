@@ -215,3 +215,32 @@ def test_word_times_cover_speech_after_lead():
     scene = build_short_script(payload, fair, n).scenes[1]
     wt = word_times(scene, 5.0, lead=0.2)
     assert wt[0][0] == pytest.approx(0.2) and wt[-1][1] == pytest.approx(5.0 - 0.35)
+
+
+def test_recap_scene_is_honest_on_good_and_bad_days():
+    from sports_analytics.video.recap import Recap, RecapItem
+    from sports_analytics.video.sample import sample_recap
+
+    payload, fair, n = sample_payload()
+    good = build_short_script(payload, fair, n, sample_recap())
+    assert [x.kind for x in good.scenes][:2] == ["recap", "hook"]
+    assert (
+        "acertó 5 de 6" in good.scenes[0].narration and "Y para mañana" in good.scenes[1].narration
+    )
+    assert "Ayer, confianza Alta: 5 de 6" in good.description
+    bad = Recap(
+        good.scenes[0].data and sample_recap().day,
+        "modelo",
+        [
+            RecapItem("Inter 0-1 Lecce", "Inter", False),
+            RecapItem("Roma 1-1 Como", "Roma", False),
+            RecapItem("Benfica 2-0 Gil Vicente", "Benfica", True),
+        ],
+    )
+    s = build_short_script(payload, fair, n, bad).scenes[0]
+    assert s.data["mood"] == "bad" and "acertó 1 de 3" in s.narration
+    assert "publicamos todo" in s.narration and "Telegram" not in s.narration
+    # sin resumen, el Short empieza con el partido abierto
+    assert build_short_script(payload, fair, n).scenes[0].kind == "hook"
+    ev = sfx_events(timeline(good))
+    assert ev[0] == (0.0, "hit") and sum(1 for _, k in ev if k == "pop") == 1 + 5 + 3

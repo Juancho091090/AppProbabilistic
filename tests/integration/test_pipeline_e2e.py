@@ -684,3 +684,39 @@ def test_tennis_fixtures_have_priority_over_backfill(env, app_config):
     )
     out = run_daily(s2, app_config, svc, now=DAY1 + timedelta(minutes=30), send=False)
     assert out.payload.n_tennis("ATP") == 1  # los partidos del día llegaron pese a la cuota
+
+
+def test_short_recap_of_yesterday(env, app_config, monkeypatch):
+    """Resumen de ayer: lo publicado en el canal (con su regla) y, sin canal, la confianza Alta."""
+    from sports_analytics.video import recap as rc
+
+    day = DAY1.date()
+    with session_scope(URL) as s:
+        published = rc._published(s, day)
+        assert published is not None  # el día 1 se envió al canal
+        r = rc.build_recap(s, "ensemble_v1", day)
+        pub_rows = rc._final_rows(s, "ensemble_v1", day, dict(published))
+        settled = sum(
+            1
+            for items in pub_rows.values()
+            if (res := max(items, key=lambda pr: pr[0].probability)[1]) is not None
+            and res.outcome is not None
+        )
+        # Solo cuentan los publicados ya resueltos (el tenis del día 1 sigue sin resultado)
+        assert (r.n if r else 0) == settled
+        if r:
+            assert r.source == "canal"
+        for item in r.items if r else []:
+            if item.label.startswith("Team01"):  # up1 terminó 2-0
+                assert "2-0" in item.label
+        # Sin canal: partidos de confianza Alta del modelo, todos ya resueltos
+        monkeypatch.setattr(rc, "_published", lambda session, d: None)
+        m = rc.build_recap(s, "ensemble_v1", day)
+        rows = rc._final_rows(s, "ensemble_v1", day)
+        expected = 0
+        for items in rows.values():
+            p, res = max(items, key=lambda pr: pr[0].probability)
+            expected += p.confidence == "high" and res is not None and res.outcome is not None
+        assert (m.n if m else 0) == expected
+        if m:
+            assert m.source == "modelo" and 0 <= m.hits <= m.n

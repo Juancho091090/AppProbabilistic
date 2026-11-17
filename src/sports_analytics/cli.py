@@ -576,13 +576,13 @@ def _short_sample(args: argparse.Namespace) -> int:
 
     from sports_analytics.config.settings import get_settings
     from sports_analytics.video.render import render_short
-    from sports_analytics.video.sample import sample_payload
+    from sports_analytics.video.sample import sample_payload, sample_recap
     from sports_analytics.video.script import build_short_script
     from sports_analytics.video.tts import GoogleTTS
 
     settings = get_settings()
     payload, fair, n_high = sample_payload()
-    script = build_short_script(payload, fair, n_high)
+    script = build_short_script(payload, fair, n_high, None if args.no_recap else sample_recap())
     tts = None
     if settings.google_tts_api_key and not args.no_voice:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
@@ -624,6 +624,7 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--output", default="data/short_prueba.mp4")
     sh.add_argument("--no-voice", action="store_true", help="Sin Google TTS")
     sh.add_argument("--send", action="store_true", help="Enviar al chat personal")
+    sh.add_argument("--no-recap", action="store_true", help="Sin el resumen de ayer")
     sh.set_defaults(func=_short_sample)
 
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(

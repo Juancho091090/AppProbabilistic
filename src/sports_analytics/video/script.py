@@ -123,19 +123,57 @@ def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[dict]:
     return out
 
 
+GOOD_DAY, OK_DAY = 0.75, 0.5
+
+
+def recap_scene(recap) -> Scene:
+    """Escena "así nos fue ayer": se cuentan aciertos y fallos, siempre todos."""
+    h, n = recap.hits, recap.n
+    where = " que publicamos en Telegram" if recap.source == "canal" else ""
+    plural = "partido" if n == 1 else "partidos"
+    if recap.rate >= GOOD_DAY:
+        say = f"¡Gran día ayer! El modelo acertó {h} de {n} {plural} de confianza alta{where}."
+        mood = "good"
+    elif recap.rate >= OK_DAY:
+        say = f"Así nos fue ayer: el modelo acertó {h} de {n} {plural} de confianza alta{where}."
+        mood = "ok"
+    else:
+        say = (
+            f"Ayer no fue nuestro día: el modelo acertó {h} de {n} {plural} de confianza alta. "
+            "Lo mostramos igual, porque aquí publicamos todo."
+        )
+        mood = "bad"
+    return Scene(
+        "recap",
+        say,
+        {
+            "hits": h,
+            "n": n,
+            "mood": mood,
+            "source": recap.source,
+            "items": [(i.label, i.pick, i.hit) for i in recap.items],
+        },
+    )
+
+
 def build_short_script(
     payload: DailyReportPayload,
     market_fair: Mapping[str, Sequence[float]] | None = None,
     n_high: int = 0,
+    recap=None,
 ) -> ShortScript | None:
+    """``recap`` (video.recap.Recap) añade al inicio el resumen de ayer."""
     f = pick_open_match(payload)
     if f is None:
         return None
     x = f.markets["1x2"]
     h, d, a = _pct(x["home"]), _pct(x["draw"]), _pct(x["away"])
+    opening = (
+        "Y para mañana, el partido más abierto" if recap else "El partido más abierto de mañana"
+    )
     hook = Scene(
         "hook",
-        f"El partido más abierto de mañana: {f.home_or_a} contra {f.away_or_b}.",
+        f"{opening}: {f.home_or_a} contra {f.away_or_b}.",
         {
             "home": f.home_or_a,
             "away": f.away_or_b,
@@ -158,19 +196,23 @@ def build_short_script(
     if n_high:
         cta_say = (
             f"¿Quieres los partidos donde el modelo sí ve un favorito claro? Mañana hay {n_high} "
-            "con confianza alta. Están en nuestro canal de Telegram: JC Probabilidades."
+            "con confianza alta, y están gratis en nuestro canal de Telegram: JC Probabilidades."
         )
     else:
         cta_say = (
-            "Los partidos donde el modelo sí ve un favorito claro los publicamos cada noche "
-            "en nuestro canal de Telegram: JC Probabilidades."
+            "Los partidos donde el modelo sí ve un favorito claro los publicamos gratis cada "
+            "noche en nuestro canal de Telegram: JC Probabilidades."
         )
     cta = Scene("cta", cta_say, {"n_high": n_high, "handle": TELEGRAM_HANDLE})
     title = f"{f.home_or_a} vs {f.away_or_b}: ¿el partido más abierto de mañana? #shorts"
-    description = (
+    yesterday = f"Ayer, confianza Alta: {recap.hits} de {recap.n} aciertos.\n\n" if recap else ""
+    description = yesterday + (
         f"{f.competition} · Probabilidades del modelo: {f.home_or_a} {h}% · Empate {d}% · "
         f"{f.away_or_b} {a}%.\n\nLos partidos de confianza Alta, cada noche en Telegram: "
         f"https://t.me/JCProbabilidades\n\nProbabilidades estimadas por un modelo estadístico "
         "(Elo + Poisson/Dixon-Coles), no recomendaciones. +18\n\n#futbol #estadistica #probabilidades"
     )
-    return ShortScript(f.event_id, title[:100], description, [hook, bars, why, cta])
+    scenes = [hook, bars, why, cta]
+    if recap and recap.n:
+        scenes.insert(0, recap_scene(recap))
+    return ShortScript(f.event_id, title[:100], description, scenes)

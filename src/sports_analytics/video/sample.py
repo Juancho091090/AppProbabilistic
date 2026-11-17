@@ -37,6 +37,23 @@ def _fc(event_id, comp, home, away, x, conf, elo, lam, hour) -> MatchForecast:
     )
 
 
+def sample_recap():
+    from sports_analytics.video.recap import Recap, RecapItem
+
+    return Recap(
+        date(2026, 11, 21),
+        "canal",
+        [
+            RecapItem("Liverpool 2-0 Burnley", "Liverpool", True),
+            RecapItem("Bayern 3-1 Mainz", "Bayern", True),
+            RecapItem("Inter 1-1 Lecce", "Inter", False),
+            RecapItem("PSG 2-0 Nantes", "PSG", True),
+            RecapItem("Sinner 2-0 Rune", "Sinner", True, "tennis"),
+            RecapItem("Porto 3-0 Arouca", "Porto", True),
+        ],
+    )
+
+
 def sample_payload() -> tuple[DailyReportPayload, dict[str, tuple[float, float, float]], int]:
     """Payload, 1X2 del mercado sin margen y número de partidos de confianza Alta."""
     open_match = _fc(

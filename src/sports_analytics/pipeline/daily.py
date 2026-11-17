@@ -501,7 +501,10 @@ def run_daily(
                         issues.append(f"Canal de Telegram: {exc}")
                 if settings.short_enabled and svc.telegram:
                     try:
-                        outcome.short_sent = _daily_short(settings, payload, fair, n_high, svc)
+                        recap = _short_recap(session, config, local_day, issues)
+                        outcome.short_sent = _daily_short(
+                            settings, payload, fair, n_high, svc, recap
+                        )
                     except Exception as exc:  # noqa: BLE001 - el video no frena el informe
                         issues.append(redact(f"Short: {type(exc).__name__}: {exc}")[:300])
                 if svc.email:
@@ -592,7 +595,19 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
         issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
 
 
-def _daily_short(settings, payload, fair, n_high, svc) -> bool:
+def _short_recap(session, config, local_day, issues):
+    """Resumen de ayer (día local anterior a la ejecución) para abrir el Short."""
+    from sports_analytics.video.recap import build_recap
+
+    try:
+        return build_recap(session, config.models.version, local_day - timedelta(days=1))
+    except Exception as exc:  # noqa: BLE001 - sin resumen, el Short sale igual
+        session.rollback()
+        issues.append(f"Short: resumen de ayer no disponible ({type(exc).__name__})")
+        return None
+
+
+def _daily_short(settings, payload, fair, n_high, svc, recap=None) -> bool:
     """Genera el Short del día y lo envía al chat personal para revisarlo y subirlo."""
     import tempfile
     from pathlib import Path
@@ -601,7 +616,7 @@ def _daily_short(settings, payload, fair, n_high, svc) -> bool:
     from sports_analytics.video.script import build_short_script
     from sports_analytics.video.tts import GoogleTTS
 
-    script = build_short_script(payload, fair, n_high)
+    script = build_short_script(payload, fair, n_high, recap)
     if script is None:
         return False
     tts = None
