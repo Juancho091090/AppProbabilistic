@@ -1,0 +1,61 @@
+name: historical-odds
+
+# Patrones en cuotas de cierre históricas (football-data.co.uk). No usa las APIs del
+# sistema ni la base de datos. Publica history/latest.{json,md} en la rama metrics-data.
+on:
+  workflow_dispatch:
+    inputs:
+      first_season:
+        description: "Primera temporada (año de inicio)"
+        default: "2012"
+      last_season:
+        description: "Última temporada (año de inicio)"
+        default: "2025"
+      recent_from:
+        description: "Corte del 'mercado actual'"
+        default: "2022/23"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: historical-odds
+  cancel-in-progress: false
+
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: CSV ya descargados
+        uses: actions/cache@v4
+        with:
+          path: .cache/football-data
+          key: football-data-${{ github.run_id }}
+          restore-keys: football-data-
+      - name: Descargar y analizar
+        run: |
+          sports-analytics historical-odds \
+            --first-season "${{ inputs.first_season || '2012' }}" \
+            --last-season "${{ inputs.last_season || '2025' }}" \
+            --recent-from "${{ inputs.recent_from || '2022/23' }}" \
+            --output "$RUNNER_TEMP/history.json"
+          cat "$RUNNER_TEMP/history.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Publicar en la rama metrics-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin metrics-data
+          git switch -C metrics-data origin/metrics-data
+          mkdir -p history
+          cp "$RUNNER_TEMP/history.json" history/latest.json
+          cp "$RUNNER_TEMP/history.md" history/latest.md
+          git add history
+          git commit -m "historial de cuotas $(TZ=America/Bogota date +%F)" || exit 0
+          git push origin metrics-data

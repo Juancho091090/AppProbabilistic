@@ -504,6 +504,43 @@ def _export_paper(args: argparse.Namespace) -> int:
     return 0
 
 
+def _historical_odds(args: argparse.Namespace) -> int:
+    """Descarga cuotas de cierre de football-data.co.uk y prueba patrones (sin APIs propias)."""
+    import json
+    from pathlib import Path
+
+    import httpx
+
+    from sports_analytics.market import history
+
+    cache = Path(args.cache_dir)
+    cache.mkdir(parents=True, exist_ok=True)
+
+    def get(url: str) -> str | None:
+        f = cache / url.split("football-data.co.uk/")[-1].replace("/", "_")
+        if f.exists():
+            return f.read_text(encoding="utf-8")
+        try:
+            r = httpx.get(url, timeout=60, follow_redirects=True)
+        except httpx.HTTPError:
+            return None
+        if r.status_code != 200 or not r.content:
+            return None
+        text = r.content.decode("utf-8-sig", errors="replace")
+        f.write_text(text, encoding="utf-8")
+        return text
+
+    seasons = history.season_codes(args.first_season, args.last_season)
+    df, missing = history.download_history(get, seasons)
+    res = history.analyze(df, recent_from=args.recent_from)
+    res["missing_files"] = missing
+    out = Path(args.output)
+    out.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float), encoding="utf-8")
+    out.with_suffix(".md").write_text(history.to_markdown(res), encoding="utf-8")
+    print(f"Partidos: {res['matches']} · ficheros que faltan: {len(missing)} · {out}")
+    return 0
+
+
 def _market_patterns(_: argparse.Namespace) -> int:
     """Reglas sistemáticas sobre precios reales guardados (investigación, sin APIs)."""
     from sqlalchemy import select
@@ -674,6 +711,16 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser(
         "market-patterns", help="Reglas sistemáticas sobre precios reales (sin APIs)"
     ).set_defaults(func=_market_patterns)
+
+    ho = sub.add_parser(
+        "historical-odds", help="Patrones en cuotas de cierre históricas (football-data.co.uk)"
+    )
+    ho.add_argument("--first-season", type=int, default=2012)
+    ho.add_argument("--last-season", type=int, default=2025)
+    ho.add_argument("--recent-from", default="2022/23")
+    ho.add_argument("--cache-dir", default=".cache/football-data")
+    ho.add_argument("--output", default="history.json")
+    ho.set_defaults(func=_historical_odds)
 
     sub.add_parser("track-record", help="Aciertos reales vs esperados (sin APIs)").set_defaults(
         func=_track_record
