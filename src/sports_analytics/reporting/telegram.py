@@ -78,22 +78,38 @@ class TelegramService:
         log.info("telegram_sent", extra={"messages": sent})
         return sent
 
-    def send_video(self, path, caption: str = "") -> None:
-        """Envía un video (máx. 50 MB por la Bot API). El caption admite 1024 caracteres."""
-        with open(path, "rb") as fh:
-            resp = self._client.post(
-                f"{self._base}/sendVideo",
-                data={
-                    "chat_id": self.chat_id,
-                    "caption": caption[:1024],
-                    "supports_streaming": "true",
-                },
-                files={"video": ("short.mp4", fh, "video/mp4")},
-                timeout=180,
-            )
-        if resp.status_code >= 400:
-            raise RuntimeError(f"Telegram HTTP {resp.status_code}: {resp.text[:200]}")
-        log.info("telegram_video_sent")
+    def send_video(self, path, caption: str = "", attempts: int = 3, wait: float = 10.0) -> None:
+        """Envía un video (máx. 50 MB por la Bot API). El caption admite 1024 caracteres.
+
+        Reintenta ante errores 5xx o de conexión de Telegram (p. ej. 502 Bad Gateway)."""
+        import time
+
+        last = ""
+        for attempt in range(1, attempts + 1):
+            try:
+                with open(path, "rb") as fh:
+                    resp = self._client.post(
+                        f"{self._base}/sendVideo",
+                        data={
+                            "chat_id": self.chat_id,
+                            "caption": caption[:1024],
+                            "supports_streaming": "true",
+                        },
+                        files={"video": ("short.mp4", fh, "video/mp4")},
+                        timeout=180,
+                    )
+            except httpx.TransportError as exc:
+                last = f"conexión: {type(exc).__name__}"
+            else:
+                if resp.status_code < 400:
+                    log.info("telegram_video_sent", extra={"attempt": attempt})
+                    return
+                last = f"HTTP {resp.status_code}: {resp.text[:200]}"
+                if resp.status_code < 500 and resp.status_code != 429:
+                    break  # error del pedido: reintentar no sirve
+            if attempt < attempts:
+                time.sleep(wait * attempt)
+        raise RuntimeError(f"Telegram {last}")
 
     def send_daily_report(self, html_text: str) -> int:
         return self.send_message(html_text, parse_mode="HTML")

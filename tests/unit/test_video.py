@@ -293,3 +293,27 @@ def sample_recap_fn():
     from sports_analytics.video.sample import sample_recap
 
     return sample_recap()
+
+
+def test_send_video_retries_on_telegram_5xx(tmp_path):
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        if len(calls) < 3:
+            return httpx.Response(502, json={"ok": False, "description": "Bad Gateway"})
+        return httpx.Response(200, json={"ok": True})
+
+    settings = Settings(
+        telegram_bot_token="123456789:ABCdefGhIJKlmNoPQRstuVWxyz0123456789", telegram_chat_id="42"
+    )
+    video = tmp_path / "v.mp4"
+    video.write_bytes(b"mp4")
+    svc = TelegramService(settings, transport=httpx.MockTransport(handler))
+    svc.send_video(video, "x", wait=0)
+    assert len(calls) == 3
+    bad = TelegramService(
+        settings, transport=httpx.MockTransport(lambda r: httpx.Response(400, json={}))
+    )
+    with pytest.raises(RuntimeError):
+        bad.send_video(video, "x", wait=0)
