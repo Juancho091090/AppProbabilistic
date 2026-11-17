@@ -79,7 +79,7 @@ class FakeFootballApi:
             self._item("up1", ko, "Team01", "Team02", "NS", None, None),
             self._item("up2", ko, "Team03", "Team04", "NS", None, None),
         ]
-        self.other = self._item("x9", ko, "Foo", "Bar", "NS", None, None, league=40)
+        self.other = self._item("x9", ko, "Foo", "Bar", "NS", None, None, league=41)
         # Benchmark de mercado: up1 con Pinnacle (preferida) y Bet365; up2 solo Bet365
         self.odds = {
             "up1": [
@@ -97,7 +97,7 @@ class FakeFootballApi:
             "fixture": {"id": fid, "date": ko.isoformat(), "status": {"short": status}},
             "league": {
                 "id": league,
-                "name": "Premier League" if league == 39 else "Championship",
+                "name": "Premier League" if league == 39 else "League One",
                 "season": 2024,
             },
             "teams": {
@@ -424,8 +424,8 @@ def test_day1_full_pipeline(env, app_config):
 
     assert out.status in ("success", "partial")
     md = out.markdown
-    # Fútbol: solo Premier (la liga 40 no está autorizada) y 2 partidos
-    assert "## Premier League" in md and "Team01 vs Team02" in md and "Championship" not in md
+    # Fútbol: solo Premier (la liga 41 no está autorizada) y 2 partidos
+    assert "## Premier League" in md and "Team01 vs Team02" in md and "League One" not in md
     assert out.payload.n_football == 2
     # Córners garantizados para los partidos del día gracias a la carga prioritaria
     assert all(f.markets["corners"] is not None for f in out.payload.football[0].forecasts)
