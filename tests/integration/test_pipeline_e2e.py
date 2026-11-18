@@ -371,6 +371,16 @@ class FakeSMTP:
         FakeSMTP.sent.append(msg)
 
 
+try:
+    import playwright  # noqa: F401
+
+    from sports_analytics.video.html_engine import chrome_path
+
+    E2E_CHROME = chrome_path() is not None
+except ImportError:
+    E2E_CHROME = False
+
+
 @pytest.fixture(scope="module")
 def env(engine, tmp_path_factory):
     tmp = tmp_path_factory.mktemp("e2e")
@@ -393,9 +403,12 @@ def env(engine, tmp_path_factory):
         email_from="bot@x.com",
         email_to="me@x.com",
     )
-    fb, tn, tg_msgs = FakeFootballApi(), FakeTennisApi(), []
+    fb, tn, tg_msgs, tg_photos = FakeFootballApi(), FakeTennisApi(), [], []
 
     def tg_handler(request):
+        if request.url.path.endswith("/sendPhoto"):  # imagen del canal (multipart)
+            tg_photos.append(request.content)
+            return httpx.Response(200, json={"ok": True})
         tg_msgs.append(json.loads(request.content))
         return httpx.Response(200, json={"ok": True})
 
@@ -415,11 +428,11 @@ def env(engine, tmp_path_factory):
             email=EmailService(settings, smtp_factory=FakeSMTP),
         )
 
-    return settings, fb, tn, tg_msgs, services
+    return settings, fb, tn, tg_msgs, tg_photos, services
 
 
 def test_day1_full_pipeline(env, app_config):
-    settings, fb, tn, tg_msgs, services = env
+    settings, fb, tn, tg_msgs, tg_photos, services = env
     out = run_daily(settings, app_config, services(), now=DAY1)
 
     assert out.status in ("success", "partial")
@@ -440,7 +453,9 @@ def test_day1_full_pipeline(env, app_config):
     assert out.telegram_sent and tg_msgs and all(m["parse_mode"] == "HTML" for m in tg_msgs)
     channel_msgs = [m for m in tg_msgs if m["chat_id"] == "@canal"]
     assert out.channel_sent and len(channel_msgs) == 1
-    assert not any(i.startswith("Canal") for i in out.issues)  # mercado leído sin errores
+    assert not any(
+        i.startswith("Canal") and (E2E_CHROME or "imagen" not in i) for i in out.issues
+    )  # mercado leído sin errores
     assert "JC Probabilidades" in channel_msgs[0]["text"]
     assert "Pinnacle" not in channel_msgs[0]["text"]
     assert out.email_sent and FakeSMTP.sent

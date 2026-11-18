@@ -1,0 +1,110 @@
+/* Imagen del canal de Telegram (1080x1350, 4:5): partidos de confianza Alta de mañana.
+   Usa el fondo de la plantilla del día (styles.js + <estilo>.css) y aquí se define el
+   contenido. Cada estilo cambia letra, colores y el tratamiento de las filas. */
+html, body { width: 1080px !important; height: 1350px !important; overflow: hidden; margin: 0; }
+#bg { position: absolute; inset: 0; overflow: hidden; }
+.card { position: absolute; inset: 0; padding: 70px 80px 60px; display: flex; flex-direction: column; }
+.cd-head { display: flex; align-items: center; gap: 26px; }
+.cd-head img { width: 120px; height: 120px; border-radius: 50%; display: block; }
+.cd-brand { font-size: 44px; line-height: 1.1; }
+.cd-date { font-size: 36px; margin-top: 4px; }
+.cd-title { font-size: 72px; line-height: 1; margin: 34px 0 18px; font-weight: 700; white-space: nowrap; }
+.cd-sub { font-size: 46px; margin: 26px 0 10px; font-weight: 700; }
+.cd-body { display: flex; flex-direction: column; flex: none; }
+.cd-list { display: flex; flex-direction: column; }
+.cd-row { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 26px; padding: 14px 0; }
+.cd-meta { font-size: 28px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cd-match { font-size: 44px; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 650px; }
+.cd-fav { text-align: right; line-height: 1; }
+.cd-fav .who { display: block; font-size: 28px; margin-bottom: 4px; max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-left: auto; }
+.cd-fav .p { font-size: 72px; font-weight: 700; }
+.cd-foot { margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
+.cd-recap { font-size: 40px; font-weight: 700; }
+.cd-legal { font-size: 26px; }
+.cd-link { font-size: 34px; font-weight: 700; }
+.cd-more { font-size: 30px; margin-top: 8px; }
+/* Tarjeta llena (6 o más partidos): filas compactas */
+.dense .cd-row { padding: 8px 0; }
+.dense .cd-match { font-size: 38px; }
+.dense .cd-meta { font-size: 24px; }
+.dense .cd-fav .p { font-size: 56px; }
+.dense .cd-fav .who { font-size: 24px; }
+.dense .cd-sub { font-size: 38px; margin: 16px 0 4px; }
+.dense .cd-recap { font-size: 34px; }
+/* Tarjeta corta (pocos partidos): filas más grandes */
+.few .cd-match { font-size: 56px; }
+.few .cd-fav .p { font-size: 92px; }
+.few .cd-row { padding: 26px 0; }
+
+/* ---------- cuaderno ---------- */
+.st-cuaderno .card { padding-left: 190px; font-family: Kalam; color: #2342A8; }
+.st-cuaderno .cd-brand, .st-cuaderno .cd-date, .st-cuaderno .cd-meta, .st-cuaderno .cd-fav .who,
+.st-cuaderno .cd-legal { font-family: Caveat; color: #5B6068; }
+.st-cuaderno .cd-brand { font-size: 52px; }
+.st-cuaderno .dense .cd-meta, .st-cuaderno .dense .cd-fav .who { font-size: 28px; }
+.st-cuaderno .cd-date { font-size: 44px; }
+.st-cuaderno .cd-meta { font-size: 34px; }
+.st-cuaderno .cd-fav .who { font-size: 34px; }
+.st-cuaderno .cd-title { font-size: 66px; align-self: flex-start; padding: 0 12px;
+  background: linear-gradient(transparent 18%, #F4EE4A 18%, #F4EE4A 88%, transparent 88%); }
+.st-cuaderno .cd-row { border-bottom: 3px solid #C9DCEE; }
+.st-cuaderno .cd-match { font-weight: 700; max-width: 560px; }
+.st-cuaderno .cd-sub { color: #C83A3A; }
+.st-cuaderno .cd-row.market .cd-fav .p { color: #C83A3A; }
+.st-cuaderno .cd-recap { color: #1F8A4C; }
+.st-cuaderno .cd-link { font-family: Archivo; font-weight: 800; color: #111; align-self: flex-start; padding: 0 10px;
+  background: linear-gradient(transparent 10%, #B8F28E 10%, #B8F28E 92%, transparent 92%); }
+.st-cuaderno .cd-head img { transform: rotate(-7deg); }
+
+/* ---------- pizarra ---------- */
+.st-pizarra .card { font-family: Caveat; font-weight: 700; color: #EEF1EA; }
+.st-pizarra .cd-title, .st-pizarra .cd-match, .st-pizarra .cd-fav .p, .st-pizarra .cd-sub { filter: url(#chalk); }
+.st-pizarra .cd-title { font-size: 92px; }
+.st-pizarra .chalk-drawing { opacity: .08 !important; }
+.st-pizarra .dense .cd-match { font-size: 46px; }
+.st-pizarra .dense .cd-meta, .st-pizarra .dense .cd-fav .who { font-size: 28px; }
+.st-pizarra .cd-date, .st-pizarra .cd-sub, .st-pizarra .cd-fav .p, .st-pizarra .cd-recap { color: #F3D77F; }
+.st-pizarra .cd-meta, .st-pizarra .cd-fav .who, .st-pizarra .cd-legal { color: rgba(238, 241, 234, .75); font-size: 34px; }
+.st-pizarra .cd-match { font-size: 54px; }
+.st-pizarra .cd-row { border-bottom: 3px dashed rgba(238, 241, 234, .3); }
+.st-pizarra .cd-row.market .cd-fav .p { color: #EE9384; }
+.st-pizarra .cd-link { font-family: 'Barlow Condensed'; font-weight: 800; color: #1D2B24; background: #F3D77F;
+  align-self: flex-start; padding: 4px 20px; border-radius: 10px; }
+
+/* ---------- marcador ---------- */
+.st-marcador .panel { top: 30px !important; height: 1290px !important; }
+.st-marcador .card { padding: 80px 90px 70px; font-family: Doto; font-weight: 900; color: #FFB21E; text-transform: uppercase;
+  letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 170, 20, .7); }
+.st-marcador .cd-brand, .st-marcador .cd-match, .st-marcador .cd-recap { color: #FFF4DA; text-shadow: 0 0 10px rgba(255, 240, 210, .6); }
+.st-marcador .cd-date, .st-marcador .cd-meta, .st-marcador .cd-sub { color: #FF4B3E; text-shadow: 0 0 10px rgba(255, 70, 50, .7); }
+.st-marcador .cd-title { font-size: 54px; }
+.st-marcador .cd-match { font-size: 38px; }
+.st-marcador .dense .cd-match { font-size: 34px; }
+.st-marcador .dense .cd-meta { font-size: 22px; }
+.st-marcador .cd-meta { font-size: 24px; }
+.st-marcador .cd-fav .p { font-size: 64px; }
+.st-marcador .cd-fav .who { font-size: 24px; color: #FFF4DA; }
+.st-marcador .cd-row { border-bottom: 3px dotted #3a3c3f; }
+.st-marcador .cd-row.market .cd-fav .p { color: #FFF4DA; }
+.st-marcador .cd-legal { font-family: Archivo; font-weight: 500; text-transform: none; letter-spacing: 0; color: #9a9da3; text-shadow: none; }
+.st-marcador .cd-link { color: #FF4B3E; font-size: 30px; }
+.st-marcador .few .cd-match { font-size: 48px; }
+
+/* ---------- cancha ---------- */
+.st-cancha .card { font-family: Oswald; font-weight: 700; color: rgba(255, 255, 255, .95); }
+.st-cancha .cd-title, .st-cancha .cd-match { text-transform: uppercase; filter: url(#paint); }
+.st-cancha .cd-title { font-size: 80px; }
+.st-cancha .lines { opacity: .25 !important; }
+.st-cancha .dense .cd-row { padding: 6px 20px; margin-bottom: 8px; }
+.st-cancha .dense .cd-match { font-size: 40px; }
+.st-cancha .cd-match { font-size: 46px; }
+.st-cancha .cd-meta, .st-cancha .cd-fav .who, .st-cancha .cd-legal, .st-cancha .cd-date { font-family: 'Barlow Condensed'; font-weight: 700; font-size: 32px; }
+.st-cancha .cd-row { background: rgba(0, 0, 0, .22); border-left: 10px solid #fff; padding: 12px 22px; margin-bottom: 10px; }
+.st-cancha .cd-row.market { border-left-color: #E9F5E4; }
+.st-cancha .cd-fav .p { color: #FFE45C; }
+.st-cancha .cd-row.market .cd-fav .p { color: #fff; }
+.st-cancha .cd-sub { font-family: 'Barlow Condensed'; font-weight: 800; color: #0F3D17; background: #E9F5E4;
+  align-self: flex-start; padding: 2px 20px; border-radius: 8px; }
+.st-cancha .cd-recap { color: #FFE45C; }
+.st-cancha .cd-link { font-family: 'Barlow Condensed'; font-weight: 800; color: #10220F; background: #FFE45C;
+  align-self: flex-start; padding: 4px 22px; border-radius: 10px; }

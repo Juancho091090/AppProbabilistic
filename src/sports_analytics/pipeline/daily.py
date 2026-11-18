@@ -483,9 +483,16 @@ def run_daily(
                     if svc.channel or settings.short_enabled
                     else {}
                 )
+                recap = (
+                    _short_recap(session, config, local_day, issues)
+                    if (svc.channel and settings.channel_image) or settings.short_enabled
+                    else None
+                )
                 if svc.channel:
                     try:
                         selected = select_channel_forecasts(payload, fair)
+                        if settings.channel_image:
+                            _channel_card(svc.channel, payload, selected, recap, issues)
                         svc.channel.send_message(
                             render_channel_message(payload, selected), parse_mode="HTML"
                         )
@@ -498,7 +505,6 @@ def run_daily(
                         issues.append(f"Canal de Telegram: {exc}")
                 if settings.short_enabled and svc.telegram:
                     try:
-                        recap = _short_recap(session, config, local_day, issues)
                         picks = select_channel_forecasts(payload, fair)
                         outcome.short_sent = (
                             _daily_shorts(settings, payload, fair, picks, svc, recap, issues) > 0
@@ -594,6 +600,35 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
     except Exception as exc:  # noqa: BLE001
         session.rollback()
         issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
+
+
+def _channel_card(channel, payload, selected, recap, issues) -> bool:
+    """Imagen de los partidos de confianza Alta antes del mensaje del canal.
+
+    Si no se puede generar o enviar, se anota y el mensaje de texto sale igual."""
+    import tempfile
+    from pathlib import Path
+
+    try:
+        from sports_analytics.video.channel_card import render_card
+
+        with tempfile.TemporaryDirectory() as tmp:
+            card = render_card(
+                selected,
+                payload.report_date,
+                Path(tmp) / "canal.png",
+                payload.timezone,
+                recap=recap,
+            )
+            if card is None:
+                return False
+            only_market = all(p.rule != "modelo_alta" for p in selected)
+            head = "Favoritos claros de mañana" if only_market else "Confianza Alta de mañana"
+            channel.send_photo(card, f"📊 <b>{head}</b>. El detalle, abajo 👇")
+        return True
+    except Exception as exc:  # noqa: BLE001 - la imagen no frena el mensaje
+        issues.append(redact(f"Canal (imagen): {type(exc).__name__}: {exc}")[:300])
+        return False
 
 
 def _short_recap(session, config, local_day, issues):

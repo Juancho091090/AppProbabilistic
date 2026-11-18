@@ -49,7 +49,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "sports_analytics.config" = ["*.yaml"]
-"sports_analytics.video" = ["assets/*"]
+"sports_analytics.video" = ["assets/*", "html/*", "html/styles/*", "html/fonts/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

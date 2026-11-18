@@ -79,30 +79,44 @@ class TelegramService:
         return sent
 
     def send_video(self, path, caption: str = "", attempts: int = 3, wait: float = 10.0) -> None:
-        """Envía un video (máx. 50 MB por la Bot API). El caption admite 1024 caracteres.
+        """Envía un video (máx. 50 MB por la Bot API). El caption admite 1024 caracteres."""
+        self._send_file(
+            "sendVideo",
+            "video",
+            path,
+            "video/mp4",
+            caption,
+            attempts,
+            wait,
+            {"supports_streaming": "true"},
+        )
 
-        Reintenta ante errores 5xx o de conexión de Telegram (p. ej. 502 Bad Gateway)."""
+    def send_photo(self, path, caption: str = "", attempts: int = 3, wait: float = 10.0) -> None:
+        """Envía una imagen (máx. 10 MB). El caption admite 1024 caracteres (HTML)."""
+        self._send_file(
+            "sendPhoto", "photo", path, "image/png", caption, attempts, wait, {"parse_mode": "HTML"}
+        )
+
+    def _send_file(self, method, field, path, mime, caption, attempts, wait, extra) -> None:
+        """Reintenta ante errores 5xx o de conexión de Telegram (p. ej. 502 Bad Gateway)."""
         import time
+        from pathlib import Path
 
         last = ""
         for attempt in range(1, attempts + 1):
             try:
                 with open(path, "rb") as fh:
                     resp = self._client.post(
-                        f"{self._base}/sendVideo",
-                        data={
-                            "chat_id": self.chat_id,
-                            "caption": caption[:1024],
-                            "supports_streaming": "true",
-                        },
-                        files={"video": ("short.mp4", fh, "video/mp4")},
+                        f"{self._base}/{method}",
+                        data={"chat_id": self.chat_id, "caption": caption[:1024], **extra},
+                        files={field: (Path(path).name, fh, mime)},
                         timeout=180,
                     )
             except httpx.TransportError as exc:
                 last = f"conexión: {type(exc).__name__}"
             else:
                 if resp.status_code < 400:
-                    log.info("telegram_video_sent", extra={"attempt": attempt})
+                    log.info("telegram_file_sent", extra={"method": method, "attempt": attempt})
                     return
                 last = f"HTTP {resp.status_code}: {resp.text[:200]}"
                 if resp.status_code < 500 and resp.status_code != 429:

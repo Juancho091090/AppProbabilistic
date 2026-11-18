@@ -59,6 +59,7 @@ jobs:
       SHORT_INTRO: ${{ vars.SHORT_INTRO || 'false' }}
       SHORT_ENGINE: ${{ vars.SHORT_ENGINE || 'html' }}
       SHORT_STYLE: ${{ vars.SHORT_STYLE || '' }}
+      CHANNEL_IMAGE: ${{ vars.CHANNEL_IMAGE || 'true' }}
       GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -83,11 +84,13 @@ jobs:
       - name: Instalar dependencias
         run: pip install -e .
 
-      - name: ffmpeg y Chrome para los Shorts (solo si están activos)
-        if: vars.SHORT_ENABLED == 'true'
+      - name: ffmpeg y Chrome para los Shorts y la imagen del canal
+        if: vars.SHORT_ENABLED == 'true' || vars.TELEGRAM_CHANNEL_ID != ''
         run: |
-          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
           pip install -e ".[video]"
+          if [ "${{ vars.SHORT_ENABLED }}" = "true" ]; then
+            command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          fi
           command -v google-chrome || python -m playwright install --with-deps chromium
 
       - name: Verificar base de datos configurada
