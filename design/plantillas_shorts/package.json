@@ -1,0 +1,13 @@
+{
+  "name": "plantillas-shorts",
+  "private": true,
+  "description": "Fuentes para las plantillas de Shorts (OFL)",
+  "dependencies": {
+    "@fontsource/kalam": "^5",
+    "@fontsource/caveat": "^5",
+    "@fontsource/barlow-condensed": "^5",
+    "@fontsource/doto": "^5",
+    "@fontsource/archivo": "^5",
+    "@fontsource/oswald": "^5"
+  }
+}
