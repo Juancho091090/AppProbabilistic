@@ -65,6 +65,8 @@ class Settings(BaseSettings):
     short_music_file: str | None = None  # pista propia; sin ella, música generada por código
     short_theme: str = "claro_cesped"  # paleta del video (video.render.THEMES)
     short_intro: bool = False  # presentación corta del canal al inicio (primeros videos)
+    short_engine: str = "html"  # html (plantillas que rotan por día) | pillow (diseño anterior)
+    short_style: str | None = None  # fija una plantilla: cuaderno, pizarra, marcador, cancha
     telegram_api_base_url: str = "https://api.telegram.org"
 
     # Email

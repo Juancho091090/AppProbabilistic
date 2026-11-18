@@ -54,6 +54,33 @@ def sample_recap():
     )
 
 
+def sample_tennis():
+    """Partido de tenis de ejemplo con las salidas reales del modelo (Markov + Elo)."""
+    return MatchForecast(
+        sport="tennis",
+        competition="ATP · ATP Finals",
+        competition_key="atp",
+        event_id="ejt1",
+        kickoff_utc=datetime(2026, 11, 22, 18, 30, tzinfo=UTC),
+        home_or_a="Sinner",
+        away_or_b="Zverev",
+        model_version="ejemplo",
+        generated_at=datetime(2026, 11, 21, 23, tzinfo=UTC),
+        as_of=datetime(2026, 11, 21, 23, tzinfo=UTC),
+        markets={
+            "winner": {"A": 0.68, "B": 0.32},
+            "set_scores": {"2-0": 0.41, "2-1": 0.27, "1-2": 0.18, "0-2": 0.14},
+            "expected_games": 22.4,
+            "serve_point_prob": {"A": 0.66, "B": 0.62},
+            "best_of": 3,
+        },
+        per_model={},
+        confidence="high",
+        confidence_score=0.68,
+        context={"surface": "hard", "elo": {"A": 2210, "B": 2080}, "tour": "ATP"},
+    )
+
+
 def sample_payload() -> tuple[DailyReportPayload, dict[str, tuple[float, float, float]], int]:
     """Payload, 1X2 del mercado sin margen y número de partidos de confianza Alta."""
     open_match = _fc(
@@ -86,5 +113,6 @@ def sample_payload() -> tuple[DailyReportPayload, dict[str, tuple[float, float, 
             CompetitionSection(name="LaLiga", key="laliga", forecasts=[open_match]),
             CompetitionSection(name="Premier League", key="epl", forecasts=[clear]),
         ],
+        tennis={"ATP": [sample_tennis()]},
     )
     return payload, {"ej1": (0.33, 0.27, 0.40)}, 4

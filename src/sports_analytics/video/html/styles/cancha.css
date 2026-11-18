@@ -1,0 +1,72 @@
+/* La cancha: grama cortada (fútbol) o pista según superficie (tenis), letras pintadas */
+:root { --paint: rgba(255, 255, 255, .94); --yel: #FFE45C; --chip: #E9F5E4; --chipt: #0F3D17; }
+body { background: #2E7A36; }
+.decor { position: absolute; inset: 0; }
+.grass { background: repeating-linear-gradient(180deg, #2F8139 0 160px, #2A7432 160px 320px); }
+.court-inner { left: 150px; top: 220px; width: 780px; height: 1500px; inset: auto; position: absolute; }
+.lines { opacity: .55; }
+.net { top: 956px; left: 120px; width: 840px; height: 28px; inset: auto; position: absolute;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .5) 0 3px, transparent 3px 12px), #1d1d1d;
+  border-top: 7px solid #fff; box-shadow: 0 10px 18px rgba(0, 0, 0, .35); opacity: .6; }
+.grain { background: var(--grain); opacity: .10; }
+.vignette { background: radial-gradient(ellipse 900px 1300px at 50% 45%, transparent 55%, rgba(0, 0, 0, .3)); }
+
+.scene { font-family: Oswald; font-weight: 700; color: var(--paint); align-items: center; text-align: center; }
+.scene > * { filter: url(#paint); }
+/* Entrada: la pintura "cae" sobre la grama */
+.rv { opacity: var(--k, 0); transform: scale(calc(1.12 - 0.12 * var(--k, 0))); transform-origin: center !important; }
+.rv-left, .rv-right { transform: scale(calc(1.12 - 0.12 * var(--k, 0))); }
+
+.kicker { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 56px; color: var(--chipt); background: var(--chip);
+  padding: 6px 26px; border-radius: 8px; filter: none; }
+.team { font-size: 150px; text-transform: uppercase; letter-spacing: 2px; }
+.vs { align-self: center; width: 230px; height: 230px; border: 9px solid var(--paint); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 84px; }
+.note { align-self: center; margin-top: 10px; filter: none; }
+.note-head { display: none; }
+.note-big { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 72px; color: var(--chipt); background: var(--chip);
+  padding: 4px 30px; border-radius: 8px; }
+.note-foot { font-size: 40px; margin-top: 8px; }
+.when { font-size: 48px; }
+
+.scene-bars, .scene-sets, .scene-why, .scene-recap, .scene-cta { align-items: flex-start; text-align: left; }
+.scene-bars .title, .scene-sets .title { font-size: 110px; }
+.row .label { font-size: 66px; text-transform: uppercase; }
+.row .bar { width: 600px; background: rgba(255, 255, 255, .14); }
+.row .fill { background: var(--paint); }
+.row.top .fill { background: var(--yel); }
+.row.top .val { color: var(--yel); }
+.row .val { font-size: 104px; }
+.aside { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 56px; color: var(--chipt); background: var(--chip); padding: 4px 26px; border-radius: 8px; filter: none; }
+.stamp { color: #fff; background: #C8323A; font-size: 60px; border-radius: 8px; filter: none; }
+
+.duel { background: rgba(0, 0, 0, .18); border-left: 10px solid var(--paint); }
+.dtitle { font-size: 46px; text-transform: uppercase; }
+.dnames { font-size: 40px; font-family: 'Barlow Condensed'; }
+.dvals { font-size: 80px; }
+.track { background: rgba(255, 255, 255, .15); }
+.track .lfill, .track .rfill { background: var(--paint); }
+.track .win { background: var(--yel); }
+.dvals .win { color: var(--yel); }
+
+.scene-recap .title { text-transform: uppercase; }
+.scene-recap .title.mood-good { color: var(--yel); }
+.rrow { background: rgba(0, 0, 0, .2); }
+.rrow .rlabel { font-family: 'Barlow Condensed'; font-size: 48px; }
+.rrow.hit .mark { color: var(--yel); }
+.rrow.miss .mark { color: #FF8A8A; }
+
+.q { font-size: 80px; text-transform: uppercase; line-height: 1; }
+.num { color: var(--yel); }
+.pill { font-family: 'Barlow Condensed'; font-weight: 800; color: #10220F; background: var(--yel); border-radius: 10px; filter: none; }
+.disc { font-family: Archivo; font-weight: 500; font-size: 30px; }
+.scene-intro .title { font-size: 100px; text-transform: uppercase; }
+.tag { font-family: 'Barlow Condensed'; font-weight: 800; color: var(--chipt); background: var(--chip); border-radius: 8px; filter: none; }
+
+.caps-line { font-family: Archivo; font-weight: 800; color: #fff; text-shadow: 0 3px 12px rgba(0, 0, 0, .6); }
+.caps .w.next { opacity: .45; }
+.caps .w.now { color: var(--yel); }
+.progress { background: rgba(0, 0, 0, .2); }
+.progress-fill { background: var(--yel); }
+.logo-small { left: 485px; top: 30px; }
+.wipe { background: repeating-linear-gradient(180deg, #3A9445 0 160px, #33873D 160px 320px); box-shadow: 0 0 60px rgba(0, 0, 0, .35); }

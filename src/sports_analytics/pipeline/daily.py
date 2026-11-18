@@ -483,9 +483,6 @@ def run_daily(
                     if svc.channel or settings.short_enabled
                     else {}
                 )
-                n_high = sum(
-                    1 for p in select_channel_forecasts(payload, fair) if p.rule == "modelo_alta"
-                )
                 if svc.channel:
                     try:
                         selected = select_channel_forecasts(payload, fair)
@@ -502,8 +499,9 @@ def run_daily(
                 if settings.short_enabled and svc.telegram:
                     try:
                         recap = _short_recap(session, config, local_day, issues)
-                        outcome.short_sent = _daily_short(
-                            settings, payload, fair, n_high, svc, recap
+                        picks = select_channel_forecasts(payload, fair)
+                        outcome.short_sent = (
+                            _daily_shorts(settings, payload, fair, picks, svc, recap, issues) > 0
                         )
                     except Exception as exc:  # noqa: BLE001 - el video no frena el informe
                         issues.append(redact(f"Short: {type(exc).__name__}: {exc}")[:300])
@@ -610,40 +608,72 @@ def _short_recap(session, config, local_day, issues):
         return None
 
 
-def _daily_short(settings, payload, fair, n_high, svc, recap=None) -> bool:
-    """Genera el Short del día y lo envía al chat personal para revisarlo y subirlo."""
-    import tempfile
-    from pathlib import Path
-
-    from sports_analytics.video.render import render_short
-    from sports_analytics.video.script import build_short_script
+def _daily_shorts(settings, payload, fair, picks, svc, recap=None, issues=None) -> int:
+    """Genera los Shorts del día (fútbol y tenis, el que tenga partidos) y los envía al chat
+    personal para revisarlos y subirlos. Devuelve cuántos se enviaron."""
+    from sports_analytics.video.script import build_short_script, build_tennis_script
     from sports_analytics.video.tts import GoogleTTS
 
-    script = build_short_script(payload, fair, n_high, recap, settings.short_intro)
-    if script is None:
-        return False
+    issues = issues if issues is not None else []
+    n_all = sum(1 for p in picks if p.rule == "modelo_alta")
+    n_tennis = sum(1 for p in picks if p.rule == "modelo_alta" and p.forecast.sport == "tennis")
+    football = build_short_script(payload, fair, n_all, recap, settings.short_intro)
+    tennis = build_tennis_script(
+        payload,
+        n_tennis,
+        None if football else recap,  # el resumen va en el primer video del día
+        settings.short_intro and football is None,
+        payload.timezone,
+    )
     tts = None
     if settings.google_tts_api_key:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
+    sent = 0
     try:
-        with tempfile.TemporaryDirectory() as tmp:
-            path = render_short(
-                script,
-                Path(tmp) / "short.mp4",
-                payload.timezone,
-                tts,
-                settings.short_music_file,
-                settings.short_theme,
-            )
-            caption = (
-                f"🎬 Short del día\n\nTítulo:\n{script.title}\n\nDescripción:\n"
-                f"{script.description}\n\n📌 Comentario para fijar:\n{script.pinned_comment}"
-            )
-            svc.telegram.send_video(path, caption)
+        for script in (s for s in (football, tennis) if s is not None):
+            try:
+                path, used = _render_short(settings, payload, script, tts, issues)
+                label = "⚽ Short de fútbol" if script.sport == "football" else "🎾 Short de tenis"
+                caption = (
+                    f"{label} (plantilla: {used})\n\nTítulo:\n{script.title}\n\nDescripción:\n"
+                    f"{script.description}\n\n📌 Comentario para fijar:\n{script.pinned_comment}"
+                )
+                svc.telegram.send_video(path, caption)
+                sent += 1
+            except Exception as exc:  # noqa: BLE001 - un video no frena al otro
+                issues.append(redact(f"Short {script.sport}: {type(exc).__name__}: {exc}")[:300])
     finally:
         if tts:
             tts.close()
-    return True
+    return sent
+
+
+def _render_short(settings, payload, script, tts, issues):
+    """Plantillas HTML (rotan por día). Si Chrome falla, el fútbol sale con el diseño anterior."""
+    import tempfile
+    from pathlib import Path
+
+    from sports_analytics.video.html_engine import render_short_html, style_for
+    from sports_analytics.video.render import render_short
+
+    out = Path(tempfile.mkdtemp()) / f"short_{script.sport}.mp4"
+    style = settings.short_style or style_for(payload.report_date, script.sport)
+    if settings.short_engine == "html":
+        try:
+            render_short_html(script, out, payload.timezone, tts, settings.short_music_file, style)
+            return out, style
+        except Exception as exc:  # noqa: BLE001
+            if script.sport != "football":
+                raise
+            issues.append(
+                redact(f"Short: plantilla {style} falló ({type(exc).__name__}); diseño anterior")[
+                    :300
+                ]
+            )
+    render_short(
+        script, out, payload.timezone, tts, settings.short_music_file, settings.short_theme
+    )
+    return out, "clásica"
 
 
 def _market_fair(session, config, forecasts, issues) -> dict[str, tuple[float, ...]]:

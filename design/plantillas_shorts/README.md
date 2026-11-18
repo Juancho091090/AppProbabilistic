@@ -1,9 +1,10 @@
 # Plantillas de Shorts (18-nov-2026)
 
 Cuatro estilos visuales para rotar por día, cada uno en versión **fútbol** y **tenis**.
-Son fotogramas de referencia (gancho + probabilidades) en HTML/CSS, renderizados con Chrome.
-El motor de video actual (`src/sports_analytics/video/`) todavía no los usa: migrarlo es el
-siguiente paso.
+Estos son los fotogramas de referencia del diseño. Desde el 18-nov el motor de video los usa:
+`src/sports_analytics/video/html/` (runtime.js + base.css + un CSS por estilo) y
+`video/html_engine.py`, que dibuja cada fotograma con Chrome. Vista previa rápida de todas las
+escenas: `python scripts/short_preview.py salida.png [estilo ...]`.
 
 | Estilo | Fútbol | Tenis | Idea |
 |---|---|---|---|

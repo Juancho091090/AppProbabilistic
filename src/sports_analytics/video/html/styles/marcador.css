@@ -1,0 +1,81 @@
+/* Marcador del estadio: todo el lienzo es una matriz de LED */
+:root { --amb: #FFB21E; --wht: #FFF4DA; --red: #FF4B3E; --off: #25272a; }
+body { background: #141516; }
+.decor { position: absolute; }
+.housing { inset: 0; background: linear-gradient(90deg, #1b1c1e, #111213 50%, #1b1c1e); }
+.panel { left: 40px; top: 180px; width: 1000px; height: 1130px; background-color: #070708; border-radius: 10px;
+  box-shadow: inset 0 0 0 10px #2a2b2d, inset 0 0 40px #000;
+  background-image: radial-gradient(circle, var(--off) 3.2px, transparent 3.8px); background-size: 16px 16px; background-position: 4px 4px; }
+
+.scene { padding: 250px 100px 0 100px; gap: 22px; font-family: Doto; font-weight: 900; color: var(--amb);
+  text-transform: uppercase; letter-spacing: 4px;
+  text-shadow: 0 0 10px rgba(255, 170, 20, .75), 0 0 26px rgba(255, 140, 0, .35); }
+.rv { opacity: var(--k, 0); }
+.rv-pop { transform: none; }
+.w-led, .vs, .when, .note-head, .note-foot, .score-label, .rpick, .numlabel, .disc, .dnames, .dvs, .tag {
+  color: var(--wht); text-shadow: 0 0 10px rgba(255, 240, 210, .7); }
+.kicker, .dtitle, .aside { color: var(--red); text-shadow: 0 0 10px rgba(255, 70, 50, .75); }
+.kicker { font-size: 54px; }
+.team { font-size: 116px; letter-spacing: 6px; }
+.sport-football .team.home::before { content: "LOCAL"; display: block; font-size: 40px; color: var(--red); margin-bottom: 8px; }
+.sport-football .team.away::before { content: "VISITA"; display: block; font-size: 40px; color: var(--red); margin-bottom: 8px; }
+.vs { font-size: 90px; margin-left: 330px; }
+.note { margin-top: 30px; }
+.note-head { font-size: 40px; }
+.note-big { font-size: 110px; color: var(--amb); }
+.note-foot { font-size: 34px; }
+.when { font-size: 56px; }
+
+.title { color: var(--wht); text-shadow: 0 0 10px rgba(255, 240, 210, .7); }
+.scene-bars .title, .scene-sets .title { font-size: 80px; }
+.row .label { font-size: 70px; color: var(--wht); text-shadow: 0 0 10px rgba(255, 240, 210, .6); }
+.row.top .label { color: var(--amb); }
+.row .bar { width: 860px; height: 64px; background-image: radial-gradient(circle, var(--off) 12px, transparent 13px); background-size: 32px 32px; }
+.row .fill { background-image: radial-gradient(circle, var(--wht) 11px, transparent 12.5px); background-size: 32px 32px;
+  filter: drop-shadow(0 0 6px rgba(255, 240, 210, .7)); }
+.row.top .fill { background-image: radial-gradient(circle, var(--amb) 11px, transparent 12.5px); filter: drop-shadow(0 0 6px rgba(255, 170, 20, .8)); }
+.row .val { top: 0; bottom: auto; font-size: 70px; color: var(--wht); }
+.row.top .val { color: var(--amb); }
+.rows { gap: 34px; margin-top: 20px; }
+.rows-4 { gap: 26px; }
+.rows-4 .row .label { font-size: 54px; }
+.rows-4 .row .val { top: 0; font-size: 54px; }
+.aside { font-size: 50px; }
+.stamp { color: var(--red); border: 6px solid var(--red); padding: 14px 30px; font-size: 56px; letter-spacing: 6px; box-shadow: 0 0 16px rgba(255, 70, 50, .5); }
+body:not(.blink) .stamp.on { opacity: .25 !important; }
+
+.duel { border: 3px dotted #3a3c3f; }
+.dtitle { font-size: 44px; }
+.dnames { font-size: 38px; }
+.dvals { font-size: 72px; }
+.dvals span { color: var(--wht); }
+.dvals .win { color: var(--amb); }
+.track { background-image: radial-gradient(circle, var(--off) 9px, transparent 10px); background-size: 24px 24px; }
+.track .lfill, .track .rfill { background-image: radial-gradient(circle, var(--wht) 8.5px, transparent 10px); background-size: 24px 24px; }
+.track .win { background-image: radial-gradient(circle, var(--amb) 8.5px, transparent 10px); }
+
+.scene-recap .title { font-size: 70px; }
+.scene-recap .title.mood-good { color: var(--amb); }
+.scene-recap .title.mood-bad { color: var(--red); }
+.score { font-size: 200px; }
+.rrow { border-bottom: 3px dotted #3a3c3f; height: 76px; }
+.rrow .rlabel { font-size: 40px; color: var(--wht); }
+.rrow .rpick { font-size: 28px; }
+.rrow.hit .mark { color: var(--amb); }
+.rrow.miss .mark { color: var(--red); }
+
+.q { font-size: 64px; color: var(--wht); }
+.num { font-size: 280px; }
+.pill { color: var(--red); border: 6px solid var(--red); font-size: 38px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 70, 50, .75); }
+.disc { font-size: 26px; letter-spacing: 1px; text-transform: none; font-family: Archivo; font-weight: 500; text-shadow: none; color: #9a9da3; }
+.scene-intro .title { color: var(--amb); font-size: 84px; }
+.scene-intro .sub { color: var(--wht); font-size: 48px; }
+.tag { font-size: 44px; }
+
+.caps { top: 1340px; }
+.caps-line { font-family: Archivo; font-weight: 800; color: #fff; }
+.caps .w.next { opacity: .4; }
+.caps .w.now { color: var(--amb); }
+.progress-fill { background: var(--amb); box-shadow: 0 0 10px var(--amb); }
+.logo-small { left: 485px; top: 45px; }
+.wipe { background: #050506 repeating-linear-gradient(180deg, rgba(255, 255, 255, .04) 0 2px, transparent 2px 8px); }

@@ -12,7 +12,6 @@ import httpx
 import pytest
 
 from sports_analytics.config.settings import Settings
-from sports_analytics.pipeline.daily import _daily_short
 from sports_analytics.reporting.telegram import TelegramService
 from sports_analytics.video.audio import RATE, generate_music, mix_soundtrack, sfx
 from sports_analytics.video.render import _captions, render_short, sfx_events, timeline, word_times
@@ -125,33 +124,6 @@ def test_render_short_with_voice(tmp_path):
     video = next(x for x in streams if x["codec_type"] == "video")
     assert (video["width"], video["height"]) == (1080, 1920)
     assert any(x["codec_type"] == "audio" for x in streams)
-
-
-def test_daily_short_sends_video_to_personal_chat(monkeypatch):
-    payload, fair, n = sample_payload()
-    sent = {}
-
-    def fake_render(script, path, tz, tts, music=None, theme=None):
-        path.write_bytes(b"mp4")
-        return path
-
-    monkeypatch.setattr("sports_analytics.video.render.render_short", fake_render)
-
-    def handler(request):
-        sent["url"] = str(request.url)
-        sent["body"] = request.content
-        return httpx.Response(200, json={"ok": True})
-
-    settings = Settings(
-        telegram_bot_token="123456789:ABCdefGhIJKlmNoPQRstuVWxyz0123456789",
-        telegram_chat_id="42",
-        short_enabled=True,
-    )
-    svc = SimpleNamespace(
-        telegram=TelegramService(settings, transport=httpx.MockTransport(handler))
-    )
-    assert _daily_short(settings, payload, fair, n, svc) is True
-    assert sent["url"].endswith("/sendVideo") and b"Atl\xc3\xa9tico de Madrid" in sent["body"]
 
 
 def test_all_font_weights_are_bundled():

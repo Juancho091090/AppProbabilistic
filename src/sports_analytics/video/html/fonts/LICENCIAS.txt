@@ -1,0 +1,3 @@
+Fuentes bajo SIL Open Font License 1.1 (redistribución permitida), tomadas de Fontsource:
+Kalam, Caveat, Barlow Condensed, Oswald, Archivo y Doto (Google Fonts).
+https://openfontlicense.org

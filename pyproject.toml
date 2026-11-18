@@ -34,6 +34,11 @@ dev = [
     "pypdf>=4",
     "respx>=0.21",
     "ruff>=0.5",
+    "playwright>=1.45",
+]
+# Plantillas HTML de los Shorts (Chrome vía Playwright)
+video = [
+    "playwright>=1.45",
 ]
 
 [project.scripts]

@@ -608,46 +608,64 @@ def _publish(md: str, title: str) -> None:
 
 
 def _short_sample(args: argparse.Namespace) -> int:
-    """Short de ejemplo (sin base de datos): prueba de diseño, voz y envío."""
+    """Shorts de ejemplo (sin base de datos): prueba de diseño, voz y envío."""
+    from datetime import date
     from pathlib import Path
 
     from sports_analytics.config.settings import get_settings
+    from sports_analytics.video.html_engine import render_short_html, style_for
     from sports_analytics.video.render import render_short
     from sports_analytics.video.sample import sample_payload, sample_recap
-    from sports_analytics.video.script import build_short_script
+    from sports_analytics.video.script import build_short_script, build_tennis_script
     from sports_analytics.video.tts import GoogleTTS
 
     settings = get_settings()
     payload, fair, n_high = sample_payload()
-    script = build_short_script(
-        payload,
-        fair,
-        n_high,
-        None if args.no_recap else sample_recap(),
-        args.intro or settings.short_intro,
-    )
+    recap = None if args.no_recap else sample_recap()
+    intro = args.intro or settings.short_intro
+    scripts = []
+    if args.sport in ("football", "both"):
+        scripts.append(build_short_script(payload, fair, n_high, recap, intro))
+    if args.sport in ("tennis", "both"):
+        first = not scripts
+        scripts.append(
+            build_tennis_script(
+                payload, 2, recap if first else None, intro and first, payload.timezone
+            )
+        )
     tts = None
     if settings.google_tts_api_key and not args.no_voice:
         tts = GoogleTTS(settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice)
-    path = render_short(
-        script,
-        Path(args.output),
-        payload.timezone,
-        tts,
-        settings.short_music_file,
-        args.theme or settings.short_theme,
-    )
-    print(f"Video: {path} · voz: {'sí' if tts else 'no'}")
+    base = Path(args.output)
+    svc = None
     if args.send:
         from sports_analytics.reporting.telegram import TelegramService
 
         svc = TelegramService(settings)
-        svc.send_video(
-            path,
-            f"🎬 Short de prueba\n\n{script.title}\n\n{script.description}"
-            f"\n\n📌 Comentario para fijar:\n{script.pinned_comment}",
-        )
-        print("Enviado por Telegram")
+    for script in scripts:
+        out = base.with_name(f"{base.stem}_{script.sport}{base.suffix or '.mp4'}")
+        engine = args.engine or settings.short_engine
+        if engine == "html":
+            style = args.style or settings.short_style or style_for(date.today(), script.sport)
+            render_short_html(script, out, payload.timezone, tts, settings.short_music_file, style)
+        else:
+            style = "clásica"
+            render_short(
+                script,
+                out,
+                payload.timezone,
+                tts,
+                settings.short_music_file,
+                args.theme or settings.short_theme,
+            )
+        print(f"Video: {out} · plantilla: {style} · voz: {'sí' if tts else 'no'}")
+        if svc:
+            svc.send_video(
+                out,
+                f"🎬 Short de prueba ({script.sport}, plantilla {style})\n\n{script.title}\n\n"
+                f"{script.description}\n\n📌 Comentario para fijar:\n{script.pinned_comment}",
+            )
+            print("Enviado por Telegram")
     return 0
 
 
@@ -680,7 +698,10 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--send", action="store_true", help="Enviar al chat personal")
     sh.add_argument("--no-recap", action="store_true", help="Sin el resumen de ayer")
     sh.add_argument("--intro", action="store_true", help="Con la presentación del canal")
-    sh.add_argument("--theme", default=None, help="Paleta (marino_lima, grafito_turquesa, ...)")
+    sh.add_argument("--theme", default=None, help="Paleta del diseño anterior (motor pillow)")
+    sh.add_argument("--sport", choices=["football", "tennis", "both"], default="both")
+    sh.add_argument("--style", default=None, help="Plantilla: cuaderno, pizarra, marcador o cancha")
+    sh.add_argument("--engine", choices=["html", "pillow"], default=None)
     sh.set_defaults(func=_short_sample)
 
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(

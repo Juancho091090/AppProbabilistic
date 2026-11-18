@@ -57,6 +57,8 @@ jobs:
       SHORT_ENABLED: ${{ vars.SHORT_ENABLED || 'false' }}
       SHORT_THEME: ${{ vars.SHORT_THEME || 'claro_cesped' }}
       SHORT_INTRO: ${{ vars.SHORT_INTRO || 'false' }}
+      SHORT_ENGINE: ${{ vars.SHORT_ENGINE || 'html' }}
+      SHORT_STYLE: ${{ vars.SHORT_STYLE || '' }}
       GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -81,9 +83,12 @@ jobs:
       - name: Instalar dependencias
         run: pip install -e .
 
-      - name: ffmpeg (solo si el Short está activo)
+      - name: ffmpeg y Chrome para los Shorts (solo si están activos)
         if: vars.SHORT_ENABLED == 'true'
-        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+        run: |
+          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          pip install -e ".[video]"
+          command -v google-chrome || python -m playwright install --with-deps chromium
 
       - name: Verificar base de datos configurada
         run: |

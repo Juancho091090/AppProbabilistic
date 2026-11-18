@@ -8,9 +8,14 @@ on:
       voice:
         description: "Voz de Google TTS (Chirp 3 HD)"
         default: "es-US-Chirp3-HD-Puck"
-      theme:
-        description: "Paleta: claro_cesped, marino_lima, grafito_turquesa o noche_coral"
-        default: "claro_cesped"
+      sport:
+        description: "Deporte"
+        type: choice
+        options: [both, football, tennis]
+        default: both
+      style:
+        description: "Plantilla (vacío = la del día): cuaderno, pizarra, marcador o cancha"
+        default: ""
       intro:
         description: "Incluir la presentación del canal"
         type: boolean
@@ -22,7 +27,7 @@ permissions:
 jobs:
   short:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       GOOGLE_TTS_VOICE: ${{ inputs.voice }}
@@ -37,14 +42,17 @@ jobs:
       - name: ffmpeg
         run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
       - name: Instalar dependencias
-        run: pip install -e .
+        run: |
+          pip install -e ".[video]"
+          command -v google-chrome || python -m playwright install --with-deps chromium
       - name: Generar y enviar el Short
         run: >-
           sports-analytics short-sample --send --output data/short_prueba.mp4
-          --theme "${{ inputs.theme }}" ${{ inputs.intro && '--intro' || '' }}
+          --sport "${{ inputs.sport }}" ${{ inputs.style && format('--style {0}', inputs.style) || '' }}
+          ${{ inputs.intro && '--intro' || '' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: short-prueba
-          path: data/short_prueba.mp4
+          path: data/short_prueba_*.mp4
           if-no-files-found: ignore

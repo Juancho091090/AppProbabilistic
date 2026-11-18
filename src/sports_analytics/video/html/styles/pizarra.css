@@ -1,0 +1,70 @@
+/* Pizarra del DT: tiza blanca, amarilla y roja; fichas magnéticas */
+:root { --chalk: #EEF1EA; --yel: #F3D77F; --red: #EE9384; --grn: #A7E3A1; }
+body { background: #24352C; }
+.decor { position: absolute; inset: 0; }
+.board { background:
+  radial-gradient(ellipse 520px 260px at 300px 1500px, rgba(255, 255, 255, .07), transparent 70%),
+  radial-gradient(ellipse 600px 300px at 820px 380px, rgba(255, 255, 255, .06), transparent 70%),
+  radial-gradient(ellipse 900px 700px at 540px 960px, #2C4035, #1D2B24); }
+.board::after { content: ""; position: absolute; inset: 0; background: var(--grain); opacity: .06; }
+.chalk-drawing { opacity: .2; }
+
+.scene { font-family: Caveat; font-weight: 700; color: var(--chalk); }
+.scene > * { filter: url(#chalk); }
+.scene .note, .scene .team { filter: none; }
+/* Entrada: se escribe con tiza */
+.rv { opacity: 1; clip-path: inset(-40% calc((1 - var(--k, 0)) * 100%) -40% -10%); }
+.rv-pop, .rv-stamp { clip-path: none; opacity: min(1, calc(var(--k, 0) * 3)); }
+
+.kicker { font-size: 72px; color: var(--yel); }
+.team { font-size: 124px; display: flex; align-items: center; gap: 34px; overflow: visible; }
+.team::before { content: ""; flex: none; width: 150px; height: 150px; border-radius: 50%;
+  box-shadow: 0 14px 18px rgba(0, 0, 0, .45), inset 0 -10px 18px rgba(0, 0, 0, .25), inset 0 10px 16px rgba(255, 255, 255, .35); }
+.sport-football .team.home::before { background: #D2343C; }
+.sport-football .team.away::before { background: #2C5DB5; }
+.sport-tennis .team.home::before { background: #E7E1C9; }
+.sport-tennis .team.away::before { background: #3A3F44; }
+.team.away { flex-direction: row-reverse; justify-content: flex-end; }
+.vs { color: var(--red); font-size: 96px; margin-left: 60px; }
+.note { border: 7px solid var(--yel); border-radius: 50% 46% 52% 48%; padding: 30px 70px; filter: url(#chalk); margin-left: 80px; }
+.note-head, .note-foot { color: var(--chalk); }
+.note-big { color: var(--yel); font-size: 104px; }
+.when { color: var(--yel); font-size: 60px; }
+
+.scene-bars .title, .scene-sets .title { font-size: 120px; }
+.row .label { font-size: 74px; }
+.row .bar { width: 560px; }
+.row .fill { background: repeating-linear-gradient(100deg, var(--chalk) 0 9px, transparent 9px 15px); }
+.row.top .fill { background: repeating-linear-gradient(100deg, var(--yel) 0 9px, transparent 9px 15px); }
+.row.top .val { color: var(--yel); }
+.row .val { font-size: 100px; }
+.aside { color: var(--red); font-size: 58px; border: 6px solid var(--red); border-radius: 50%; padding: 12px 44px; align-self: flex-start; }
+.stamp { color: var(--red); font-size: 66px; border: 7px solid var(--red); border-radius: 48%; padding: 16px 54px; white-space: nowrap; }
+
+.duel { border: 5px solid rgba(238, 241, 234, .55); border-radius: 16px; filter: url(#chalk); }
+.dtitle { color: var(--yel); font-size: 54px; }
+.dnames { font-size: 46px; }
+.dvals { font-size: 76px; }
+.track { border: 4px solid rgba(238, 241, 234, .5); border-radius: 8px; }
+.track .lfill, .track .rfill { background: repeating-linear-gradient(100deg, var(--chalk) 0 8px, transparent 8px 14px); }
+.track .win { background: repeating-linear-gradient(100deg, var(--yel) 0 8px, transparent 8px 14px); }
+.dvals .win { color: var(--yel); }
+
+.scene-recap .title.mood-good { color: var(--yel); }
+.scene-recap .title.mood-bad { color: var(--red); }
+.rrow { border-bottom: 3px dashed rgba(238, 241, 234, .35); }
+.rrow.hit .mark { color: var(--grn); }
+.rrow.miss .mark { color: var(--red); }
+.rrow .rpick, .score-label, .disc { color: rgba(238, 241, 234, .75); }
+
+.num { color: var(--yel); }
+.pill { color: #1D2B24; background: var(--yel); border-radius: 14px; font-family: 'Barlow Condensed'; font-weight: 800; filter: url(#chalk); }
+.tag { color: var(--yel); font-size: 58px; }
+
+.caps { background: rgba(10, 18, 14, .55); border-radius: 18px; }
+.caps-line { font-family: Archivo; font-weight: 800; color: #fff; }
+.caps .w.next { opacity: .4; }
+.caps .w.now { color: var(--yel); }
+.progress-fill { background: var(--yel); }
+.logo-small { left: 70px; }
+.wipe { background: linear-gradient(90deg, transparent, rgba(150, 165, 155, .55) 12%, #34483D 30%, #2C4035 70%, rgba(150, 165, 155, .45) 88%, transparent); }
