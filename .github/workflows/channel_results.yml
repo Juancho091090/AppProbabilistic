@@ -73,4 +73,12 @@ jobs:
           ARGS=""
           [ -n "${{ inputs.day }}" ] && ARGS="$ARGS --day ${{ inputs.day }}"
           [ "${{ inputs.send }}" = "false" ] && ARGS="$ARGS --no-send"
-          sports-analytics channel-results $ARGS
+          sports-analytics channel-results $ARGS --output reports/output/resultados.png
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultados-canal-${{ github.run_id }}
+          path: reports/output/
+          retention-days: 14
+          if-no-files-found: ignore

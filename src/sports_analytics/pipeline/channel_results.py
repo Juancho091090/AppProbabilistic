@@ -45,6 +45,7 @@ class ResultsOutcome:
     day: date
     recap: object | None = None
     message_ids: list[int] = field(default_factory=list)
+    totals: tuple[int, int] | None = None
     issues: list[str] = field(default_factory=list)
 
 
@@ -89,6 +90,7 @@ def run_channel_results(
                 session.commit()
                 return out
             totals = channel_totals(session, model, day)
+            out.totals = totals
             reply_to = _evening_message_id(session, day)
             if send and svc.channel:
                 out.message_ids = publish(

@@ -66,6 +66,14 @@ def _channel_results(args: argparse.Namespace) -> int:
     summary = f"Resultados del {out.day}: {out.status}" + (
         f" · {r.hits} de {r.n} acertados, {r.pending} sin resultado" if r else ""
     )
+    if args.output and r is not None:
+        from sports_analytics.reporting.channel import render_results_message
+        from sports_analytics.video.channel_card import render_results_card
+
+        render_results_card(r, Path(args.output), totals=out.totals)
+        Path(args.output).with_suffix(".txt").write_text(
+            render_results_message(r, out.totals), encoding="utf-8"
+        )
     print(summary)
     for issue in out.issues:
         print(f"- {issue}")
@@ -729,6 +737,7 @@ def build_parser() -> argparse.ArgumentParser:
     cr = sub.add_parser("channel-results", help="Resultados de ayer en el canal (mañana)")
     cr.add_argument("--day", help="Día de los partidos (AAAA-MM-DD); por defecto, ayer")
     cr.add_argument("--no-send", action="store_true", help="No publica en el canal")
+    cr.add_argument("--output", help="Guarda la imagen (PNG) y el texto (.txt) para revisarlos")
     cr.set_defaults(func=_channel_results)
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(
         func=_settle
