@@ -108,3 +108,38 @@ html, body { width: 1080px !important; height: 1350px !important; overflow: hidd
 .st-cancha .cd-recap { color: #FFE45C; }
 .st-cancha .cd-link { font-family: 'Barlow Condensed'; font-weight: 800; color: #10220F; background: #FFE45C;
   align-self: flex-start; padding: 4px 22px; border-radius: 10px; }
+
+/* ---------- resultados de la mañana: visto / equis a mano en cada fila ---------- */
+.results .cd-fav { display: flex; align-items: center; gap: 18px; }
+.results .cd-fav .who { margin: 0; }
+.cd-mark { width: 84px; height: 84px; flex: none; fill: none; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+.dense .cd-mark { width: 64px; height: 64px; }
+.few .cd-mark { width: 104px; height: 104px; }
+.cd-mark.hit { stroke: #1F8A4C; }
+.cd-mark.miss { stroke: #C83A3A; }
+.cd-wait { font-size: 28px; opacity: .8; white-space: nowrap; }
+.results .cd-row.miss .cd-match { opacity: .8; }
+/* cuaderno: corrección con esfero (verde acierto, rojo fallo) */
+.st-cuaderno .results .cd-title { background: linear-gradient(transparent 18%, #B8F28E 18%, #B8F28E 88%, transparent 88%); }
+.st-cuaderno .cd-wait { font-family: Caveat; font-size: 34px; color: #5B6068; }
+/* pizarra: tiza */
+.st-pizarra .cd-mark { filter: url(#chalk); }
+.st-pizarra .cd-mark.hit { stroke: #F3D77F; }
+.st-pizarra .cd-mark.miss { stroke: #EE9384; }
+/* marcador: LED */
+.st-marcador .cd-mark { stroke-linecap: square; stroke-linejoin: miter; stroke-width: 14; }
+.st-marcador .cd-mark.hit { stroke: #3CE26E; filter: drop-shadow(0 0 8px rgba(60, 226, 110, .8)); }
+.st-marcador .cd-mark.miss { stroke: #FF4B3E; filter: drop-shadow(0 0 8px rgba(255, 75, 62, .8)); }
+.st-marcador .cd-wait { font-size: 22px; color: #FFF4DA; }
+/* cancha: pintura */
+.st-cancha .cd-mark { filter: url(#paint); }
+.st-cancha .cd-mark.hit { stroke: #FFE45C; }
+.st-cancha .cd-mark.miss { stroke: #FF9A8A; }
+.st-cancha .results .cd-row.hit { border-left-color: #FFE45C; }
+.st-cancha .results .cd-row.miss { border-left-color: #FF9A8A; }
+.results .cd-date { white-space: nowrap; }
+.results .cd-fav .who { max-width: 320px; }
+.results .cd-match { max-width: 600px; }
+.st-cuaderno .results .cd-match { max-width: 500px; }
+.st-marcador .results .cd-date { font-size: 27px; }
+.st-cuaderno .cd-fav .who { padding-right: 8px; }

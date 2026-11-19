@@ -1,0 +1,76 @@
+name: channel-results
+
+# Mañana siguiente: resultados de los partidos que el canal publicó la noche anterior,
+# como respuesta a ese mensaje (imagen + texto). Bogotá = UTC-5 todo el año.
+# * 12:37 UTC = 7:37 Bogotá (los últimos partidos de América terminan hacia medianoche).
+# * 15:17 UTC = 10:17 Bogotá: respaldo. Si ya se publicó, termina sin llamar a ninguna API;
+#   si a primera hora aún no había resultados, publica entonces.
+# Gasto: 1 llamada de API-Football + 2 a 4 de la Tennis API (comparte el contador diario de
+# cuota con el informe de la noche a través de la caché).
+on:
+  schedule:
+    - cron: "37 12 * * *"
+    - cron: "17 15 * * *"
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "Día de los partidos (AAAA-MM-DD). Vacío = ayer"
+        type: string
+        default: ""
+      send:
+        description: "Publicar en el canal"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: channel-results
+  cancel-in-progress: false
+
+jobs:
+  results:
+    if: vars.TELEGRAM_CHANNEL_ID != '' && vars.CHANNEL_RESULTS != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: INFO
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_DAILY_LIMIT: "7000"
+      TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+      TENNIS_API_DAILY_LIMIT: "45"
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_CHANNEL_ID }}
+      CHANNEL_IMAGE: ${{ vars.CHANNEL_IMAGE || 'true' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # Misma caché que el informe diario: comparte el contador de cuota
+      - uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: http-cache-${{ github.run_id }}
+          restore-keys: http-cache-
+
+      - name: Instalar dependencias y Chrome
+        run: |
+          pip install -e ".[video]"
+          command -v google-chrome || python -m playwright install --with-deps chromium
+
+      - name: Migraciones
+        run: alembic upgrade head
+
+      - name: Resultados de ayer en el canal
+        run: |
+          ARGS=""
+          [ -n "${{ inputs.day }}" ] && ARGS="$ARGS --day ${{ inputs.day }}"
+          [ "${{ inputs.send }}" = "false" ] && ARGS="$ARGS --no-send"
+          sports-analytics channel-results $ARGS

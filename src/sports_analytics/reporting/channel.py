@@ -177,3 +177,33 @@ def render_channel_message(
             out += [*_market_football(p, tz), ""]
     out.append(CHANNEL_DISCLAIMER)
     return "\n".join(out)
+
+
+def render_results_message(recap, totals: tuple[int, int] | None = None) -> str:
+    """Resultados de los partidos publicados (HTML). Se cuentan aciertos y fallos por igual;
+    los que aún no tienen resultado se listan aparte y no cuentan."""
+    d = recap.day
+    out = [
+        f"📋 <b>Así nos fue ayer</b> ({_DAYS[d.weekday()]} {d.day} {_MONTHS[d.month - 1]})",
+        f"<b>{recap.hits} de {recap.n} acertados</b>",
+        "",
+    ]
+
+    def line(it) -> str:
+        mark = {True: "✅", False: "❌", None: "⏳"}[it.hit]
+        tail = " (sin resultado aún)" if it.hit is None else ""
+        return f"{mark} {html.escape(it.label)}: {html.escape(it.pick)}{tail}"
+
+    model = [i for i in recap.items if not i.market]
+    market = [i for i in recap.items if i.market]
+    out += [line(i) for i in model]
+    if market:
+        out += ["", "<i>Favoritos claros del mercado</i>", *[line(i) for i in market]]
+    out.append("")
+    if recap.n - recap.hits:
+        out.append("Los fallos también se publican: una probabilidad alta no es una garantía.")
+    if totals and totals[1]:
+        h, n = totals
+        out.append(f"📈 Acumulado del canal: {h} de {n} ({round(100 * h / n)} %)")
+    out += ["Esta noche, los partidos de mañana.", "", CHANNEL_DISCLAIMER]
+    return "\n".join(out)

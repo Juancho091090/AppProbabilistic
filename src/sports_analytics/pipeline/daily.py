@@ -471,6 +471,7 @@ def run_daily(
                 log.info("report_already_sent_today", extra={"date": today.isoformat()})
                 run.details = {**(run.details or {}), "skipped_send": "already_sent_today"}
             channel_ids: list[dict] | None = None
+            channel_msg_id: int | None = None
             if send and not settings.dry_run and not already:
                 if svc.telegram:
                     try:
@@ -491,12 +492,18 @@ def run_daily(
                 if svc.channel:
                     try:
                         selected = select_channel_forecasts(payload, fair)
-                        if settings.channel_image:
+                        photo_id = (
                             _channel_card(svc.channel, payload, selected, recap, issues)
+                            if settings.channel_image
+                            else None
+                        )
                         svc.channel.send_message(
                             render_channel_message(payload, selected), parse_mode="HTML"
                         )
                         outcome.channel_sent = True
+                        # La publicación de resultados de la mañana responde a este mensaje
+                        text_id = getattr(svc.channel, "last_message_id", None)
+                        channel_msg_id = photo_id or text_id
                         # Registro de lo publicado: base del informe mensual de transparencia
                         channel_ids = [
                             {"event_id": p.forecast.event_id, "rule": p.rule} for p in selected
@@ -537,6 +544,7 @@ def run_daily(
                 "narrative": narrative is not None,
                 "local_time": to_local(now, tz).isoformat(),
                 **({"channel_event_ids": channel_ids} if channel_ids is not None else {}),
+                **({"channel_message_id": channel_msg_id} if channel_msg_id else {}),
             }
             outcome.status = "success" if not issues else "partial"
             repo.finish_run(session, run, outcome.status)
@@ -602,10 +610,9 @@ def _paper_trading(session, config, forecasts, today, now, report, issues) -> No
         issues.append(f"Registro simulado: {type(exc).__name__}: {str(exc)[:160]}")
 
 
-def _channel_card(channel, payload, selected, recap, issues) -> bool:
-    """Imagen de los partidos de confianza Alta antes del mensaje del canal.
-
-    Si no se puede generar o enviar, se anota y el mensaje de texto sale igual."""
+def _channel_card(channel, payload, selected, recap, issues) -> int | None:
+    """Imagen de los partidos de confianza Alta antes del mensaje del canal. Devuelve el id
+    del mensaje publicado (o ``None``). Si falla, se anota y el texto sale igual."""
     import tempfile
     from pathlib import Path
 
@@ -621,14 +628,13 @@ def _channel_card(channel, payload, selected, recap, issues) -> bool:
                 recap=recap,
             )
             if card is None:
-                return False
+                return None
             only_market = all(p.rule != "modelo_alta" for p in selected)
             head = "Favoritos claros de mañana" if only_market else "Confianza Alta de mañana"
-            channel.send_photo(card, f"📊 <b>{head}</b>. El detalle, abajo 👇")
-        return True
+            return channel.send_photo(card, f"📊 <b>{head}</b>. El detalle, abajo 👇")
     except Exception as exc:  # noqa: BLE001 - la imagen no frena el mensaje
         issues.append(redact(f"Canal (imagen): {type(exc).__name__}: {exc}")[:300])
-        return False
+        return None
 
 
 def _short_recap(session, config, local_day, issues):

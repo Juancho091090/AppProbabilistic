@@ -55,6 +55,28 @@ def _run_daily(args: argparse.Namespace) -> int:
     return 0 if outcome.status in ("success", "partial", "skipped") else 1
 
 
+def _channel_results(args: argparse.Namespace) -> int:
+    from datetime import date
+
+    from sports_analytics.pipeline.channel_results import run_channel_results
+
+    day = date.fromisoformat(args.day) if args.day else None
+    out = run_channel_results(get_settings(), get_config(), day=day, send=not args.no_send)
+    r = out.recap
+    summary = f"Resultados del {out.day}: {out.status}" + (
+        f" · {r.hits} de {r.n} acertados, {r.pending} sin resultado" if r else ""
+    )
+    print(summary)
+    for issue in out.issues:
+        print(f"- {issue}")
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import _escape_annotation
+
+        text = "\n".join([summary, *[f"- {i}" for i in out.issues]])
+        print(f"::notice title=resultados-canal::{_escape_annotation(text)}")
+    return 1 if out.status == "failed" else 0
+
+
 def _settle(_: argparse.Namespace) -> int:
     from sports_analytics.db.session import session_scope
     from sports_analytics.pipeline.results import refresh_live_metrics, settle_predictions
@@ -704,6 +726,10 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--engine", choices=["html", "pillow"], default=None)
     sh.set_defaults(func=_short_sample)
 
+    cr = sub.add_parser("channel-results", help="Resultados de ayer en el canal (mañana)")
+    cr.add_argument("--day", help="Día de los partidos (AAAA-MM-DD); por defecto, ayer")
+    cr.add_argument("--no-send", action="store_true", help="No publica en el canal")
+    cr.set_defaults(func=_channel_results)
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(
         func=_settle
     )

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import httpx
 
 from sports_analytics.config.settings import Settings
@@ -54,18 +56,27 @@ class TelegramService:
         self._base = f"{settings.telegram_api_base_url}/bot{token}"
         self._url = f"{self._base}/sendMessage"
         self.chat_id = target
+        self.last_message_id: int | None = None
         self._client = httpx.Client(timeout=settings.http_timeout_seconds, transport=transport)
 
     def close(self) -> None:
         self._client.close()
 
-    def send_message(self, text: str, parse_mode: str | None = "HTML") -> int:
-        """Envía (dividiendo si hace falta). Devuelve el número de mensajes enviados."""
+    def send_message(
+        self, text: str, parse_mode: str | None = "HTML", reply_to: int | None = None
+    ) -> int:
+        """Envía (dividiendo si hace falta). Devuelve el número de mensajes enviados.
+
+        ``reply_to``: id de un mensaje del mismo chat al que responde la primera parte (si ya
+        no existe, se publica igual). El id del primer mensaje queda en ``last_message_id``."""
         sent = 0
+        self.last_message_id = None
         for part in split_message(text):
             payload = {"chat_id": self.chat_id, "text": part, "disable_web_page_preview": True}
             if parse_mode:
                 payload["parse_mode"] = parse_mode
+            if reply_to and not sent:
+                payload["reply_parameters"] = _reply(reply_to)
             resp = self._client.post(self._url, json=payload)
             if resp.status_code == 400 and parse_mode:
                 # HTML rechazado: reintenta como texto plano para no perder el informe
@@ -74,6 +85,8 @@ class TelegramService:
             if resp.status_code >= 400:
                 # No se registra la URL (contiene el token)
                 raise RuntimeError(f"Telegram HTTP {resp.status_code}: {resp.text[:200]}")
+            if not sent:
+                self.last_message_id = _message_id(resp)
             sent += 1
         log.info("telegram_sent", extra={"messages": sent})
         return sent
@@ -91,13 +104,24 @@ class TelegramService:
             {"supports_streaming": "true"},
         )
 
-    def send_photo(self, path, caption: str = "", attempts: int = 3, wait: float = 10.0) -> None:
-        """Envía una imagen (máx. 10 MB). El caption admite 1024 caracteres (HTML)."""
-        self._send_file(
-            "sendPhoto", "photo", path, "image/png", caption, attempts, wait, {"parse_mode": "HTML"}
+    def send_photo(
+        self,
+        path,
+        caption: str = "",
+        attempts: int = 3,
+        wait: float = 10.0,
+        reply_to: int | None = None,
+    ) -> int | None:
+        """Envía una imagen (máx. 10 MB). El caption admite 1024 caracteres (HTML).
+        Devuelve el id del mensaje publicado (si Telegram lo informa)."""
+        extra = {"parse_mode": "HTML"}
+        if reply_to:
+            extra["reply_parameters"] = json.dumps(_reply(reply_to))
+        return self._send_file(
+            "sendPhoto", "photo", path, "image/png", caption, attempts, wait, extra
         )
 
-    def _send_file(self, method, field, path, mime, caption, attempts, wait, extra) -> None:
+    def _send_file(self, method, field, path, mime, caption, attempts, wait, extra) -> int | None:
         """Reintenta ante errores 5xx o de conexión de Telegram (p. ej. 502 Bad Gateway)."""
         import time
         from pathlib import Path
@@ -117,7 +141,8 @@ class TelegramService:
             else:
                 if resp.status_code < 400:
                     log.info("telegram_file_sent", extra={"method": method, "attempt": attempt})
-                    return
+                    self.last_message_id = _message_id(resp)
+                    return self.last_message_id
                 last = f"HTTP {resp.status_code}: {resp.text[:200]}"
                 if resp.status_code < 500 and resp.status_code != 429:
                     break  # error del pedido: reintentar no sirve
@@ -130,3 +155,14 @@ class TelegramService:
 
     def send_error_notification(self, error: str) -> int:
         return self.send_message(f"⚠️ Error en el pipeline diario:\n{error[:3000]}", parse_mode=None)
+
+
+def _reply(message_id: int) -> dict:
+    return {"message_id": int(message_id), "allow_sending_without_reply": True}
+
+
+def _message_id(resp) -> int | None:
+    try:
+        return int(resp.json()["result"]["message_id"])
+    except Exception:  # noqa: BLE001 - respuesta sin id (p. ej. en pruebas)
+        return None

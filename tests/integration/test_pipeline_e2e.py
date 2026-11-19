@@ -246,6 +246,19 @@ class FakeTennisApi:
     def pid(name):
         return 1000 + int(name[1:])
 
+    def finish_fixture(self):
+        """El partido del día 1 (Clay Masters, id 900) termina: gana el jugador 1."""
+        fx = self.fixtures[0]
+        self.results.append(
+            {
+                **fx,
+                "match_winner": fx["player1Id"],
+                "result": "6-3 6-4",
+                "result_type": "completed",
+                "tournament": {"id": 900, "name": "Clay Masters", "courtId": 2, "rankId": 3},
+            }
+        )
+
     def _tid(self, m, challenger=False):
         return 22 if challenger else 500 + (m.kickoff_utc - self.t0).days // 14
 
@@ -406,11 +419,12 @@ def env(engine, tmp_path_factory):
     fb, tn, tg_msgs, tg_photos = FakeFootballApi(), FakeTennisApi(), [], []
 
     def tg_handler(request):
+        mid = 100 + len(tg_msgs) + len(tg_photos)  # id de mensaje como el de Telegram
         if request.url.path.endswith("/sendPhoto"):  # imagen del canal (multipart)
             tg_photos.append(request.content)
-            return httpx.Response(200, json={"ok": True})
-        tg_msgs.append(json.loads(request.content))
-        return httpx.Response(200, json={"ok": True})
+        else:
+            tg_msgs.append(json.loads(request.content))
+        return httpx.Response(200, json={"ok": True, "result": {"message_id": mid}})
 
     def services():
         return Services(
@@ -735,3 +749,51 @@ def test_short_recap_of_yesterday(env, app_config, monkeypatch):
         assert (m.n if m else 0) == expected
         if m:
             assert m.source == "modelo" and 0 <= m.hits <= m.n
+
+
+def test_channel_results_next_morning(env, app_config):
+    """Mañana siguiente: resultados de lo publicado, como respuesta al mensaje de la noche."""
+    from sports_analytics.pipeline.channel_results import run_channel_results
+
+    settings, _fb, _tn, tg_msgs, tg_photos, services = env
+    day = DAY1.date()
+    with session_scope(URL) as s:
+        runs = s.scalars(
+            select(PipelineRun).where(PipelineRun.run_type == "daily", PipelineRun.run_date == day)
+        ).all()
+        evening = next(
+            (
+                r.details["channel_message_id"]
+                for r in runs
+                if (r.details or {}).get("channel_message_id")
+            ),
+            None,
+        )
+    assert evening  # la noche guardó el id del mensaje del canal
+    n_msgs, n_photos = len(tg_msgs), len(tg_photos)
+    out = run_channel_results(
+        settings, app_config, services=services(), now=DAY2 + timedelta(hours=3), day=day
+    )
+    # A primera hora el tenis aún no terminó: no se publica (el respaldo lo intentará)
+    assert out.status == "skipped" and out.recap is not None and out.recap.pending >= 1
+    assert "Todavía no hay resultados" in out.issues[-1]
+    assert len(tg_photos) == n_photos and len(tg_msgs) == n_msgs
+    _tn.finish_fixture()
+    shutil.rmtree(settings.cache_dir, ignore_errors=True)
+    out = run_channel_results(
+        settings, app_config, services=services(), now=DAY2 + timedelta(hours=5), day=day
+    )
+    assert out.status == "sent", out.issues
+    assert out.recap.n >= 1 and not any("no actualizados" in i for i in out.issues)
+    new_msgs = [m for m in tg_msgs[n_msgs:] if m["chat_id"] == "@canal"]
+    if len(tg_photos) > n_photos:  # con Chrome: imagen con el texto como pie
+        assert b'"message_id": %d' % evening in tg_photos[-1].replace(b"\\", b"")
+        assert "Así nos fue ayer".encode() in tg_photos[-1]
+    else:
+        assert new_msgs and new_msgs[0]["reply_parameters"]["message_id"] == evening
+        assert "Así nos fue ayer" in new_msgs[0]["text"]
+    # Una sola publicación por día
+    again = run_channel_results(
+        settings, app_config, services=services(), now=DAY2 + timedelta(hours=6), day=day
+    )
+    assert again.status == "skipped" and "ya publicados" in again.issues[0]

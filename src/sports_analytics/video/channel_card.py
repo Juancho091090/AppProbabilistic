@@ -1,4 +1,5 @@
-"""Imagen del canal de Telegram (1080x1350): los partidos de confianza Alta de mañana.
+"""Imágenes del canal de Telegram (1080x1350): los partidos de confianza Alta de mañana
+(noche) y cómo les fue (mañana siguiente).
 
 Usa la plantilla del día (la misma del Short de fútbol) para que el canal y YouTube se vean
 como una sola marca. Muestra exactamente los partidos que publica el mensaje del canal
@@ -105,8 +106,17 @@ def card_html(items: list[dict], day: date, style: str, recap=None) -> str:
         if recap and recap.n
         else ""
     )
-    when = f"{_DAYS[day.weekday()]} {day.day} de {_MONTHS[day.month - 1]}"
-    density = " few" if len(items) <= 4 else (" dense" if len(items) >= 6 else "")
+    return _page(style, len(items), _when(day), title, body, recap_line)
+
+
+def _when(day: date) -> str:
+    return f"{_DAYS[day.weekday()]} {day.day} de {_MONTHS[day.month - 1]}"
+
+
+def _page(
+    style: str, n_rows: int, date_line: str, title: str, body: str, foot: str, extra_class: str = ""
+) -> str:
+    density = " few" if n_rows <= 4 else (" dense" if n_rows >= 6 else "")
     css = (E.HTML_DIR / "styles" / f"{style}.css").read_text(encoding="utf-8") + (
         E.HTML_DIR / "card.css"
     ).read_text(encoding="utf-8")
@@ -115,18 +125,63 @@ def card_html(items: list[dict], day: date, style: str, recap=None) -> str:
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
 {E._font_css()}:root{{--grain:url({E._grain_uri()})}}
 {css}</style></head><body class="st-{style}">{E.SVG_FILTERS}<div id="bg"></div>
-<div class="card{density}">
+<div class="card{density}{extra_class}">
  <div class="cd-head"><img src="{E._logo_uri()}" alt=""><div>
-  <div class="cd-brand">JC Probabilidades</div><div class="cd-date">{when}</div></div></div>
+  <div class="cd-brand">JC Probabilidades</div><div class="cd-date">{date_line}</div></div></div>
  <div class="cd-title">{title}</div>
  <div class="cd-body">{body}</div>
- <div class="cd-foot">{recap_line}
+ <div class="cd-foot">{foot}
   <div class="cd-legal">Probabilidades de un modelo estadístico, no recomendaciones. +18</div>
   <div class="cd-link">t.me/JCProbabilidades</div></div>
 </div>
 <script>{js}</script><script>
 const D = {data}; (window.STYLES[D.style].decor || (() => {{}}))(document.getElementById('bg'), D);
 </script></body></html>"""
+
+
+# Marcas dibujadas a mano (trazo SVG): visto para acierto, equis para fallo.
+_MARK = {
+    True: '<svg class="cd-mark hit" viewBox="0 0 100 100" aria-label="Acierto">'
+    '<path d="M14 56 C24 62 32 72 40 84 C52 58 68 34 88 14"/></svg>',
+    False: '<svg class="cd-mark miss" viewBox="0 0 100 100" aria-label="Fallo">'
+    '<path d="M20 18 C40 40 60 62 82 84"/><path d="M82 16 C60 40 42 60 18 86"/></svg>',
+}
+
+
+def results_html(recap, style: str, totals: tuple[int, int] | None = None) -> str:
+    """Tarjeta de resultados del día ``recap.day``: cada partido publicado con su marca."""
+
+    def row(it) -> str:
+        state = {True: "hit", False: "miss", None: "pending"}[it.hit]
+        cls = f"cd-row res {state}" + (" market" if it.market else "")
+        sport = "Fútbol" if it.sport == "football" else "Tenis"
+        meta = f"{sport}, {it.league}" if it.league else sport
+        mark = _MARK.get(it.hit, '<span class="cd-wait">Sin resultado aún</span>')
+        return (
+            f'<div class="{cls}"><div><div class="cd-meta">{html.escape(meta)}</div>'
+            f'<div class="cd-match">{html.escape(it.label)}</div></div>'
+            f'<div class="cd-fav"><span class="who">{html.escape(it.pick)}</span>{mark}</div></div>'
+        )
+
+    items = recap.items[:MAX_ROWS]
+    model = [i for i in items if not i.market]
+    market = [i for i in items if i.market]
+    body = ""
+    if model:
+        body += f'<div class="cd-list">{"".join(row(i) for i in model)}</div>'
+    if market:
+        body += '<div class="cd-sub">Favoritos claros del mercado</div>'
+        body += f'<div class="cd-list">{"".join(row(i) for i in market)}</div>'
+    title = f"{recap.hits} de {recap.n} acertados" if recap.n else "Aún sin resultados"
+    foot = ""
+    if totals and totals[1]:
+        h, n = totals
+        foot = (
+            f'<div class="cd-recap">Acumulado del canal: {h} de {n} ({round(100 * h / n)} %)</div>'
+        )
+    return _page(
+        style, len(items), f"Resultados del {_when(recap.day)}", title, body, foot, " results"
+    )
 
 
 # Si las filas no caben, encoge la lista (zoom) hasta que el pie quede dentro de la tarjeta.
@@ -152,18 +207,33 @@ def render_card(
     style: str | None = None,
     recap=None,
 ) -> Path | None:
-    """PNG de la tarjeta, o ``None`` si no hay partidos que mostrar."""
-    from playwright.sync_api import sync_playwright
-
+    """PNG de la tarjeta de la noche, o ``None`` si no hay partidos que mostrar."""
     items = card_items(picks, ZoneInfo(tz))
     if not items:
         return None
     style = style or E.style_for(day, "football")
+    return _screenshot(card_html(items, day, style, recap), out_path)
+
+
+def render_results_card(
+    recap, out_path: Path, style: str | None = None, totals: tuple[int, int] | None = None
+) -> Path | None:
+    """PNG de los resultados de ``recap.day`` en la misma plantilla que se publicó esa noche
+    (la del día del partido), o ``None`` si no hay partidos."""
+    if recap is None or not recap.items:
+        return None
+    style = style or E.style_for(recap.day, "football")
+    return _screenshot(results_html(recap, style, totals), out_path)
+
+
+def _screenshot(page_html: str, out_path: Path) -> Path:
+    from playwright.sync_api import sync_playwright
+
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         page_file = Path(tmp) / "card.html"
-        page_file.write_text(card_html(items, day, style, recap), encoding="utf-8")
+        page_file.write_text(page_html, encoding="utf-8")
         with sync_playwright() as p:
             kw = {"args": ["--allow-file-access-from-files"]}
             if E.chrome_path():
