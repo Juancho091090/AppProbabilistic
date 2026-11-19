@@ -3,14 +3,17 @@ name: channel-results
 # Mañana siguiente: resultados de los partidos que el canal publicó la noche anterior,
 # como respuesta a ese mensaje (imagen + texto). Bogotá = UTC-5 todo el año.
 # * 12:37 UTC = 7:37 Bogotá (los últimos partidos de América terminan hacia medianoche).
-# * 15:17 UTC = 10:17 Bogotá: respaldo. Si ya se publicó, termina sin llamar a ninguna API;
-#   si a primera hora aún no había resultados, publica entonces.
+# * Respaldos 13:47, 15:17 y 16:57 UTC (8:47, 10:17 y 11:57 Bogotá): GitHub a veces omite
+#   ejecuciones programadas. Si ya se publicó, terminan sin llamar a ninguna API; si a primera
+#   hora aún no había resultados, publican entonces.
 # Gasto: 1 llamada de API-Football + 2 a 4 de la Tennis API (comparte el contador diario de
 # cuota con el informe de la noche a través de la caché).
 on:
   schedule:
     - cron: "37 12 * * *"
+    - cron: "47 13 * * *"
     - cron: "17 15 * * *"
+    - cron: "57 16 * * *"
   workflow_dispatch:
     inputs:
       day:
