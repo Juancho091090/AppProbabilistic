@@ -61,7 +61,9 @@ def _channel_results(args: argparse.Namespace) -> int:
     from sports_analytics.pipeline.channel_results import run_channel_results
 
     day = date.fromisoformat(args.day) if args.day else None
-    out = run_channel_results(get_settings(), get_config(), day=day, send=not args.no_send)
+    out = run_channel_results(
+        get_settings(), get_config(), day=day, send=not args.no_send, preview=args.preview
+    )
     r = out.recap
     summary = f"Resultados del {out.day}: {out.status}" + (
         f" · {r.hits} de {r.n} acertados, {r.pending} sin resultado" if r else ""
@@ -737,6 +739,9 @@ def build_parser() -> argparse.ArgumentParser:
     cr = sub.add_parser("channel-results", help="Resultados de ayer en el canal (mañana)")
     cr.add_argument("--day", help="Día de los partidos (AAAA-MM-DD); por defecto, ayer")
     cr.add_argument("--no-send", action="store_true", help="No publica en el canal")
+    cr.add_argument(
+        "--preview", action="store_true", help="Lo envía a tu chat personal, no al canal"
+    )
     cr.add_argument("--output", help="Guarda la imagen (PNG) y el texto (.txt) para revisarlos")
     cr.set_defaults(func=_channel_results)
     sub.add_parser("settle", help="Registra resultados y recalcula métricas").set_defaults(

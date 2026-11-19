@@ -17,10 +17,11 @@ on:
         description: "Día de los partidos (AAAA-MM-DD). Vacío = ayer"
         type: string
         default: ""
-      send:
-        description: "Publicar en el canal"
-        type: boolean
-        default: true
+      mode:
+        description: "canal = publicar · vista_previa = a tu chat personal · nada = sin enviar"
+        type: choice
+        options: ["canal", "vista_previa", "nada"]
+        default: "vista_previa"
 
 permissions:
   contents: read
@@ -72,7 +73,8 @@ jobs:
         run: |
           ARGS=""
           [ -n "${{ inputs.day }}" ] && ARGS="$ARGS --day ${{ inputs.day }}"
-          [ "${{ inputs.send }}" = "false" ] && ARGS="$ARGS --no-send"
+          [ "${{ inputs.mode }}" = "vista_previa" ] && ARGS="$ARGS --preview"
+          [ "${{ inputs.mode }}" = "nada" ] && ARGS="$ARGS --no-send"
           sports-analytics channel-results $ARGS --output reports/output/resultados.png
 
       - uses: actions/upload-artifact@v4

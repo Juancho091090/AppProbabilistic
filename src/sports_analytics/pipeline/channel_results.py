@@ -57,7 +57,10 @@ def run_channel_results(
     now: datetime | None = None,
     day: date | None = None,
     send: bool = True,
+    preview: bool = False,
 ) -> ResultsOutcome:
+    """``preview``: publica en el chat personal (no en el canal), sin responder a nada y sin
+    marcar el día como publicado. Sirve para revisar con datos reales."""
     from sports_analytics.pipeline.daily import build_services
 
     now = now or now_utc()
@@ -65,7 +68,7 @@ def run_channel_results(
     svc = services or build_services(settings)
     out = ResultsOutcome("skipped", day)
     with session_scope(settings.database_url) as session:
-        if _already_sent(session, day):
+        if _already_sent(session, day) and not preview:
             out.issues.append(f"Resultados del {day.isoformat()} ya publicados")
             return out
         published = _published(session, day)
@@ -92,22 +95,27 @@ def run_channel_results(
             totals = channel_totals(session, model, day)
             out.totals = totals
             reply_to = _evening_message_id(session, day)
-            if send and svc.channel:
+            target = svc.telegram if preview else svc.channel
+            if send and target:
                 out.message_ids = publish(
-                    svc.channel, recap, totals, reply_to, settings, out.issues
+                    target, recap, totals, None if preview else reply_to, settings, out.issues
                 )
-            out.status = "sent" if out.message_ids or not send else "failed"
+            if preview or not send:
+                out.status = "preview" if preview and out.message_ids else "dry_run"
+            else:
+                out.status = "sent" if out.message_ids else "failed"
             run.errors = out.issues
             run.details = {
                 "calls": calls,
-                "sent": bool(out.message_ids),
+                "sent": bool(out.message_ids) and not preview,
+                "preview": preview,
                 "hits": recap.hits,
                 "resolved": recap.n,
                 "pending": recap.pending,
                 "reply_to": reply_to,
                 "message_ids": out.message_ids,
             }
-            repo.finish_run(session, run, "success" if out.status == "sent" else "partial")
+            repo.finish_run(session, run, "partial" if out.status == "failed" else "success")
             session.commit()
         except Exception as exc:
             session.rollback()
