@@ -27,7 +27,7 @@ NACIONAL_ID = 1137
 FINISHED = ("FT", "AET", "PEN")
 
 # Nombres como se dicen en Colombia (la API los trae sin tildes o con el nombre largo)
-SHORT_NAMES = {
+SHORT_NAMES = {  # ids verificados con la API (22-nov); el resto usa el nombre de la API
     1137: "Nacional",
     1128: "Medellín",
     1136: "Once Caldas",
@@ -36,12 +36,6 @@ SHORT_NAMES = {
     1125: "Millonarios",
     1127: "Deportivo Cali",
     1131: "Bucaramanga",
-    1135: "Junior",
-    1126: "Tolima",
-    1134: "Pasto",
-    1130: "Pereira",
-    1140: "Águilas Doradas",
-    1141: "Alianza",
 }
 _ACCENTS = {
     "Medellin": "Medellín",
@@ -50,6 +44,7 @@ _ACCENTS = {
     "Bogota": "Bogotá",
     "Cucuta": "Cúcuta",
     "Atletico": "Atlético",
+    "Petrolera": "Petrolera",
 }
 
 

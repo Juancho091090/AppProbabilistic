@@ -961,6 +961,84 @@ def check_nacional(settings: Settings, season: int | None = None) -> list[str]:
     return lines
 
 
+def check_nacional_report(settings: Settings) -> list[str]:
+    """Auditoría del Short de Nacional: todas las cifras del informe, partido por partido, y
+    la comparación con la tabla oficial de la API (/standings)."""
+    from sports_analytics.content import nacional as N
+
+    lines = ["## Auditoría del Short de Nacional", ""]
+    client = ApiFootballClient(settings)
+    season = date.today().year
+    fixtures = client.fixtures_by_league_season(N.LEAGUE_ID, season)
+    r = N.build_report(client, season)
+    if r is None:
+        return [*lines, "Sin partidos de Nacional en el semestre"]
+    lines.append(f"Jornada {r.round} · fase {r.phase} · llamadas {r.calls}")
+    lines.append(
+        f"Último: {r.last.home} {r.last.home_goals}-{r.last.away_goals} {r.last.away} "
+        f"({r.last.kickoff_utc.isoformat()})"
+    )
+    if r.next:
+        lines.append(f"Próximo: {r.next.home} vs {r.next.away} ({r.next.kickoff_utc.isoformat()})")
+    for t in r.teams:
+        lines.append(
+            f"- {t.name} (id {t.team_id}): PJ {t.played} · GF {t.goals_for} · GC "
+            f"{t.goals_against} ({t.per_game('goals_against'):.2f}/PJ) · tiros rival "
+            f"{t.shots_against} ({t.per_game('shots_against'):.2f}) · al arco rival "
+            f"{t.sot_against} ({t.per_game('sot_against'):.2f}) en {t.stats_games} con datos · "
+            f"vallas {t.clean_sheets} · gana al descanso {t.ht_leads}, no ganó "
+            f"{t.ht_leads_not_won} · pts {t.points}"
+        )
+    lines += r.notes
+    # Partido por partido de Nacional (con tiros del rival)
+    ids = [
+        str(it["fixture"]["id"])
+        for it in N.semester(fixtures)
+        if N.NACIONAL_ID in (it["teams"]["home"]["id"], it["teams"]["away"]["id"])
+        and it["fixture"]["status"]["short"] in N.FINISHED
+    ]
+    items = []
+    for i in range(0, len(ids), 20):
+        items += client.http.get("/fixtures", {"ids": "-".join(ids[i : i + 20])}).get(
+            "response", []
+        )
+    lines.append("")
+    lines.append("Nacional, partido por partido:")
+    for it in sorted(items, key=lambda x: x["fixture"]["date"]):
+        t, sc = it["teams"], it.get("score") or {}
+        ht, ft = sc.get("halftime") or {}, sc.get("fulltime") or {}
+        shots = {}
+        for b in it.get("statistics") or []:
+            v = {x["type"]: x["value"] for x in b.get("statistics", [])}
+            shots[b["team"]["id"]] = (v.get("Total Shots"), v.get("Shots on Goal"))
+        lines.append(
+            f"  {it['fixture']['date'][:10]} {it['league']['round']}: {t['home']['name']} "
+            f"{ft.get('home')}-{ft.get('away')} {t['away']['name']} (desc. {ht.get('home')}-"
+            f"{ht.get('away')}) · tiros {shots.get(t['home']['id'])} / {shots.get(t['away']['id'])}"
+        )
+    # Tabla oficial de la API para contrastar PJ, GF y GC
+    lines.append("")
+    lines.append("Tablas de la API (PJ, GF, GC):")
+    st = client.http.get("/standings", {"league": N.LEAGUE_ID, "season": season}).get(
+        "response", []
+    )
+    group_ids = {t.team_id for t in r.teams}
+    for lg in st:
+        for grp in lg["league"]["standings"]:
+            gname = grp[0].get("group", "") if grp else ""
+            if "anual" in gname.lower() or "apertura" in gname.lower():
+                continue
+            for row in grp:
+                if row["team"]["id"] in group_ids:
+                    a = row.get("all") or {}
+                    g = a.get("goals") or {}
+                    lines.append(
+                        f"  [{gname}] {row['team']['name']}: PJ {a.get('played')} · GF "
+                        f"{g.get('for')} · GC {g.get('against')} · pts {row.get('points')}"
+                    )
+    return lines
+
+
 def check_xg_batch(settings: Settings) -> list[str]:
     """1 llamada: /fixtures?ids= con 20 partidos antiguos sin xG (uno o dos por liga) para
     comprobar si el lote trae estadísticas con expected_goals de temporadas pasadas."""
@@ -1102,6 +1180,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "xg_batch": lambda: check_xg_batch(settings),
         "betplay": lambda: check_betplay_players(settings),
         "nacional": lambda: check_nacional(settings),
+        "nacional_report": lambda: check_nacional_report(settings),
         "odds_markets": lambda: check_odds_markets(settings),
         "email": lambda: check_email(settings),
     }
