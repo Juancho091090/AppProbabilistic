@@ -13,7 +13,7 @@ from playwright.sync_api import sync_playwright
 
 from sports_analytics.video import html_engine as E
 from sports_analytics.video.render import timeline
-from sports_analytics.video.sample import sample_payload, sample_recap
+from sports_analytics.video.sample import FAVORITE_FAIR, sample_payload, sample_recap
 from sports_analytics.video.script import build_short_script, build_tennis_script
 
 
@@ -27,7 +27,9 @@ def main() -> None:
     styles = sys.argv[2:] or list(E.STYLES)
     p, fair, n = sample_payload()
     scripts = [
-        build_short_script(p, fair, n, sample_recap(), intro=True),
+        build_short_script(
+            p, {**fair, **FAVORITE_FAIR}, n, sample_recap(), True, ["ej2"], n_published=5
+        ),
         build_tennis_script(p, 2),
     ]
     tz = ZoneInfo("America/Bogota")

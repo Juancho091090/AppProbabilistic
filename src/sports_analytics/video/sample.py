@@ -116,3 +116,7 @@ def sample_payload() -> tuple[DailyReportPayload, dict[str, tuple[float, float, 
         tennis={"ATP": [sample_tennis()]},
     )
     return payload, {"ej1": (0.33, 0.27, 0.40)}, 4
+
+
+# Mercado sin margen de Liverpool-Burnley: favorito ≥ 60 % (formato "favorito claro").
+FAVORITE_FAIR = {"ej2": (0.68, 0.19, 0.13)}

@@ -1,8 +1,13 @@
-"""Guion del Short diario: "el partido más abierto de mañana".
+"""Guiones de los Shorts diarios (fútbol y tenis).
 
-Determinista: todas las cifras salen del pronóstico (sin LLM). Se elige el partido de
-fútbol de confianza Media/Baja con el 1X2 más repartido (mayor entropía) y el video
-cierra invitando al canal de Telegram, donde están los partidos de confianza Alta.
+Determinista: todas las cifras salen del pronóstico (sin LLM).
+
+Fútbol (desde el 22-nov): "un favorito claro de mañana", un partido cuyo favorito del
+mercado (sin margen) llega al 60 %, la misma regla que completa el canal. Se prefiere uno
+publicado en el canal y, entre ellos, el de equipos más fuertes (Elo sumado), que es el que
+más gente reconoce. El video pregunta "¿se cumple?" y remite a Telegram, donde a la mañana
+siguiente se publica el resultado. Si ningún partido llega al 60 %, sale el formato anterior:
+el partido de confianza Media/Baja con el 1X2 más repartido (mayor entropía).
 """
 
 from __future__ import annotations
@@ -16,6 +21,7 @@ from sports_analytics.reporting.payload import DailyReportPayload
 
 TELEGRAM_HANDLE = "@JCProbabilidades"
 OPEN_LEVELS = ("medium", "low")
+MARKET_FAVORITE = 0.60  # misma regla que reporting.channel (mercado_favorito_60)
 
 
 @dataclass
@@ -51,6 +57,35 @@ def pick_open_match(payload: DailyReportPayload) -> MatchForecast | None:
     )
 
 
+def pick_market_favorite(
+    payload: DailyReportPayload,
+    market_fair: Mapping[str, Sequence[float]] | None,
+    preferred: set[str] | frozenset[str] = frozenset(),
+) -> tuple[MatchForecast, int] | None:
+    """(partido, índice del favorito: 0 local, 2 visitante) con favorito del mercado ≥ 60 %."""
+    cands = []
+    for f in payload.all_forecasts():
+        fair = (market_fair or {}).get(f.event_id)
+        if f.sport != "football" or not fair or "1x2" not in f.markets:
+            continue
+        i = 0 if fair[0] >= fair[2] else 2
+        if fair[i] >= MARKET_FAVORITE and fair[i] > fair[1]:
+            cands.append((f, i))
+    if not cands:
+        return None
+
+    def rank(c):
+        f, _ = c
+        elo = f.context.get("elo") or {}
+        return (
+            f.event_id in preferred,
+            sum(elo.values()) if elo else 0.0,
+            -f.kickoff_utc.timestamp(),
+        )
+
+    return max(cands, key=rank)
+
+
 def _pct(p: float) -> int:
     return int(round(p * 100))
 
@@ -60,10 +95,13 @@ def _dec(x: float) -> str:
     return f"{x:.1f}".replace(".", ",")
 
 
-def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[dict]:
+def _why(f: MatchForecast, fair: Sequence[float] | None, fav: int | None = None) -> list[dict]:
     """Duelos de la escena "¿por qué?": dos valores enfrentados y la frase narrada.
 
-    ``fmt``: int (Elo), dec (goles) o pct (probabilidades)."""
+    ``fmt``: int (Elo), dec (goles) o pct (probabilidades). ``fav`` (0 local, 2 visitante):
+    el video es de un favorito claro y las frases explican esa ventaja."""
+    if fav is not None:
+        return _why_favorite(f, fair, fav)
     out = []
     elo = f.context.get("elo") or {}
     if elo:
@@ -126,6 +164,74 @@ def _why(f: MatchForecast, fair: Sequence[float] | None) -> list[dict]:
     return out
 
 
+def _why_favorite(f: MatchForecast, fair: Sequence[float] | None, fav: int) -> list[dict]:
+    names = (f.home_or_a, f.away_or_b)
+    me, rival = (names[0], names[1]) if fav == 0 else (names[1], names[0])
+    side = "home" if fav == 0 else "away"
+    other = "away" if fav == 0 else "home"
+    out = []
+    elo = f.context.get("elo") or {}
+    if elo:
+        gap = elo[side] - elo[other]
+        if gap >= 60:
+            say = f"En Elo, {me} saca {gap:.0f} puntos: {elo[side]:.0f} contra {elo[other]:.0f}."
+        elif gap > -60:
+            say = (
+                f"En Elo están cerca, {elo[side]:.0f} contra {elo[other]:.0f}: "
+                "la ventaja no viene de ahí."
+            )
+        else:
+            say = (
+                f"Curioso: en Elo, {rival} está por encima, {elo[other]:.0f} contra "
+                f"{elo[side]:.0f}."
+            )
+        out.append(
+            {
+                "title": "Fuerza (Elo)",
+                "left": (f.home_or_a, float(elo["home"])),
+                "right": (f.away_or_b, float(elo["away"])),
+                "fmt": "int",
+                "say": say,
+            }
+        )
+    lam = f.context.get("lambda") or {}
+    if lam:
+        out.append(
+            {
+                "title": "Goles esperados",
+                "left": (f.home_or_a, float(lam["home"])),
+                "right": (f.away_or_b, float(lam["away"])),
+                "fmt": "dec",
+                "say": (
+                    f"El modelo espera {_dec(lam[side])} goles de {me} "
+                    f"y {_dec(lam[other])} de {rival}."
+                ),
+            }
+        )
+    if fair:
+        model = f.markets["1x2"][side]
+        m = fair[fav]
+        if model >= m + 0.05:
+            say = f"Y el modelo es todavía más optimista: le da {_pct(model)} por ciento."
+        elif model <= m - 0.08:
+            say = (
+                f"Pero ojo: el modelo es más prudente, le da solo {_pct(model)} por ciento. "
+                "Ahí está la duda."
+            )
+        else:
+            say = f"Y el modelo coincide: le da {_pct(model)} por ciento."
+        out.append(
+            {
+                "title": f"Favorito: {me}",
+                "left": ("Mercado", float(m)),
+                "right": ("Modelo", float(model)),
+                "fmt": "pct",
+                "say": say,
+            }
+        )
+    return out
+
+
 GOOD_DAY, OK_DAY = 0.75, 0.5
 
 # Presentación del canal (~5 s): contexto para quien llega por primera vez.
@@ -140,17 +246,22 @@ INTRO_SCENE = Scene(
 def recap_scene(recap) -> Scene:
     """Escena "así nos fue ayer": se cuentan aciertos y fallos, siempre todos."""
     h, n = recap.hits, recap.n
-    where = " que publicamos en Telegram" if recap.source == "canal" else ""
     plural = "partido" if n == 1 else "partidos"
+    # En el canal hay confianza Alta y favoritos del mercado: se nombra el canal, no el nivel
+    what = (
+        f"{plural} que publicamos en Telegram"
+        if recap.source == "canal"
+        else f"{plural} de confianza alta"
+    )
     if recap.rate >= GOOD_DAY:
-        say = f"¡Gran día ayer! El modelo acertó {h} de {n} {plural} de confianza alta{where}."
+        say = f"¡Gran día ayer! Acertamos {h} de {n} {what}."
         mood = "good"
     elif recap.rate >= OK_DAY:
-        say = f"Así nos fue ayer: el modelo acertó {h} de {n} {plural} de confianza alta{where}."
+        say = f"Así nos fue ayer: acertamos {h} de {n} {what}."
         mood = "ok"
     else:
         say = (
-            f"Ayer no fue nuestro día: el modelo acertó {h} de {n} {plural} de confianza alta. "
+            f"Ayer no fue nuestro día: acertamos {h} de {n} {what}. "
             "Lo mostramos igual, porque aquí publicamos todo."
         )
         mood = "bad"
@@ -173,9 +284,15 @@ def build_short_script(
     n_high: int = 0,
     recap=None,
     intro: bool = False,
+    published: Sequence[str] = (),
+    n_published: int = 0,
 ) -> ShortScript | None:
     """``recap`` (video.recap.Recap) añade el resumen de ayer; ``intro`` antepone una
-    presentación corta del canal (pensada para los primeros videos)."""
+    presentación corta del canal (pensada para los primeros videos). ``published``: ids de
+    los partidos del canal de esa noche (se prefieren); ``n_published``: cuántos son."""
+    picked = pick_market_favorite(payload, market_fair, set(published))
+    if picked:
+        return _favorite_script(payload, market_fair, *picked, recap, intro, n_published or n_high)
     f = pick_open_match(payload)
     if f is None:
         return None
@@ -236,6 +353,83 @@ def build_short_script(
         f"¿Tú qué ves en {f.home_or_a} vs {f.away_or_b}? Comenta L, E o V 👇\n\n"
         "📊 Los partidos de confianza Alta de mañana están gratis en Telegram: "
         "@JCProbabilidades (enlace en el perfil del canal)."
+    )
+    return ShortScript(f.event_id, title[:100], description, scenes, pinned)
+
+
+def _favorite_script(payload, market_fair, f, fav, recap, intro, n_channel) -> ShortScript:
+    x = f.markets["1x2"]
+    fair = market_fair[f.event_id]
+    names = (f.home_or_a, f.away_or_b)
+    me, rival = (names[0], names[1]) if fav == 0 else (names[1], names[0])
+    m = _pct(fair[fav])
+    h, d, a = _pct(x["home"]), _pct(x["draw"]), _pct(x["away"])
+    p_model = h if fav == 0 else a
+    opening = "Y para mañana, un favorito claro" if recap else "Mañana, un favorito claro"
+    hook = Scene(
+        "hook",
+        f"{opening}: {me}, que juega contra {rival}. ¿Se cumple?",
+        {
+            "home": f.home_or_a,
+            "away": f.away_or_b,
+            "competition": f.competition,
+            "kickoff": f.kickoff_utc,
+            "kicker": opening,
+            "note_head": f"el mercado ve a {me}:",
+            "note_big": f"{m} %",
+            "note_foot": "de probabilidad de ganar",
+        },
+    )
+    bars = Scene(
+        "bars",
+        f"El mercado le da a {me} un {m} por ciento. El modelo: {h} por ciento a "
+        f"{f.home_or_a}, {d} al empate y {a} a {f.away_or_b}.",
+        {
+            "rows": [(f.home_or_a, x["home"]), ("Empate", x["draw"]), (f.away_or_b, x["away"])],
+            "title": "¿Se cumple el favorito?",
+            "stamp": f"Mercado: {m} % {me}",
+        },
+    )
+    factors = _why(f, fair, fav)
+    why = Scene(
+        "why",
+        " ".join(x["say"] for x in factors) or f"Los números acompañan a {me}.",
+        {"duels": factors, "title": f"¿Por qué {me}?"},
+    )
+    many = f"Este y {n_channel - 1} partidos más" if n_channel > 1 else "Este partido"
+    cta = Scene(
+        "cta",
+        f"{many} están gratis esta noche en nuestro canal de Telegram, JC Probabilidades. "
+        "Y mañana en la mañana publicamos si se cumplieron, aciertos y fallos.",
+        {
+            "n_high": n_channel,
+            "handle": TELEGRAM_HANDLE,
+            "question": "¿Se cumple? Mañana te lo contamos",
+            "num_label": "partidos gratis esta noche"
+            if n_channel != 1
+            else "partido gratis esta noche",
+        },
+    )
+    title = f"{me} es favorito con {m} %. ¿Se cumple? #shorts"
+    yesterday = (
+        f"Ayer, en el canal: {recap.hits} de {recap.n} aciertos.\n\n" if recap and recap.n else ""
+    )
+    description = yesterday + (
+        f"{f.competition}: {f.home_or_a} vs {f.away_or_b}. El mercado le da {m}% a {me}; "
+        f"el modelo, {p_model}%.\n\nLos partidos de mañana, cada noche en Telegram, y el "
+        "resultado a la mañana siguiente: https://t.me/JCProbabilidades\n\n"
+        "Probabilidades estimadas por un modelo estadístico (Elo + Poisson/Dixon-Coles) y por el "
+        "mercado sin margen, no recomendaciones. +18\n\n#futbol #estadistica #probabilidades"
+    )
+    scenes = [hook, bars, why, cta]
+    if recap and recap.n:
+        scenes.insert(0, recap_scene(recap))
+    if intro:
+        scenes.insert(0, INTRO_SCENE)
+    pinned = (
+        "¿Se cumple el favorito? Comenta SÍ o NO 👇 Mañana publicamos el resultado.\n\n"
+        "📊 Los partidos de mañana están gratis en Telegram: @JCProbabilidades "
+        "(enlace en el perfil del canal)."
     )
     return ShortScript(f.event_id, title[:100], description, scenes, pinned)
 

@@ -150,7 +150,7 @@ def scene_data(kind: str, data: dict, tz: ZoneInfo) -> dict:
             "bad": "Ayer no fue nuestro día",
         }
         note = (
-            "Publicados en Telegram, confianza Alta"
+            "Publicados en el canal de Telegram"
             if data["source"] == "canal"
             else "Partidos de confianza Alta del modelo"
         )
@@ -179,8 +179,10 @@ def scene_data(kind: str, data: dict, tz: ZoneInfo) -> dict:
         rows = [[label, float(p)] for label, p in data["rows"]]
         top = max(p for _, p in rows)
         low = min(p for _, p in rows)
-        out = {"title": "¿Quién gana?", "rows": rows, "scale": max(0.5, top)}
-        if top < 0.5:  # el sello resume; la diferencia exacta la dice la voz
+        out = {"title": data.get("title", "¿Quién gana?"), "rows": rows, "scale": max(0.5, top)}
+        if data.get("stamp"):
+            out["stamp"] = data["stamp"]
+        elif top < 0.5:  # el sello resume; la diferencia exacta la dice la voz
             out["stamp"] = f"Sin favorito claro: {round((top - low) * 100)} puntos"
         return out
     if kind == "why":
@@ -193,12 +195,12 @@ def scene_data(kind: str, data: dict, tz: ZoneInfo) -> dict:
             }
             for d in data.get("duels", [])
         ]
-        return {"title": "¿Por qué tan parejo?", "duels": duels}
+        return {"title": data.get("title", "¿Por qué tan parejo?"), "duels": duels}
     if kind == "cta":
         return {
-            "question": "¿Quieres los partidos con favorito claro?",
+            "question": data.get("question", "¿Quieres los partidos con favorito claro?"),
             "n_high": data.get("n_high", 0),
-            "num_label": "con confianza Alta mañana",
+            "num_label": data.get("num_label", "con confianza Alta mañana"),
             "handle": data.get("handle", "@JCProbabilidades"),
             "disclaimer": "Probabilidades de un modelo estadístico, no recomendaciones. +18",
         }

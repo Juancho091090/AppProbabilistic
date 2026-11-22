@@ -231,3 +231,63 @@ def test_real_render_with_chrome(style, tmp_path):
     video = next(x for x in streams if x["codec_type"] == "video")
     assert (video["width"], video["height"]) == (1080, 1920)
     assert any(x["codec_type"] == "audio" for x in streams)
+
+
+# ------------------------------------------------ fútbol: favorito claro del mercado (≥ 60 %)
+
+from sports_analytics.video.sample import FAVORITE_FAIR  # noqa: E402
+from sports_analytics.video.script import pick_market_favorite  # noqa: E402
+
+
+def test_market_favorite_replaces_open_match():
+    payload, fair, n = sample_payload()
+    s = build_short_script(
+        payload, {**fair, **FAVORITE_FAIR}, n, sample_recap(), published=["ej2"], n_published=5
+    )
+    assert s.event_id == "ej2" and [sc.kind for sc in s.scenes] == [
+        "recap",
+        "hook",
+        "bars",
+        "why",
+        "cta",
+    ]
+    data = {sc.kind: E.scene_data(sc.kind, sc.data, TZ) for sc in s.scenes}
+    assert data["hook"]["note_big"] == "68 %" and "Liverpool" in data["hook"]["note_head"]
+    assert data["hook"]["kicker"] == "Y para mañana, un favorito claro"
+    assert data["bars"]["stamp"] == "Mercado: 68 % Liverpool"
+    assert data["why"]["title"] == "¿Por qué Liverpool?" and len(data["why"]["duels"]) == 3
+    assert data["cta"]["n_high"] == 5 and "Mañana" in data["cta"]["question"]
+    cta = s.scenes[-1].narration
+    assert "Este y 4 partidos más" in cta and "mañana en la mañana publicamos" in cta
+    assert "¿Se cumple?" in s.title and "SÍ o NO" in s.pinned_comment
+    assert "Ayer, en el canal: 5 de 6" in s.description
+    # el resumen nombra el canal (hay confianza Alta y favoritos del mercado)
+    assert "que publicamos en Telegram" in s.scenes[0].narration
+    json.dumps(data)
+
+
+def test_market_favorite_rules():
+    payload, _, _ = sample_payload()
+    # 59 % no alcanza; el empate nunca es "favorito"; sin mercado, formato anterior
+    assert pick_market_favorite(payload, {"ej2": (0.59, 0.25, 0.16)}) is None
+    assert pick_market_favorite(payload, {"ej2": (0.2, 0.62, 0.18)}) is None
+    assert build_short_script(payload, {}, 0).event_id == "ej1"
+    # visitante favorito
+    f, i = pick_market_favorite(payload, {"ej2": (0.12, 0.2, 0.68)})
+    assert f.event_id == "ej2" and i == 2
+    # se prefiere el publicado en el canal, aunque otro tenga más Elo
+    fair = {"ej1": (0.61, 0.2, 0.19), "ej2": (0.7, 0.18, 0.12)}
+    assert pick_market_favorite(payload, fair, {"ej1"})[0].event_id == "ej1"
+    top = max(("ej1", 1832 + 1851), ("ej2", 1890 + 1610), key=lambda t: t[1])[0]
+    assert pick_market_favorite(payload, fair)[0].event_id == top
+
+
+def test_favorite_why_lines():
+    payload, _, _ = sample_payload()
+    f = next(x for x in payload.all_forecasts() if x.event_id == "ej2")
+    duels = __import__("sports_analytics.video.script", fromlist=["_why"])._why(
+        f, (0.6, 0.25, 0.15), 0
+    )
+    says = " ".join(d["say"] for d in duels)
+    assert "En Elo, Liverpool saca 280 puntos" in says
+    assert "el modelo es todavía más optimista: le da 71" in says

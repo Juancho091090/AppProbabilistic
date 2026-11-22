@@ -197,7 +197,8 @@ def test_recap_scene_is_honest_on_good_and_bad_days():
     good = build_short_script(payload, fair, n, sample_recap())
     assert [x.kind for x in good.scenes][:2] == ["recap", "hook"]
     assert (
-        "acertó 5 de 6" in good.scenes[0].narration and "Y para mañana" in good.scenes[1].narration
+        "Acertamos 5 de 6" in good.scenes[0].narration
+        and "Y para mañana" in good.scenes[1].narration
     )
     assert "Ayer, confianza Alta: 5 de 6" in good.description
     bad = Recap(
@@ -210,7 +211,7 @@ def test_recap_scene_is_honest_on_good_and_bad_days():
         ],
     )
     s = build_short_script(payload, fair, n, bad).scenes[0]
-    assert s.data["mood"] == "bad" and "acertó 1 de 3" in s.narration
+    assert s.data["mood"] == "bad" and "acertamos 1 de 3" in s.narration
     assert "publicamos todo" in s.narration and "Telegram" not in s.narration
     # sin resumen, el Short empieza con el partido abierto
     assert build_short_script(payload, fair, n).scenes[0].kind == "hook"

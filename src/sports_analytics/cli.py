@@ -647,17 +647,21 @@ def _short_sample(args: argparse.Namespace) -> int:
     from sports_analytics.config.settings import get_settings
     from sports_analytics.video.html_engine import render_short_html, style_for
     from sports_analytics.video.render import render_short
-    from sports_analytics.video.sample import sample_payload, sample_recap
+    from sports_analytics.video.sample import FAVORITE_FAIR, sample_payload, sample_recap
     from sports_analytics.video.script import build_short_script, build_tennis_script
     from sports_analytics.video.tts import GoogleTTS
 
     settings = get_settings()
     payload, fair, n_high = sample_payload()
+    if not args.open_match:  # formato actual: favorito claro del mercado
+        fair = {**fair, **FAVORITE_FAIR}
     recap = None if args.no_recap else sample_recap()
     intro = args.intro or settings.short_intro
     scripts = []
     if args.sport in ("football", "both"):
-        scripts.append(build_short_script(payload, fair, n_high, recap, intro))
+        scripts.append(
+            build_short_script(payload, fair, n_high, recap, intro, ["ej2"], n_published=5)
+        )
     if args.sport in ("tennis", "both"):
         first = not scripts
         scripts.append(
@@ -729,6 +733,9 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--no-voice", action="store_true", help="Sin Google TTS")
     sh.add_argument("--send", action="store_true", help="Enviar al chat personal")
     sh.add_argument("--no-recap", action="store_true", help="Sin el resumen de ayer")
+    sh.add_argument(
+        "--open-match", action="store_true", help="Formato anterior: el partido más abierto"
+    )
     sh.add_argument("--intro", action="store_true", help="Con la presentación del canal")
     sh.add_argument("--theme", default=None, help="Paleta del diseño anterior (motor pillow)")
     sh.add_argument("--sport", choices=["football", "tennis", "both"], default="both")

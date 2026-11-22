@@ -658,7 +658,15 @@ def _daily_shorts(settings, payload, fair, picks, svc, recap=None, issues=None) 
     issues = issues if issues is not None else []
     n_all = sum(1 for p in picks if p.rule == "modelo_alta")
     n_tennis = sum(1 for p in picks if p.rule == "modelo_alta" and p.forecast.sport == "tennis")
-    football = build_short_script(payload, fair, n_all, recap, settings.short_intro)
+    football = build_short_script(
+        payload,
+        fair,
+        n_all,
+        recap,
+        settings.short_intro,
+        published=[p.forecast.event_id for p in picks],
+        n_published=len(picks),
+    )
     tennis = build_tennis_script(
         payload,
         n_tennis,
