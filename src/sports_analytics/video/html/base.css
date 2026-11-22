@@ -96,3 +96,7 @@ body { position: relative; -webkit-font-smoothing: antialiased; }
 body.is-intro .logo-small { display: none; }
 .wipe { position: absolute; top: 0; height: 1920px; width: 1300px; visibility: hidden;
   left: calc(1080px - var(--e, 0) * 2380px); }
+
+/* etiquetas "Mejor" / "Peor" junto al nombre en las barras */
+.label .rtag { display: inline-block; margin-left: 18px; font-size: .55em; padding: 2px 14px;
+  vertical-align: middle; line-height: 1.3; }

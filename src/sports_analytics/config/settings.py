@@ -65,6 +65,9 @@ class Settings(BaseSettings):
     short_music_file: str | None = None  # pista propia; sin ella, música generada por código
     short_theme: str = "claro_cesped"  # paleta del video (video.render.THEMES)
     short_intro: bool = False  # presentación corta del canal al inicio (primeros videos)
+    # Crítica del momento a Nacional que el Short semanal contrasta con los datos (cambia con
+    # la semana: variable NACIONAL_CRITICA del repo). Vacío = texto por defecto.
+    nacional_criticism: str | None = Field(default=None, validation_alias="NACIONAL_CRITICA")
     channel_image: bool = True  # imagen con los partidos antes del mensaje del canal
     short_engine: str = "html"  # html (plantillas que rotan por día) | pillow (diseño anterior)
     short_style: str | None = None  # fija una plantilla: cuaderno, pizarra, marcador, cancha

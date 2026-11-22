@@ -73,11 +73,17 @@
       const rows = h("div", "rows rows-" + d.rows.length);
       const top = Math.max(...d.rows.map((r) => r[1]));
       d.rows.forEach(([label, v], i) => {
-        const r = rv(h("div", "row" + (v === top ? " top" : "")), p.rows[i], 0.9);
+        // d.me: fila destacada (p. ej. el equipo del video); si no, se destaca el mayor valor
+        const mark = d.me ? (label === d.me ? " me" : "") : (v === top ? " top" : "");
+        const r = rv(h("div", "row" + mark), p.rows[i], 0.9);
         r.style.setProperty("--p", v / d.scale);
         const bar = h("div", "bar");
         bar.appendChild(h("div", "fill"));
-        r.append(h("div", "label fit", label), bar, counter(h("div", "val"), v, "pct"));
+        const lab = h("div", "label fit");
+        lab.appendChild(h("span", "ltext", label));
+        const tag = (d.tags || {})[label];
+        if (tag) lab.appendChild(h("span", "rtag rtag-" + tag.kind, tag.text));
+        r.append(lab, bar, counter(h("div", "val"), v, d.fmt || "pct"));
         rows.appendChild(r);
       });
       s.appendChild(rows);

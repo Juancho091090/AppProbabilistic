@@ -27,7 +27,8 @@ HTML_DIR = Path(__file__).parent / "html"
 ASSETS = Path(__file__).parent / "assets"
 FPS = 30
 TAIL = 0.8
-STYLES = ("cuaderno", "pizarra", "marcador", "cancha")
+STYLES = ("cuaderno", "pizarra", "marcador", "cancha")  # rotación diaria
+EXTRA_STYLES = ("nacional",)  # plantillas de series propias (fuera de la rotación)
 FONTS = [
     ("Kalam", 400, "kalam-latin-400-normal"),
     ("Kalam", 700, "kalam-latin-700-normal"),
@@ -179,10 +180,15 @@ def scene_data(kind: str, data: dict, tz: ZoneInfo) -> dict:
         rows = [[label, float(p)] for label, p in data["rows"]]
         top = max(p for _, p in rows)
         low = min(p for _, p in rows)
-        out = {"title": data.get("title", "¿Quién gana?"), "rows": rows, "scale": max(0.5, top)}
+        fmt = data.get("fmt", "pct")
+        scale = max(0.5, top) if fmt == "pct" else (top * 1.08 or 1.0)
+        out = {"title": data.get("title", "¿Quién gana?"), "rows": rows, "scale": scale}
+        for k in ("fmt", "me", "tags"):
+            if data.get(k):
+                out[k] = data[k]
         if data.get("stamp"):
             out["stamp"] = data["stamp"]
-        elif top < 0.5:  # el sello resume; la diferencia exacta la dice la voz
+        elif top < 0.5 and fmt == "pct":  # el sello resume; la diferencia exacta la dice la voz
             out["stamp"] = f"Sin favorito claro: {round((top - low) * 100)} puntos"
         return out
     if kind == "why":
@@ -202,7 +208,9 @@ def scene_data(kind: str, data: dict, tz: ZoneInfo) -> dict:
             "n_high": data.get("n_high", 0),
             "num_label": data.get("num_label", "con confianza Alta mañana"),
             "handle": data.get("handle", "@JCProbabilidades"),
-            "disclaimer": "Probabilidades de un modelo estadístico, no recomendaciones. +18",
+            "disclaimer": data.get(
+                "disclaimer", "Probabilidades de un modelo estadístico, no recomendaciones. +18"
+            ),
         }
     return dict(data)
 
@@ -364,8 +372,10 @@ def render_short_html(
 
     zone = ZoneInfo(tz)
     style = style or style_for(day or date.today(), script.sport)
-    if style not in STYLES:
-        raise ValueError(f"Plantilla desconocida: {style}. Opciones: {', '.join(STYLES)}")
+    if style not in STYLES + EXTRA_STYLES:
+        raise ValueError(
+            f"Plantilla desconocida: {style}. Opciones: {', '.join(STYLES + EXTRA_STYLES)}"
+        )
     timed = timeline(script, tts)
     payload = page_payload(script, timed, zone, style, _logo_uri())
     out_path = Path(out_path)

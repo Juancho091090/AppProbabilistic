@@ -120,3 +120,41 @@ def sample_payload() -> tuple[DailyReportPayload, dict[str, tuple[float, float, 
 
 # Mercado sin margen de Liverpool-Burnley: favorito ≥ 60 % (formato "favorito claro").
 FAVORITE_FAIR = {"ej2": (0.68, 0.19, 0.13)}
+
+
+def sample_nacional():
+    """Informe de Nacional con datos inventados (solo para pruebas y vistas previas)."""
+    from sports_analytics.content.nacional import MatchLine, NacionalReport, TeamLine
+
+    def t(tid, name, pj, gf, ga, sa, sot, cs, htl, htn, pts):
+        return TeamLine(tid, name, pj, gf, ga, sa, sot, pj, cs, htl, htn, pts)
+
+    teams = [
+        t(1137, "Nacional", 20, 38, 19, 196, 62, 7, 11, 3, 42),
+        t(1128, "Medellín", 20, 29, 17, 210, 58, 8, 8, 1, 35),
+        t(1136, "Once Caldas", 20, 27, 24, 236, 81, 5, 7, 2, 31),
+        t(1139, "Santa Fe", 20, 30, 21, 220, 70, 6, 9, 2, 33),
+    ]
+    last = MatchLine(
+        "Clausura - Quadrangular - 1",
+        datetime(2026, 11, 22, 1, 15, tzinfo=UTC),
+        1136,
+        1137,
+        "Once Caldas",
+        "Nacional",
+        0,
+        0,
+        True,
+    )
+    nxt = MatchLine(
+        "Clausura - Quadrangular - 2",
+        datetime(2026, 11, 26, 1, 30, tzinfo=UTC),
+        1137,
+        1128,
+        "Nacional",
+        "Medellín",
+        None,
+        None,
+        False,
+    )
+    return NacionalReport("cuadrangular", last.round, "Cuadrangular, fecha 1", teams, last, nxt)

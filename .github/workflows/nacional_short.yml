@@ -1,0 +1,77 @@
+name: nacional-short
+
+# Short de Atlético Nacional: el día siguiente al último partido de la jornada en la que jugó
+# Nacional (con fechas entre semana salen dos por semana). Llega al chat personal con título,
+# descripción y comentario para fijar. Se revisa cada mañana; si hoy no toca, termina con
+# 1 llamada de API-Football. Bogotá = UTC-5.
+# * 13:43 UTC = 8:43 Bogotá · respaldo 16:13 UTC = 11:13 Bogotá (GitHub a veces omite uno).
+on:
+  schedule:
+    - cron: "43 13 * * *"
+    - cron: "13 16 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Generarlo aunque hoy no toque"
+        type: boolean
+        default: true
+      send:
+        description: "Enviarlo a Telegram (chat personal)"
+        type: boolean
+        default: true
+      sample:
+        description: "Datos de ejemplo (prueba de diseño)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nacional-short
+  cancel-in-progress: false
+
+jobs:
+  short:
+    if: vars.NACIONAL_SHORT != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      APP_TIMEZONE: America/Bogota
+      LOG_LEVEL: INFO
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      API_FOOTBALL_DAILY_LIMIT: "7000"
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
+      NACIONAL_CRITICA: ${{ vars.NACIONAL_CRITICA }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: http-cache-${{ github.run_id }}
+          restore-keys: http-cache-
+
+      - name: Dependencias, ffmpeg y Chrome
+        run: |
+          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          pip install -e ".[video]"
+          command -v google-chrome || python -m playwright install --with-deps chromium
+
+      - name: Migraciones
+        run: alembic upgrade head
+
+      - name: Short de Nacional
+        run: |
+          ARGS="--output data"
+          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
+          [ "${{ inputs.send }}" = "false" ] && ARGS="$ARGS --no-send"
+          [ "${{ inputs.sample }}" = "true" ] && ARGS="$ARGS --sample"
+          sports-analytics nacional-short $ARGS

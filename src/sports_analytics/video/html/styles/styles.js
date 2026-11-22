@@ -56,6 +56,16 @@ window.STYLES = (() => {
         document.body.classList.toggle("blink", Math.floor(t * 2.5) % 2 === 0);
       },
     },
+    nacional: {
+      ease: "out",
+      decor(bg) {
+        layer(bg, "", "fabric");
+        layer(bg, "", "grain");
+        layer(bg, "", "vignette");
+        layer(bg, "", "edge");
+        layer(bg, "", "collar");
+      },
+    },
     cancha: {
       ease: "out",
       decor(bg, D) {

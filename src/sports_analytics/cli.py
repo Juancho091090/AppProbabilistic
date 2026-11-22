@@ -87,6 +87,53 @@ def _channel_results(args: argparse.Namespace) -> int:
     return 1 if out.status == "failed" else 0
 
 
+def _nacional_short(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from sports_analytics.config.settings import get_settings
+
+    settings = get_settings()
+    if args.sample:  # datos inventados: prueba de diseño sin API
+        from sports_analytics.video.html_engine import render_short_html
+        from sports_analytics.video.nacional_script import build_nacional_script
+        from sports_analytics.video.sample import sample_nacional
+        from sports_analytics.video.tts import GoogleTTS
+
+        script = build_nacional_script(sample_nacional(), settings.nacional_criticism)
+        tts = None
+        if settings.google_tts_api_key and not args.no_voice:
+            tts = GoogleTTS(
+                settings.google_tts_api_key.get_secret_value(), settings.google_tts_voice
+            )
+        path = Path(args.output) / "nacional_ejemplo.mp4"
+        render_short_html(script, path, settings.app_timezone, tts, None, "nacional")
+        print(f"Video de ejemplo: {path}\n{script.title}")
+        if not args.no_send and settings.telegram_bot_token:
+            from sports_analytics.reporting.telegram import TelegramService
+
+            TelegramService(settings).send_video(
+                path, f"💚 Short de Nacional (EJEMPLO, datos inventados)\n\n{script.title}"
+            )
+        return 0
+    from sports_analytics.pipeline.nacional_short import run_nacional_short
+
+    out = run_nacional_short(
+        settings, force=args.force, send=not args.no_send, out_dir=Path(args.output)
+    )
+    summary = f"Short de Nacional ({out.round}): {out.status}" + (
+        f" · {out.title}" if out.title else ""
+    )
+    print(summary)
+    for issue in out.issues:
+        print(f"- {issue}")
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        from sports_analytics.diagnostics import _escape_annotation
+
+        text = "\n".join([summary, *[f"- {i}" for i in out.issues]])
+        print(f"::notice title=nacional-short::{_escape_annotation(text)}")
+    return 1 if out.status == "failed" else 0
+
+
 def _settle(_: argparse.Namespace) -> int:
     from sports_analytics.db.session import session_scope
     from sports_analytics.pipeline.results import refresh_live_metrics, settle_predictions
@@ -743,6 +790,13 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument("--engine", choices=["html", "pillow"], default=None)
     sh.set_defaults(func=_short_sample)
 
+    na = sub.add_parser("nacional-short", help="Short semanal de Atlético Nacional")
+    na.add_argument("--force", action="store_true", help="Genera aunque hoy no toque")
+    na.add_argument("--no-send", action="store_true", help="No lo envía a Telegram")
+    na.add_argument("--sample", action="store_true", help="Datos de ejemplo (sin API)")
+    na.add_argument("--no-voice", action="store_true", help="Sin voz (solo con --sample)")
+    na.add_argument("--output", default="data", help="Carpeta del MP4")
+    na.set_defaults(func=_nacional_short)
     cr = sub.add_parser("channel-results", help="Resultados de ayer en el canal (mañana)")
     cr.add_argument("--day", help="Día de los partidos (AAAA-MM-DD); por defecto, ayer")
     cr.add_argument("--no-send", action="store_true", help="No publica en el canal")
