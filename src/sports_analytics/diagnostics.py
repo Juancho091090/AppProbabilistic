@@ -907,6 +907,60 @@ def check_betplay_players(settings: Settings, season: int | None = None) -> list
     return lines
 
 
+def check_nacional(settings: Settings, season: int | None = None) -> list[str]:
+    """Cuadrangular de Atlético Nacional: grupo, partidos y estadísticas disponibles."""
+    lines = ["## API-Football: Atlético Nacional en el cuadrangular", ""]
+    if settings.api_football_key is None:
+        return [*lines, "❌ falta API_FOOTBALL_KEY"]
+    client = ApiFootballClient(settings)
+    season = season or date.today().year
+    fixtures = client.fixtures_by_league_season(239, season)
+    quad = [it for it in fixtures if "quadrangular" in it["league"]["round"].lower()]
+    for it in sorted(quad, key=lambda x: x["fixture"]["date"]):
+        t, g = it["teams"], it["goals"]
+        lines.append(
+            f"- {it['league']['round']} · {it['fixture']['date'][:16]} · "
+            f"{t['home']['name']} ({t['home']['id']}) {g['home']}-{g['away']} "
+            f"{t['away']['name']} ({t['away']['id']}) · {it['fixture']['status']['short']}"
+        )
+    nac = [
+        it
+        for it in fixtures
+        if "nacional" in (it["teams"]["home"]["name"] + it["teams"]["away"]["name"]).lower()
+        and "apertura" not in it["league"]["round"].lower()
+        and it["fixture"]["status"]["short"] in ("FT", "AET", "PEN")
+    ]
+    lines.append(f"Nacional, partidos jugados del semestre: {len(nac)}")
+    if nac:
+        last = sorted(nac, key=lambda x: x["fixture"]["date"])[-1]
+        it = client.http.get("/fixtures", {"ids": str(last["fixture"]["id"])}).get("response", [])
+        if it:
+            it = it[0]
+            lines.append(f"Último: {it['teams']['home']['name']} vs {it['teams']['away']['name']}")
+            for team in it.get("statistics") or []:
+                vals = {x["type"]: x["value"] for x in team.get("statistics", [])}
+                lines.append(f"  {team['team']['name']}: {vals}")
+            ev = it.get("events") or []
+            lines.append(
+                "  Eventos de gol: "
+                + "; ".join(
+                    f"{e['time']['elapsed']}' {e['team']['name']} {e.get('detail')}"
+                    for e in ev
+                    if e.get("type") == "Goal"
+                )
+            )
+    try:
+        st = client.http.get("/standings", {"league": 239, "season": season}).get("response", [])
+        for lg in st:
+            for grp in lg["league"]["standings"]:
+                names = [f"{r['team']['name']} ({r['group']})" for r in grp][:4]
+                lines.append(f"Tabla: {'; '.join(names)} ... ({len(grp)} equipos)")
+    except Exception as exc:  # noqa: BLE001
+        lines.append(f"standings: {exc}")
+    lines.append(f"Llamadas: {client.http.calls_made}")
+    return lines
+
+
 def check_xg_batch(settings: Settings) -> list[str]:
     """1 llamada: /fixtures?ids= con 20 partidos antiguos sin xG (uno o dos por liga) para
     comprobar si el lote trae estadísticas con expected_goals de temporadas pasadas."""
@@ -1047,6 +1101,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "league_lookup": lambda: check_league_lookup(settings),
         "xg_batch": lambda: check_xg_batch(settings),
         "betplay": lambda: check_betplay_players(settings),
+        "nacional": lambda: check_nacional(settings),
         "odds_markets": lambda: check_odds_markets(settings),
         "email": lambda: check_email(settings),
     }
