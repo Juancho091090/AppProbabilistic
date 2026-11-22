@@ -29,6 +29,7 @@
     if (fmt === "pct") return Math.round(v * 100) + "%";
     if (fmt === "int") return String(Math.round(v));
     if (fmt === "dec") return v.toFixed(1).replace(".", ",");
+    if (fmt === "dec2") return v.toFixed(2).replace(".", ",");
     return String(Math.round(v));
   };
 

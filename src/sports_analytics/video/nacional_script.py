@@ -18,8 +18,8 @@ DEFAULT_CRITICISM = (
 ORD = {1: "el mejor", 2: "el segundo", 3: "el tercero", 4: "el cuarto"}
 
 
-def _d(x: float) -> str:
-    return f"{x:.1f}".replace(".", ",")
+def _d(x: float, nd: int = 1) -> str:
+    return f"{x:.{nd}f}".replace(".", ",")
 
 
 def _rivals_phrase(r: NacionalReport) -> str:
@@ -66,36 +66,44 @@ def _pos_text(pos: int, n: int) -> str:
     return f"{ORD[pos]} del grupo"
 
 
-def _bars(r: NacionalReport, attr: str, title: str, unit: str) -> Scene:
+def _bars(r: NacionalReport, attr: str, title: str, unit: str, nd: int = 1) -> Scene:
+    """``nd``: decimales; con goles por partido se usan 2 para que no se vean empates falsos
+    (0,90 frente a 0,95 se verían ambos como 0,9)."""
     teams = r.teams
     order = ranking(teams, attr)
     pos, best, worst = _place(teams, attr)
     nac = r.nacional
-    rows = [(t.name, round(t.per_game(attr), 2)) for t in order]
+    rows = [(t.name, round(t.per_game(attr), 3)) for t in order]
     tags = {
         best.name: {"kind": "best", "text": "Mejor"},
         worst.name: {"kind": "worst", "text": "Peor"},
     }
     if best.team_id == NACIONAL_ID:
         say = (
-            f"En {unit}, Nacional es el mejor: {_d(nac.per_game(attr))} por partido. "
-            f"El peor es {worst.name}, con {_d(worst.per_game(attr))}."
+            f"En {unit}, Nacional es el mejor: {_d(nac.per_game(attr), nd)} por partido. "
+            f"El peor es {worst.name}, con {_d(worst.per_game(attr), nd)}."
         )
     elif worst.team_id == NACIONAL_ID:
         say = (
-            f"En {unit}, Nacional es el peor: {_d(nac.per_game(attr))} por partido. "
-            f"El mejor es {best.name}, con {_d(best.per_game(attr))}."
+            f"En {unit}, Nacional es el peor: {_d(nac.per_game(attr), nd)} por partido. "
+            f"El mejor es {best.name}, con {_d(best.per_game(attr), nd)}."
         )
     else:
         say = (
-            f"En {unit}, el mejor es {best.name}, con {_d(best.per_game(attr))} por partido, y el "
-            f"peor {worst.name}, con {_d(worst.per_game(attr))}. Nacional queda "
-            f"{_pos_text(pos, len(teams))}: {_d(nac.per_game(attr))}."
+            f"En {unit}, el mejor es {best.name}, con {_d(best.per_game(attr), nd)} por partido, y el "
+            f"peor {worst.name}, con {_d(worst.per_game(attr), nd)}. Nacional queda "
+            f"{_pos_text(pos, len(teams))}: {_d(nac.per_game(attr), nd)}."
         )
     return Scene(
         "bars",
         say,
-        {"rows": rows, "title": title, "fmt": "dec", "me": nac.name, "tags": tags},
+        {
+            "rows": rows,
+            "title": title,
+            "fmt": "dec2" if nd == 2 else "dec",
+            "me": nac.name,
+            "tags": tags,
+        },
     )
 
 
@@ -140,15 +148,20 @@ def _why(r: NacionalReport, criticism: str) -> Scene:
             }
         )
         n_lost = nac.ht_leads_not_won
+        lost_txt = (
+            "no se le escapó ninguno"
+            if n_lost == 0
+            else ("se le escapó 1" if n_lost == 1 else f"se le escaparon {n_lost}")
+        )
         if np_ > rp + 0.05:
             says.append(
-                f"Y las ventajas: de {nac.ht_leads} partidos que ganaba al descanso, se le "
-                f"escaparon {n_lost}. Ahí la crítica tiene sustento."
+                f"Y las ventajas: de {nac.ht_leads} partidos que ganaba al descanso, "
+                f"{lost_txt}. Ahí la crítica tiene sustento."
             )
         else:
             says.append(
-                f"Y las ventajas: de {nac.ht_leads} partidos que ganaba al descanso, solo se le "
-                f"escaparon {n_lost}. Ahí los números defienden a Nacional."
+                f"Y las ventajas: de {nac.ht_leads} partidos que ganaba al descanso, "
+                f"{'solo ' if n_lost else ''}{lost_txt}. Ahí los números defienden a Nacional."
             )
     nc = nac.clean_sheets / nac.played if nac.played else 0.0
     rc = sum(t.clean_sheets for t in rivals) / max(1, sum(t.played for t in rivals))
@@ -188,8 +201,8 @@ def build_nacional_script(
             "note_foot": r.round_label,
         },
     )
-    goals = _bars(r, "goals_against", "Goles recibidos por partido", "goles recibidos")
-    shots = _bars(r, "sot_against", "Llegadas al arco recibidas", "llegadas al arco recibidas")
+    goals = _bars(r, "goals_against", "Goles recibidos por partido", "goles recibidos", 2)
+    shots = _bars(r, "sot_against", "Llegadas al arco recibidas", "llegadas al arco recibidas", 2)
     why = _why(r, criticism or DEFAULT_CRITICISM)
     nxt = r.next
     if nxt:
@@ -234,14 +247,22 @@ def build_nacional_script(
     else:
         title = f"¿Defiende mal Nacional? Los números de {_spoken_round(r)} #shorts"
     table = "\n".join(
-        f"{t.name}: {_d(t.per_game('goals_against'))} goles recibidos y "
-        f"{_d(t.per_game('sot_against'))} tiros al arco recibidos por partido"
+        f"{t.name}: {_d(t.per_game('goals_against'), 2)} goles recibidos y "
+        f"{_d(t.per_game('sot_against'), 2)} tiros al arco recibidos por partido"
         for t in ranking(r.teams, "goals_against")
+    )
+    gaps = "".join(
+        f" {t.name}: tiros de {t.stats_games} de {t.played} partidos (uno sin datos)."
+        if t.played - t.stats_games == 1
+        else f" {t.name}: tiros de {t.stats_games} de {t.played} partidos."
+        for t in r.teams
+        if t.stats_games < t.played
     )
     description = (
         f"{_result(r)} ({r.round_label}). Así está atrás frente a {rivals}, con los partidos "
         f"de liga del semestre:\n\n{table}\n\nDatos: API-Football, Liga BetPlay 2026-II (todos "
-        "contra todos y fases finales del segundo semestre).\n\nMás datos cada día en Telegram: "
+        f"contra todos y fases finales del segundo semestre).{gaps}\n\nMás datos cada día en "
+        "Telegram: "
         "https://t.me/JCProbabilidades\n\n#AtléticoNacional #Nacional #LigaBetPlay #futbolcolombiano"
     )
     pinned = (

@@ -147,7 +147,7 @@ def test_script_scenes_and_page_data():
     assert "se le critica" in why.narration and "¿Qué dicen los números?" in why.narration
     assert "Nacional contra Medellín, miércoles 25" in cta.narration
     data = {i: E.scene_data(x.kind, x.data, TZ) for i, x in enumerate(s.scenes)}
-    assert data[1]["fmt"] == "dec" and data[1]["me"] == "Nacional" and "stamp" not in data[1]
+    assert data[1]["fmt"] == "dec2" and data[1]["me"] == "Nacional" and "stamp" not in data[1]
     assert (
         data[1]["tags"]["Medellín"]["kind"] == "best"
         and data[1]["tags"]["Once Caldas"]["kind"] == "worst"
@@ -211,3 +211,14 @@ def test_pipeline_renders_on_due_day(tmp_path):
     )
     assert out.status == "sent", out.issues
     assert out.video.exists() and sent and "Short de Nacional" in sent[0][1]
+
+
+def test_two_decimals_avoid_false_ties_and_singular():
+    r = sample_nacional()
+    for t, ga in zip(r.teams, (18, 25, 19, 19), strict=True):
+        t.goals_against = ga
+    r.nacional.ht_leads, r.nacional.ht_leads_not_won = 9, 1
+    s = build_nacional_script(r)
+    assert "Nacional es el mejor: 0,90 por partido" in s.scenes[1].narration
+    assert "solo se le escapó 1." in s.scenes[3].narration
+    assert "Once Caldas: 0,95 goles" in s.description
