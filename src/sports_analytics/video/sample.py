@@ -158,3 +158,42 @@ def sample_nacional():
         False,
     )
     return NacionalReport("cuadrangular", last.round, "Cuadrangular, fecha 1", teams, last, nxt)
+
+
+def sample_round():
+    """Fecha 2 del cuadrangular con datos inventados (solo pruebas y vistas previas)."""
+    from sports_analytics.content.nacional import MatchLine, RoundMatch, RoundReport, SideStats
+
+    def m(h, a, ko, ng):
+        return RoundMatch(SideStats(*h), SideStats(*a), ko, ng)
+
+    ko = datetime(2026, 11, 25, 23, 20, tzinfo=UTC)
+    matches = [
+        m((1125, "Millonarios", 1, 55, 14, 5, 9), (1131, "Bucaramanga", 1, 45, 9, 3, 6), ko, False),
+        m((1138, "América", 2, 48, 11, 6, 8), (1127, "Deportivo Cali", 1, 52, 13, 4, 7), ko, False),
+        m((1139, "Santa Fe", 0, 50, 10, 2, 5), (1136, "Once Caldas", 1, 50, 8, 3, 6), ko, True),
+        m((1137, "Nacional", 2, 58, 16, 7, 11), (1128, "Medellín", 1, 42, 7, 2, 4), ko, True),
+    ]
+    last = MatchLine(
+        "Clausura - Quadrangular - 2",
+        datetime(2026, 11, 26, 1, 30, tzinfo=UTC),
+        1137,
+        1128,
+        "Nacional",
+        "Medellín",
+        2,
+        1,
+        True,
+    )
+    nxt = MatchLine(
+        "Clausura - Quadrangular - 3",
+        datetime(2026, 11, 29, 0, 30, tzinfo=UTC),
+        1139,
+        1137,
+        "Santa Fe",
+        "Nacional",
+        None,
+        None,
+        False,
+    )
+    return RoundReport(last.round, "Cuadrangular, fecha 2", matches, last, nxt)

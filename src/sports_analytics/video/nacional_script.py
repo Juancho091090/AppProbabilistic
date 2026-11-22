@@ -274,3 +274,224 @@ def build_nacional_script(
     )
     s.sport = "football"
     return s
+
+
+# ------------------------------------------------ formato "fecha": partido a partido
+
+
+def _match_scene(m, first_other: bool) -> Scene | None:
+    from sports_analytics.content.nacional import NACIONAL_ID as NAC
+
+    h, a = m.home, m.away
+    head = f"{h.name} {h.goals}-{a.goals} {a.name}"
+    if not (h.has_stats() and a.has_stats()):
+        return None
+    duels = [
+        {
+            "title": "Posesión",
+            "left": (h.name, h.possession / 100),
+            "right": (a.name, a.possession / 100),
+            "fmt": "pct",
+        },
+        {
+            "title": "Tiros",
+            "left": (h.name, float(h.shots)),
+            "right": (a.name, float(a.shots)),
+            "fmt": "int",
+        },
+        {
+            "title": "Tiros al arco",
+            "left": (h.name, float(h.sot)),
+            "right": (a.name, float(a.sot)),
+            "fmt": "int",
+        },
+        {
+            "title": "Tiros dentro del área",
+            "left": (h.name, float(h.inside)),
+            "right": (a.name, float(a.inside)),
+            "fmt": "int",
+        },
+    ]
+    ball = h if h.possession >= a.possession else a
+    shooter = h if h.shots >= a.shots else a
+    lead = (
+        "En el otro grupo, "
+        if first_other
+        else (
+            "Y en el clásico, "
+            if NAC in (h.team_id, a.team_id) and {h.team_id, a.team_id} == {1137, 1128}
+            else ""
+        )
+    )
+    say = f"{lead}{head.replace('-', ' a ', 1)}."
+    if h.possession == a.possession:
+        say += " La pelota quedó repartida"
+    else:
+        say += f" {ball.name} tuvo más la pelota, {ball.possession} por ciento,"
+    if h.shots == a.shots:
+        say += f"{',' if h.possession != a.possession else ''} y los dos remataron {h.shots} veces."
+    else:
+        other = a if shooter is h else h
+        if h.possession == a.possession:
+            say += f" y {shooter.name} remató más: "
+        elif shooter is ball:
+            say += " y remató más: "
+        else:
+            say += f" pero {shooter.name} remató más: "
+        say += f"{shooter.shots} tiros contra {other.shots}, {shooter.sot} al arco."
+    winner = h if h.goals > a.goals else (a if a.goals > h.goals else None)
+    if winner and winner.shots < (a if winner is h else h).shots:
+        say += f" {winner.name} ganó con menos llegadas: más efectivo."
+    return Scene("why", say, {"duels": duels, "title": head})
+
+
+def _defense_scene(rr) -> Scene:
+    from sports_analytics.content.nacional import NACIONAL_ID as NAC
+
+    rows = []
+    for m in rr.matches:
+        for side in (m.home, m.away):
+            rival = m.conceded(side)
+            if rival.sot is not None:
+                rows.append((side, rival.sot, rival.inside if rival.inside is not None else 99))
+    rows.sort(key=lambda r: (r[1], r[2]))
+    lo, hi = rows[0][1], rows[-1][1]
+    best = [s.name for s, v, _ in rows if v == lo]
+    worst = [s.name for s, v, _ in rows if v == hi]
+    tags = {n: {"kind": "best", "text": "Mejor"} for n in best}
+    tags |= {n: {"kind": "worst", "text": "Peor"} for n in worst if n not in tags}
+
+    def names(ns):
+        return ns[0] if len(ns) == 1 else ", ".join(ns[:-1]) + " y " + ns[-1]
+
+    def tiros(n):
+        return "1 tiro" if n == 1 else f"{n} tiros"
+
+    say = (
+        f"Y las defensas de la fecha: {'la mejor fue la de' if len(best) == 1 else 'las mejores fueron las de'} "
+        f"{names(best)}, con {tiros(lo)} al arco en contra. "
+        f"{'La que más sufrió' if len(worst) == 1 else 'Las que más sufrieron'}: {names(worst)}, con {tiros(hi)}."
+    )
+    nac = next((r for r in rows if r[0].team_id == NAC), None)
+    if nac:
+        pos = 1 + sum(1 for _, v, _ in rows if v < nac[1])
+        if nac[1] == lo:
+            others = [n for n in best if n != "Nacional"]
+            where = "la mejor de la fecha" + (f", empatada con {names(others)}" if others else "")
+        elif nac[1] == hi:
+            where = "de las que más sufrieron"
+        else:
+            where = f"puesto {pos} de {len(rows)}"
+        inside = f", {nac[2]} dentro del área" if nac[2] != 99 else ""
+        say += f" Nacional recibió {tiros(nac[1])} al arco{inside}: {where}."
+    data = {
+        "rows": [(s.name, float(v)) for s, v, _ in rows],
+        "title": "Llegadas al arco recibidas",
+        "fmt": "int",
+        "me": "Nacional" if nac else None,
+        "tags": tags,
+    }
+    return Scene("bars", say, data)
+
+
+def build_nacional_round_script(rr, tz: str = "America/Bogota") -> ShortScript:
+    """La jornada partido a partido (todos los grupos) y las defensas de la fecha."""
+    from zoneinfo import ZoneInfo
+
+    from sports_analytics.video.html_engine import when_es
+
+    m = rr.last
+    num = rr.round.rsplit("-", 1)[-1].strip()
+    fake = NacionalReport(
+        "cuadrangular" if "uadrangular" in rr.round else "liga",
+        rr.round,
+        rr.round_label,
+        [],
+        m,
+        rr.next,
+    )
+    hook = Scene(
+        "hook",
+        f"{_result(fake)} en {_spoken_round(fake)}. Así fueron los {len(rr.matches)} partidos "
+        "de la fecha, en números.",
+        {
+            "home": m.home,
+            "away": m.away,
+            "competition": "Liga BetPlay",
+            "kickoff": m.kickoff_utc,
+            "kicker": f"La fecha {num} en números" if num.isdigit() else "La fecha en números",
+            "note_head": "terminó",
+            "note_big": f"{m.home_goals} - {m.away_goals}",
+            "note_foot": rr.round_label,
+        },
+    )
+    scenes = [hook]
+    first_other = True
+    skipped = []
+    for match in rr.matches:
+        sc = _match_scene(match, first_other and not match.nacional_group)
+        if sc is None:
+            skipped.append(
+                f"{match.home.name} {match.home.goals}-{match.away.goals} {match.away.name}"
+            )
+            continue
+        if not match.nacional_group:
+            first_other = False
+        scenes.append(sc)
+    scenes.append(_defense_scene(rr))
+    nxt = rr.next
+    if nxt:
+        rival = nxt.away if nxt.home_id == NACIONAL_ID else nxt.home
+        when = when_es(nxt.kickoff_utc, ZoneInfo(tz))
+        nnum = nxt.round.rsplit("-", 1)[-1].strip()
+        cta_say = (
+            f"¿Qué equipo te convenció más en la fecha? Comenta. La próxima: Nacional contra "
+            f"{rival}, {when.split(',')[0]}. Más datos en Telegram: JC Probabilidades."
+        )
+        stage = "fecha del cuadrangular" if "uadrangular" in nxt.round else "fecha"
+        n_big, label = (
+            (int(nnum), f"{stage}: Nacional vs {rival}, {when}") if nnum.isdigit() else (0, "")
+        )
+    else:
+        cta_say = "¿Qué equipo te convenció más en la fecha? Comenta. Más datos en Telegram: JC Probabilidades."
+        n_big, label = 0, ""
+    scenes.append(
+        Scene(
+            "cta",
+            cta_say,
+            {
+                "question": "¿Quién te convenció más?",
+                "n_high": n_big,
+                "num_label": label,
+                "handle": TELEGRAM_HANDLE,
+                "disclaimer": "Datos de la Liga BetPlay 2026-II (API-Football).",
+            },
+        )
+    )
+    lines = []
+    for match in rr.matches:
+        h, a = match.home, match.away
+        lines.append(f"{h.name} {h.goals}-{a.goals} {a.name}")
+        if h.has_stats() and a.has_stats():
+            for s in (h, a):
+                lines.append(
+                    f"  {s.name}: posesión {s.possession}%, {s.shots} tiros, {s.sot} al arco, "
+                    f"{s.inside} dentro del área"
+                )
+        else:
+            lines.append("  (sin estadísticas completas de este partido)")
+    spoken = _spoken_round(fake)
+    title = f"{m.home} {m.home_goals}-{m.away_goals} {m.away} y toda {spoken} en números #shorts"
+    description = (
+        f"{spoken[0].upper() + spoken[1:]} de la Liga BetPlay, partido a partido:\n\n"
+        + "\n".join(lines)
+        + "\n\nDatos: API-Football, Liga BetPlay 2026-II.\n\nMás datos cada día en Telegram: "
+        "https://t.me/JCProbabilidades\n\n#AtléticoNacional #Nacional #LigaBetPlay #futbolcolombiano"
+    )
+    pinned = (
+        f"¿Qué equipo te convenció más en {spoken}? Comenta 👇\n\n"
+        "📊 Más datos en Telegram: @JCProbabilidades (enlace en el perfil del canal)."
+    )
+    s = ShortScript(f"nacional-fecha-{rr.round}", title[:100], description, scenes, pinned)
+    s.notes = skipped  # partidos sin estadísticas (no salen en el video)
+    return s

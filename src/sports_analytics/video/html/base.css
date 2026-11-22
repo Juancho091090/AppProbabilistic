@@ -100,3 +100,16 @@ body.is-intro .logo-small { display: none; }
 /* etiquetas "Mejor" / "Peor" junto al nombre en las barras */
 .label .rtag { display: inline-block; margin-left: 18px; font-size: .55em; padding: 2px 14px;
   vertical-align: middle; line-height: 1.3; }
+.rows-8 { gap: 6px; }
+.rows-8 .row .label { font-size: 40px; }
+.rows-8 .row .bar { height: 30px; }
+.rows-8 .row .val { font-size: 48px; }
+
+/* 4 duelos (partido a partido): más compactos para no invadir los subtítulos */
+.duels-4 { gap: 12px; }
+.duels-4 .duel { padding: 8px 26px; }
+.duels-4 .dtitle { font-size: 32px; margin-bottom: 0; }
+.duels-4 .dnames { display: none; }
+.duels-4 .track { height: 24px; margin: 4px 0; }
+.duels-4 .dvals { font-size: 46px; }
+.duels-4 .duel:first-child .dnames { display: flex; font-size: 30px; }

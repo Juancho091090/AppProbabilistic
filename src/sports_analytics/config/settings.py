@@ -68,6 +68,9 @@ class Settings(BaseSettings):
     # Crítica del momento a Nacional que el Short semanal contrasta con los datos (cambia con
     # la semana: variable NACIONAL_CRITICA del repo). Vacío = texto por defecto.
     nacional_criticism: str | None = Field(default=None, validation_alias="NACIONAL_CRITICA")
+    # Formato del Short de Nacional: "semestre" (Nacional frente a sus rivales con los datos
+    # del semestre) o "fecha" (los partidos de la jornada, partido a partido, y las defensas).
+    nacional_format: str = Field(default="semestre", validation_alias="NACIONAL_FORMATO")
     channel_image: bool = True  # imagen con los partidos antes del mensaje del canal
     short_engine: str = "html"  # html (plantillas que rotan por día) | pillow (diseño anterior)
     short_style: str | None = None  # fija una plantilla: cuaderno, pizarra, marcador, cancha

@@ -95,11 +95,17 @@ def _nacional_short(args: argparse.Namespace) -> int:
     settings = get_settings()
     if args.sample:  # datos inventados: prueba de diseño sin API
         from sports_analytics.video.html_engine import render_short_html
-        from sports_analytics.video.nacional_script import build_nacional_script
-        from sports_analytics.video.sample import sample_nacional
+        from sports_analytics.video.nacional_script import (
+            build_nacional_round_script,
+            build_nacional_script,
+        )
+        from sports_analytics.video.sample import sample_nacional, sample_round
         from sports_analytics.video.tts import GoogleTTS
 
-        script = build_nacional_script(sample_nacional(), settings.nacional_criticism)
+        if (settings.nacional_format or "").lower() == "fecha":
+            script = build_nacional_round_script(sample_round())
+        else:
+            script = build_nacional_script(sample_nacional(), settings.nacional_criticism)
         tts = None
         if settings.google_tts_api_key and not args.no_voice:
             tts = GoogleTTS(

@@ -292,3 +292,129 @@ def build_report(client, season: int) -> NacionalReport | None:
 
 def ranking(teams: list[TeamLine], attr: str, low_is_good: bool = True) -> list[TeamLine]:
     return sorted(teams, key=lambda t: t.per_game(attr), reverse=not low_is_good)
+
+
+# ------------------------------------------------ formato "fecha": partido a partido
+
+
+@dataclass
+class SideStats:
+    team_id: int
+    name: str
+    goals: int
+    possession: int | None  # %
+    shots: int | None
+    sot: int | None
+    inside: int | None  # tiros dentro del área
+
+    def has_stats(self) -> bool:
+        return None not in (self.possession, self.shots, self.sot, self.inside)
+
+
+@dataclass
+class RoundMatch:
+    home: SideStats
+    away: SideStats
+    kickoff_utc: datetime
+    nacional_group: bool  # partido del grupo de Nacional
+
+    def conceded(self, side: SideStats) -> SideStats:
+        """Estadísticas del rival de ``side`` (lo que ``side`` recibió)."""
+        return self.away if side is self.home else self.home
+
+
+@dataclass
+class RoundReport:
+    round: str
+    round_label: str
+    matches: list[RoundMatch]  # orden del video: otro grupo, grupo de Nacional, Nacional
+    last: MatchLine
+    next: MatchLine | None = None
+    calls: int = 0
+    notes: list[str] = field(default_factory=list)
+
+
+def _int(v) -> int | None:
+    if v is None:
+        return None
+    try:
+        return int(str(v).rstrip("%"))
+    except ValueError:
+        return None
+
+
+def _sides(it: dict) -> tuple[SideStats, SideStats]:
+    t, ft = it["teams"], (it.get("score") or {}).get("fulltime") or {}
+    goals = {
+        "home": ft.get("home") if ft.get("home") is not None else it["goals"]["home"],
+        "away": ft.get("away") if ft.get("away") is not None else it["goals"]["away"],
+    }
+    stats = {}
+    for block in it.get("statistics") or []:
+        stats[block["team"]["id"]] = {x["type"]: x["value"] for x in block.get("statistics", [])}
+    out = []
+    for side in ("home", "away"):
+        tid = t[side]["id"]
+        v = stats.get(tid, {})
+        out.append(
+            SideStats(
+                tid,
+                team_name(tid, t[side]["name"]),
+                goals[side],
+                _int(v.get("Ball Possession")),
+                _int(v.get("Total Shots")),
+                _int(v.get("Shots on Goal")),
+                _int(v.get("Shots insidebox")),
+            )
+        )
+    return out[0], out[1]
+
+
+def build_round_report(client, season: int) -> RoundReport | None:
+    """Los partidos de la última jornada jugada por Nacional, de todos los grupos."""
+    start = client.http.calls_made
+    fixtures = client.fixtures_by_league_season(LEAGUE_ID, season)
+    rnd = last_round(fixtures)
+    if rnd is None:
+        return None
+    group = {NACIONAL_ID, *rivals(fixtures, rnd)}
+    games = [
+        it
+        for it in fixtures
+        if it["league"].get("round") == rnd and it["fixture"]["status"]["short"] in FINISHED
+    ]
+    ids = [str(it["fixture"]["id"]) for it in games]
+    items = client.http.get("/fixtures", {"ids": "-".join(ids)}).get("response", []) if ids else []
+    matches = []
+    for it in items:
+        home, away = _sides(it)
+        matches.append(
+            RoundMatch(
+                home,
+                away,
+                datetime.fromisoformat(it["fixture"]["date"]),
+                bool({home.team_id, away.team_id} & group),
+            )
+        )
+
+    def order(m: RoundMatch):
+        has_nac = NACIONAL_ID in (m.home.team_id, m.away.team_id)
+        return (m.nacional_group, has_nac, m.kickoff_utc)
+
+    matches.sort(key=order)
+    nac = sorted(
+        (_match(it) for it in _nacional_matches(semester(fixtures))), key=lambda m: m.kickoff_utc
+    )
+    upcoming = [m for m in nac if not m.finished]
+    report = RoundReport(
+        rnd,
+        round_label(rnd),
+        matches,
+        [m for m in nac if m.finished][-1],
+        upcoming[0] if upcoming else None,
+        client.http.calls_made - start,
+    )
+    for m in matches:
+        if not (m.home.has_stats() and m.away.has_stats()):
+            report.notes.append(f"Sin estadísticas completas: {m.home.name} vs {m.away.name}")
+    return report

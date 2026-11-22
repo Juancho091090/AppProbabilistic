@@ -80,16 +80,27 @@ def run_nacional_short(
             if _done(s, out.round):
                 out.issues.append(f"El video de {out.round} ya se envió")
                 return out
-    report = N.build_report(svc.football, season)
+    from sports_analytics.video.html_engine import render_short_html
+    from sports_analytics.video.nacional_script import (
+        build_nacional_round_script,
+        build_nacional_script,
+    )
+    from sports_analytics.video.tts import GoogleTTS
+
+    fmt = (settings.nacional_format or "semestre").strip().lower()
+    if fmt == "fecha":
+        report = N.build_round_report(svc.football, season)
+    else:
+        report = N.build_report(svc.football, season)
     if report is None:
         out.issues.append("Nacional no ha jugado este semestre")
         return out
     out.issues += report.notes
-    from sports_analytics.video.html_engine import render_short_html
-    from sports_analytics.video.nacional_script import build_nacional_script
-    from sports_analytics.video.tts import GoogleTTS
-
-    script = build_nacional_script(report, settings.nacional_criticism, settings.app_timezone)
+    if fmt == "fecha":
+        script = build_nacional_round_script(report, settings.app_timezone)
+        out.issues += [f"No sale (sin estadísticas): {x}" for x in getattr(script, "notes", [])]
+    else:
+        script = build_nacional_script(report, settings.nacional_criticism, settings.app_timezone)
     out.title = script.title
     folder = out_dir or Path(tempfile.mkdtemp())
     path = Path(folder) / f"nacional_{report.round.rsplit('-', 1)[-1].strip()}.mp4"

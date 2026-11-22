@@ -66,3 +66,5 @@ body { background: var(--g); }
 /* Transición: pasa la camiseta (rayas verde y blanca de alto contraste) */
 .wipe { background: repeating-linear-gradient(90deg, var(--w) 0 90px, var(--g) 90px 180px);
   box-shadow: 0 0 60px rgba(0, 0, 0, .35); }
+.duels-4 .dtitle { font-size: 34px; }
+.duels-4 .dvals { font-size: 50px; }

@@ -93,7 +93,7 @@
     },
     why(s, d, p) {
       s.appendChild(rv(h("div", "title", d.title), p.title, 0.5));
-      const box = h("div", "duels");
+      const box = h("div", "duels duels-" + d.duels.length);
       d.duels.forEach((du, i) => {
         const [ln, lv] = du.left, [rn, rvv] = du.right;
         const top = Math.max(lv, rvv) || 1;

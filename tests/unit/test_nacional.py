@@ -222,3 +222,93 @@ def test_two_decimals_avoid_false_ties_and_singular():
     assert "Nacional es el mejor: 0,90 por partido" in s.scenes[1].narration
     assert "solo se le escapó 1." in s.scenes[3].narration
     assert "Once Caldas: 0,95 goles" in s.description
+
+
+# ------------------------------------------------ formato "fecha": partido a partido
+
+from sports_analytics.video.nacional_script import build_nacional_round_script  # noqa: E402
+from sports_analytics.video.sample import sample_round  # noqa: E402
+
+
+def _stats(home, away, poss, shots, sot, inside):
+    return [
+        {
+            "team": {"id": home},
+            "statistics": [
+                {"type": "Ball Possession", "value": f"{poss[0]}%"},
+                {"type": "Total Shots", "value": shots[0]},
+                {"type": "Shots on Goal", "value": sot[0]},
+                {"type": "Shots insidebox", "value": inside[0]},
+            ],
+        },
+        {
+            "team": {"id": away},
+            "statistics": [
+                {"type": "Ball Possession", "value": f"{poss[1]}%"},
+                {"type": "Total Shots", "value": shots[1]},
+                {"type": "Shots on Goal", "value": sot[1]},
+                {"type": "Shots insidebox", "value": inside[1]},
+            ],
+        },
+    ]
+
+
+def test_round_report_orders_other_group_first_and_nacional_last():
+    f = season()
+    for it, st in zip(
+        f[3:6],
+        (
+            _stats(1128, 1139, (51, 49), (9, 8), (3, 2), (6, 5)),
+            _stats(1138, 1125, (60, 40), (15, 7), (6, 2), (10, 4)),
+            _stats(1136, 1137, (49, 51), (12, 7), (1, 1), (4, 6)),
+        ),
+        strict=True,
+    ):
+        it["statistics"] = st
+    rr = N.build_round_report(FakeClient(f), 2026)
+    names = [(m.home.name, m.away.name) for m in rr.matches]
+    assert names == [
+        ("América", "Millonarios"),
+        ("Medellín", "Santa Fe"),
+        ("Once Caldas", "Nacional"),
+    ]
+    assert [m.nacional_group for m in rr.matches] == [False, True, True]
+    oc = rr.matches[-1]
+    assert (oc.home.possession, oc.home.shots, oc.home.sot, oc.home.inside) == (49, 12, 1, 4)
+    assert oc.conceded(oc.away) is oc.home and rr.notes == []
+    assert rr.calls == 2
+
+
+def test_round_script_scenes_and_defense_ranking():
+    s = build_nacional_round_script(sample_round())
+    kinds = [x.kind for x in s.scenes]
+    assert kinds == ["hook", "why", "why", "why", "why", "bars", "cta"]
+    assert s.scenes[1].narration.startswith("En el otro grupo, Millonarios 1 a 1 Bucaramanga.")
+    assert "Y en el clásico, Nacional 2 a 1 Medellín." in s.scenes[4].narration
+    assert "América ganó con menos llegadas" in s.scenes[2].narration
+    assert "La pelota quedó repartida y Santa Fe remató más" in s.scenes[3].narration
+    d = s.scenes[5]
+    # Nacional y Once Caldas recibieron 2 al arco; desempata lo recibido dentro del área
+    assert [r[0] for r in d.data["rows"]][:2] == ["Nacional", "Once Caldas"]
+    assert (
+        d.data["tags"]["Nacional"]["kind"] == "best"
+        and d.data["tags"]["Medellín"]["kind"] == "worst"
+    )
+    assert "empatada con Once Caldas" in d.narration
+    page = E.scene_data("bars", d.data, TZ)
+    assert page["fmt"] == "int" and len(page["rows"]) == 8
+    assert len(s.scenes[1].data["duels"]) == 4
+    assert s.title.startswith("Nacional 2-1 Medellín y toda la fecha 2 del cuadrangular")
+    assert "Millonarios: posesión 55%, 14 tiros, 5 al arco, 9 dentro del área" in s.description
+    json.dumps({i: E.scene_data(x.kind, x.data, TZ) for i, x in enumerate(s.scenes)})
+
+
+def test_round_script_skips_matches_without_stats():
+    rr = sample_round()
+    rr.matches[0].home.possession = None
+    s = build_nacional_round_script(rr)
+    assert [x.kind for x in s.scenes].count("why") == 3
+    assert s.notes == ["Millonarios 1-1 Bucaramanga"]
+    assert "sin estadísticas completas" in s.description
+    # el primer partido del otro grupo que sí sale lleva la entrada "En el otro grupo"
+    assert s.scenes[1].narration.startswith("En el otro grupo, América")

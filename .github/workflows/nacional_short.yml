@@ -23,6 +23,11 @@ on:
         description: "Datos de ejemplo (prueba de diseño)"
         type: boolean
         default: false
+      formato:
+        description: "Formato: vacío = el de la variable NACIONAL_FORMATO"
+        type: choice
+        options: ["", "semestre", "fecha"]
+        default: ""
 
 permissions:
   contents: read
@@ -46,6 +51,7 @@ jobs:
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
       NACIONAL_CRITICA: ${{ vars.NACIONAL_CRITICA }}
+      NACIONAL_FORMATO: ${{ inputs.formato || vars.NACIONAL_FORMATO || 'semestre' }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6

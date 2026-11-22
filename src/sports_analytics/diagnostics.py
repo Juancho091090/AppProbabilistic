@@ -1016,6 +1016,18 @@ def check_nacional_report(settings: Settings) -> list[str]:
             f"{ft.get('home')}-{ft.get('away')} {t['away']['name']} (desc. {ht.get('home')}-"
             f"{ht.get('away')}) · tiros {shots.get(t['home']['id'])} / {shots.get(t['away']['id'])}"
         )
+    # Formato "fecha": estadísticas de cada partido de la jornada
+    rr = N.build_round_report(client, season)
+    if rr:
+        lines.append("")
+        lines.append(f"Jornada {rr.round}, partido a partido:")
+        for m in rr.matches:
+            for sd in (m.home, m.away):
+                lines.append(
+                    f"  {sd.name}: goles {sd.goals} · posesión {sd.possession}% · tiros {sd.shots}"
+                    f" · al arco {sd.sot} · dentro del área {sd.inside}"
+                )
+        lines += rr.notes
     # Tabla oficial de la API para contrastar PJ, GF y GC
     lines.append("")
     lines.append("Tablas de la API (PJ, GF, GC):")
