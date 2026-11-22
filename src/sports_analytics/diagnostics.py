@@ -827,6 +827,86 @@ def check_league_lookup(settings: Settings) -> list[str]:
     return lines
 
 
+def check_betplay_players(settings: Settings, season: int | None = None) -> list[str]:
+    """Liga BetPlay: rondas del semestre, cobertura y estadísticas de jugadores por partido.
+
+    ~1 llamada (/fixtures de la temporada) + 1 por cada 20 partidos del segundo semestre
+    (/fixtures?ids= trae el bloque ``players`` de cada partido). Muestra los líderes."""
+    from collections import Counter, defaultdict
+
+    lines = ["## API-Football: Liga BetPlay, jugadores del semestre", ""]
+    if settings.api_football_key is None:
+        return [*lines, "❌ falta API_FOOTBALL_KEY"]
+    client = ApiFootballClient(settings)
+    cov = client.current_leagues().get(239)
+    season = season or (cov.season if cov else date.today().year)
+    if cov:
+        lines.append(
+            f"Temporada {cov.season} ({cov.season_start} a {cov.season_end}) · jugadores "
+            f"{_yes(cov.players)} · eventos {_yes(cov.fixtures_events)} · alineaciones "
+            f"{_yes(cov.lineups)} · estadísticas {_yes(cov.fixtures_statistics)}"
+        )
+    fixtures = client.fixtures_by_league_season(239, season)
+    rounds = Counter(it["league"].get("round", "?") for it in fixtures)
+    lines.append(f"Partidos de la temporada: {len(fixtures)}")
+    lines += [f"- {r}: {n}" for r, n in sorted(rounds.items(), key=lambda x: x[0])]
+    first = {
+        str(it["fixture"]["id"]) for it in fixtures if "apertura" in it["league"]["round"].lower()
+    }
+    sem = [
+        it
+        for it in fixtures
+        if str(it["fixture"]["id"]) not in first
+        and it["fixture"]["status"]["short"] in ("FT", "AET", "PEN")
+    ]
+    lines.append(f"Segundo semestre, jugados: {len(sem)}")
+    ids = [str(it["fixture"]["id"]) for it in sem]
+    tot: dict[tuple, Counter] = defaultdict(Counter)
+    ratings: dict[tuple, list[float]] = defaultdict(list)
+    with_players = 0
+    sample_keys: set[str] = set()
+    for i in range(0, len(ids), 20):
+        items = client.http.get("/fixtures", {"ids": "-".join(ids[i : i + 20])}).get("response", [])
+        for it in items:
+            blocks = it.get("players") or []
+            with_players += bool(blocks)
+            for team in blocks:
+                tname = team["team"]["name"]
+                for pl in team.get("players", []):
+                    st = (pl.get("statistics") or [{}])[0]
+                    sample_keys.update(st.keys())
+                    key = (pl["player"]["name"], tname)
+                    g, sh, pa = st.get("goals") or {}, st.get("shots") or {}, st.get("passes") or {}
+                    tk, dr = st.get("tackles") or {}, st.get("dribbles") or {}
+                    games = st.get("games") or {}
+                    c = tot[key]
+                    c["min"] += games.get("minutes") or 0
+                    c["pj"] += 1 if (games.get("minutes") or 0) > 0 else 0
+                    c["goles"] += g.get("total") or 0
+                    c["asist"] += g.get("assists") or 0
+                    c["atajadas"] += g.get("saves") or 0
+                    c["tiros_arco"] += sh.get("on") or 0
+                    c["pases_clave"] += pa.get("key") or 0
+                    c["quites"] += (tk.get("total") or 0) + (tk.get("interceptions") or 0)
+                    c["regates"] += dr.get("success") or 0
+                    if games.get("rating"):
+                        ratings[key].append(float(games["rating"]))
+    lines.append(
+        f"Con bloque de jugadores: {with_players}/{len(ids)} · llamadas {client.http.calls_made}"
+    )
+    lines.append(f"Campos por jugador: {', '.join(sorted(sample_keys)) or 'ninguno'}")
+    for stat in ("goles", "asist", "tiros_arco", "pases_clave", "regates", "quites", "atajadas"):
+        top = sorted(tot.items(), key=lambda kv: kv[1][stat], reverse=True)[:5]
+        lines.append(f"Top {stat}: " + "; ".join(f"{p} ({t}) {c[stat]}" for (p, t), c in top))
+    rated = [(k, sum(v) / len(v), len(v)) for k, v in ratings.items() if len(v) >= 8]
+    top = sorted(rated, key=lambda x: x[1], reverse=True)[:5]
+    lines.append(
+        "Top calificación (≥8 PJ): "
+        + "; ".join(f"{p} ({t}) {r:.2f} en {n}" for (p, t), r, n in top)
+    )
+    return lines
+
+
 def check_xg_batch(settings: Settings) -> list[str]:
     """1 llamada: /fixtures?ids= con 20 partidos antiguos sin xG (uno o dos por liga) para
     comprobar si el lote trae estadísticas con expected_goals de temporadas pasadas."""
@@ -966,6 +1046,7 @@ def run_diagnostics(settings: Settings, config: AppConfig, sections: str | None 
         "tennis_structure": lambda: check_tennis_tournament(settings),
         "league_lookup": lambda: check_league_lookup(settings),
         "xg_batch": lambda: check_xg_batch(settings),
+        "betplay": lambda: check_betplay_players(settings),
         "odds_markets": lambda: check_odds_markets(settings),
         "email": lambda: check_email(settings),
     }
