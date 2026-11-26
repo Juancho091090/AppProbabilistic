@@ -306,6 +306,7 @@ class SideStats:
     shots: int | None
     sot: int | None
     inside: int | None  # tiros dentro del área
+    reds: int = 0  # tarjetas rojas (contexto: jugó con uno menos)
 
     def has_stats(self) -> bool:
         return None not in (self.possession, self.shots, self.sot, self.inside)
@@ -365,6 +366,7 @@ def _sides(it: dict) -> tuple[SideStats, SideStats]:
                 _int(v.get("Total Shots")),
                 _int(v.get("Shots on Goal")),
                 _int(v.get("Shots insidebox")),
+                _int(v.get("Red Cards")) or 0,
             )
         )
     return out[0], out[1]

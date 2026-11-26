@@ -312,3 +312,14 @@ def test_round_script_skips_matches_without_stats():
     assert "sin estadísticas completas" in s.description
     # el primer partido del otro grupo que sí sale lleva la entrada "En el otro grupo"
     assert s.scenes[1].narration.startswith("En el otro grupo, América")
+
+
+def test_red_card_context_is_narrated():
+    rr = sample_round()
+    rr.matches[-1].away.reds = 1  # Medellín con diez
+    s = build_nacional_round_script(rr)
+    assert "Ojo: Medellín jugó con uno menos tras una expulsión." in s.scenes[4].narration
+    assert (
+        "Medellín: posesión 42%, 7 tiros, 2 al arco, 4 dentro del área, 1 expulsado"
+        in s.description
+    )

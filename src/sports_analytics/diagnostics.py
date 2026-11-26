@@ -1025,7 +1025,7 @@ def check_nacional_report(settings: Settings) -> list[str]:
             for sd in (m.home, m.away):
                 lines.append(
                     f"  {sd.name}: goles {sd.goals} · posesión {sd.possession}% · tiros {sd.shots}"
-                    f" · al arco {sd.sot} · dentro del área {sd.inside}"
+                    f" · al arco {sd.sot} · dentro del área {sd.inside} · rojas {sd.reds}"
                 )
         lines += rr.notes
     # Tabla oficial de la API para contrastar PJ, GF y GC

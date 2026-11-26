@@ -339,6 +339,12 @@ def _match_scene(m, first_other: bool) -> Scene | None:
         else:
             say += f" pero {shooter.name} remató más: "
         say += f"{shooter.shots} tiros contra {other.shots}, {shooter.sot} al arco."
+    # Contexto que cambia la lectura de los números: expulsados
+    for side in (h, a):
+        if side.reds == 1:
+            say += f" Ojo: {side.name} jugó con uno menos tras una expulsión."
+        elif side.reds > 1:
+            say += f" Ojo: {side.name} sufrió {side.reds} expulsiones."
     winner = h if h.goals > a.goals else (a if a.goals > h.goals else None)
     if winner and winner.shots < (a if winner is h else h).shots:
         say += f" {winner.name} ganó con menos llegadas: más efectivo."
@@ -474,9 +480,10 @@ def build_nacional_round_script(rr, tz: str = "America/Bogota") -> ShortScript:
         lines.append(f"{h.name} {h.goals}-{a.goals} {a.name}")
         if h.has_stats() and a.has_stats():
             for s in (h, a):
+                red = f", {s.reds} expulsado{'s' if s.reds > 1 else ''}" if s.reds else ""
                 lines.append(
                     f"  {s.name}: posesión {s.possession}%, {s.shots} tiros, {s.sot} al arco, "
-                    f"{s.inside} dentro del área"
+                    f"{s.inside} dentro del área{red}"
                 )
         else:
             lines.append("  (sin estadísticas completas de este partido)")
