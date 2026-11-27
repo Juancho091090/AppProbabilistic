@@ -243,6 +243,28 @@ INTRO_SCENE = Scene(
 )
 
 
+HOST_NAME = "Leo"
+
+
+def host_scene(recap=None, bridge: str = "Y para mañana te traigo un favorito claro.") -> Scene:
+    """Leo, el analista ficticio (dibujado), saluda, cuenta cómo nos fue ayer y presenta el
+    partido. Reemplaza la escena del resumen cuando el Short usa presentador."""
+    if recap and recap.n:
+        base = recap_scene(recap)
+        say = f"Hola, soy {HOST_NAME}. " + base.narration + " " + bridge
+        data = {
+            "generic": True,
+            "top": "Ayer, en el canal de Telegram",
+            "big": f"{recap.hits} de {recap.n}",
+            "small": "acertados, fallos incluidos" if recap.hits < recap.n else "acertados",
+        }
+    else:
+        say = f"Hola, soy {HOST_NAME}, el analista de JC Probabilidades. {bridge}"
+        data = {"generic": True, "top": "Los números de mañana", "big": "", "small": ""}
+    data["name"] = f"{HOST_NAME}, analista de datos"
+    return Scene("host", say, data)
+
+
 def recap_scene(recap) -> Scene:
     """Escena "así nos fue ayer": se cuentan aciertos y fallos, siempre todos."""
     h, n = recap.hits, recap.n
@@ -286,13 +308,15 @@ def build_short_script(
     intro: bool = False,
     published: Sequence[str] = (),
     n_published: int = 0,
+    host: bool = False,
 ) -> ShortScript | None:
     """``recap`` (video.recap.Recap) añade el resumen de ayer; ``intro`` antepone una
     presentación corta del canal (pensada para los primeros videos). ``published``: ids de
     los partidos del canal de esa noche (se prefieren); ``n_published``: cuántos son."""
     picked = pick_market_favorite(payload, market_fair, set(published))
     if picked:
-        return _favorite_script(payload, market_fair, *picked, recap, intro, n_published or n_high)
+        out = _favorite_script(payload, market_fair, *picked, recap, intro, n_published or n_high)
+        return _with_host(out, recap) if host else out
     f = pick_open_match(payload)
     if f is None:
         return None
@@ -432,6 +456,20 @@ def _favorite_script(payload, market_fair, f, fav, recap, intro, n_channel) -> S
         "(enlace en el perfil del canal)."
     )
     return ShortScript(f.event_id, title[:100], description, scenes, pinned)
+
+
+def _with_host(script: ShortScript, recap) -> ShortScript:
+    """Pone a Leo al inicio: reemplaza el resumen (o va antes del gancho si no hay resumen)."""
+    scenes = [sc for sc in script.scenes if sc.kind not in ("recap",)]
+    at = 1 if scenes and scenes[0].kind == "intro" else 0
+    scenes.insert(at, host_scene(recap))
+    # el gancho ya no repite "Y para mañana": lo dijo Leo
+    for sc in scenes:
+        if sc.kind == "hook" and sc.narration.startswith("Y para mañana, un favorito claro: "):
+            sc.narration = sc.narration.replace("Y para mañana, un favorito claro: ", "", 1)
+            sc.narration = sc.narration[0].upper() + sc.narration[1:]
+    script.scenes = scenes
+    return script
 
 
 # --------------------------------------------------------------------------- tenis

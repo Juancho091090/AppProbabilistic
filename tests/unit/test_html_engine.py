@@ -291,3 +291,29 @@ def test_favorite_why_lines():
     says = " ".join(d["say"] for d in duels)
     assert "En Elo, Liverpool saca 280 puntos" in says
     assert "el modelo es todavía más optimista: le da 71" in says
+
+
+def test_host_scene_replaces_recap_and_trims_hook():
+    payload, fair, n = sample_payload()
+    s = build_short_script(
+        payload,
+        {**fair, **FAVORITE_FAIR},
+        n,
+        sample_recap(),
+        published=["ej2"],
+        n_published=5,
+        host=True,
+    )
+    kinds = [sc.kind for sc in s.scenes]
+    assert kinds[0] == "host" and "recap" not in kinds
+    host = s.scenes[0]
+    assert host.narration.startswith("Hola, soy Leo. ¡Gran día ayer! Acertamos 5 de 6")
+    assert host.narration.endswith("Y para mañana te traigo un favorito claro.")
+    data = E.scene_data("host", host.data, TZ)
+    assert data["big"] == "5 de 6" and data["name"] == "Leo, analista de datos"
+    assert s.scenes[1].narration.startswith("Liverpool, que juega contra Burnley.")
+    plan = E.plan_for("host", data, 6.0)
+    assert plan["big"] > plan["card"] > plan["host"]
+    # sin resumen: Leo saluda y presenta
+    s2 = build_short_script(payload, {**fair, **FAVORITE_FAIR}, n, None, host=True)
+    assert s2.scenes[0].narration.startswith("Hola, soy Leo, el analista de JC Probabilidades.")

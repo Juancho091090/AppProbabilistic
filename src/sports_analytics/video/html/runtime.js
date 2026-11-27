@@ -126,6 +126,103 @@
   };
   BUILD.sets = BUILD.bars;
 
+
+  // ------------------------------------------------------------ presentador ficticio
+  // Leo: analista inventado, dibujado en SVG. Boca, parpadeo y cabeza se mueven en
+  // updateHost() según las palabras narradas (sc.words), así queda sincronizado con la voz.
+  const HOST_SVG = `
+<svg class="host-svg" viewBox="0 0 1080 1120" aria-hidden="true">
+  <defs>
+    <radialGradient id="hSpot" cx="50%" cy="45%" r="50%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hSkin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C98C62"/><stop offset="1" stop-color="#B27650"/>
+    </linearGradient>
+    <linearGradient id="hJacket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B3458"/><stop offset="1" stop-color="#0F2140"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="540" cy="470" rx="470" ry="440" fill="url(#hSpot)"/>
+  <g class="h-body">
+    <path d="M150 1120 C170 960 250 880 400 840 L470 820 L540 900 L610 820 L680 840 C830 880 910 960 930 1120 Z" fill="url(#hJacket)"/>
+    <path d="M470 820 L540 900 L610 820 L590 812 L540 860 L490 812 Z" fill="#F4F6FA"/>
+    <path d="M520 870 L540 900 L560 870 L552 1000 L540 1020 L528 1000 Z" fill="#C6F432"/>
+    <path d="M470 820 L430 900 L500 1060 L540 905 Z" fill="#0C1A33" opacity=".55"/>
+    <path d="M610 820 L650 900 L580 1060 L540 905 Z" fill="#0C1A33" opacity=".55"/>
+    <path d="M700 960 L770 960 L765 985 L705 985 Z" fill="#C6F432"/>
+  </g>
+  <g class="h-head">
+    <rect x="490" y="700" width="100" height="140" rx="30" fill="#A96E48"/>
+    <ellipse cx="392" cy="545" rx="30" ry="46" fill="#B9794F"/>
+    <ellipse cx="688" cy="545" rx="30" ry="46" fill="#B9794F"/>
+    <ellipse cx="540" cy="520" rx="150" ry="188" fill="url(#hSkin)"/>
+    <path d="M410 600 C420 690 470 735 540 740 C610 735 660 690 670 600 C650 650 610 700 540 702 C470 700 430 650 410 600 Z" fill="#2A1A12" opacity=".16"/>
+    <path d="M388 470 C380 360 440 300 540 298 C650 296 705 365 694 470 C676 420 640 395 600 392 C560 410 500 410 460 392 C420 400 398 430 388 470 Z" fill="#231915"/>
+    <path d="M405 440 C415 380 460 340 520 335" stroke="#3B2A22" stroke-width="10" fill="none" stroke-linecap="round" opacity=".6"/>
+    <g class="h-brows">
+      <rect x="440" y="440" width="76" height="14" rx="7" fill="#231915" transform="rotate(-4 478 447)"/>
+      <rect x="564" y="440" width="76" height="14" rx="7" fill="#231915" transform="rotate(4 602 447)"/>
+    </g>
+    <g class="h-eyes">
+      <g class="h-eye" transform="translate(478 500)"><g class="h-lid"><ellipse rx="26" ry="20" fill="#fff"/><circle r="12" fill="#2B1C14"/><circle cx="-4" cy="-5" r="4" fill="#fff"/></g></g>
+      <g class="h-eye" transform="translate(602 500)"><g class="h-lid"><ellipse rx="26" ry="20" fill="#fff"/><circle r="12" fill="#2B1C14"/><circle cx="-4" cy="-5" r="4" fill="#fff"/></g></g>
+    </g>
+    <g fill="none" stroke="#14294A" stroke-width="8">
+      <rect x="434" y="465" width="88" height="70" rx="22"/>
+      <rect x="558" y="465" width="88" height="70" rx="22"/>
+      <path d="M522 492 Q540 482 558 492"/>
+    </g>
+    <path d="M540 520 C534 560 528 585 522 598 C532 606 548 606 558 598" stroke="#8E5A3A" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <g class="h-mouth" transform="translate(540 650)">
+      <ellipse class="h-mouth-in" rx="46" ry="6" fill="#5B1D1D"/>
+      <ellipse class="h-tongue" cx="0" cy="10" rx="26" ry="0" fill="#C24E4E"/>
+      <path class="h-lip" d="M-48 0 Q0 14 48 0" stroke="#7A3524" stroke-width="7" fill="none" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>`;
+  BUILD.host = (el, d, p) => {
+    const wrap = rv(h("div", "host"), p.host, 0.5);
+    wrap.innerHTML = HOST_SVG;
+    el.appendChild(wrap);
+    const card = rv(h("div", "host-card"), p.card, 0.45);
+    card.append(h("div", "host-name", d.name || "Leo, analista de datos"));
+    if (d.top) card.append(h("div", "host-top", d.top));
+    if (d.big) {
+      const big = rv(h("div", "host-big rv-pop"), p.big, 0.5);
+      big.textContent = d.big;
+      card.append(big);
+    }
+    if (d.small) card.append(h("div", "host-small", d.small));
+    el.appendChild(card);
+  };
+  // Apertura de boca (0..1) a partir de las palabras: sílabas aproximadas por palabra
+  const mouthAt = (words, t) => {
+    for (const w of words) {
+      const a = w[0], b = w[1];
+      if (t >= a && t < b) {
+        const syl = Math.max(1, Math.round((w[3] || "").replace(/[^aeiouáéíóú]/gi, "").length));
+        const ph = ((t - a) / Math.max(0.05, b - a)) * syl;
+        return 0.25 + 0.75 * Math.abs(Math.sin(Math.PI * ph));
+      }
+    }
+    return 0;
+  };
+  const updateHost = (el, t, words) => {
+    const svg = el.querySelector(".host-svg");
+    if (!svg) return;
+    const m = mouthAt(words || [], t);
+    svg.querySelector(".h-mouth-in").setAttribute("ry", (5 + 30 * m).toFixed(1));
+    svg.querySelector(".h-tongue").setAttribute("ry", (m > 0.4 ? 10 * m : 0).toFixed(1));
+    svg.querySelector(".h-lip").style.opacity = m > 0.15 ? 0 : 1;
+    // parpadeo cada ~3.4 s (0.14 s), cabeza que acompaña la voz
+    const cyc = t % 3.4, blink = cyc > 3.26 ? 0.1 : 1;
+    svg.querySelectorAll(".h-lid").forEach((l) => l.setAttribute("transform", `scale(1 ${blink})`));
+    const talk = m > 0 ? 1 : 0.4;
+    const rot = Math.sin(t * 1.6) * 1.6 * talk, dy = Math.sin(t * 3.1) * 3 * talk;
+    svg.querySelector(".h-head").setAttribute("transform", `rotate(${rot.toFixed(2)} 540 760) translate(0 ${dy.toFixed(1)})`);
+    svg.querySelector(".h-brows").setAttribute("transform", `translate(0 ${(-6 * m * (Math.sin(t * 5) > 0.6 ? 1 : 0)).toFixed(1)})`);
+  };
   // ------------------------------------------------------------ montaje
   const stage = document.getElementById("stage");
   const bg = document.getElementById("bg");
@@ -228,6 +325,7 @@
     }
     document.body.classList.toggle("is-intro", f.sc.kind === "intro");
     drawCaps(f.sc, t);
+    if (f.sc.kind === "host" && !showPrev) updateHost(f.el, t, f.sc.words);
     prog.firstChild.style.width = (100 * clamp(tg / D.total)).toFixed(2) + "%";
     if (STYLE.tick) STYLE.tick(tg);
   };

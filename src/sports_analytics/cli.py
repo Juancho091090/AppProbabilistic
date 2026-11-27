@@ -713,7 +713,9 @@ def _short_sample(args: argparse.Namespace) -> int:
     scripts = []
     if args.sport in ("football", "both"):
         scripts.append(
-            build_short_script(payload, fair, n_high, recap, intro, ["ej2"], n_published=5)
+            build_short_script(
+                payload, fair, n_high, recap, intro, ["ej2"], n_published=5, host=args.host
+            )
         )
     if args.sport in ("tennis", "both"):
         first = not scripts
@@ -789,6 +791,7 @@ def build_parser() -> argparse.ArgumentParser:
     sh.add_argument(
         "--open-match", action="store_true", help="Formato anterior: el partido más abierto"
     )
+    sh.add_argument("--host", action="store_true", help="Con Leo, el presentador dibujado")
     sh.add_argument("--intro", action="store_true", help="Con la presentación del canal")
     sh.add_argument("--theme", default=None, help="Paleta del diseño anterior (motor pillow)")
     sh.add_argument("--sport", choices=["football", "tennis", "both"], default="both")

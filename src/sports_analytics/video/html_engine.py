@@ -96,6 +96,8 @@ def plan_for(kind: str, data: dict, dur: float) -> dict:
             "rows": rows,
             "note": (rows[-1] if rows else 1.0) + 0.3,
         }
+    if kind == "host":
+        return {"host": 0.0, "card": 0.5, "big": 0.8}
     if kind == "hook":
         return {"kicker": 0.0, "home": 0.15, "vs": 0.45, "away": 0.6, "note": 0.95, "when": 1.2}
     if kind in ("bars", "sets"):
@@ -120,6 +122,8 @@ def sfx_for(scenes: list[dict]) -> list[tuple[float, str]]:
             ev.append((s0 + p["vs"], "pop"))
         elif kind == "intro":
             ev += [(s0 + t, "pop") for t in p["tags"]]
+        elif kind == "host":
+            ev.append((s0 + p["big"], "pop"))
         elif kind == "recap":
             ev.append((s0 + p["score"] + p["score_d"], "hit"))
             ev += [(s0 + t, "pop") for t in p["rows"]]

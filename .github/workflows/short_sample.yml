@@ -20,6 +20,10 @@ on:
         description: "Incluir la presentación del canal"
         type: boolean
         default: false
+      host:
+        description: "Con Leo, el presentador dibujado (fútbol)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -49,7 +53,7 @@ jobs:
         run: >-
           sports-analytics short-sample --send --output data/short_prueba.mp4
           --sport "${{ inputs.sport }}" ${{ inputs.style && format('--style {0}', inputs.style) || '' }}
-          ${{ inputs.intro && '--intro' || '' }}
+          ${{ inputs.intro && '--intro' || '' }} ${{ inputs.host && '--host' || '' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
