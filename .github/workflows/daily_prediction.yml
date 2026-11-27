@@ -52,9 +52,11 @@ jobs:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       # Canal público @JCProbabilidades (variable, no secreto). Vacío = no se publica
-      TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_CHANNEL_ID }}
-      # Short diario: variable SHORT_ENABLED=true para activarlo; voz con Google TTS
-      SHORT_ENABLED: ${{ vars.SHORT_ENABLED || 'false' }}
+      # 27-nov: el usuario cierra YouTube y el canal de Telegram. Sin publicaciones en el canal
+      # ni Shorts; el informe personal sigue igual. Para reactivar, volver a
+      # vars.TELEGRAM_CHANNEL_ID y vars.SHORT_ENABLED.
+      TELEGRAM_CHANNEL_ID: ""
+      SHORT_ENABLED: "false"
       SHORT_THEME: ${{ vars.SHORT_THEME || 'claro_cesped' }}
       SHORT_INTRO: ${{ vars.SHORT_INTRO || 'false' }}
       SHORT_ENGINE: ${{ vars.SHORT_ENGINE || 'html' }}
@@ -85,7 +87,7 @@ jobs:
         run: pip install -e .
 
       - name: ffmpeg y Chrome para los Shorts y la imagen del canal
-        if: vars.SHORT_ENABLED == 'true' || vars.TELEGRAM_CHANNEL_ID != ''
+        if: false  # sin Shorts ni imagen del canal desde el 27-nov
         run: |
           pip install -e ".[video]"
           if [ "${{ vars.SHORT_ENABLED }}" = "true" ]; then
